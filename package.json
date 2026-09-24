@@ -1,0 +1,31 @@
+{
+  "name": "motion-pack",
+  "productName": "Motion Pack",
+  "version": "1.0.0",
+  "description": "Motion Pack garment lookbook",
+  "author": "Motion Pack",
+  "main": "main.js",
+  "scripts": {
+    "dist": "electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  },
+  "build": {
+    "appId": "com.motionpack.app",
+    "productName": "Motion Pack",
+    "files": ["main.js", "app/**"],
+    "directories": { "output": "dist", "buildResources": "build" },
+    "win": { "icon": "build/icon.ico", "target": ["nsis", "portable"] },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Motion Pack",
+      "artifactName": "Motion Pack Setup.exe"
+    },
+    "portable": { "artifactName": "Motion Pack.exe" }
+  }
+}
