@@ -1343,8 +1343,8 @@ async function techPack(items){
 const libEl=$('#library');const curId=()=>S.lid||'default';
 async function libGet(){return (await IDB.get('lib'))||[]}
 function thumbOf(src){return new Promise(r=>{if(!src)return r('');const im=new Image();im.onload=()=>{try{const k=Math.min(1,420/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);let u=c.toDataURL('image/webp',.82);if(u.indexOf('data:image/webp')!==0)u=c.toDataURL('image/png');r(u)}catch(e){r('')}};im.onerror=()=>r('');im.src=src})}
-async function libTouch(){if(!LOCAL||S.locked)return;const l=await libGet(),id=curId();let e=l.find(x=>x.id===id);if(!e){e={id};l.unshift(e)}
-  e.name=S.title||e.name||'Untitled lookbook';e.count=S.items.length;e.updated=Date.now();const f=S.items[0],key=f?f.id+':'+(f.src||'').length:'';
+async function libTouch(){if(!LOCAL||S.locked)return;const l=await libGet(),id=curId();let e=l.find(x=>x.id===id);if(!e){if(!S.items.length&&!S.title)return;e={id};l.unshift(e)}
+  e.name=S.title||(S.items[0]&&S.items[0].fields&&S.items[0].fields.name)||e.name||'Untitled lookbook';e.count=S.items.length;e.updated=Date.now();const f=S.items[0],key=f?f.id+':'+(f.src||'').length:'';
   if(e.ck!==key){e.cover=f?await thumbOf(f.src):'';e.ck=key}await IDB.set('lib',l)}
 async function switchTo(id,d){S.lid=id;KEY='lb:'+id;S.items=(d&&d.items)||[];if(d&&d.brand!=null)S.brand=d.brand;S.title=(d&&d.title)||'Untitled lookbook';S.light=(d&&d.light)||S.light||'studio';applyLight(S.light,false);
   S.mode=S.items.length?'view':'edit';libEl.hidden=true;setAdding(false);render(true);feed.scrollTop=0;await IDB.set('last',id);await libTouch();if(!ed())setTimeout(hint,900)}
@@ -1390,7 +1390,7 @@ function showGate(){const g=$('#gate');$('#gateMsg').textContent='';$('#gateMsg'
 async function tryKey(){const v=$('#gateKey').value,m=$('#gateMsg');m.className='gate-m';m.textContent='Checking…';const d=await verifyKey(v);
   if(!d){m.textContent='That key isn\'t valid. Check you copied all of it, including MP- at the start.';return}
   const k=v.replace(/\s+/g,'');try{localStorage.setItem('mp_key',k)}catch(e){}await IDB.set('mp_key',k);LIC=d;applyLic();
-  m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{const g=$('#gate');g.classList.add('out');if(!S.items.length)S.mode='edit';render(true);setTimeout(()=>{g.hidden=true;g.classList.remove('out')},1100);toast('Motion Pack activated on this device',2200)},700)}
+  m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{const g=$('#gate');g.classList.add('out');if(!S.items.length)S.mode='edit';render(true);setTimeout(()=>{g.hidden=true;g.classList.remove('out');goHome()},1100);toast('Motion Pack activated on this device',2200)},700)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cmd]');if(!b)return;const c=b.dataset.cmd;
   if(c==='gate')showGate();else if(c==='gateok')tryKey();else if(c==='gateclose')$('#gate').hidden=true});
 $('#gateKey').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();tryKey()}});
@@ -1399,7 +1399,7 @@ const licReady=loadLic();
 try{const c=document.createElement('canvas');c.width=c.height=160;const x=c.getContext('2d'),d=x.createImageData(160,160);for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255|0;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}x.putImageData(d,0,0);document.getElementById('grain').style.backgroundImage=`url(${c.toDataURL()})`}catch(e){}
 function intro(){
   const el=document.getElementById('intro');if(!el)return Promise.resolve();
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,b=(S.brand||'').trim(),name=(!b||/^your label$/i.test(b))?'Motion Pack':b;
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,b=(S.brand||'').trim(),name=(S.locked&&b&&!/^your label$/i.test(b))?b:'Motion Pack';
   const nm=$('#inName');nm.insertAdjacentHTML('afterbegin',[...name.toUpperCase()].map((c,i)=>c===' '?'<span class="sp"> </span>':`<span style="--d:${(200+i*90+Math.random()*140)|0}ms">${esc(c)}</span>`).join(''));
   $('#inSub').textContent=name==='Motion Pack'?'Garment Lookbook':'Motion Pack';
   requestAnimationFrame(()=>el.classList.add('go'));
@@ -1408,8 +1408,10 @@ function intro(){
     setTimeout(()=>['pointerdown','keydown','wheel','touchstart'].forEach(t=>addEventListener(t,end,{once:true,passive:true})),500)});
 }
 render(false);
-const loaded=LOCAL&&!S.locked?IDB.get('last').then(l=>{if(l&&!S.items.length&&!S.lid){S.lid=l;KEY='lb:'+l}return IDB.get(KEY)}).then(d=>{if(d&&d.title)S.title=d.title;if(d&&Array.isArray(d.items)&&d.items.length&&(!S.items.length||(d.savedAt||0)>(S.savedAt||0))){const m=S.mode;S.brand=d.brand;S.items=d.items;if(d.light)S.light=d.light;applyLight(S.light,false);S.mode=S.items.length?m:'edit';render(false)}}):Promise.resolve();
-Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC)showGate();else if(!ed())setTimeout(hint,900)});
+if(LOCAL&&!S.locked&&!S.items.length&&!S.lid){S.lid=uid();KEY='lb:'+S.lid}
+const loaded=LOCAL&&!S.locked?IDB.get(KEY).then(d=>{if(d&&d.title)S.title=d.title;if(d&&Array.isArray(d.items)&&d.items.length&&(!S.items.length||(d.savedAt||0)>(S.savedAt||0))){const m=S.mode;S.brand=d.brand;S.items=d.items;if(d.light)S.light=d.light;applyLight(S.light,false);S.mode=S.items.length?m:'edit';render(false)}}):Promise.resolve();
+Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC)showGate();else goHome()});
+async function goHome(){if(LOCAL&&!S.locked&&!S.items.length){const l=await libGet();if(l.length){openLibrary();return}}if(!ed())setTimeout(hint,900)}
 cloud();
 })();
 </script>
