@@ -71,14 +71,20 @@ body.edit [contenteditable]:empty::before{content:attr(data-ph);color:#555;-webk
 
 /* spec panel */
 .spec{position:absolute;z-index:4;left:max(18px,env(safe-area-inset-left));bottom:calc(82px + env(safe-area-inset-bottom));width:min(520px,calc(100vw - 36px))}
-.spec-h{display:flex;align-items:baseline;gap:12px;width:100%;text-align:left;padding:6px 0}
+.spec-h{display:flex;align-items:baseline;gap:12px;width:100%;text-align:left;padding:6px 0;list-style:none;cursor:pointer}
+.spec-h::-webkit-details-marker{display:none}
 .num{font-size:10px;letter-spacing:.22em;color:var(--mute);font-variant-numeric:tabular-nums}
 .nm{flex:1;min-width:0;font-size:clamp(18px,3vw,30px);font-weight:300;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:clip}
 .tog{font-size:15px;color:var(--mute);transition:transform .6s var(--ease)}
-.spec.open .tog{transform:rotate(45deg)}
-.spec dl{max-height:0;opacity:0;overflow:hidden;padding:0 12px;border-radius:3px;background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
-  transition:max-height .7s var(--ease),opacity .5s var(--ease)}
-.spec.open dl{max-height:58vh;opacity:1;overflow:auto;border:1px solid rgba(255,255,255,.12)}
+.spec[open] .tog{transform:rotate(45deg)}
+.spec .body{max-height:min(58vh,520px);overflow:auto;border-radius:4px;background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);animation:drop .45s var(--ease)}
+.spec dl{padding:0 12px}
+.plist{display:none;list-style:none;margin:0;padding:4px 12px 8px;border-top:1px solid var(--hair)}
+.plist li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--hair);font-size:12px;line-height:1.45}
+.plist li:last-child{border-bottom:0}
+.plist b{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--chrome-x);color:#000;font-size:10px;font-weight:700}
+.plist i{display:block;font-style:normal;font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:2px}
+.plist span{color:#cfcfcf;white-space:pre-wrap}
 .row{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--hair);font-size:12px;line-height:1.4}
 .row:last-child{border-bottom:0}
 dt{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);padding-top:2px}
@@ -155,7 +161,7 @@ body.view .e,.ro #modeBtn,.ro .e{display:none}
 html.nojs,html.nojs body{overflow:auto;height:auto}
 html.nojs{scroll-snap-type:y mandatory}
 html.nojs #feed{position:static;overflow:visible}
-html.nojs #dock,html.nojs #hint,html.nojs #toast,html.nojs .st,html.nojs .tog,html.nojs #empty{display:none}
+html.nojs #dock,html.nojs #hint,html.nojs #toast,html.nojs .st,html.nojs #empty{display:none}
 #namer{position:fixed;z-index:8;left:50%;top:calc(58px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:min(440px,calc(100vw - 32px));padding:14px 16px 16px;border-radius:6px;
   background:rgba(12,12,12,.82);-webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 20px 60px rgba(0,0,0,.7);animation:drop .6s var(--ease)}
 #namer[hidden]{display:none}
@@ -219,7 +225,7 @@ body.edit .nm{cursor:text}
 .zt{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 .zl{display:none}
 html.nojs .zl{display:block;position:absolute;inset:0;z-index:1;cursor:zoom-in}
-html.nojs .canvas{transform-origin:50% 50%;transition:transform 1s var(--ease);animation:zo 1s var(--ease)}
+html.nojs .canvas{transform-origin:50% 50%;transition:transform 1s var(--ease)}
 html.nojs .zt:checked~.stage .canvas{transform:scale(2.4);--s:2.4;animation:zi 1s var(--ease)}
 html.nojs .zt:checked~.zl{cursor:zoom-out}
 @keyframes zi{0%{filter:blur(0)}35%{filter:blur(6px)}100%{filter:blur(0)}}
@@ -228,7 +234,37 @@ html.nojs .zt:checked~.zl{cursor:zoom-out}
   html.nojs .frame{animation:flow linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
   @keyframes flow{0%{transform:translateY(8%) scale(.86);opacity:.15;filter:blur(10px)}38%,62%{transform:none;opacity:1;filter:blur(0)}100%{transform:translateY(-8%) scale(.86);opacity:.15;filter:blur(10px)}}
 }
-html.nojs .spec dl{max-height:none;opacity:1;border:1px solid rgba(255,255,255,.12)}
+html.nojs #top{position:absolute}
+/* ---------- phones: numbered dots, details in one tidy place ---------- */
+.psheet{top:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);animation:psup .45s var(--ease)}
+@keyframes psup{from{opacity:0;transform:translate(-50%,16px)}}
+.psheet img{display:block;width:100%;max-height:34vh;object-fit:cover;border-radius:4px;margin-bottom:12px}
+.psheet img[hidden]{display:none}
+.psheet input,.psheet textarea{display:block;width:100%;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.25);color:#fff;font:inherit;outline:none;border-radius:0;padding:8px 0}
+.psheet input{font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.psheet textarea{font-size:14px;line-height:1.5;color:#d8d8d8;resize:none;min-height:70px;margin-top:6px}
+.psheet.ro input,.psheet.ro textarea{border-bottom-color:transparent;pointer-events:none}
+.psheet.ro textarea{min-height:0;field-sizing:content}
+.psheet .row2.e{margin-top:12px}
+@media (max-width:700px),(max-height:500px) and (pointer:coarse){
+  .card,.links{display:none!important}
+  .pt{width:36px;height:36px}
+  .pt::before{content:attr(data-n);width:22px;height:22px;display:grid;place-items:center;font:700 10px/1 var(--f);color:#111}
+  .pt::after{inset:6px}
+  .plist{display:block}
+  .spec{bottom:calc(76px + env(safe-area-inset-bottom,0px));left:12px;width:calc(100vw - 24px)}
+  .spec .body{max-height:48vh}
+  .nm{font-size:20px}
+  .st{left:12px;right:12px;top:calc(50px + env(safe-area-inset-top,0px));max-width:none;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:16px;padding:4px 0}
+  .st::-webkit-scrollbar{display:none}
+  .st button{white-space:nowrap}
+  #dock{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  #dock .z[data-cmd=zin],#dock .z[data-cmd=zout],#dock .sep{display:none}
+  #dock button,#dock label{padding:0 10px;letter-spacing:.14em}
+  .gx{right:12px;bottom:calc(128px + env(safe-area-inset-bottom,0px))}
+  #brand{font-size:11px;letter-spacing:.3em}
+  #hint,#toast{bottom:auto;top:calc(52px + env(safe-area-inset-top,0px));white-space:normal;text-align:center;max-width:calc(100vw - 32px)}
+}
 #file{position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0}
 label[data-cmd]{cursor:pointer}
 #dock label{display:grid;place-items:center;height:36px;padding:0 12px;border-radius:999px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#cfcfcf}
@@ -277,6 +313,13 @@ body.dragging #drop{display:grid}
 <div id="namer" hidden role="dialog" aria-label="Name this piece"><div class="nm-top"><span id="nmCount">Name this piece</span><button data-cmd="nskip">Skip</button></div><input id="nmIn" type="text" placeholder="Name this piece" autocomplete="off" autocapitalize="words" enterkeyhint="next" aria-label="Garment name"><button id="nmNext" data-cmd="nnext">Next</button></div>
 <div id="nav"><button data-cmd="prev" aria-label="Previous piece">&#8593;</button><button data-cmd="next" aria-label="Next piece">&#8595;</button></div>
 <div id="lens" hidden></div>
+<div class="sheet psheet" id="ptSheet" hidden role="dialog" aria-label="Detail">
+  <button class="x" data-cmd="psclose" aria-label="Close">&times;</button>
+  <img id="psImg" alt="" hidden>
+  <input id="psTitle" type="text" placeholder="Title" aria-label="Detail title" autocomplete="off">
+  <textarea id="psText" placeholder="Add a note…" aria-label="Detail note" rows="3"></textarea>
+  <div class="row2 e"><button class="pill" data-cmd="psimg">Image</button><button class="pill" data-cmd="psdel">Remove point</button></div>
+</div>
 <div class="sheet" id="presentP" hidden role="dialog" aria-label="Present">
   <button class="x" data-cmd="pclose" aria-label="Close">&times;</button>
   <div class="grp"><h3>Present</h3><p class="note">Plays your lookbook like a film, full screen, on repeat. Click or press Esc to stop.</p>
@@ -300,6 +343,12 @@ body.dragging #drop{display:grid}
 <div id="drop">Drop garments</div>
 <input type="file" id="file" accept="image/*" multiple aria-label="Choose images">
 <script id="state" type="application/json">{"brand":"Your Label","mode":"edit","items":[]}</script>
+<script>
+/* safety net: never leave a black screen — show what went wrong */
+(function(){var shown=0;function show(msg){try{var i=document.getElementById('intro');if(i)i.remove();if(shown++)return;var d=document.createElement('div');d.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99;max-width:90vw;padding:12px 18px;border-radius:10px;background:#1a1a1a;border:1px solid #555;color:#ddd;font:12px/1.5 system-ui,sans-serif';d.textContent='Something went wrong: '+msg+'  (Press Ctrl+R to reload)';document.body.appendChild(d)}catch(e){}}
+window.addEventListener('error',function(e){show(e.message||'unknown error')});window.addEventListener('unhandledrejection',function(e){show((e.reason&&e.reason.message)||String(e.reason))});
+setTimeout(function(){var i=document.getElementById('intro');if(i&&!i.classList.contains('out')){i.classList.add('out');setTimeout(function(){i.remove()},1500)}},9000)})();
+</script>
 <script id="app">
 (()=>{'use strict';
 document.documentElement.classList.remove('nojs');
@@ -328,7 +377,7 @@ function slideHTML(it,i){
   const rows=FIELDS.map(([k,l])=>{const v=f[k]||'';if(!ed()&&!v)return'';
     return `<div class="row"><dt>${l}</dt><dd data-f="${k}"${ce('—')}>${esc(v)}</dd></div>`}).join('');
   const lines=it.points.map(p=>`<line data-p="${p.id}" x1="${p.x}" y1="${p.y}" x2="${p.cx}" y2="${p.cy}"/>`).join('');
-  const pts=it.points.map(p=>`<button class="pt" data-p="${p.id}" style="left:${p.x}%;top:${p.y}%" aria-label="${esc(p.title||'Detail')}"></button>`+
+  const pts=it.points.map((p,k)=>`<button class="pt" data-p="${p.id}" data-n="${k+1}" style="left:${p.x}%;top:${p.y}%" aria-label="${esc(p.title||'Detail')}"></button>`+
     `<div class="card${p.cx<p.x?' l':''}" data-p="${p.id}" style="left:${p.cx}%;top:${p.cy}%">`+
     (p.img?`<img src="${p.img}" alt="">`:'')+
     `<b class="chrome" data-k="title"${ce('Title')}>${esc(p.title)}</b><p data-k="text"${ce('Add a note…')}>${esc(p.text)}</p>`+
@@ -336,7 +385,7 @@ function slideHTML(it,i){
   return `<section class="slide" data-id="${it.id}"><div class="stage"><div class="canvas"><div class="frame">`+
     `<div class="flip"><img class="g" src="${it.src}" style="--ar:${it.ar||1}" alt="${esc(f.name||'Garment')}" draggable="false"><img class="cw" alt=""><i class="sheen"></i>${it.back?`<img class="bk" src="${it.back}" alt="Back of ${esc(f.name||'garment')}">`:''}</div>`+
     `<svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>${pts}</div></div></div>`+
-    `<aside class="spec${it.open?' open':''}"><button class="spec-h"><span class="num">${pad(i+1)}</span><span class="nm chrome">${esc(f.name||(ed()?'Tap to name':''))}</span>${rows?'<span class="tog">+</span>':''}</button>${rows?`<dl>${rows}</dl>`:''}</aside>`+
+    `<details class="spec"${it.open?' open':''}><summary class="spec-h"><span class="num">${pad(i+1)}</span><span class="nm chrome">${esc(f.name||(ed()?'Tap to name':''))}</span>${rows||it.points.length?'<span class="tog">+</span>':''}</summary>${rows||it.points.length?`<div class="body">${rows?`<dl>${rows}</dl>`:''}${it.points.length?`<ol class="plist">${it.points.map((p,k)=>`<li><b>${k+1}</b><div><i class="chrome">${esc(p.title||'Detail')}</i>${p.text?`<span>${esc(p.text)}</span>`:''}</div></li>`).join('')}</ol>`:''}</div>`:''}</details>`+
     gxHTML(it)+(ed()?`<div class="st"><button data-a="up">Move up</button><button data-a="replace">Replace</button><button data-a="cut">Cut out</button><button data-a="back">${it.back?'Change back':'+ Back'}</button>${it.back?'<button data-a="noback">No back</button>':''}<button data-a="color">+ Colour</button>${(it.ways||[]).length>1?'<button data-a="nocolor">Remove colour</button>':''}<button data-a="remove">Delete</button></div>`:'')+`</section>`;
 }
 function gxHTML(it){const w=it.ways||[];const sw=w.length>1?w.map((x,k)=>`<button class="sw${k===(it.cw||0)?' on':''}" data-a="sw" data-k="${k}" style="--c:${esc(x.hex||'#777')}" title="${esc(x.name||'')}" aria-label="${esc(x.name||'Colour')}"></button>`).join(''):'';
@@ -456,7 +505,7 @@ document.addEventListener('gesturestart',e=>e.preventDefault());
 /* desktop: trackpad pinch / ctrl+wheel, wheel pan, drag pan, double-click */
 feed.addEventListener('wheel',e=>{
   const sec=e.target.closest('.slide');if(!sec)return;const z=getZ(sec),r=sec.getBoundingClientRect();
-  if(e.target.closest('.spec dl,#namer'))return;
+  if(e.target.closest('.spec .body,#namer,.sheet'))return;
   e.preventDefault();if(lensOn){lensK=clamp(lensK*Math.exp(-clamp(e.deltaY,-50,50)*.006),1.6,8);lensAt(e.clientX,e.clientY);return}const k=e.deltaMode?33:1,dy=e.deltaY*k,dx=e.deltaX*k;
   if(!e.ctrlKey&&z.ts>1.001&&Math.abs(dx)>Math.abs(dy)){z.tx-=dx;clampZ(z,r.width,r.height);z.k=.3;zooms.set(sec,z);kick();return}
   if(dy)zoomAt(sec,z.ts*Math.exp(-clamp(dy,-50,50)*.006),e.clientX-r.left,e.clientY-r.top,.3)
@@ -514,16 +563,18 @@ feed.addEventListener('click',e=>{
     else if(act==='up'){const i=S.items.indexOf(it);if(i>0){S.items.splice(i,1);S.items.splice(i-1,0,it);render();feed.scrollTop=(i-1)*feed.clientHeight;toast('Moved up')}}
     else if(act==='remove'){if(!a.classList.contains('arm')){a.classList.add('arm');a.textContent='Tap to confirm';setTimeout(()=>{a.classList.remove('arm');a.textContent='Delete'},3000);return}const i=S.items.indexOf(it);S.items.splice(i,1);drop(it.a);it.points.forEach(q=>drop(q.ia));render();feed.scrollTop=Math.max(0,i-1)*feed.clientHeight;changed()}
     return}
-  if(ed()&&e.target.closest('.nm')){nameQueue([it]);return}
-  if(e.target.closest('.spec-h')){it.open=!it.open;sec.querySelector('.spec').classList.toggle('open',it.open);return}
+  if(ed()&&e.target.closest('.nm')){e.preventDefault();nameQueue([it]);return}
+  if(e.target.closest('.spec-h')){setTimeout(()=>{const d=sec.querySelector('.spec');if(d)it.open=d.open},0);return}
   const pt=e.target.closest('.pt');
+  if(pt&&isPhone()){const p=it.points.find(q=>q.id===pt.dataset.p);if(p)openPtSheet(it,p);return}
   if(pt&&!ed()){sec.querySelectorAll(`.card[data-p="${pt.dataset.p}"],line[data-p="${pt.dataset.p}"]`).forEach(n=>n.classList.toggle('off'));return}
   if(adding&&!skip(e.target)){
     const f=sec.querySelector('.frame').getBoundingClientRect(),x=+((e.clientX-f.left)/f.width*100).toFixed(2),y=+((e.clientY-f.top)/f.height*100).toFixed(2);
     const p={id:uid(),x,y,cx:+(x<55?x+16:x-16).toFixed(2),cy:+(y-7).toFixed(2),title:'Detail',text:'',img:null};
     it.points.push(p);setAdding(false);changed();$('#toast').classList.remove('show');
     const n=rerender(it),b=n&&n.querySelector(`.card[data-p="${p.id}"] b`);
-    if(b){b.focus();const rg=document.createRange();rg.selectNodeContents(b);const s=getSelection();s.removeAllRanges();s.addRange(rg)}
+    if(isPhone()){const np=it.points[it.points.length-1];openPtSheet(it,np);setTimeout(()=>{try{$('#psTitle').focus();$('#psTitle').select()}catch(_){}},80)}
+    else if(b){b.focus();const rg=document.createRange();rg.selectNodeContents(b);const s=getSelection();s.removeAllRanges();s.addRange(rg)}
   }
 });
 
@@ -612,7 +663,7 @@ async function exportFile(opts){opts=opts||{};
   const items=[];for(const it of S.items){const pts=[];for(const p of it.points)pts.push(Object.assign({},p,{ia:null,img:p.img?await toData(p.img):null}));
     const src=await toData(it.src),ways=[];for(const w of it.ways||[])ways.push({id:w.id,name:w.name,hex:w.hex,src:w.src===it.src?'':await toData(w.src)});
     items.push(Object.assign({},it,{a:null,ba:null,src,back:it.back?await toData(it.back):null,ways:ways.length?ways:undefined,points:pts}))}
-  const m0=S.mode;S.mode='view';const pre=items.map((it,i)=>slideHTML(Object.assign({},it,{back:null,ways:null,open:it.open||Object.values(it.fields||{}).some(Boolean)}),i)).join('').replace(/<section class="slide" data-id="([^"]+)">/g,(m,id)=>m+`<input type="checkbox" class="zt" id="zt-${id}" aria-label="Zoom"><label class="zl" for="zt-${id}"></label>`);S.mode=m0;
+  const m0=S.mode;S.mode='view';const pre=items.map((it,i)=>slideHTML(Object.assign({},it,{back:null,ways:null,open:false}),i)).join('').replace(/<section class="slide" data-id="([^"]+)">/g,(m,id)=>m+`<input type="checkbox" class="zt" id="zt-${id}" aria-label="Zoom"><label class="zl" for="zt-${id}"></label>`);S.mode=m0;
   const lean=items.map(it=>Object.assign({},it,{src:'',points:it.points.map(p=>Object.assign({},p,{img:null,pimg:!!p.img}))}));
   const json=JSON.stringify({brand:S.brand,mode:'view',light:S.light||'studio',locked:!!opts.locked||!!S.locked,lid:opts.locked?uid():(S.lid||uid()),savedAt:Date.now(),items:lean}).replace(/</g,'\\u003c');
   const doc=new DOMParser().parseFromString(SRC,'text/html');
@@ -747,6 +798,23 @@ function extAct(act,a,it,sec){
   if(act==='cut'){openCut(it,sec);return true}
   return false;
 }
+
+/* ================= phone detail sheet ================= */
+const phoneMQ=matchMedia('(max-width:700px),(max-height:500px) and (pointer:coarse)');const isPhone=()=>phoneMQ.matches;
+let PS=null;const psEl=$('#ptSheet'),psT=$('#psTitle'),psX=$('#psText'),psI=$('#psImg');
+function openPtSheet(it,p){PS={it,p};psT.value=p.title||'';psX.value=p.text||'';psI.hidden=!p.img;if(p.img)psI.src=p.img;const ro=!ed();psEl.classList.toggle('ro',ro);psT.readOnly=ro;psX.readOnly=ro;psX.hidden=ro&&!p.text;psEl.hidden=false;
+  const sec=secOf(it);if(sec){const z=getZ(sec),dot=sec.querySelector(`.pt[data-p="${p.id}"]`);if(dot&&z.ts<1.6){const r=sec.getBoundingClientRect(),d=dot.getBoundingClientRect();zoomAt(sec,2,d.left+d.width/2-r.left,d.top+d.height/2-r.top,.14)}}}
+function closePtSheet(){psEl.hidden=true;if(PS){const sec=secOf(PS.it);if(sec){const z=Z.get(sec);if(z&&z.ts>1.001)zoomAt(sec,1,0,0,.16)}}PS=null}
+function syncPoint(){if(!PS)return;const {it,p}=PS,sec=secOf(it);if(!sec)return;const k=it.points.indexOf(p);
+  const b=sec.querySelector(`.card[data-p="${p.id}"] b`),tx=sec.querySelector(`.card[data-p="${p.id}"] p`),li=sec.querySelectorAll('.plist li')[k];
+  if(b)b.textContent=p.title;if(tx)tx.textContent=p.text;if(li){li.querySelector('i').textContent=p.title||'Detail';let sp=li.querySelector('span');if(!sp){sp=document.createElement('span');li.lastElementChild.appendChild(sp)}sp.textContent=p.text}}
+psT.addEventListener('input',()=>{if(!PS||!ed())return;PS.p.title=psT.value;syncPoint();changed()});
+psX.addEventListener('input',()=>{if(!PS||!ed())return;PS.p.text=psX.value;syncPoint();changed()});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cmd]');if(!b)return;const c=b.dataset.cmd;
+  if(c==='psclose')closePtSheet();
+  else if(c==='psimg'&&PS){const {it,p}=PS;closePtSheet();pick('insert',it,p)}
+  else if(c==='psdel'&&PS){const {it,p}=PS;closePtSheet();it.points=it.points.filter(q=>q!==p);drop(p.ia);rerender(it);changed()}});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!psEl.hidden){closePtSheet()}});
 
 /* ================= magnifier lens ================= */
 let lensOn=false,lensK=3;const lensEl=$('#lens');
