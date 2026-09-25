@@ -156,6 +156,22 @@ body.measuring [data-a=measure]{color:#ff6b5a}
 .lb-a button:hover,.lb-a button.arm{color:#fff}
 .lib-f{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;max-width:520px}
 .lib-f .pill.big{width:auto;flex:1;min-width:200px}
+/* access lock */
+.gatebtn{display:none}
+.nolic .gatebtn{display:block}
+.nolic .e,.nolic #modeBtn,.nolic [data-cmd=library],.nolic .st,.nolic .lic,.nolic .xbtns{display:none!important}
+#gate{position:fixed;inset:0;z-index:45;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(255,250,242,.1),transparent 70%),#030303;animation:fadein .6s var(--ease)}
+#gate[hidden]{display:none}
+.gate-in{width:min(440px,100%);text-align:center;display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.gate-k{margin:0;font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:#8a8a8a}
+.gate-in h2{margin:0 0 6px;font-size:clamp(36px,9vw,64px);font-weight:200;letter-spacing:.12em;text-transform:uppercase;line-height:1}
+.gate-t{margin:0 0 6px;font-size:13px;line-height:1.55;color:#aaa}
+#gateKey{width:100%;padding:14px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.2);color:#fff;font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:none;outline:none;word-break:break-all}
+#gateKey:focus{border-color:rgba(255,255,255,.55)}
+.gate-m{margin:0;min-height:18px;font-size:12px;color:#ff8a7a}
+.gate-m.ok{color:#9be3a6}
+.gate-f{margin:0;font-size:11px;color:#666}
+.gate-x{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#888;margin-top:4px}
 /* lens */
 #lens{position:fixed;left:0;top:0;z-index:9;width:230px;height:230px;border-radius:50%;pointer-events:none;background-color:#0b0b0b;background-repeat:no-repeat;
   box-shadow:0 0 0 1px rgba(255,255,255,.55),0 0 0 5px rgba(0,0,0,.35),0 0 0 6px rgba(255,255,255,.18),0 24px 60px rgba(0,0,0,.7),inset 0 0 30px rgba(0,0,0,.35)}
@@ -365,11 +381,22 @@ body.dragging #drop{display:grid}
   <button data-cmd="light" title="Lighting (K)">Light</button>
   <button data-cmd="present" title="Present, video and share">&#9654;&#xFE0E; Present</button>
   <button id="modeBtn" data-cmd="mode">Preview</button>
+  <button class="gatebtn" data-cmd="gate" title="Enter your access key">&#128273;&#xFE0E; Unlock</button>
   <button class="z" id="fsBtn" data-cmd="fs" aria-label="Full screen" hidden>&#x2922;</button>
 </nav>
 <div id="namer" hidden role="dialog" aria-label="Name this piece"><div class="nm-top"><span id="nmCount">Name this piece</span><button data-cmd="nskip">Skip</button></div><input id="nmIn" type="text" placeholder="Name this piece" autocomplete="off" autocapitalize="words" enterkeyhint="next" aria-label="Garment name"><button id="nmNext" data-cmd="nnext">Next</button></div>
 <div id="nav"><button data-cmd="prev" aria-label="Previous piece">&#8593;</button><button data-cmd="next" aria-label="Next piece">&#8595;</button></div>
 <div id="lens" hidden></div>
+<div id="gate" hidden role="dialog" aria-label="Private access"><div class="gate-in">
+  <p class="gate-k">Private access</p>
+  <h2 class="chrome">Motion Pack</h2>
+  <p class="gate-t">Enter your access key to create lookbooks, tech packs and videos on this device.</p>
+  <textarea id="gateKey" rows="3" placeholder="Paste your access key (starts with MP-)" aria-label="Access key" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+  <button class="pill big" data-cmd="gateok">Unlock</button>
+  <p class="gate-m" id="gateMsg" aria-live="polite"></p>
+  <p class="gate-f">No key yet? Ask the owner of Motion Pack for one.</p>
+  <button class="gate-x" data-cmd="gateclose" hidden>View only</button>
+</div></div>
 <div class="sheet psheet" id="measP" hidden role="dialog" aria-label="Measurement">
   <h3 id="mTitle">Measurement</h3>
   <input id="mLabel" type="text" placeholder="What is it? e.g. Chest width" aria-label="Measurement name" autocomplete="off">
@@ -394,12 +421,12 @@ body.dragging #drop{display:grid}
   <div class="grp"><h3>Present</h3><p class="note">Plays your lookbook like a film, full screen, on repeat. Click or press Esc to stop.</p>
     <div class="row2"><button class="pill big" data-cmd="play">&#9654;&#xFE0E; Play full screen</button></div></div>
   <div class="grp"><h3>Music</h3><div class="row2"><span class="mname" id="mName">No music</span><button class="pill" data-cmd="music">Choose</button><button class="pill" data-cmd="nomusic" id="noMusic" hidden>Remove</button></div></div>
-  <div class="grp"><h3>Export video</h3><p class="note" id="vNote">Records the film as a video with motion blur and your points. It plays in real time while it records.</p>
+  <div class="grp lic"><h3>Export video</h3><p class="note" id="vNote">Records the film as a video with motion blur and your points. It plays in real time while it records.</p>
     <div class="row2"><button class="pill on" data-fmt="story">Story 9:16</button><button class="pill" data-fmt="square">Square 1:1</button><button class="pill" data-fmt="wide">Wide 16:9</button></div>
     <div class="row2"><button class="pill big" data-cmd="record">&#9679; Record video</button></div></div>
-  <div class="grp"><h3>Share</h3><p class="note">Saves a view-only lookbook that opens with your intro. Viewers can browse, zoom and play it, but not edit.</p>
+  <div class="grp lic"><h3>Share</h3><p class="note">Saves a view-only lookbook that opens with your intro. Viewers can browse, zoom and play it, but not edit.</p>
     <div class="row2"><button class="pill big" data-cmd="share">Save view-only lookbook</button></div></div>
-  <div class="grp"><h3>Tech pack</h3><p class="note">A factory-ready PDF with front and back, numbered details, measurements, size chart and specs.</p>
+  <div class="grp lic"><h3>Tech pack</h3><p class="note">A factory-ready PDF with front and back, numbered details, measurements, size chart and specs.</p>
     <div class="row2"><button class="pill" style="flex:1" data-cmd="tpone">This piece</button><button class="pill" style="flex:1" data-cmd="tpall">Whole lookbook</button></div></div>
 </div>
 <div class="sheet" id="cutP" hidden role="dialog" aria-label="Remove background">
@@ -668,6 +695,7 @@ document.addEventListener('keydown',e=>{
   else if(sec&&(e.key==='+'||e.key==='=')){const z=getZ(sec),r=sec.getBoundingClientRect();zoomAt(sec,z.ts*1.7,r.width/2,r.height/2,.14)}
   else if(sec&&(e.key==='-'||e.key==='_')){const z=getZ(sec),r=sec.getBoundingClientRect();zoomAt(sec,z.ts/1.7,r.width/2,r.height/2,.14)}
   else if((e.key==='f'||e.key==='F')&&!e.ctrlKey&&!e.metaKey)toggleFs();
+  else if(document.documentElement.classList.contains('nolic')&&/^[kK]$/.test(e.key)){}
   else if(e.key==='l'||e.key==='L')setLens(!lensOn);
   else if(e.key==='k'||e.key==='K')cycleLight();
   else if((e.key==='r'||e.key==='R')&&sec)flipSec(sec);
@@ -698,6 +726,7 @@ fileIn.addEventListener('change',async()=>{
   ctx={kind:'add'};fileIn.multiple=true;
 });
 async function addFiles(files){
+  if(document.documentElement.classList.contains('nolic')){showGate();return}
   toast('Adding '+files.length+(files.length>1?' garments':' garment'),1200);
   const start=S.items.length;
   for(const f of files){try{const r=await shrink(f,2400);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{},points:[],open:false})}catch(e){}}
@@ -1340,6 +1369,27 @@ async function importFile(f){
 }
 if(!LOCAL||S.locked)document.querySelectorAll('[data-cmd=library]').forEach(b=>b.hidden=true);
 
+/* ================= access keys (private lock) ================= */
+const PUBJWK={"kty":"EC","x":"vm5tRPRFjyYghDG0B0AGPdcGW3DPMtjEP5NoVEyc1SQ","y":"5kFs3Xfcsy3Bfooy3W1OYCrpLZyCYp707Ze-tblannw","crv":"P-256"};
+const REVOKED=[]; /* add a key's id here to switch that key off in the next update */
+const needLic=LOCAL&&!S.locked;let LIC=null;
+const b64d=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((s.length+3)%4)),c=>c.charCodeAt(0));
+async function verifyKey(k){try{k=String(k||'').replace(/\s+/g,'').replace(/^MP-/i,'');const [pl,sg]=k.split('.');if(!pl||!sg||!crypto.subtle)return null;
+  const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},PUBJWK),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+  if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},key,b64d(sg),new TextEncoder().encode(pl)))return null;
+  const d=JSON.parse(new TextDecoder().decode(b64d(pl)));return REVOKED.includes(d.id)?null:d}catch(e){return null}}
+function applyLic(){const off=needLic&&!LIC;document.documentElement.classList.toggle('nolic',off);if(off){if(S.mode==='edit'&&S.items.length)setMode('view');setAdding(false)}}
+async function loadLic(){if(!needLic)return;let k=null;try{k=localStorage.getItem('mp_key')}catch(e){}if(!k)k=await IDB.get('mp_key');LIC=k?await verifyKey(k):null;applyLic()}
+function showGate(){const g=$('#gate');$('#gateMsg').textContent='';$('#gateMsg').className='gate-m';g.querySelector('.gate-x').hidden=!S.items.length;g.hidden=false;setTimeout(()=>{try{$('#gateKey').focus()}catch(_){}},200)}
+async function tryKey(){const v=$('#gateKey').value,m=$('#gateMsg');m.className='gate-m';m.textContent='Checking…';const d=await verifyKey(v);
+  if(!d){m.textContent='That key isn\'t valid. Check you copied all of it, including MP- at the start.';return}
+  const k=v.replace(/\s+/g,'');try{localStorage.setItem('mp_key',k)}catch(e){}await IDB.set('mp_key',k);LIC=d;applyLic();
+  m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{$('#gate').hidden=true;if(!S.items.length){S.mode='edit';render(true)}toast('Motion Pack unlocked on this device',2200)},700)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cmd]');if(!b)return;const c=b.dataset.cmd;
+  if(c==='gate')showGate();else if(c==='gateok')tryKey();else if(c==='gateclose')$('#gate').hidden=true});
+$('#gateKey').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();tryKey()}});
+const licReady=loadLic();
+
 try{const c=document.createElement('canvas');c.width=c.height=160;const x=c.getContext('2d'),d=x.createImageData(160,160);for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255|0;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}x.putImageData(d,0,0);document.getElementById('grain').style.backgroundImage=`url(${c.toDataURL()})`}catch(e){}
 function intro(){
   const el=document.getElementById('intro');if(!el)return Promise.resolve();
@@ -1353,7 +1403,7 @@ function intro(){
 }
 render(false);
 const loaded=LOCAL&&!S.locked?IDB.get('last').then(l=>{if(l&&!S.items.length&&!S.lid){S.lid=l;KEY='lb:'+l}return IDB.get(KEY)}).then(d=>{if(d&&d.title)S.title=d.title;if(d&&Array.isArray(d.items)&&d.items.length&&(!S.items.length||(d.savedAt||0)>(S.savedAt||0))){const m=S.mode;S.brand=d.brand;S.items=d.items;if(d.light)S.light=d.light;applyLight(S.light,false);S.mode=S.items.length?m:'edit';render(false)}}):Promise.resolve();
-Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(intro).then(()=>{L.tp=1;kick();render(true);if(!ed())setTimeout(hint,900)});
+Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC&&!S.items.length)showGate();else if(!ed())setTimeout(hint,900)});
 cloud();
 })();
 </script>
