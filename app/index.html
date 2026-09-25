@@ -718,6 +718,39 @@ html.inlab #toast,html.inhome #toast{z-index:46}
 .lopt .xn{width:58px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;padding:0 6px;font-size:11px}
 .klist{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:4px 16px}.klist div{display:flex;gap:10px;align-items:baseline;font-size:12px;color:#bbb;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)}.klist kbd{flex:none;min-width:118px;font:inherit;font-size:11px;color:#fff;font-weight:600}
 .lb-ed.nopanels .lpop,.lb-ed.nopanels .ltools,.lb-ed.nopanels .lopt,.lb-ed.nopanels .lstat,.lb-ed.nopanels .lside{display:none}.lb-ed.fs .lbar{display:none}
+#lab .qrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 2px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+#lab .qrow .ql{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#888;margin-right:6px}
+#lab .qrow small{flex-basis:100%;font-size:11px;color:#8a8a8a;margin-top:2px}
+#lab .psets{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+#lab .psets.sm{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));margin:12px 0 4px;max-height:132px;overflow:auto}
+#lab .pset{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:10px;border-radius:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);text-align:left;min-height:44px}
+#lab .pset:hover{border-color:rgba(255,255,255,.45)}
+#lab .pset i{display:block;height:44px;max-width:100%;border:1px solid rgba(255,255,255,.35);border-radius:3px;background:linear-gradient(160deg,#2a2a2d,#161618);margin-bottom:4px}
+#lab .pset i.cust{width:44px;display:grid;place-items:center;font-style:normal;color:#aaa;font-size:18px;border-style:dashed}
+#lab .pset b{font-size:11px;font-weight:600;color:#eee}
+#lab .pset small{font-size:10px;color:#888;font-variant-numeric:tabular-nums}
+#lab .psets.sm .pset{padding:7px 9px;min-height:0}
+#lab .szg{display:grid;grid-template-columns:1fr auto 1fr 1.1fr;gap:8px;align-items:end;margin-top:6px}
+#lab .szg.two{grid-template-columns:1fr auto}
+#lab .szg .lbl{margin:8px 0 0}
+#lab .szg .lbl input,#lab .szg .lbl select{margin-top:4px}
+#lab .szg .lk{align-self:end;height:34px;display:grid;place-items:center;color:#777;font-size:13px}
+#lab .szg .rot{height:34px;align-self:end}
+#lab .szg input:disabled{opacity:.45}
+#lab .csw .szg{grid-template-columns:1fr 1fr 1.1fr}
+#lab .csw{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start}
+#lab .anc{display:grid;grid-template-columns:repeat(3,30px);gap:3px;margin-top:4px}
+#lab .anc button{width:30px;height:30px;border-radius:5px;border:1px solid rgba(255,255,255,.14);color:#bbb;font-size:13px;background:rgba(255,255,255,.03)}
+#lab .anc button.on{background:#fff;color:#000;border-color:#fff}
+#lab .nsinfo{margin-top:14px;padding:11px 13px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#aaa;line-height:1.55;font-variant-numeric:tabular-nums}
+#lab .nsinfo b{color:#fff;font-weight:600}
+#lab .nsinfo .warn{color:#ff9f8a;margin-top:4px}
+#lab .nsinfo .ok{color:#8fd6a0;margin-top:2px}
+#lab .nsinfo .note{color:#8a8a8a;margin-top:4px;font-size:11.5px}
+#lab .lch:disabled{opacity:.35;pointer-events:none}
+#lab .xdim{flex:none;padding:0 8px;height:28px;display:flex;align-items:center;border-radius:7px;background:rgba(255,255,255,.06);color:#fff;font-variant-numeric:tabular-nums}
+#lab .bd.hq{color:#9fe0b0;border-color:rgba(159,224,176,.4)}
+@media (max-width:640px){#lab .szg{grid-template-columns:1fr auto 1fr}#lab .szg>.lbl:last-child{grid-column:1/-1}#lab .szg.two{grid-template-columns:1fr}#lab .csw{grid-template-columns:1fr}#lab .csw .szg{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body class="edit empty">
@@ -1121,11 +1154,12 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ---------- images ---------- */
+const GQ=3600;
 function shrink(file,max){return new Promise((res,rej)=>{
   const url=URL.createObjectURL(file),im=new Image();
   im.onload=()=>{const w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,max/Math.max(w,h)),c=document.createElement('canvas');
     c.width=Math.round(w*k);c.height=Math.round(h*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(url);
-    let d=c.toDataURL('image/webp',.9);if(d.indexOf('data:image/webp')!==0)d=c.toDataURL(file.type==='image/jpeg'?'image/jpeg':'image/png',.92);
+    let d=c.toDataURL('image/webp',max>=GQ?.94:.9);if(d.indexOf('data:image/webp')!==0)d=c.toDataURL(file.type==='image/jpeg'?'image/jpeg':'image/png',.92);
     res({src:d,ar:+(w/h).toFixed(4)})};
   im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('bad image'))};im.src=url;
 })}
@@ -1135,10 +1169,10 @@ fileIn.addEventListener('change',async()=>{
   const files=[...fileIn.files].filter(f=>/^image\//.test(f.type)||/\.(jpe?g|png|webp|gif|avif|heic)$/i.test(f.name));ctx=ctx||{kind:'add'};if(!files.length)return;
   try{
     if(ctx.kind==='add')await addFiles(files);
-    else if(ctx.kind==='replace'){const r=await shrink(files[0],2400);drop(ctx.it.a);ctx.it.a=null;ctx.it.src=r.src;ctx.it.ar=r.ar;if(ctx.it.ways){const w=ctx.it.ways[ctx.it.cw||0];if(w){w.src=r.src;w.a=null;w.hex=await hexOf(r.src)}}rerender(ctx.it);changed()}
-    else if(ctx.kind==='back'){const r=await shrink(files[0],2400);drop(ctx.it.ba);ctx.it.ba=null;ctx.it.back=r.src;const n=rerender(ctx.it);changed();if(n)setTimeout(()=>flipSec(n,true),200)}
+    else if(ctx.kind==='replace'){const r=await shrink(files[0],GQ);drop(ctx.it.a);ctx.it.a=null;ctx.it.src=r.src;ctx.it.ar=r.ar;if(ctx.it.ways){const w=ctx.it.ways[ctx.it.cw||0];if(w){w.src=r.src;w.a=null;w.hex=await hexOf(r.src)}}rerender(ctx.it);changed()}
+    else if(ctx.kind==='back'){const r=await shrink(files[0],GQ);drop(ctx.it.ba);ctx.it.ba=null;ctx.it.back=r.src;const n=rerender(ctx.it);changed();if(n)setTimeout(()=>flipSec(n,true),200)}
     else if(ctx.kind==='color')await addWay(ctx.it,files[0]);
-    else if(ctx.kind==='insert'){const r=await shrink(files[0],1000);drop(ctx.p.ia);ctx.p.ia=null;ctx.p.img=r.src;rerender(ctx.it);changed()}
+    else if(ctx.kind==='insert'){const r=await shrink(files[0],1600);drop(ctx.p.ia);ctx.p.ia=null;ctx.p.img=r.src;rerender(ctx.it);changed()}
   }catch(err){toast('Could not read that image')}
   ctx={kind:'add'};fileIn.multiple=true;
 });
@@ -1146,7 +1180,7 @@ async function addFiles(files){
   if(document.documentElement.classList.contains('nolic')){showGate();return}
   toast('Adding '+files.length+(files.length>1?' garments':' garment'),1200);
   const start=S.items.length;
-  for(const f of files){try{const r=await shrink(f,2400);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{},points:[],open:false})}catch(e){}}
+  for(const f of files){try{const r=await shrink(f,GQ);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{},points:[],open:false})}catch(e){}}
   if(S.items.length===start)return toast('Could not read those images');
   if(!ed())S.mode='edit';render(true);changed();
   nameQueue(S.items.slice(start));if(matchMedia('(pointer:fine)').matches)setTimeout(hint,400);
@@ -1293,7 +1327,7 @@ function hexOf(src){return new Promise(res=>{const im=new Image();im.onload=()=>
   if(!n){for(let o=0;o<d.length;o+=4){if(d[o+3]<200)continue;r+=d[o];g+=d[o+1];b+=d[o+2];n++}}
   n=n||1;res('#'+[r,g,b].map(v=>Math.round(v/n).toString(16).padStart(2,'0')).join(''))}catch(e){res('#777777')}};im.onerror=()=>res('#777777');im.src=src})}
 async function addWay(it,file){
-  const r=await shrink(file,2400);
+  const r=await shrink(file,GQ);
   if(!it.ways||!it.ways.length)it.ways=[{id:uid(),name:(it.fields&&it.fields.color)||'Original',hex:await hexOf(it.src),src:it.src,a:it.a||null}];
   const w={id:uid(),name:'Colour '+(it.ways.length+1),hex:await hexOf(r.src),src:r.src,a:null};it.ways.push(w);
   const k=it.ways.length-1;rerender(it);changed();
@@ -2187,6 +2221,7 @@ function onSlide(sec,prev){
 
 /* ---------- garment shader: fabric ripple, heat shimmer, holographic foil, wind, x-ray ---------- */
 let ripOn=false,G=null;const XR={hold:false,x:.5,y:.5,r:0,pend:null};
+function glMax(){try{return Math.min(4096,(G&&G.gl&&G.gl.getParameter(G.gl.MAX_TEXTURE_SIZE))||2048)}catch(e){return 2048}}
 function glInit(){if(G)return G.ok;G={ok:false};const cv=document.createElement('canvas');cv.className='glc';const gl=cv.getContext('webgl',{premultipliedAlpha:true,alpha:true,antialias:false,preserveDrawingBuffer:false});if(!gl)return false;
   const sh=(t,src)=>{const s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);return s};
   const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,'attribute vec2 p;varying vec2 uv;void main(){uv=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}'));
@@ -2210,7 +2245,7 @@ function glInit(){if(G)return G.ok;G={ok:false};const cv=document.createElement(
   gl.uniform1i(gl.getUniformLocation(pr,'tex'),0);gl.uniform1i(gl.getUniformLocation(pr,'skt'),1);
   const U={};['R','T','asp','uHeat','uFoil','uWind','uMask','uBg','uXr','uFp'].forEach(n=>U[n]=gl.getUniformLocation(pr,n));
   Object.assign(G,{ok:true,cv,gl,tex,skt,U,R:new Float32Array(40),n:0,t0:performance.now(),src:'',sk:'',last:0,lastAdd:0,lx:0,ly:0,bg:{mask:0,rgb:[0,0,0]}});return true}
-function texSrc(img){const k=Math.min(1,2048/Math.max(img.naturalWidth,img.naturalHeight));if(k===1)return img;const c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*k);c.height=Math.round(img.naturalHeight*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c}
+function texSrc(img){const k=Math.min(1,glMax()/Math.max(img.naturalWidth,img.naturalHeight));if(k===1)return img;const c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*k);c.height=Math.round(img.naturalHeight*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c}
 function sketchOf(img){const m=miniOf(img);if(!m)return null;if(m._sk)return m._sk;const w=m.width,h=m.height,x=m.getContext('2d'),d=x.getImageData(0,0,w,h).data,L=new Float32Array(w*h);for(let i=0;i<w*h;i++)L[i]=(d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11)/255;
   const c=document.createElement('canvas');c.width=w;c.height=h;const y=c.getContext('2d'),o=y.createImageData(w,h),q=o.data;
   for(let j=0;j<h;j++)for(let i=0;i<w;i++){const k=j*w+i,g=(i%22===0||j%22===0)?.1:0;let e=0;if(i>0&&j>0&&i<w-1&&j<h-1){const gx=-L[k-w-1]-2*L[k-1]-L[k+w-1]+L[k-w+1]+2*L[k+1]+L[k+w+1],gy=-L[k-w-1]-2*L[k-w]-L[k-w+1]+L[k+w-1]+2*L[k+w]+L[k+w+1];e=Math.min(1,Math.hypot(gx,gy)*2.2)}
@@ -2223,7 +2258,7 @@ function glFrame(sec){if(!glNeed()||!sec||sec.classList.contains('flipped')){glD
   if(cv.parentNode!==img.parentNode){glDetach();img.after(cv)}
   if(G.src!==img.src){G.src=img.src;const ts=texSrc(img);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,G.tex);try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,ts)}catch(e){glDetach();return false}const m=miniOf(img);G.bg=m?bgInfo(m):{mask:0,rgb:[0,0,0]};G.sk=''}
   if((fxOf('xray')||XR.r>0)&&G.sk!==img.src){const s=sketchOf(img);if(s){gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,G.skt);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,s);gl.activeTexture(gl.TEXTURE0);G.sk=img.src}}
-  const z=Z.get(sec),zs=z?Math.min(2.4,z.s):1,k=Math.min(2,devicePixelRatio||1)*zs,w=Math.min(2048,Math.round(img.clientWidth*k)),h=Math.min(2048,Math.round(img.clientHeight*k));if(!w||!h)return false;
+  const z=Z.get(sec),zs=z?Math.min(6,z.s):1,k=Math.min(3,devicePixelRatio||1)*zs,gm=glMax(),w0=img.clientWidth*k,h0=img.clientHeight*k,gk=Math.min(1,gm/Math.max(w0,h0,1)),w=Math.round(w0*gk),h=Math.round(h0*gk);if(!w||!h)return false;
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}
   gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);const T=(performance.now()-G.t0)/1000;
   gl.uniform4fv(U.R,G.R);gl.uniform1f(U.T,T);gl.uniform1f(U.asp,img.clientWidth/img.clientHeight);gl.uniform1f(U.uHeat,fxOf('heat'));gl.uniform1f(U.uFoil,fxOf('foil'));gl.uniform1f(U.uWind,fxOf('wind'));
@@ -2413,7 +2448,13 @@ const mk=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(1,w);
 const cx2=c=>c.getContext('2d');
 const clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
 const lid=()=>Math.random().toString(36).slice(2,10);
-const MAXH=TOUCH?80e6:240e6,MAXL=TOUCH?20:48,PXB=TOUCH?1.4e6:3.4e6;
+const MAXAREA=TOUCH?16.7e6:64e6,MAXSIDE=TOUCH?8192:16384;
+const MEMB=TOUCH?((devicePixelRatio||1)>=2.9?700e6:440e6):Math.min(2.4e9,navigator.deviceMemory?navigator.deviceMemory*3e8:1.6e9);
+const MAXH=TOUCH?120e6:320e6;
+const QUAL=TOUCH?{std:2.4e6,hd:5e6,ultra:Math.min(8.5e6,Math.floor(MEMB/4/14))}:{std:3e6,hd:8e6,ultra:Math.min(MAXAREA,16e6,Math.floor(MEMB/4/14))};
+const layerCap=(w,h)=>Math.max(0,Math.min(TOUCH?60:120,Math.floor(MEMB/(w*h*4))-6));
+let MAXL=20,QK='hd';try{QK=localStorage.getItem('mp_q')||'hd'}catch(e){}if(!QUAL[QK])QK='hd';
+const layerLoad=()=>D.layers.filter(l=>l.type!=='group').length+D.layers.filter(l=>l.so).length;
 let D=null,dirtyComp=true,saveTimer=0;
 const TMP={};
 function T(n){let c=TMP[n];if(!c||c.width!==D.w||c.height!==D.h){c=TMP[n]=mk(D.w,D.h)}return c}
@@ -2489,18 +2530,18 @@ function composite(target,noBg){const x=cx2(target);x.setTransform(1,0,0,1,0,0);
 const V={s:1,r:0,x:0,y:0,fx:1};let rq=0,dpr=1;
 function req(){if(!rq)rq=requestAnimationFrame(draw)}
 const desk=()=>innerWidth>760;
-function fit(){const W=cv.clientWidth,H=cv.clientHeight,l=desk()?84:16,r=desk()&&!popEl.hidden?340:16,t=desk()?104:112,b=desk()?40:84;const s=Math.min((W-l-r)/D.w,(H-t-b)/D.h);V.s=s;V.r=0;V.x=l+(W-l-r)/2;V.y=t+(H-t-b)/2;req();stat()}
+function fit(){const rr=VIEW.rulers?20:0,W=cv.clientWidth,H=cv.clientHeight,l=(desk()?84:16)+rr,r=desk()&&!popEl.hidden?340:16,t=(desk()?104:112)+rr,b=desk()?40:84;const s=Math.min((W-l-r)/D.w,(H-t-b)/D.h);V.s=s;V.r=0;V.x=l+(W-l-r)/2;V.y=t+(H-t-b)/2;req();stat()}
 function toDoc(sx,sy){const dx=sx-V.x,dy=sy-V.y,c=Math.cos(-V.r),s=Math.sin(-V.r);return [(dx*c-dy*s)/V.s*V.fx+D.w/2,(dx*s+dy*c)/V.s+D.h/2]}
 function toScr(x,y){const px=(x-D.w/2)*V.fx*V.s,py=(y-D.h/2)*V.s,c=Math.cos(V.r),s=Math.sin(V.r);return [V.x+px*c-py*s,V.y+px*s+py*c]}
 let checker=null;
-function draw(){rq=0;if(!D||edEl.hidden)return;dpr=Math.min(2,devicePixelRatio||1);const W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
-  if(dirtyComp){composite(T('comp'));dirtyComp=false}
+function draw(){rq=0;if(!D||edEl.hidden)return;dpr=Math.min(3,devicePixelRatio||1);const W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+  if(dirtyComp){composite(T('comp'));dirtyComp=false;compN++}
   const x=vx;x.setTransform(1,0,0,1,0,0);x.fillStyle='#1b1b1d';x.fillRect(0,0,cv.width,cv.height);
   x.setTransform(dpr,0,0,dpr,0,0);x.translate(V.x,V.y);x.rotate(V.r);x.scale(V.s*V.fx,V.s);x.translate(-D.w/2,-D.h/2);
   x.save();x.shadowColor='rgba(0,0,0,.6)';x.shadowBlur=40;x.shadowOffsetY=12;x.fillStyle='#000';x.fillRect(0,0,D.w,D.h);x.restore();
   if(!D.bgOn){if(!checker){const c=mk(16,16),g=c.getContext('2d');g.fillStyle='#e6e6e6';g.fillRect(0,0,16,16);g.fillStyle='#c9c9c9';g.fillRect(0,0,8,8);g.fillRect(8,8,8,8);checker=x.createPattern(c,'repeat')}x.save();x.scale(1/V.s,1/V.s);x.fillStyle=checker;x.fillRect(0,0,D.w*V.s,D.h*V.s);x.restore()}
-  x.imageSmoothingEnabled=V.s<1.8;x.imageSmoothingQuality='high';x.drawImage(T('comp'),0,0);x.imageSmoothingEnabled=true;
-  overlays(x)}
+  {const eff=V.s*dpr;x.imageSmoothingEnabled=!(VIEW.pixels&&eff>=3);x.imageSmoothingQuality='high';x.drawImage(eff<.5?mipFor(eff):T('comp'),0,0,D.w,D.h);x.imageSmoothingEnabled=true;if(VIEW.pixels&&eff>=10)pixGrid(x)}
+  overlays(x);if(VIEW.rulers)rulers(x)}
 const hair=()=>1/V.s;
 let antsT=0;function antsTick(){if(antsT)return;antsT=setTimeout(()=>{antsT=0;if(D&&D.sel&&!edEl.hidden)req()},110)}
 const CUR={x:0,y:0,show:false};
@@ -2514,12 +2555,17 @@ function overlays(x){const h=hair();
   if(XFORM)xfOverlay(x,h);if(CROP)cropOverlay(x,h);
   if(TOOL.t==='clone'&&CLONE.src){const p=ACT==='stroke'&&STROKE&&STROKE.kind==='clone'?[STROKE.last.x+CLONE.off[0],STROKE.last.y+CLONE.off[1]]:CLONE.src;x.save();x.lineWidth=h*1.5;x.strokeStyle='#fff';x.beginPath();x.moveTo(p[0]-12*h,p[1]);x.lineTo(p[0]+12*h,p[1]);x.moveTo(p[0],p[1]-12*h);x.lineTo(p[0],p[1]+12*h);x.stroke();x.strokeStyle='#000';x.beginPath();x.arc(p[0],p[1],6*h,0,7);x.stroke();x.restore()}
   if(CUR.show&&!TOUCH&&['brush','erase','smudge','clone','dodge'].includes(TOOL.t)){const r=Math.max(1,sizeNow()/2);x.save();x.lineWidth=h;x.strokeStyle='rgba(255,255,255,.85)';x.beginPath();x.arc(CUR.x,CUR.y,r,0,7);x.stroke();x.strokeStyle='rgba(0,0,0,.5)';x.beginPath();x.arc(CUR.x,CUR.y,r+h,0,7);x.stroke();x.restore()}}
-const VIEW={grid:false};
+const VIEW={grid:false,pixels:false,rulers:false};try{VIEW.rulers=localStorage.getItem('mp_rul')==='1';VIEW.pixels=localStorage.getItem('mp_pix')==='1'}catch(e){}
+let compN=0;const MIP={n:-1,w:0,h:0,l:[]};
+function half(c){const n=mk(Math.max(1,Math.round(c.width/2)),Math.max(1,Math.round(c.height/2))),x=cx2(n);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(c,0,0,n.width,n.height);return n}
+function mipFor(eff){if(MIP.n!==compN||MIP.w!==D.w||MIP.h!==D.h){MIP.l=[];MIP.n=compN;MIP.w=D.w;MIP.h=D.h}let c=T('comp'),s=1,i=0;while(eff<s*.5&&c.width>64){c=MIP.l[i]||(MIP.l[i]=half(c));s/=2;i++}return c}
+function pixGrid(x){const h=hair(),a=toDoc(0,0),b=toDoc(cv.clientWidth,cv.clientHeight),x0=Math.max(0,Math.floor(Math.min(a[0],b[0]))),x1=Math.min(D.w,Math.ceil(Math.max(a[0],b[0]))),y0=Math.max(0,Math.floor(Math.min(a[1],b[1]))),y1=Math.min(D.h,Math.ceil(Math.max(a[1],b[1])));if((x1-x0)*(y1-y0)>40000)return;x.save();x.strokeStyle='rgba(128,128,128,.35)';x.lineWidth=h;x.beginPath();for(let i=x0;i<=x1;i++){x.moveTo(i,y0);x.lineTo(i,y1)}for(let j=y0;j<=y1;j++){x.moveTo(x0,j);x.lineTo(x1,j)}x.stroke();x.restore()}
 
 /* ---------- history ---------- */
 const H={u:[],r:[],bytes:0};
 const bytesOf=e=>e.k==='px'?(e.b.data.length+e.a.data.length):e.k==='multi'?e.list.reduce((s,z)=>s+bytesOf(z),0):3000;
-function pushH(e,name){if(!e)return;if(name)e.n=name;if(!e.n)e.n=e.k==='px'?'Paint':'Layer change';H.u.push(e);H.bytes+=bytesOf(e);H.r.forEach(z=>H.bytes-=bytesOf(z));H.r=[];while(H.bytes>MAXH&&H.u.length>1)H.bytes-=bytesOf(H.u.shift());refreshPanels();updSide()}
+function soMark(e){if(e.k==='multi'){e.list.forEach(soMark);return}if(e.k==='px'&&!e.m&&e.l){if(!('soA' in e)){e.soB=e.l.so||null;e.soA=null}e.l.so=e.soA}}
+function pushH(e,name){if(!e)return;soMark(e);if(name)e.n=name;if(!e.n)e.n=e.k==='px'?'Paint':'Layer change';H.u.push(e);H.bytes+=bytesOf(e);H.r.forEach(z=>H.bytes-=bytesOf(z));H.r=[];while(H.bytes>MAXH&&H.u.length>1)H.bytes-=bytesOf(H.u.shift());refreshPanels();updSide()}
 const PROPS=['name','vis','op','fillOp','blend','clip','alock','lock','type','t','bi','fx','mask','maskOn','tgt','gid','collapsed'];
 function snapSt(){return {layers:D.layers.map(l=>{const m={};PROPS.forEach(k=>{const v=l[k];m[k]=(k==='t'||k==='bi'||k==='fx')&&v?JSON.parse(JSON.stringify(v)):v});return {l,m}}),cur:D.cur,bg:D.bg,bgOn:D.bgOn}}
 function restSt(s){D.layers=s.layers.map(o=>{const t=o.m.t?JSON.parse(JSON.stringify(o.m.t)):o.m.t;Object.assign(o.l,o.m,{t,bi:o.m.bi?JSON.parse(JSON.stringify(o.m.bi)):null,fx:o.m.fx?JSON.parse(JSON.stringify(o.m.fx)):null});if(o.l.type==='text')renderText(o.l);o.l.v++;o.l.mv++;return o.l});D.cur=s.cur;D.bg=s.bg;D.bgOn=s.bgOn}
@@ -2528,7 +2574,7 @@ function pxEntry(l,m,before,x,y,w,h){const a=grab(m?l.mask:l.cv,x,y,w,h);if(!a)r
 const wholeBefore=(l,m)=>cx2(m?l.mask:l.cv).getImageData(0,0,D.w,D.h);
 const wholeEntry=(l,m,before,n)=>({k:'px',l,m,x:0,y:0,b:before,a:wholeBefore(l,m),n});
 function stOp(fn,name){const b=snapSt();fn();pushH({k:'st',b,a:snapSt()},name);touchAll()}
-function applyE(e,dir){if(e.k==='px'){cx2(e.m?e.l.mask:e.l.cv).putImageData(dir?e.a:e.b,e.x,e.y);if(e.m)e.l.mv++;else e.l.v++}else if(e.k==='st')restSt(dir?e.a:e.b);else if(e.k==='multi')(dir?e.list:[...e.list].reverse()).forEach(z=>applyE(z,dir))}
+function applyE(e,dir){if(e.k==='px'){cx2(e.m?e.l.mask:e.l.cv).putImageData(dir?e.a:e.b,e.x,e.y);if('soA' in e)e.l.so=dir?e.soA:e.soB;if(e.m)e.l.mv++;else e.l.v++}else if(e.k==='st')restSt(dir?e.a:e.b);else if(e.k==='multi')(dir?e.list:[...e.list].reverse()).forEach(z=>applyE(z,dir))}
 function undo(){if(STROKE||XFORM||ADJ)return;const e=H.u.pop();if(!e)return hint('Nothing to undo');applyE(e,false);H.r.push(e);touchAll();hint('Undo: '+e.n)}
 function redo(){if(STROKE||XFORM||ADJ)return;const e=H.r.pop();if(!e)return hint('Nothing to redo');applyE(e,true);H.u.push(e);touchAll();hint('Redo: '+e.n)}
 function histJump(n){while(H.u.length>n)undo();while(H.u.length<n&&H.r.length)redo()}
@@ -2690,7 +2736,7 @@ function xfStart(mode){XFORM=null;XD=null;const ls=xfTargets(),l0=curL();if(!l0)
   const px=ls.filter(x=>x.type!=='text'),tx=ls.filter(x=>x.type==='text');
   if(ls.length===1&&tx.length===1){const l=tx[0],t=l.t,[sx,sy]=tS(t),bb=l.bb||[-50,-20,50,20];XFORM={mode:'free',px:[],tx:[{l,t0:JSON.parse(JSON.stringify(t))}],single:true,c0:[t.x,t.y],r0:t.rot,rect:[bb[0]*sx,bb[1]*sy,bb[2]*sx,bb[3]*sy],tx_:0,ty_:0,sx:1,sy:1,r:0,sb:snapSt()};req();drawOpt();return}
   let bx0=1e9,by0=1e9,bx1=-1e9,by1=-1e9;const snaps=[];
-  for(const l of px){const b=contentBox(l.cv);if(!b)continue;bx0=Math.min(bx0,b[0]);by0=Math.min(by0,b[1]);bx1=Math.max(bx1,b[2]);by1=Math.max(by1,b[3]);const s=mk(D.w,D.h);cx2(s).drawImage(l.cv,0,0);snaps.push({l,snap:s})}
+  for(const l of px){const b=contentBox(l.cv);if(!b)continue;bx0=Math.min(bx0,b[0]);by0=Math.min(by0,b[1]);bx1=Math.max(bx1,b[2]);by1=Math.max(by1,b[3]);if(l.so){snaps.push({l,snap:null,so:l.so});continue}const s=mk(D.w,D.h);cx2(s).drawImage(l.cv,0,0);snaps.push({l,snap:s})}
   for(const l of tx)textCorners(l).forEach(p=>{bx0=Math.min(bx0,p[0]);by0=Math.min(by0,p[1]);bx1=Math.max(bx1,p[0]);by1=Math.max(by1,p[1])});
   if(bx1<bx0){hint('This layer is empty');return}const cx0=(bx0+bx1)/2,cy0=(by0+by1)/2;
   XFORM={mode:'free',px:snaps,tx:tx.map(l=>({l,t0:JSON.parse(JSON.stringify(l.t))})),c0:[cx0,cy0],r0:0,rect:[bx0-cx0,by0-cy0,bx1-cx0,by1-cy0],tx_:0,ty_:0,sx:1,sy:1,r:0,sb:snapSt(),bx:bx0,by:by0,bw:bx1-bx0,bh:by1-by0};
@@ -2716,11 +2762,12 @@ function drawTri(x,img,s0,s1,s2,d0,d1,d2){const [X0,Y0]=s0,[X1,Y1]=s1,[X2,Y2]=s2
   const cxp=(u0+u1+u2)/3,cyp=(v0+v1+v2)/3,ex=p=>{const dx=p[0]-cxp,dy=p[1]-cyp,L2=Math.hypot(dx,dy)||1;return [p[0]+dx/L2*.7,p[1]+dy/L2*.7]};
   x.save();x.beginPath();const q0=ex(d0),q1=ex(d1),q2=ex(d2);x.moveTo(q0[0],q0[1]);x.lineTo(q1[0],q1[1]);x.lineTo(q2[0],q2[1]);x.closePath();x.clip();x.transform(a,b,c,d,e,f);
   const mnx=Math.max(0,Math.floor(Math.min(X0,X1,X2))-2),mny=Math.max(0,Math.floor(Math.min(Y0,Y1,Y2))-2),mxx=Math.min(img.width,Math.ceil(Math.max(X0,X1,X2))+2),mxy=Math.min(img.height,Math.ceil(Math.max(Y0,Y1,Y2))+2);if(mxx>mnx&&mxy>mny)x.drawImage(img,mnx,mny,mxx-mnx,mxy-mny,mnx,mny,mxx-mnx,mxy-mny);x.restore()}
-function meshDraw(x,img,bx,by,bw,bh,map,N){const P=[];for(let j=0;j<=N;j++){const row=[];for(let i=0;i<=N;i++)row.push(map(i/N,j/N));P.push(row)}
-  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const s=(ii,jj)=>[bx+bw*ii/N,by+bh*jj/N],a=s(i,j),b=s(i+1,j),c=s(i+1,j+1),d=s(i,j+1);drawTri(x,img,a,b,c,P[j][i],P[j][i+1],P[j+1][i+1]);drawTri(x,img,a,c,d,P[j][i],P[j+1][i+1],P[j+1][i])}}
-function xfRender(x,X,snap,N){if(X.mode==='free'){const m=xfMat(X);x.save();x.translate(m.C[0],m.C[1]);x.rotate(X.r0+X.r);x.scale(X.sx,X.sy);x.rotate(-X.r0);x.translate(-X.c0[0],-X.c0[1]);x.imageSmoothingQuality='high';x.drawImage(snap,0,0);x.restore()}
-  else{x.save();x.imageSmoothingQuality='high';meshDraw(x,snap,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):warpMap(X.g),N);x.restore()}}
-function xfPreviewFor(l){const o=XFORM.px.find(p=>p.l===l),c=T('xf'),x=cx2(c);x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);xfRender(x,XFORM,o.snap,XFORM.mode==='free'?1:(TOUCH?10:14));return c}
+function meshDraw(x,img,bx,by,bw,bh,map,N,inv){const P=[];for(let j=0;j<=N;j++){const row=[];for(let i=0;i<=N;i++)row.push(map(i/N,j/N));P.push(row)}
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const s=(ii,jj)=>{const px=bx+bw*ii/N,py=by+bh*jj/N;if(!inv)return [px,py];const q=inv.transformPoint(new DOMPoint(px,py));return [q.x,q.y]},a=s(i,j),b=s(i+1,j),c=s(i+1,j+1),d=s(i,j+1);drawTri(x,img,a,b,c,P[j][i],P[j][i+1],P[j+1][i+1]);drawTri(x,img,a,c,d,P[j][i],P[j+1][i+1],P[j+1][i])}}
+function xfM(X){const m=xfMat(X),d=180/Math.PI;return new DOMMatrix().translate(m.C[0],m.C[1]).rotate((X.r0+X.r)*d).scale(X.sx,X.sy).rotate(-X.r0*d).translate(-X.c0[0],-X.c0[1])}
+function xfRender(x,X,o,N){const snap=o.snap;if(X.mode==='free'){const m=xfMat(X);x.save();x.translate(m.C[0],m.C[1]);x.rotate(X.r0+X.r);x.scale(X.sx,X.sy);x.rotate(-X.r0);x.translate(-X.c0[0],-X.c0[1]);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(o.so)drawSo(x,o.so,Math.sqrt(Math.abs(X.sx*X.sy)));else x.drawImage(snap,0,0);x.restore()}
+  else{x.save();x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(o.so){const P=soPick(o.so,soScale(o.so.m));meshDraw(x,P.c,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):warpMap(X.g),N,new DOMMatrix().scale(P.f,P.f).multiply(o.so.m.inverse()))}else meshDraw(x,snap,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):warpMap(X.g),N);x.restore()}}
+function xfPreviewFor(l){const o=XFORM.px.find(p=>p.l===l),c=T('xf'),x=cx2(c);x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);xfRender(x,XFORM,o,XFORM.mode==='free'?1:(TOUCH?10:14));return c}
 function xfHandles(X){if(X.mode==='distort')return {pts:X.q};if(X.mode==='warp')return {pts:X.g,warp:true};const [x0,y0,x1,y1]=X.rect,xm=(x0+x1)/2,ym=(y0+y1)/2,loc=[[x0,y0],[x1,y0],[x1,y1],[x0,y1],[xm,y0],[x1,ym],[xm,y1],[x0,ym]];return {pts:loc.map(([u,v])=>xfP(X,u,v)),loc,C:xfP(X,xm,ym),cl:[xm,ym]}}
 function xfOverlay(x,h){const X=XFORM,H3=xfHandles(X),hs=7*h;x.save();x.lineWidth=h*1.4;x.strokeStyle='rgba(120,170,255,.95)';
   if(H3.warp){const m=warpMap(X.g);for(let k=0;k<=3;k++){x.beginPath();for(let i=0;i<=24;i++){const p=m(i/24,k/3);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke();x.beginPath();for(let i=0;i<=24;i++){const p=m(k/3,i/24);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke()}
@@ -2752,7 +2799,7 @@ function xfMove(p,e){const X=XFORM;if(!X||!XD)return;const dx=p.x-XD.p0[0],dy=p.
     if(prop){if(!XD.side){const wx=ex*st.sx,wy=ey*st.sy,k=(ddx*wx+ddy*wy)/Math.max(1e-9,wx*wx+wy*wy);nsx=st.sx*k;nsy=st.sy*k}else if(Math.abs(ex)>1e-6){const k=nsx/st.sx;nsy=st.sy*k}else{const k=nsy/st.sy;nsx=st.sx*k}}
     const mn=.005;if(Math.abs(nsx)<mn)nsx=mn*Math.sign(nsx||1);if(Math.abs(nsy)<mn)nsy=mn*Math.sign(nsy||1);X.sx=nsx;X.sy=nsy;const px=al[0]*nsx,py=al[1]*nsy;X.tx_=A[0]-X.c0[0]-(px*c-py*s);X.ty_=A[1]-X.c0[1]-(px*s+py*c)}
   if(X.tx.length)xfTextApply(X);dirtyComp=true;req();xfFields()}
-function xfFields(){const X=XFORM;if(!X||X.mode!=='free')return;const f=optEl.querySelector('[data-xn="w"]');if(!f)return;if(document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.xn)return;optEl.querySelector('[data-xn="w"]').value=Math.round(X.sx*1000)/10;optEl.querySelector('[data-xn="h"]').value=Math.round(X.sy*1000)/10;optEl.querySelector('[data-xn="a"]').value=Math.round(X.r*1800/Math.PI)/10}
+function xfFields(){const X=XFORM;if(!X||X.mode!=='free')return;{const xd=optEl.querySelector('[data-xd]');if(xd)xd.textContent=xfDimStr()}const f=optEl.querySelector('[data-xn="w"]');if(!f)return;if(document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.xn)return;optEl.querySelector('[data-xn="w"]').value=Math.round(X.sx*1000)/10;optEl.querySelector('[data-xn="h"]').value=Math.round(X.sy*1000)/10;optEl.querySelector('[data-xn="a"]').value=Math.round(X.r*1800/Math.PI)/10}
 function xfNum(k,v){const X=XFORM;if(!X||X.mode!=='free'||!isFinite(v))return;const C=xfHandles(X).C;if(k==='w'){const n=v/100;if(TOOL.xflink){X.sy=X.sy*n/X.sx}X.sx=n}else if(k==='h'){const n=v/100;if(TOOL.xflink){X.sx=X.sx*n/X.sy}X.sy=n}else if(k==='a')X.r=v*Math.PI/180;
   const cl=xfHandles(Object.assign({},X)).cl,a=X.r0+X.r,c=Math.cos(a),s=Math.sin(a),px=cl[0]*X.sx,py=cl[1]*X.sy;X.tx_=C[0]-X.c0[0]-(px*c-py*s);X.ty_=C[1]-X.c0[1]-(px*s+py*c);if(X.tx.length)xfTextApply(X);dirtyComp=true;req();xfFields()}
 function xfNudge(dx,dy){const X=XFORM;if(!X)return;if(X.mode!=='free'){const pts=X.mode==='distort'?X.q:X.g;pts.forEach(q=>{q[0]+=dx;q[1]+=dy})}else{X.tx_+=dx;X.ty_+=dy;if(X.tx.length)xfTextApply(X)}dirtyComp=true;req()}
@@ -2767,7 +2814,7 @@ function xfOp(op){const X=XFORM;if(!X)return;
   else if(op==='apply'){xfCommit();return}else if(op==='cancel'){xfCancel();return}
   if(X.tx.length)xfTextApply(X);dirtyComp=true;req();drawOpt()}
 function xfCommit(){const X=XFORM;if(!X)return;XFORM=null;XD=null;const moved=X.mode!=='free'||X.tx_||X.ty_||X.sx!==1||X.sy!==1||X.r;
-  if(moved){const list=[];X.px.forEach(o=>{const b=wholeBefore(o.l,false),c=cx2(o.l.cv);c.save();c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,D.w,D.h);xfRender(c,X,o.snap,TOUCH?20:30);c.restore();list.push(wholeEntry(o.l,false,b));o.l.v++});
+  if(moved){const list=[],Rg=xfRegion(X),M=X.mode==='free'?xfM(X):null;X.px.forEach(o=>{const g=grab(o.l.cv,Rg[0],Rg[1],Rg[2],Rg[3]);if(!g)return;const c=cx2(o.l.cv);c.save();c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,D.w,D.h);xfRender(c,X,o,TOUCH?20:30);c.restore();const e=pxEntry(o.l,false,g.d,g.x,g.y,g.d.width,g.d.height);if(e){e.soB=o.l.so||null;e.soA=o.so&&M?Object.assign({},o.so,{m:M.multiply(o.so.m)}):null;list.push(e)}o.l.v++});
     if(X.tx.length)list.push({k:'st',b:X.sb,a:snapSt()});pushH(list.length===1?list[0]:{k:'multi',list},X.mode==='warp'?'Warp':X.mode==='distort'?'Distort':'Free transform')}
   touchAll();drawOpt()}
 function xfCancel(){const X=XFORM;if(!X)return;XFORM=null;XD=null;X.tx.forEach(o=>{o.l.t=o.t0;renderText(o.l)});touchAll();drawOpt()}
@@ -2808,8 +2855,8 @@ function newText(x,y){const n=D.layers.filter(l=>l.type==='text').length+1;let l
 function rasterize(l,silent){if(!l||l.type!=='text')return;stOp(()=>{l.type='px'},'Rasterize text');if(!silent)hint('Text rasterized')}
 
 /* ---------- layer operations ---------- */
-function addLayer(){if(D.layers.length>=MAXL)return hint('Layer limit reached');stOp(()=>{const l=newLayer('Layer '+(D.layers.length+1));insertAbove(l)},'New layer')}
-function dupLayer(l){if(l.type==='group'||(D.lsel&&D.lsel.size)){dupItems(topItems());return}if(D.layers.length>=MAXL)return hint('Layer limit reached');stOp(()=>{const n=newLayer(l.name+' copy',{type:l.type,t:l.t?JSON.parse(JSON.stringify(l.t)):null,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,bi:l.bi?JSON.parse(JSON.stringify(l.bi)):null,fx:l.fx?JSON.parse(JSON.stringify(l.fx)):null,maskOn:l.maskOn});cx2(n.cv).drawImage(l.cv,0,0);if(l.mask){n.mask=mk(D.w,D.h);cx2(n.mask).drawImage(l.mask,0,0)}n.bb=l.bb;D.layers.splice(idxOf(l)+1,0,n);D.cur=n.id},'Duplicate layer');hint('Duplicated')}
+function addLayer(){if(layerLoad()>=MAXL)return limitHint();stOp(()=>{const l=newLayer('Layer '+(D.layers.length+1));insertAbove(l)},'New layer')}
+function dupLayer(l){if(l.type==='group'||(D.lsel&&D.lsel.size)){dupItems(topItems());return}if(layerLoad()>=MAXL)return limitHint();stOp(()=>{const n=newLayer(l.name+' copy',{type:l.type,t:l.t?JSON.parse(JSON.stringify(l.t)):null,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,bi:l.bi?JSON.parse(JSON.stringify(l.bi)):null,fx:l.fx?JSON.parse(JSON.stringify(l.fx)):null,maskOn:l.maskOn});cx2(n.cv).drawImage(l.cv,0,0);if(l.mask){n.mask=mk(D.w,D.h);cx2(n.mask).drawImage(l.mask,0,0)}n.bb=l.bb;n.so=l.so||null;D.layers.splice(idxOf(l)+1,0,n);D.cur=n.id},'Duplicate layer');hint('Duplicated')}
 function delLayer(l){if(l.type==='group'||(D.lsel&&D.lsel.size)){delItems(topItems(),l.type==='group'?'Delete group':'Delete layers');return}if(D.layers.length<=1){clearLayer(l);return}stOp(()=>{const i=idxOf(l);D.layers.splice(i,1);if(D.layers[0])D.layers[0].clip=false;D.cur=(D.layers[Math.max(0,i-1)]||D.layers[0]).id},'Delete layer');if(D.garment===l.id)D.garment=null}
 function clearLayer(l){if(!needPx(l,'Clear'))return;if(l.lock)return hint('This layer is locked');const m=onMask(l);if(l.type==='text'&&!m)rasterize(l,true);const b=wholeBefore(l,m),c=cx2(m?l.mask:l.cv);if(m){c.fillStyle='#000';c.fillRect(0,0,D.w,D.h)}else c.clearRect(0,0,D.w,D.h);pushH(wholeEntry(l,m,b),'Clear');touch(l,m)}
 function flipLayer(l,dir){if(!needPx(l,'Flip'))return;if(l.lock)return;if(l.type==='text'){stOp(()=>{if(dir==='h')l.t.fx=-(l.t.fx||1);else l.t.fy=-(l.t.fy||1)},'Flip');renderText(l);return}const b=wholeBefore(l,false),x=cx2(l.cv),s=cx2(T('backup'));s.globalCompositeOperation='copy';s.drawImage(l.cv,0,0);s.globalCompositeOperation='source-over';x.save();x.clearRect(0,0,D.w,D.h);if(dir==='h'){x.translate(D.w,0);x.scale(-1,1)}else{x.translate(0,D.h);x.scale(1,-1)}x.drawImage(T('backup'),0,0);x.restore();pushH(wholeEntry(l,false,b),dir==='h'?'Flip horizontal':'Flip vertical');touch(l,false)}
@@ -2875,13 +2922,14 @@ function hsl2rgb(h,s,l){if(!s){const v=l*255;return [v,v,v]}const q=l<.5?l*(1+s)
 function histogram(l,m){const d=cx2(m?l.mask:l.cv).getImageData(0,0,D.w,D.h).data,hst=new Uint32Array(256);for(let k=0;k<d.length;k+=16)if(d[k+3])hst[Math.round(lum(d[k],d[k+1],d[k+2]))]++;return hst}
 
 /* ---------- document size / rotate / crop ---------- */
-function resizeDoc(nw,nh,ox,oy,sc,name){nw=Math.max(16,Math.round(nw));nh=Math.max(16,Math.round(nh));if(nw*nh>PXB*1.6)return hint('That size is too large for this device',2600);if(XFORM)xfCommit();
-  const map=(c,bgFill)=>{const n=mk(nw,nh),x=cx2(n);if(bgFill){x.fillStyle=bgFill;x.fillRect(0,0,nw,nh)}x.imageSmoothingQuality='high';x.drawImage(c,ox,oy,c.width*sc,c.height*sc);return n};
-  D.layers.forEach(l=>{if(l.cv)l.cv=map(l.cv);if(l.mask)l.mask=map(l.mask,'#fff');if(l.t){l.t.x=l.t.x*sc+ox;l.t.y=l.t.y*sc+oy;l.t.size*=sc}l.fxc=null;l.mA=null;l.v++;l.mv++});
-  D.w=nw;D.h=nh;D.sel=null;freeTmp();D.layers.forEach(l=>{if(l.type==='text')renderText(l)});H.u=[];H.r=[];H.bytes=0;D.changed=true;dirtyComp=true;fit();touchAll();hint((name||'Canvas size')+' · '+nw+' × '+nh+' (history cleared)',2600)}
-function rotateDoc(dir){const nw=D.h,nh=D.w;const rot=c=>{const n=mk(c.height,c.width),x=cx2(n);x.translate(dir>0?n.width:0,dir>0?0:n.height);x.rotate(dir*Math.PI/2);x.drawImage(c,0,0);return n};
+function resizeDoc(nw,nh,ox,oy,sc,name,ppi){nw=Math.max(1,Math.round(nw));nh=Math.max(1,Math.round(nh));const bad=sizeBad(nw,nh);if(bad)return hint(bad,3400);if(XFORM)xfCommit();
+  const sx=Array.isArray(sc)?sc[0]:sc,sy=Array.isArray(sc)?sc[1]:sc,M=new DOMMatrix([sx,0,0,sy,ox,oy]);
+  const map=(c,bgFill)=>{const n=mk(nw,nh),x=cx2(n);if(bgFill){x.fillStyle=bgFill;x.fillRect(0,0,nw,nh)}x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(sx<.5||sy<.5){let s=c;while(c.width*sx<s.width/2&&c.height*sy<s.height/2&&s.width>2)s=half(s);x.drawImage(s,ox,oy,c.width*sx,c.height*sy)}else x.drawImage(c,ox,oy,c.width*sx,c.height*sy);return n};
+  D.layers.forEach(l=>{if(l.cv){if(l.so&&l.type!=='text'){l.so=Object.assign({},l.so,{m:M.multiply(l.so.m)});const n=mk(nw,nh);drawSo(cx2(n),l.so);l.cv=n}else l.cv=map(l.cv)}if(l.mask)l.mask=map(l.mask,'#fff');if(l.t){l.t.x=l.t.x*sx+ox;l.t.y=l.t.y*sy+oy;l.t.size*=sy;if(Math.abs(sx-sy)>1e-6)l.t.kx=(l.t.kx||1)*sx/sy}l.fxc=null;l.mA=null;l.v++;l.mv++});if(ppi)D.ppi=ppi;MAXL=Math.max(3,layerCap(nw,nh));
+  D.w=nw;D.h=nh;D.sel=null;freeTmp();D.layers.forEach(l=>{if(l.type==='text')renderText(l)});H.u=[];H.r=[];H.bytes=0;D.changed=true;dirtyComp=true;fit();touchAll();hint((name||'Canvas size')+' · '+nw+' × '+nh+' px · '+dimStr(nw,nh)+' (history cleared)',2800)}
+function rotateDoc(dir){const nw=D.h,nh=D.w;const RM=new DOMMatrix().translate(dir>0?nw:0,dir>0?0:nh).rotate(dir*90);D.layers.forEach(l=>{if(l.so)l.so=Object.assign({},l.so,{m:RM.multiply(l.so.m)})});const rot=c=>{const n=mk(c.height,c.width),x=cx2(n);x.translate(dir>0?n.width:0,dir>0?0:n.height);x.rotate(dir*Math.PI/2);x.drawImage(c,0,0);return n};
   D.layers.forEach(l=>{if(l.cv)l.cv=rot(l.cv);if(l.mask)l.mask=rot(l.mask);if(l.t){const ox=l.t.x,oy=l.t.y;if(dir>0){l.t.x=D.h-oy;l.t.y=ox}else{l.t.x=oy;l.t.y=D.w-ox}l.t.rot+=dir*Math.PI/2}l.fxc=null;l.mA=null;l.v++;l.mv++});D.w=nw;D.h=nh;D.sel=null;freeTmp();D.layers.forEach(l=>{if(l.type==='text')renderText(l)});H.u=[];H.r=[];H.bytes=0;D.changed=true;dirtyComp=true;fit();touchAll()}
-function flipDoc(){D.layers.forEach(l=>{if(l.cv){const n=mk(D.w,D.h),x=cx2(n);x.translate(D.w,0);x.scale(-1,1);x.drawImage(l.cv,0,0);l.cv=n}if(l.mask){const m=mk(D.w,D.h),y=cx2(m);y.translate(D.w,0);y.scale(-1,1);y.drawImage(l.mask,0,0);l.mask=m}if(l.t){l.t.x=D.w-l.t.x;l.t.fx=-(l.t.fx||1);renderText(l)}l.fxc=null;l.mA=null;l.v++;l.mv++});D.sel=null;H.u=[];H.r=[];H.bytes=0;D.changed=true;touchAll()}
+function flipDoc(){const FM=new DOMMatrix([-1,0,0,1,D.w,0]);D.layers.forEach(l=>{if(l.so)l.so=Object.assign({},l.so,{m:FM.multiply(l.so.m)});if(l.cv){const n=mk(D.w,D.h),x=cx2(n);x.translate(D.w,0);x.scale(-1,1);x.drawImage(l.cv,0,0);l.cv=n}if(l.mask){const m=mk(D.w,D.h),y=cx2(m);y.translate(D.w,0);y.scale(-1,1);y.drawImage(l.mask,0,0);l.mask=m}if(l.t){l.t.x=D.w-l.t.x;l.t.fx=-(l.t.fx||1);renderText(l)}l.fxc=null;l.mA=null;l.v++;l.mv++});D.sel=null;H.u=[];H.r=[];H.bytes=0;D.changed=true;touchAll()}
 
 /* ---------- mockups ---------- */
 function shadingFrom(img,w,h){const c=mk(w,h),x=cx2(c);x.drawImage(img,0,0,w,h);const d=x.getImageData(0,0,w,h),a=d.data,vals=[];for(let k=0;k<a.length;k+=64)if(a[k+3]>200)vals.push(lum(a[k],a[k+1],a[k+2]));vals.sort((p,q)=>p-q);const hi=Math.max(40,vals[Math.floor(vals.length*.9)]||255);
@@ -2906,7 +2954,7 @@ function groupLayers(){const items=topItems();if(!items.length)return;stOp(()=>{
 function ungroup(g){if(!g||g.type!=='group')return hint('Select a group to ungroup');stOp(()=>{const pg=g.gid||null,lvl=kids(pg),i=lvl.indexOf(g),ch=kids(g.id);ch.forEach(c=>c.gid=pg);const nl=lvl.slice();nl.splice(i,1,...ch);D.layers=D.layers.filter(x=>x!==g);relinearize(new Map([[pg,nl]]));D.cur=(ch[ch.length-1]||D.layers[D.layers.length-1]).id},'Ungroup')}
 function newEmptyGroup(){stOp(()=>{const c=curL(),pg=c?(c.gid||null):null,g=newGroup('Group '+(D.layers.filter(x=>x.type==='group').length+1));g.gid=pg;D.layers.push(g);const lvl=kids(pg).filter(x=>x!==g),i=c?lvl.indexOf(c):lvl.length-1;lvl.splice(i+1,0,g);relinearize(new Map([[pg,lvl]]));D.cur=g.id},'New group')}
 function delItems(items,name){stOp(()=>{const kill=new Set();items.forEach(it=>{kill.add(it);if(it.type==='group')descOf(it).forEach(d=>kill.add(d))});if(kill.size>=D.layers.length){const keep=newLayer('Layer 1');D.layers=[keep];D.cur=keep.id}else{const idx=Math.min(...[...kill].map(k=>idxOf(k)));D.layers=D.layers.filter(x=>!kill.has(x));relinearize();D.cur=(D.layers[Math.max(0,Math.min(idx-1,D.layers.length-1))]||D.layers[0]).id}if(D.garment&&!byId(D.garment))D.garment=null;D.lsel=new Set()},name||'Delete')}
-function cloneItem(l,gid,map){const n=l.type==='group'?newGroup(l.name+' copy'):newLayer(l.name+' copy',{type:l.type});Object.assign(n,{op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,vis:l.vis,maskOn:l.maskOn,collapsed:l.collapsed,gid,t:l.t?JSON.parse(JSON.stringify(l.t)):null,bi:l.bi?JSON.parse(JSON.stringify(l.bi)):null,fx:l.fx?JSON.parse(JSON.stringify(l.fx)):null,bb:l.bb});
+function cloneItem(l,gid,map){const n=l.type==='group'?newGroup(l.name+' copy'):newLayer(l.name+' copy',{type:l.type});Object.assign(n,{op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,vis:l.vis,maskOn:l.maskOn,collapsed:l.collapsed,gid,t:l.t?JSON.parse(JSON.stringify(l.t)):null,bi:l.bi?JSON.parse(JSON.stringify(l.bi)):null,fx:l.fx?JSON.parse(JSON.stringify(l.fx)):null,bb:l.bb,so:l.so||null});
   if(l.cv)cx2(n.cv).drawImage(l.cv,0,0);if(l.mask){n.mask=mk(D.w,D.h);cx2(n.mask).drawImage(l.mask,0,0)}map.set(l.id,n.id);return n}
 function dupItems(items){stOp(()=>{let last=null;items.forEach(it=>{const map=new Map(),pg=it.gid||null,n=cloneItem(it,pg,map),made=[n];if(it.type==='group')descOf(it).forEach(d=>made.push(cloneItem(d,null,map)));made.slice(1).forEach(m=>{});
     if(it.type==='group'){const ds=descOf(it);ds.forEach((d,i)=>{made[i+1].gid=map.get(d.gid)})}D.layers.push(...made);const lvl=kids(pg).filter(x=>x!==n),i=lvl.indexOf(it);lvl.splice(i+1,0,n);relinearize(new Map([[pg,lvl]]));last=n});if(last)D.cur=last.id;D.lsel=new Set()},'Duplicate');hint('Duplicated')}
@@ -2985,13 +3033,13 @@ Object.assign(IC,{crop:'M6 2v16h16M2 6h16v16',zoom:'M10.5 4a6.5 6.5 0 110 13 6.5
 
 /* ---------- top bar + menus ---------- */
 const MENUS={
-  File:[['new','New design…','Ctrl+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a lookbook'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
+  File:[['new','New design…','Ctrl+N'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a lookbook'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
   Edit:[['undo','Undo','Ctrl+Z'],['redo','Redo','Ctrl+Shift+Z'],['undo','Step backward','Ctrl+Alt+Z'],['panel:history','History panel'],['-'],['xf:free','Free transform','Ctrl+T'],['xf:distort','Distort (perspective)'],['xf:warp','Warp'],['xf:fh','Flip horizontal'],['xf:fv','Flip vertical'],['-'],['fillsheet','Fill…','Shift+F5'],['strokesheet','Stroke selection…'],['sa:clear','Clear','Del'],['-'],['keys','Keyboard shortcuts…','?']],
   Image:[['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
   Select:[['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W']],
   Filter:[['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background']],
-  View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
+  View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
   <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
   <span class="fgbg"><button class="fg" data-l="panel:colour" style="--c:${TOOL.color}" title="Foreground colour"></button><button class="bg" data-l="panel:colour2" style="--c:${TOOL.color2}" title="Background colour"></button><button class="sw" data-l="swapcol" title="Swap colours (X) · D = default">${icon('swap')}</button></span>`;
@@ -3009,7 +3057,7 @@ function updSide(){if(!D)return;sideEl.innerHTML=`<div class="vsl" data-vs="size
 function updVs(){const k=sizeKey();sideEl.querySelectorAll('.vsl').forEach(e=>{const isS=e.dataset.vs==='size';const v=isS?s2v(TOOL.size[k]||20):(TOOL.op[k]||1);e.style.setProperty('--v',(v*100).toFixed(1)+'%');e.querySelector('b').textContent=isS?Math.round(TOOL.size[k]||20)+' px':Math.round((TOOL.op[k]||1)*100)+'%'})}
 sideEl.addEventListener('pointerdown',e=>{const vs=e.target.closest('.vsl');if(!vs)return;e.preventDefault();vs.setPointerCapture(e.pointerId);vs.classList.add('act');const set=ev=>{const r=vs.getBoundingClientRect(),v=clampN(1-(ev.clientY-r.top)/r.height,0,1),k=sizeKey();if(vs.dataset.vs==='size')TOOL.size[k]=Math.round(v2s(v));else TOOL.op[k]=Math.max(.01,+v.toFixed(2));updVs();CUR.show=true;CUR.x=D.w/2;CUR.y=D.h/2;req()};set(e);
   const mv=ev=>set(ev),up=()=>{vs.classList.remove('act');vs.removeEventListener('pointermove',mv);vs.removeEventListener('pointerup',up);CUR.show=false;req();drawOpt()};vs.addEventListener('pointermove',mv);vs.addEventListener('pointerup',up)});
-function stat(){if(!D||!statEl)return;const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h}${D.sel?' · selection active':''}`}
+function stat(){if(!D||!statEl)return;const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
 /* ---------- options bar ---------- */
 function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=curL(),ch=(on,a,txt,cls,ti)=>`<button class="ch${on?' on':''}${cls?' '+cls:''}" data-l="${a}"${ti?` title="${ti}"`:''}>${txt}</button>`,sl=(o,label,min,max,val,unit)=>`<label>${label}<input type="range" min="${min}" max="${max}" value="${val}" data-o="${o}"><output>${val}${unit||''}</output></label>`;
@@ -3026,7 +3074,7 @@ function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=
     h+='<span class="osep"></span>'+[['new','New'],['add','Add (Shift)'],['sub','Subtract (Alt)'],['int','Intersect']].map(([a,n])=>ch(TOOL.selMode===a,'smode:'+a,n)).join('');
     if(D.sel)h+='<span class="osep"></span>'+['fill:Fill','clear:Clear','copy:Layer via copy','xform:Move pixels','invert:Invert','crop:Crop','deselect:Deselect'].map(s=>{const [a,n]=s.split(':');return ch(false,'sa:'+a,n,a==='deselect'?'go':'')}).join('')+ch(false,'panel:feather','Feather…')+ch(false,'strokesheet','Stroke…');else h+=ch(false,'sa:all','Select all')+ch(false,'sa:layer','Load layer pixels')}
   else if(t==='move'){h+=ch(TOOL.autosel,'autosel','Auto-select layer','','Click the canvas to pick the layer under the pointer (or Ctrl-click)');if(XFORM){h+='<span class="osep"></span>'+[['free','Free'],['distort','Distort'],['warp','Warp']].map(([a,n])=>ch(XFORM.mode===a,'xf:'+a,n)).join('');
-      if(XFORM.mode==='free')h+=`<span class="osep"></span><label>W<input type="number" step="0.1" data-xn="w" value="${Math.round(XFORM.sx*1000)/10}" class="xn">%</label>${ch(TOOL.xflink,'xflink','🔗','','Link width and height')}<label>H<input type="number" step="0.1" data-xn="h" value="${Math.round(XFORM.sy*1000)/10}" class="xn">%</label><label>∠<input type="number" step="0.1" data-xn="a" value="${Math.round(XFORM.r*1800/Math.PI)/10}" class="xn">°</label>`+ch(TOOL.xffree,'xffree','Free corners','','Corners stretch freely without holding Shift')+['fh:Flip H','fv:Flip V','r90:↻ 90°','r-90:↺ 90°','ch:Centre ↔','cv:Centre ↕','fitw:Fit width','fith:Fit height'].map(s=>{const [a,n]=s.split(':');return ch(false,'xf:'+a,n)}).join('');
+      if(XFORM.mode==='free')h+=`<span class="osep"></span><label>W<input type="number" step="0.1" data-xn="w" value="${Math.round(XFORM.sx*1000)/10}" class="xn">%</label>${ch(TOOL.xflink,'xflink','🔗','','Link width and height')}<label>H<input type="number" step="0.1" data-xn="h" value="${Math.round(XFORM.sy*1000)/10}" class="xn">%</label><label>∠<input type="number" step="0.1" data-xn="a" value="${Math.round(XFORM.r*1800/Math.PI)/10}" class="xn">°</label><span class="xdim" data-xd title="Real size at the document resolution">${xfDimStr()}</span>`+ch(TOOL.xffree,'xffree','Free corners','','Corners stretch freely without holding Shift')+['fh:Flip H','fv:Flip V','r90:↻ 90°','r-90:↺ 90°','ch:Centre ↔','cv:Centre ↕','fitw:Fit width','fith:Fit height'].map(s=>{const [a,n]=s.split(':');return ch(false,'xf:'+a,n)}).join('');
       else h+=`<span class="otip">${XFORM.mode==='warp'?'Drag the dots to bend the layer onto folds':'Drag each corner to set perspective'}</span>`;
       h+=ch(false,'xf:reset','Reset')+ch(false,'xf:cancel','Cancel (Esc)')+ch(false,'xf:apply','✓ Commit (Enter)','go')}else h+=`<span class="otip">Pick a layer with something on it</span>`}
   else if(t==='crop')h+=`<span class="otip">Drag the area to keep</span>`+(CROP?ch(false,'crop:cancel','Cancel (Esc)')+ch(false,'crop:apply','✓ Crop (Enter)','go'):'')+ch(false,'sa:crop','Crop to selection');
@@ -3073,7 +3121,7 @@ function thumb(c,src){const x=c.getContext('2d'),w=c.width,h=c.height,k=Math.min
 function layersHTML(){const l=curL(),sel=selSet(),grp=l&&l.type==='group';
   const top=l?`<div class="lctl"><label>Blend<select data-lblend="${l.id}">${grp?`<option value="pass"${l.blend==='pass'?' selected':''}>Pass through</option>`:''}${BLENDS.map(([k,n])=>`<option value="${k}"${l.blend===k?' selected':''}>${n}</option>`).join('')}</select></label><label>Opacity<input type="range" min="0" max="100" value="${Math.round(l.op*100)}" data-lop="${l.id}"><output>${Math.round(l.op*100)}%</output></label>${grp?'':`<label>Fill<input type="range" min="0" max="100" value="${Math.round(l.fillOp*100)}" data-lfill="${l.id}"><output>${Math.round(l.fillOp*100)}%</output></label>`}
     <div class="lock">Lock: ${grp?'':`<button class="${l.alock?'on':''}" data-l="lm:alock" title="Lock transparent pixels (/) – paint only where there is already paint">▦ Transparency</button>`}<button class="${l.lock?'on':''}" data-l="lm:lock" title="Lock the whole layer">🔒 All</button>${sel.size>1?`<span class="msc">${sel.size} selected</span>`:''}</div></div>`:'';
-  const badge=x=>`${x.clip?'<i class="bd" title="Clipped to the layer below">clip</i>':''}${x.mask?`<i class="bd${x.maskOn?'':' off'}" title="Has a mask">mask</i>`:''}${fxOn(x.fx)?'<i class="bd fx" title="Has layer styles">fx</i>':''}${biOn(x.bi)?'<i class="bd" title="Blend If knock-out">blend if</i>':''}${x.type==='text'?'<i class="bd" title="Editable type">T</i>':''}${x.lock?'<i class="bd" title="Locked">lock</i>':''}${x.alock?'<i class="bd" title="Transparency locked">α</i>':''}`;
+  const badge=x=>`${x.clip?'<i class="bd" title="Clipped to the layer below">clip</i>':''}${x.mask?`<i class="bd${x.maskOn?'':' off'}" title="Has a mask">mask</i>`:''}${fxOn(x.fx)?'<i class="bd fx" title="Has layer styles">fx</i>':''}${biOn(x.bi)?'<i class="bd" title="Blend If knock-out">blend if</i>':''}${x.type==='text'?'<i class="bd" title="Editable type">T</i>':''}${x.so&&x.type!=='text'?'<i class="bd hq" title="Original image kept – resizing and transforms stay sharp">HQ</i>':''}${x.lock?'<i class="bd" title="Locked">lock</i>':''}${x.alock?'<i class="bd" title="Transparency locked">α</i>':''}`;
   const rows=displayList().map(({l:x,d})=>{const isSel=x.id===D.cur,ms=sel.has(x.id)&&!isSel,g=x.type==='group',hid=!effVis(x);
     return `<div class="lyr${isSel?' sel':''}${ms?' msel':''}${x.clip?' clp':''}${hid?' hid':''}${g?' grp':''}" data-ly="${x.id}" style="--d:${d}"><button class="ey" data-l="vis:${x.id}" title="Show / hide (Alt-click = show only this)">${icon(x.vis?'eye':'eyeoff')}</button><span class="hd" data-drag="${x.id}" title="Drag to reorder or drop into a group">⋮⋮</span>`+
       (g?`<button class="gtw" data-l="collapse:${x.id}" title="${x.collapsed?'Expand':'Collapse'}">${x.collapsed?'▸':'▾'}</button><span class="gico${x.tgt!=='mask'?' tg':''}" data-l="${x.mask?'tgt:'+x.id+':px':'noop'}">${icon('folder')}</span>`:`<canvas class="${x.tgt!=='mask'?'tg':''}" data-th="${x.id}" data-l="tgt:${x.id}:px" width="88" height="88" title="Layer pixels (Ctrl-click = load as selection)"></canvas>`)+
@@ -3178,13 +3226,13 @@ function helpSheet(){sheetIn.innerHTML=`<h3>Design Lab guide<button data-l="shee
   <h5>Gestures & shortcuts</h5><p class="pnote">Phone/iPad: pinch to zoom and rotate, two-finger tap = undo, three-finger tap = redo. Computer: scroll to zoom, Space+drag to pan, [ ] brush size, X swap colours, Ctrl+Z undo, Ctrl+J copy selection to layer, Ctrl+T transform, Alt-click to pick a colour (or set clone source).</p>`;sheetEl.hidden=false}
 
 /* ---------- documents ---------- */
-function docDims(ar){let w=Math.sqrt(PXB*ar),h=w/ar;return [Math.round(w),Math.round(h)]}
-function openEditor(){galEl.hidden=true;edEl.hidden=false;H.u=[];H.r=[];H.bytes=0;XFORM=null;STROKE=null;ADJ=null;TOOL.t='brush';CLONE.src=null;CLONE.off=null;PANEL='layers';popEl.hidden=!desk();updBar();drawPanel();requestAnimationFrame(()=>{fit();dirtyComp=true;req()});
+function docDims(ar){const A=QUAL[QK]||QUAL.hd;let w=Math.sqrt(A*ar),h=w/ar;if(w>MAXSIDE){w=MAXSIDE;h=w/ar}if(h>MAXSIDE){h=MAXSIDE;w=h*ar}return [Math.round(w),Math.round(h)]}
+function openEditor(){MAXL=Math.max(3,layerCap(D.w,D.h));MIP.n=-1;galEl.hidden=true;edEl.hidden=false;H.u=[];H.r=[];H.bytes=0;XFORM=null;STROKE=null;ADJ=null;TOOL.t='brush';CLONE.src=null;CLONE.off=null;PANEL='layers';popEl.hidden=!desk();updBar();drawPanel();requestAnimationFrame(()=>{fit();dirtyComp=true;req()});
   if(!localStorage.getItem('mp_labtip2')){try{localStorage.setItem('mp_labtip2','1')}catch(e){}setTimeout(()=>hint('New here? Tap ? (top right) for a guide to every tool',3800),700)}}
-function blankDoc(ar,name){const [w,h]=docDims(ar);D={id:lid(),name:name||'Untitled design',w,h,layers:[],lsel:new Set(),cur:null,bg:'#ffffff',bgOn:true,garment:null,created:Date.now(),changed:true,sel:null};freeTmp();return D}
+function blankDoc(ar,name){const [w,h]=docDims(ar);D={id:lid(),name:name||'Untitled design',w,h,ppi:300,layers:[],lsel:new Set(),cur:null,bg:'#ffffff',bgOn:true,garment:null,created:Date.now(),changed:true,sel:null};freeTmp();return D}
 function newDoc(o){blankDoc(o.ar||.8,o.name);const l=newLayer('Layer 1');D.layers=[l];D.cur=l.id;openEditor();schedSave()}
 async function docFromMockup(img,name){const ar=img.naturalWidth/img.naturalHeight;blankDoc(clampN(ar,.3,3),(name||'Mockup')+' design');D.bg='#ececea';const W=D.w,H2=D.h;
-  const base=newLayer('Mockup (garment)');cx2(base.cv).drawImage(img,0,0,W,H2);const des=newLayer('Design',{clip:true});const sh=newLayer('Fabric shading',{clip:true,blend:'multiply',op:.9});cx2(sh.cv).drawImage(shadingFrom(img,W,H2),0,0);
+  const base=newLayer('Mockup (garment)');{const o=capImg(img,Math.max(W*H2,Math.min(SOMAX,QUAL.ultra)));setSo(base,o,[W/o.width,0,0,H2/o.height,0,0]);drawSo(cx2(base.cv),base.so)}const des=newLayer('Design',{clip:true});const sh=newLayer('Fabric shading',{clip:true,blend:'multiply',op:.9});cx2(sh.cv).drawImage(shadingFrom(img,W,H2),0,0);
   D.layers=[base,des,sh];D.cur=des.id;D.garment=base.id;openEditor();schedSave();setTimeout(()=>hint('Put your art on "Design" – it stays inside the garment and picks up the folds',3800),900)}
 function schedSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{if(STROKE||ACT||STY){schedSave();return}saveDoc()},2400)}
 const toBlobP=(c,t,q)=>new Promise(r=>c.toBlob(b=>r(b),t||'image/png',q));
@@ -3192,18 +3240,18 @@ let saving=false;
 async function saveDoc(force){if(!D||saving||(!D.changed&&!force))return;saving=true;const doc=D;doc.changed=false;
   try{const layers=[];for(const l of doc.layers){const m={id:l.id,name:l.name,type:l.type,vis:l.vis,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,lock:l.lock,maskOn:l.maskOn,tgt:l.tgt,bi:l.bi,fx:l.fx,gid:l.gid||null,collapsed:!!l.collapsed};
       if(l.type==='group'){}else if(l.type==='text'){m.t=l.t;m.bb=l.bb}else{if(!l.blob||l.sv!==l.v){l.sv=l.v;l.blob=await toBlobP(l.cv)}m.blob=l.blob}
-      if(l.mask){if(!l.mblob||l.msv!==l.mv){l.msv=l.mv;l.mblob=await toBlobP(l.mask)}m.mblob=l.mblob}layers.push(m)}
+      if(l.mask){if(!l.mblob||l.msv!==l.mv){l.msv=l.mv;l.mblob=await toBlobP(l.mask)}m.mblob=l.mblob}if(l.so&&l.type!=='text'){if(!l.so.img._blob)l.so.img._blob=await toBlobP(l.so.img,l.so.fmt||'image/png',.95);const q=l.so.m;m.so={m:[q.a,q.b,q.c,q.d,q.e,q.f],blob:l.so.img._blob,fmt:l.so.fmt}}layers.push(m)}
     if(doc!==D){saving=false;return}const c=T('comp');composite(c);const tc=mk(240,300),tx=tc.getContext('2d'),k=Math.min(240/doc.w,300/doc.h);tx.fillStyle='#0c0c0c';tx.fillRect(0,0,240,300);tx.drawImage(c,(240-doc.w*k)/2,(300-doc.h*k)/2,doc.w*k,doc.h*k);const thumbU=tc.toDataURL('image/jpeg',.82);dirtyComp=true;
-    const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU};
+    const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,ppi:doc.ppi||300,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU};
     if(!await IDB.set('des:'+doc.id,rec))toast('Could not save the design, storage may be full',3000);
     const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==doc.id);m.unshift({id:doc.id,name:doc.name,thumb:thumbU,updated:rec.updated,w:doc.w,h:doc.h});await IDB.set('dlib',m)}catch(e){console.error(e);doc.changed=true}saving=false}
 const bmpOf=b=>window.createImageBitmap?createImageBitmap(b):blobImg(b);
 function blobImg(b){return new Promise((res,rej)=>{const i=new Image(),u=URL.createObjectURL(b);i.onload=()=>{res(i);setTimeout(()=>URL.revokeObjectURL(u),1000)};i.onerror=rej;i.src=u})}
 async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('Could not open that design');hint('Opening…');
-  D={id:r.id,name:r.name,w:r.w,h:r.h,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,created:r.created,changed:false,sel:null};freeTmp();
+  D={id:r.id,name:r.name,w:r.w,h:r.h,ppi:r.ppi||300,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,created:r.created,changed:false,sel:null};freeTmp();
   for(const m of r.layers){const l=m.type==='group'?Object.assign(newGroup(m.name),{id:m.id,vis:m.vis,op:m.op,blend:m.blend||'pass',lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',gid:m.gid||null,collapsed:!!m.collapsed}):newLayer(m.name,{gid:m.gid||null,id:m.id,type:m.type,vis:m.vis,op:m.op,fillOp:m.fillOp==null?1:m.fillOp,blend:m.blend,clip:m.clip,alock:m.alock,lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',bi:m.bi||null,fx:m.fx||null});
     if(m.type==='group'){}else if(m.type==='text'){l.t=m.t;l.bb=m.bb}else if(m.blob){try{cx2(l.cv).drawImage(await bmpOf(m.blob),0,0);l.blob=m.blob;l.sv=l.v}catch(e){}}
-    if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';D.layers.push(l)}
+    if(m.so&&m.so.blob){try{const im=await bmpOf(m.so.blob);im._blob=m.so.blob;setSo(l,im,m.so.m,m.so.fmt)}catch(e){}}if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';D.layers.push(l)}
   relinearize();D.lsel=new Set();if(!D.layers.find(l=>l.id===D.cur))D.cur=D.layers[D.layers.length-1].id;
   for(const l of D.layers)if(l.type==='text'){if(!fontReady(l.t.font))await ensureFont(l.t.font);try{await document.fonts.load(`40px ${fontCss(l.t.font)}`)}catch(e){}renderText(l)}
   openEditor()}
@@ -3215,9 +3263,9 @@ async function drawGallery(){const m=(await IDB.get('dlib'))||[];$('#labGrid').i
 const SLOTNAMES=['T-shirt front','T-shirt back','Hoodie front','Hoodie back','Crewneck','Long sleeve','Zip hoodie','Tank top','Shorts','Joggers','Cap','Tote bag'];
 let SLOTS=null;async function getSlots(){if(!SLOTS)SLOTS=(await IDB.get('mslots'))||SLOTNAMES.map(n=>({id:lid(),name:n,blob:null,thumb:null}));return SLOTS}
 const saveSlots=()=>IDB.set('mslots',SLOTS);
-async function templateSheet(){await getSlots();sheetIn.innerHTML=`<h3>New design<button data-l="sheetclose">&times;</button></h3>
+async function templateSheet(){await getSlots();sheetIn.innerHTML=`<h3>New design<button data-l="sheetclose">&times;</button></h3>${qRow()}
   <h5>Your mockups <span class="h5n">Tap an empty slot to add your own mockup image (PNG with a transparent background works best)</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start a design on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}<div class="slot"><button data-l="slotadd"><i class="addslot"><em>＋</em><small>New slot</small></i></button><span>Add a slot</span></div></div>
-  <h5>Blank canvas</h5><div class="tpl">${[['4x5','Portrait 4:5'],['1x1','Square'],['9x16','Story 9:16'],['16x9','Landscape'],['210x297','A4 print']].map(([r,n])=>`<button data-l="blank:${r}"><i style="aspect-ratio:${r.replace('x','/')}">${n.split(' ')[0]}</i><span>${n}</span></button>`).join('')}</div>
+  <h5>Blank canvas <span class="h5n">Real print and screen sizes – tap one to adjust the width, height, units (px, in, cm, mm) and resolution before creating</span></h5><div class="psets">${PRESETS.map((p,i)=>`<button class="pset" data-l="nspre:${i}"><i style="aspect-ratio:${p[1]}/${p[2]}"></i><b>${esc(p[0])}</b><small>${p[1]} × ${p[2]} ${p[3]}</small></button>`).join('')}<button class="pset" data-l="newsize"><i class="cust">＋</i><b>Custom size</b><small>px · in · cm · mm · pt</small></button></div>
   <h5>Start from</h5><div class="rw"><button class="lch" data-l="photo">A photo (one time)</button>${S.items.length?'<button class="lch" data-l="lbnew">A garment from your lookbook</button>':''}</div>`;sheetEl.hidden=false}
 let SLOTPICK=null;
 function slotUpload(id){SLOTPICK=id;importMode='slot';$('#labFile').click()}
@@ -3229,7 +3277,7 @@ function mockSetup(img,name){const k=Math.min(1,640/Math.max(img.naturalWidth,im
   $('#msTol').oninput=e=>{MS.tol=+e.target.value;$('#msTolV').textContent=e.target.value;if(MS.rm){clearTimeout(MS.t);MS.t=setTimeout(msPreview,120)}}}
 function msRender(w,h){const c=mk(w,h),x=cx2(c);x.drawImage(MS.img,0,0,w,h);if(MS.rm){const d=x.getImageData(0,0,w,h);removeBgData(d,w,h,MS.tol);x.putImageData(d,0,0)}return c}
 function msPreview(){const pc=$('#msPrev');if(!pc)return;const x=pc.getContext('2d');x.clearRect(0,0,pc.width,pc.height);x.drawImage(msRender(MS.pw,MS.ph),0,0)}
-async function msSave(go){const k=Math.min(1,Math.sqrt(4e6/(MS.img.naturalWidth*MS.img.naturalHeight))),w=Math.round(MS.img.naturalWidth*k),h=Math.round(MS.img.naturalHeight*k),c=msRender(w,h),blob=await toBlobP(c);
+async function msSave(go){const k=Math.min(1,Math.sqrt(Math.min(SOMAX,QUAL.ultra)/(MS.img.naturalWidth*MS.img.naturalHeight))),w=Math.round(MS.img.naturalWidth*k),h=Math.round(MS.img.naturalHeight*k),c=msRender(w,h),blob=await toBlobP(c);
   const t=mk(200,250),tx=t.getContext('2d'),tk=Math.min(200/w,250/h);tx.fillStyle='#e9e9e7';tx.fillRect(0,0,200,250);tx.drawImage(c,(200-w*tk)/2,(250-h*tk)/2,w*tk,h*tk);
   const s=SLOTS.find(z=>z.id===SLOTPICK);const nm=($('#msName').value||'').trim()||(s&&s.name)||'Mockup';if(s){s.blob=blob;s.thumb=t.toDataURL('image/jpeg',.85);s.name=nm}await saveSlots();sheetEl.hidden=true;
   if(go){const img=await bmpOf(blob);await docFromMockup(img.naturalWidth?img:Object.assign(img,{naturalWidth:img.width,naturalHeight:img.height}),nm)}else{hint('Mockup saved');templateSheet()}}
@@ -3238,23 +3286,166 @@ async function startSlot(id){const s=SLOTS.find(z=>z.id===id);if(!s)return;if(!s
 /* ---------- import / export / send ---------- */
 let importMode='layer';
 function lbPickSheet(){sheetIn.innerHTML=`<h3>Choose a garment<button data-l="sheetclose">&times;</button></h3><div class="tpl" style="margin-top:14px">${S.items.map(it=>`<button data-l="lbitem:${it.id}"><i style="background:#0c0c0c url(${it.src}) center/contain no-repeat"></i><span>${esc((it.fields||{}).name||'Untitled')}</span></button>`).join('')||'<p class="pnote">This lookbook has no garments yet.</p>'}</div>`;sheetEl.hidden=false}
-$('#labFile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const r=await shrink(f,3000),im=await loadIm(r.src),nm=f.name.replace(/\.[^.]+$/,'');
+$('#labFile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const im=await fileIm(f),nm=f.name.replace(/\.[^.]+$/,'');im._fmt=/jpe?g/i.test(f.type)?'image/jpeg':'image/png';
   if(importMode==='slot')mockSetup(im,(SLOTS.find(z=>z.id===SLOTPICK)||{}).name||nm);else await placeImg(im,nm,importMode==='new')}catch(err){toast('Could not open that image')}});
 const loadIm=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
-async function placeImg(im,name,asNew){if(asNew||!D){blankDoc(clampN(im.naturalWidth/im.naturalHeight,.3,3),name||'Photo design');const l=newLayer('Photo');cx2(l.cv).drawImage(im,0,0,D.w,D.h);const d=newLayer('Design');D.layers=[l,d];D.cur=d.id;openEditor();schedSave();return}
-  stOp(()=>{const l=newLayer(name||'Placed image'),k=Math.min(D.w*.8/im.naturalWidth,D.h*.8/im.naturalHeight,1),w=im.naturalWidth*k,h=im.naturalHeight*k;cx2(l.cv).drawImage(im,(D.w-w)/2,(D.h-h)/2,w,h);insertAbove(l)},'Place image');setTool('move');hint('Drag to place it, then tap ✓ Done')}
+async function placeImg(im,name,asNew){if(asNew||!D){blankDoc(clampN(im.naturalWidth/im.naturalHeight,.3,3),name||'Photo design');const l=newLayer('Photo');{const o=capImg(im);setSo(l,o,[D.w/o.width,0,0,D.h/o.height,0,0],im._fmt);drawSo(cx2(l.cv),l.so)}const d=newLayer('Design');D.layers=[l,d];D.cur=d.id;openEditor();schedSave();return}
+  if(layerLoad()+2>MAXL)return limitHint();stOp(()=>{const l=newLayer(name||'Placed image'),k=Math.min(D.w*.8/im.naturalWidth,D.h*.8/im.naturalHeight,1),w=im.naturalWidth*k,h=im.naturalHeight*k,o=capImg(im),q=w/o.width;setSo(l,o,[q,0,0,h/o.height,(D.w-w)/2,(D.h-h)/2],im._fmt);drawSo(cx2(l.cv),l.so);insertAbove(l)},'Place image');setTool('move');hint('Drag to place it, then tap ✓ Done')}
 function flatten(noBg){const c=mk(D.w,D.h);composite(c,noBg);dirtyComp=true;return c}
-async function exportDoc(kind){const c=flatten(kind==='clear');let blob;if(kind==='jpg'){const j=mk(D.w,D.h),x=j.getContext('2d');x.fillStyle=D.bgOn?D.bg:'#ffffff';x.fillRect(0,0,D.w,D.h);x.drawImage(c,0,0);blob=await toBlobP(j,'image/jpeg',.94)}else blob=await toBlobP(c);
+async function exportDoc(kind){const c=flatten(kind==='clear');let blob;if(kind==='jpg'){const j=mk(D.w,D.h),x=j.getContext('2d');x.fillStyle=D.bgOn?D.bg:'#ffffff';x.fillRect(0,0,D.w,D.h);x.drawImage(c,0,0);blob=await toBlobP(j,'image/jpeg',.94)}else blob=await toBlobP(c);blob=await withDpi(blob,kind==='jpg'?'jpg':'png',D.ppi||300);
   const nm=(D.name||'design').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'design';if(await saveBlob(nm+(kind==='jpg'?'.jpg':'.png'),blob))hint('Exported')}
 async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));sheetIn.innerHTML=`<h3>Send to a lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Your design is added as a new garment with a transparent background, so scenes and lighting sit behind it.</p><h5>Lookbooks</h5><div class="tpl">
   <button data-l="sendto:__new"><i>+ New</i><span>New lookbook</span></button>${l.map(b=>`<button data-l="sendto:${esc(b.id)}"><i style="background:#0c0c0c ${b.cover?`url(${b.cover}) center/contain no-repeat`:''}"></i><span>${esc(b.name||'Untitled')}${b.id===(S.lid||'default')?' · current':''}</span></button>`).join('')}${l.length?'':`<button data-l="sendto:__cur"><i>Current</i><span>Current lookbook</span></button>`}</div>`;sheetEl.hidden=false}
 async function sendToLookbook(target){hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
-  try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,2400);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
+  try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
     requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+name+'" added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the design')}}
 $('#labFont').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const buf=await f.arrayBuffer(),n=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+(regular|normal)$/i,'').trim()||'My font';await addFontBuf(n,buf,'Yours',false);FCAT='Yours';TOOL.font=n;if(TEXTEDIT){TEXTEDIT.l.t.font=n;renderText(TEXTEDIT.l)}drawPanel();hint('Font added: '+n)}catch(err){toast('That font file could not be read')}});
-function sizeSheet(kind){const img=kind==='image';sheetIn.innerHTML=`<h3>${img?'Image size':'Canvas size'}<button data-l="sheetclose">&times;</button></h3><p class="pnote">${img?'Scales everything on the canvas.':'Adds or trims space around the design (centred).'} Current: ${D.w} × ${D.h}px. History is cleared after resizing.</p>
-  <div class="rw" style="margin-top:12px"><label class="lbl" style="flex:1">Width<input type="number" id="szW" value="${D.w}" min="16"></label><label class="lbl" style="flex:1">Height<input type="number" id="szH" value="${D.h}" min="16"></label></div>${img?'<label class="ck"><input type="checkbox" id="szLock" checked> Keep proportions</label>':''}<div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="dosize:${kind}">Apply</button></div>`;sheetEl.hidden=false;
-  if(img){const W=$('#szW'),Hh=$('#szH');W.oninput=()=>{if($('#szLock').checked)Hh.value=Math.round(W.value*D.h/D.w)};Hh.oninput=()=>{if($('#szLock').checked)W.value=Math.round(Hh.value*D.w/D.h)}}}
+/* ---------- HD: original-quality images ---------- */
+const SOMAX=TOUCH?8e6:24e6,GMAX=3600;
+function soScale(m){return Math.sqrt(Math.abs(m.a*m.d-m.b*m.c))}
+function soPick(so,sc){const img=so.img,L=img._mips||(img._mips=[]);let c=img,f=1,i=0;while(sc<f*.5&&c.width>32&&c.height>32){c=L[i]||(L[i]=half(c));f/=2;i++}return {c,f}}
+function drawSo(x,so,extra){const m=so.m,P=soPick(so,soScale(m)*(extra||1));x.save();x.transform(m.a,m.b,m.c,m.d,m.e,m.f);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(P.c,0,0,so.img.width,so.img.height);x.restore()}
+function setSo(l,img,m,fmt){l.so={img,m:m instanceof DOMMatrix?m:new DOMMatrix(m),fmt:fmt||'image/png'}}
+function capImg(im,max){const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,k=Math.min(1,Math.sqrt((max||SOMAX)/(w*h))),c=mk(Math.max(1,Math.round(w*k)),Math.max(1,Math.round(h*k))),x=cx2(c);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
+  if(k<.5&&c.width*c.height*4<=MAXAREA){const t=mk(c.width*2,c.height*2),y=cx2(t);y.imageSmoothingQuality='high';y.drawImage(im,0,0,t.width,t.height);x.drawImage(t,0,0,c.width,c.height)}else x.drawImage(im,0,0,c.width,c.height);return c}
+function fileIm(f){return new Promise((res,rej)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>{res(i);setTimeout(()=>URL.revokeObjectURL(u),60000)};i.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('bad image'))};i.src=u})}
+function xfRegion(X){const P=X.mode==='distort'?X.q:X.mode==='warp'?X.g:freePts(X);let x0=X.bx,y0=X.by,x1=X.bx+X.bw,y1=X.by+X.bh;P.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});
+  x0=Math.max(0,Math.floor(x0-4));y0=Math.max(0,Math.floor(y0-4));x1=Math.min(D.w,Math.ceil(x1+4));y1=Math.min(D.h,Math.ceil(y1+4));return [x0,y0,Math.max(1,x1-x0),Math.max(1,y1-y0)]}
+function xfDimStr(){const X=XFORM;if(!X||X.mode!=='free'||!X.rect)return '';const w=(X.rect[2]-X.rect[0])*Math.abs(X.sx),h=(X.rect[3]-X.rect[1])*Math.abs(X.sy);return UNIT==='px'?Math.round(w)+' × '+Math.round(h)+' px':fmtU(w)+' × '+fmtU(h)+' '+UNIT}
+function sizeBad(w,h,n){n=n==null?(D?layerLoad():3):n;if(!(w>=1&&h>=1))return 'Enter a width and height';if(w>MAXSIDE||h>MAXSIDE)return `Too large – this device allows up to ${MAXSIDE.toLocaleString()} px per side`;if(w*h>MAXAREA)return `Too large – this device allows up to ${(MAXAREA/1e6).toFixed(1)} megapixels`;if(layerCap(w,h)<Math.max(3,n))return `Too large for ${Math.max(3,n)} layers on this device – lower the size or resolution`;return ''}
+function limitHint(){hint(`Layer limit for this canvas size on this device (${MAXL}). Merge some layers, or lower the resolution in Image size, to add more`,3800)}
+
+/* ---------- units ---------- */
+const UN={px:['px','Pixels'],in:['in','Inches'],cm:['cm','Centimetres'],mm:['mm','Millimetres'],pt:['pt','Points']};
+const PER={in:1,cm:2.54,mm:25.4,pt:72};
+let UNIT='in';try{UNIT=localStorage.getItem('mp_unit')||'in'}catch(e){}if(!UN[UNIT])UNIT='in';
+const u2px=(v,u,ppi)=>u==='px'?v:v/PER[u]*ppi;
+const px2u=(p,u,ppi)=>u==='px'?p:p/ppi*PER[u];
+const rndU=(v,u)=>u==='px'?Math.round(v):u==='mm'||u==='pt'?Math.round(v*10)/10:Math.round(v*100)/100;
+const fmtU=(p,u,ppi)=>String(rndU(px2u(p,u||UNIT,ppi||(D&&D.ppi)||300),u||UNIT));
+function dimStr(w,h,u){u=u||UNIT;if(u==='px')u='in';const ppi=(D&&D.ppi)||300;return fmtU(w,u,ppi)+' × '+fmtU(h,u,ppi)+' '+u+' @ '+Math.round(ppi)+' ppi'}
+function setUnit(u){if(!UN[u])return;UNIT=u;try{localStorage.setItem('mp_unit',u)}catch(e){}stat();req();if(XFORM)xfFields();hint('Measuring in '+UN[u][1].toLowerCase())}
+const unitOpts=(sel,pct)=>Object.keys(UN).map(u=>`<option value="${u}"${u===sel?' selected':''}>${UN[u][1]}</option>`).join('')+(pct?`<option value="%"${sel==='%'?' selected':''}>Percent</option>`:'');
+function unitSheet(){sheetIn.innerHTML=`<h3>Units &amp; resolution<button data-l="sheetclose">&times;</button></h3><div id="unitSheet"></div>
+  <h5>Measure in</h5><div class="rw">${Object.keys(UN).map(u=>`<button class="lch${UNIT===u?' on':''}" data-l="setunit:${u}">${UN[u][1]}</button>`).join('')}</div>
+  <p class="pnote">Used by the rulers, the status bar, the transform size readout and the size dialogs.</p>
+  ${D?`<h5>This design</h5><p class="pnote" style="color:#ccc">${D.w.toLocaleString()} × ${D.h.toLocaleString()} px · ${dimStr(D.w,D.h)} · up to ${MAXL} layers on this device</p><div class="rw" style="margin-top:10px"><button class="lch" data-l="imgsize">Image size / resolution…</button><button class="lch" data-l="canvas">Canvas size…</button></div>`:''}
+  <h5>View</h5><div class="rw"><button class="lch${VIEW.rulers?' on':''}" data-l="rulers">Rulers (Ctrl+R)</button><button class="lch${VIEW.pixels?' on':''}" data-l="pixels">Sharp pixels when zoomed in</button></div>
+  <p class="pnote">Zoom is smooth and high quality by default. Turn on sharp pixels only for pixel-level retouching (a pixel grid appears past 1000%).</p>`;sheetEl.hidden=false}
+
+/* ---------- quality presets ---------- */
+const QN={std:'Standard',hd:'HD',ultra:'Ultra HD'};
+function qInfo(k){k=k||QK;const A=QUAL[k],w=Math.round(Math.sqrt(A*.8)),h=Math.round(w/.8);return `${w.toLocaleString()} × ${h.toLocaleString()} px for a 4:5 mockup · up to ${layerCap(w,h)} layers on this device`}
+function qRow(){return `<div class="qrow"><span class="ql">Mockup quality</span>${['std','hd','ultra'].map(k=>`<button class="lch${QK===k?' on':''}" data-l="setq:${k}">${QN[k]}</button>`).join('')}<small id="qInfo">${qInfo()}</small></div>`}
+function setQ(k){if(!QUAL[k])return;QK=k;try{localStorage.setItem('mp_q',k)}catch(e){}sheetIn.querySelectorAll('[data-l^="setq:"]').forEach(b=>b.classList.toggle('on',b.dataset.l==='setq:'+k));const i=$('#qInfo');if(i)i.textContent=qInfo()}
+
+/* ---------- new canvas (custom size) ---------- */
+const PRESETS=[['DTG front print',12,16,'in',300],['Full back print',14,18,'in',300],['Left chest',4,4,'in',300],['Sleeve',3.5,14,'in',300],['Hat front',4.5,2.25,'in',300],['Tote bag',12,12,'in',300],['A4',210,297,'mm',300],['A3',297,420,'mm',300],['Instagram post',1080,1350,'px',72],['Story / Reel',1080,1920,'px',72],['Square 3000',3000,3000,'px',300]];
+let NS=null;
+function newSizeSheet(o){o=o||{};const u=o.u||UNIT;NS={name:o.name||'Untitled design',w:o.w||(u==='px'?3000:rndU(12*PER[u],u)),h:o.h||(u==='px'?3750:rndU(16*PER[u],u)),u,ppi:o.ppi||300,bg:'white'};nsDraw()}
+function nsPreset(i){const p=PRESETS[i];if(p)newSizeSheet({name:p[0],w:p[1],h:p[2],u:p[3],ppi:p[4]})}
+const nsPx=()=>[Math.round(u2px(NS.w,NS.u,NS.ppi)),Math.round(u2px(NS.h,NS.u,NS.ppi))];
+function nsDraw(){sheetIn.innerHTML=`<h3>New canvas<button data-l="sheetclose">&times;</button></h3>
+  <div class="psets sm">${PRESETS.map((p,i)=>`<button class="pset" data-l="nspre:${i}"><b>${esc(p[0])}</b><small>${p[1]} × ${p[2]} ${p[3]}</small></button>`).join('')}</div>
+  <label class="lbl">Name<input type="text" id="nsName" value="${esc(NS.name)}" maxlength="60"></label>
+  <div class="szg"><label class="lbl">Width<input type="number" id="nsW" step="any" min="0" value="${NS.w}"></label><button class="lch rot" data-l="nsrot" title="Swap width and height">⇄</button><label class="lbl">Height<input type="number" id="nsH" step="any" min="0" value="${NS.h}"></label><label class="lbl">Units<select id="nsU">${unitOpts(NS.u)}</select></label></div>
+  <div class="szg two"><label class="lbl">Resolution (pixels per inch)<input type="number" id="nsP" step="any" min="1" value="${NS.ppi}"></label><div class="rw">${[72,150,300].map(v=>`<button class="lch${NS.ppi===v?' on':''}" data-l="nsppi:${v}">${v} ppi</button>`).join('')}</div></div>
+  <h5>Background</h5><div class="rw">${[['white','White'],['clear','Transparent'],['black','Black']].map(([k,n])=>`<button class="lch${NS.bg===k?' on':''}" data-l="nsbg:${k}">${n}</button>`).join('')}</div>
+  <div class="nsinfo" id="nsInfo"></div>
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="new">Back</button><button class="lch pri" data-l="nscreate" id="nsGo">Create</button></div>`;sheetEl.hidden=false;
+  const W=$('#nsW'),H2=$('#nsH'),P=$('#nsP'),U=$('#nsU');
+  W.oninput=()=>{NS.w=+W.value;nsInfo()};H2.oninput=()=>{NS.h=+H2.value;nsInfo()};P.oninput=()=>{NS.ppi=+P.value;nsInfo()};$('#nsName').oninput=e=>{NS.name=e.target.value};
+  U.onchange=()=>{const [pw,ph]=nsPx(),u=U.value;NS.u=u;NS.w=rndU(px2u(pw,u,NS.ppi),u);NS.h=rndU(px2u(ph,u,NS.ppi),u);W.value=NS.w;H2.value=NS.h;nsInfo()};nsInfo()}
+function nsInfo(){const el=$('#nsInfo');if(!el)return;const [pw,ph]=nsPx(),bad=sizeBad(pw,ph,3),phys=NS.u==='px'?`${fmtU(pw,'in',NS.ppi)} × ${fmtU(ph,'in',NS.ppi)} in at ${Math.round(NS.ppi)} ppi`:`${Math.round(NS.ppi)} ppi`;
+  let t=`<div><b>${pw>0?pw.toLocaleString():'–'} × ${ph>0?ph.toLocaleString():'–'} px</b> · ${pw>0&&ph>0?(pw*ph/1e6).toFixed(1):'0'} MP · ${phys}</div>`;
+  if(bad)t+=`<div class="warn">${bad}</div>${pw>0&&ph>0?'<button class="lch" data-l="nsfit" style="margin-top:8px">Fit to this device</button>':''}`;else t+=`<div class="ok">Up to ${layerCap(pw,ph)} layers on this device</div>`;
+  if(!bad&&NS.u!=='px'&&NS.ppi<150)t+=`<div class="note">Under 150 ppi can look soft when printed – 300 ppi is the print standard.</div>`;
+  el.innerHTML=t;const g=$('#nsGo');if(g)g.disabled=!!bad}
+function nsFit(){const [pw,ph]=nsPx();if(!(pw>0&&ph>0))return;const A=Math.min(MAXAREA,MEMB/4/14),k=Math.min(1,Math.sqrt(A/(pw*ph)),MAXSIDE/pw,MAXSIDE/ph)*.995;
+  if(NS.u==='px'){NS.w=Math.floor(NS.w*k);NS.h=Math.floor(NS.h*k)}else NS.ppi=Math.max(1,Math.floor(NS.ppi*k));nsDraw();hint(NS.u==='px'?'Size reduced to fit this device':'Resolution lowered to '+NS.ppi+' ppi to fit this device – the print size is unchanged',3000)}
+function nsRot(){const w=NS.w;NS.w=NS.h;NS.h=w;nsDraw()}
+function nsCreate(){const [pw,ph]=nsPx(),bad=sizeBad(pw,ph,3);if(bad)return hint(bad,3000);const nm=(($('#nsName')||{}).value||'').trim()||'Untitled design';sheetEl.hidden=true;
+  D={id:lid(),name:nm,w:pw,h:ph,ppi:NS.ppi,layers:[],lsel:new Set(),cur:null,bg:NS.bg==='black'?'#000000':'#ffffff',bgOn:NS.bg!=='clear',garment:null,created:Date.now(),changed:true,sel:null};freeTmp();
+  const l=newLayer('Layer 1');D.layers=[l];D.cur=l.id;openEditor();schedSave();setTimeout(()=>hint(`${pw.toLocaleString()} × ${ph.toLocaleString()} px · ${dimStr(pw,ph,NS.u==='px'?'in':NS.u)}`,3000),600)}
+
+/* ---------- image size ---------- */
+let IS=null,CS=null;
+function sizeSheet(kind){if(XFORM)xfCommit();if(kind==='image')isDraw();else{CS={w:D.w,h:D.h,u:UNIT,rel:false,anc:4};csDraw()}}
+function isDraw(){IS={pw:D.w,ph:D.h,ppi:D.ppi||300,u:UNIT,rs:true,link:true};sheetIn.innerHTML=`<h3>Image size<button data-l="sheetclose">&times;</button></h3>
+  <p class="pnote">Now: ${D.w.toLocaleString()} × ${D.h.toLocaleString()} px · ${dimStr(D.w,D.h,UNIT==='px'?'in':UNIT)}. Turn Resample off to change only the print size / resolution without changing any pixels.</p>
+  <div class="szg"><label class="lbl">Width<input type="number" id="isW" step="any" min="0"></label><span class="lk">🔗</span><label class="lbl">Height<input type="number" id="isH" step="any" min="0"></label><label class="lbl">Units<select id="isU">${unitOpts(IS.u,true)}</select></label></div>
+  <div class="szg two"><label class="lbl">Resolution (pixels per inch)<input type="number" id="isP" step="any" min="1"></label><div class="rw">${[72,150,300].map(v=>`<button class="lch" data-l="isppi:${v}">${v} ppi</button>`).join('')}</div></div>
+  <label class="ck"><input type="checkbox" id="isLk" checked> Keep proportions</label><label class="ck"><input type="checkbox" id="isRs" checked> Resample (change the number of pixels)</label>
+  <div class="nsinfo" id="isInfo"></div>
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="dosize:image" id="isGo">Apply</button></div>`;sheetEl.hidden=false;
+  const W=$('#isW'),H2=$('#isH'),P=$('#isP'),U=$('#isU'),Lk=$('#isLk'),Rs=$('#isRs');
+  const val=(id)=>{const v=+$(id).value;return v>0?v:null};
+  W.oninput=()=>{const v=val('#isW');if(!v)return;if(IS.rs){IS.pw=IS.u==='%'?D.w*v/100:u2px(v,IS.u,IS.ppi);if(IS.link)IS.ph=IS.pw*D.h/D.w}else if(IS.u!=='px'&&IS.u!=='%')IS.ppi=D.w/(v/PER[IS.u]);isFields('isW')};
+  H2.oninput=()=>{const v=val('#isH');if(!v)return;if(IS.rs){IS.ph=IS.u==='%'?D.h*v/100:u2px(v,IS.u,IS.ppi);if(IS.link)IS.pw=IS.ph*D.w/D.h}else if(IS.u!=='px'&&IS.u!=='%')IS.ppi=D.h/(v/PER[IS.u]);isFields('isH')};
+  P.oninput=()=>{const v=val('#isP');if(v)isPpi(v,'isP')};U.onchange=()=>{IS.u=U.value;isFields()};
+  Lk.onchange=()=>{IS.link=Lk.checked;if(IS.link)IS.ph=IS.pw*D.h/D.w;isFields()};Rs.onchange=()=>{IS.rs=Rs.checked;if(!IS.rs){IS.pw=D.w;IS.ph=D.h;Lk.checked=true;IS.link=true}Lk.disabled=!IS.rs;isFields()};isFields()}
+function isPpi(v,skip){if(IS.rs&&IS.u!=='px'&&IS.u!=='%'){const k=v/IS.ppi;IS.pw*=k;IS.ph*=k}IS.ppi=v;isFields(skip)}
+function isSetPpi(v){if(IS)isPpi(v)}
+function isFields(skip){const f=(p,full)=>IS.u==='%'?Math.round(p/full*1000)/10:rndU(px2u(p,IS.u,IS.ppi),IS.u);
+  if(skip!=='isW')$('#isW').value=f(IS.pw,D.w);if(skip!=='isH')$('#isH').value=f(IS.ph,D.h);if(skip!=='isP')$('#isP').value=Math.round(IS.ppi*100)/100;
+  const lockPx=!IS.rs&&(IS.u==='px'||IS.u==='%');$('#isW').disabled=lockPx;$('#isH').disabled=lockPx;
+  const pw=Math.round(IS.pw),ph=Math.round(IS.ph),same=pw===D.w&&ph===D.h,bad=same?'':sizeBad(pw,ph);
+  let t=`<div><b>${pw.toLocaleString()} × ${ph.toLocaleString()} px</b>${same?' (pixels unchanged)':` · was ${D.w.toLocaleString()} × ${D.h.toLocaleString()}`} · ${fmtU(pw,'in',IS.ppi)} × ${fmtU(ph,'in',IS.ppi)} in at ${Math.round(IS.ppi)} ppi</div>`;
+  if(bad)t+=`<div class="warn">${bad}</div>`;else if(!same&&(pw>D.w||ph>D.h))t+=`<div class="note">Enlarging: placed images and mockups are redrawn from their originals so they stay sharp; painted layers are smoothly enlarged.</div>`;
+  if(!same&&!bad)t+=`<div class="note">Undo history is cleared after resampling.</div>`;
+  $('#isInfo').innerHTML=t;$('#isGo').disabled=!!bad}
+function isApply(){if(!IS)return;const pw=Math.round(IS.pw),ph=Math.round(IS.ph),ppi=Math.round(IS.ppi*100)/100;sheetEl.hidden=true;
+  if(pw===D.w&&ph===D.h){D.ppi=ppi;D.changed=true;schedSave();stat();hint('Resolution '+Math.round(ppi)+' ppi · prints at '+dimStr(D.w,D.h,UNIT==='px'?'in':UNIT),3000);return}
+  resizeDoc(pw,ph,0,0,[pw/D.w,ph/D.h],'Image size',ppi)}
+
+/* ---------- canvas size ---------- */
+const ARW={'-1,-1':'↖','0,-1':'↑','1,-1':'↗','-1,0':'←','1,0':'→','-1,1':'↙','0,1':'↓','1,1':'↘'};
+function csDraw(){const ac=CS.anc%3,ar=Math.floor(CS.anc/3);sheetIn.innerHTML=`<h3>Canvas size<button data-l="sheetclose">&times;</button></h3>
+  <p class="pnote">Adds or trims space around the design without scaling it. Now: ${D.w.toLocaleString()} × ${D.h.toLocaleString()} px · ${dimStr(D.w,D.h,UNIT==='px'?'in':UNIT)}.</p>
+  <div class="csw"><div><div class="szg"><label class="lbl">Width<input type="number" id="csW" step="any"></label><label class="lbl">Height<input type="number" id="csH" step="any"></label><label class="lbl">Units<select id="csU">${unitOpts(CS.u,true)}</select></label></div>
+  <label class="ck"><input type="checkbox" id="csRel"${CS.rel?' checked':''}> Relative (add to the current size)</label></div>
+  <div><span class="lbl">Anchor</span><div class="anc">${[0,1,2,3,4,5,6,7,8].map(i=>{const c=i%3,r=Math.floor(i/3);return `<button class="${i===CS.anc?'on':''}" data-l="csanc:${i}" title="Keep the design here">${i===CS.anc?'●':(ARW[(c-ac)+','+(r-ar)]||'')}</button>`}).join('')}</div></div></div>
+  <div class="nsinfo" id="csInfo"></div>
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="dosize:canvas" id="csGo">Apply</button></div>`;sheetEl.hidden=false;
+  const W=$('#csW'),H2=$('#csH'),U=$('#csU'),Rl=$('#csRel'),ppi=D.ppi||300;
+  const toP=(v,full)=>CS.u==='%'?full*v/100:u2px(v,CS.u,ppi);
+  W.oninput=()=>{const v=+W.value;if(!isFinite(v))return;CS.w=CS.rel?D.w+toP(v,D.w):toP(v,D.w);csFields('csW')};H2.oninput=()=>{const v=+H2.value;if(!isFinite(v))return;CS.h=CS.rel?D.h+toP(v,D.h):toP(v,D.h);csFields('csH')};
+  U.onchange=()=>{CS.u=U.value;csFields()};Rl.onchange=()=>{CS.rel=Rl.checked;csFields()};csFields()}
+function csFields(skip){const ppi=D.ppi||300,f=(p,full)=>{const v=CS.rel?p-full:p;return CS.u==='%'?Math.round(v/full*1000)/10:rndU(px2u(v,CS.u,ppi),CS.u)};
+  if(skip!=='csW')$('#csW').value=f(CS.w,D.w);if(skip!=='csH')$('#csH').value=f(CS.h,D.h);
+  const w=Math.round(CS.w),h=Math.round(CS.h),bad=w===D.w&&h===D.h?'':sizeBad(w,h);
+  $('#csInfo').innerHTML=`<div><b>${w.toLocaleString()} × ${h.toLocaleString()} px</b> · ${fmtU(w,'in',ppi)} × ${fmtU(h,'in',ppi)} in at ${Math.round(ppi)} ppi</div>`+(bad?`<div class="warn">${bad}</div>`:w<D.w||h<D.h?'<div class="note">Smaller than now – parts of the design outside the new edges are trimmed.</div>':'');$('#csGo').disabled=!!bad}
+function csApply(){if(!CS)return;const nw=Math.round(CS.w),nh=Math.round(CS.h);if(!(nw>=1&&nh>=1))return hint('Enter a width and height');sheetEl.hidden=true;if(nw===D.w&&nh===D.h)return;const ac=CS.anc%3,ar=Math.floor(CS.anc/3);
+  resizeDoc(nw,nh,ac===0?0:ac===1?Math.round((nw-D.w)/2):nw-D.w,ar===0?0:ar===1?Math.round((nh-D.h)/2):nh-D.h,1,'Canvas size')}
+
+/* ---------- rulers ---------- */
+function niceStep(min,u){const L=u==='in'?[1/16,1/8,1/4,1/2,1,2,5,10,20,50,100,200,500]:[];if(L.length){for(const s of L)if(s>=min)return s;return L[L.length-1]}const p=Math.pow(10,Math.floor(Math.log10(Math.max(min,1e-6))));for(const m of [1,2,5,10])if(m*p>=min)return m*p;return 10*p}
+function subdiv(px,u,step){const C=u==='in'&&step>=1?[8,4,2,1]:u==='in'?[4,2,1]:[10,5,2,1];for(const n of C)if(px/n>=5)return n;return 1}
+const rLbl=v=>{const r=Math.round(v*1000)/1000;return String(Math.abs(r)<1e-9?0:r)};
+function rulers(x){if(!D||Math.abs(V.r)>1e-4||V.fx<0)return;const cr=cv.getBoundingClientRect(),o=optEl.getBoundingClientRect(),dk=desk(),tl=toolsEl.getBoundingClientRect();
+  const T0=Math.max(0,(o.height?o.bottom:cr.top+46)-cr.top),L0=dk?Math.max(0,tl.right-cr.left):0,W=cv.clientWidth,Hb=dk?cv.clientHeight:Math.max(T0+40,tl.top-cr.top),RW=18;
+  const u=UNIT,ppi=D.ppi||300,up=u==='px'?1:u2px(1,u,ppi),spu=up*V.s,step=niceStep(64/spu,u),sub=subdiv(step*spu,u,step),O=toScr(0,0),E=toScr(D.w,D.h);
+  x.save();x.setTransform(dpr,0,0,dpr,0,0);x.fillStyle='rgba(18,18,20,.94)';x.fillRect(L0,T0,W-L0,RW);x.fillRect(L0,T0,RW,Hb-T0);
+  x.fillStyle='rgba(255,255,255,.07)';{const a=Math.max(L0+RW,O[0]),b=Math.min(W,E[0]);if(b>a)x.fillRect(a,T0,b-a,RW);const c=Math.max(T0+RW,O[1]),d=Math.min(Hb,E[1]);if(d>c)x.fillRect(L0,c,RW,d-c)}
+  x.strokeStyle='rgba(255,255,255,.38)';x.lineWidth=1;x.fillStyle='#a3a3a3';x.font='9px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';x.textBaseline='alphabetic';
+  x.beginPath();const lab=[];
+  {const a=(L0+RW-O[0])/spu,b=(W-O[0])/spu;for(let i=Math.floor(a/step);i<=Math.ceil(b/step);i++)for(let k=0;k<sub;k++){const v=(i+k/sub)*step,s=Math.round(O[0]+v*spu)+.5;if(s<L0+RW||s>W)continue;const len=k===0?RW:(sub%2===0&&k===sub/2)?RW*.5:RW*.28;x.moveTo(s,T0+RW-len);x.lineTo(s,T0+RW);if(k===0)lab.push([0,s,v])}}
+  {const a=(T0+RW-O[1])/spu,b=(Hb-O[1])/spu;for(let i=Math.floor(a/step);i<=Math.ceil(b/step);i++)for(let k=0;k<sub;k++){const v=(i+k/sub)*step,s=Math.round(O[1]+v*spu)+.5;if(s<T0+RW||s>Hb)continue;const len=k===0?RW:(sub%2===0&&k===sub/2)?RW*.5:RW*.28;x.moveTo(L0+RW-len,s);x.lineTo(L0+RW,s);if(k===0)lab.push([1,s,v])}}
+  x.stroke();lab.forEach(([d,s,v])=>{if(d===0)x.fillText(rLbl(v),s+3,T0+9);else{x.save();x.translate(L0+9,s+3);x.rotate(-Math.PI/2);x.textAlign='right';x.fillText(rLbl(v),0,0);x.restore()}});
+  x.strokeStyle='rgba(255,255,255,.14)';x.beginPath();x.moveTo(L0+RW,T0+RW+.5);x.lineTo(W,T0+RW+.5);x.moveTo(L0+RW+.5,T0+RW);x.lineTo(L0+RW+.5,Hb);x.stroke();
+  if(CUR.show&&!TOUCH){const c=toScr(CUR.x,CUR.y);x.strokeStyle='#7aa8ff';x.beginPath();x.moveTo(Math.round(c[0])+.5,T0);x.lineTo(Math.round(c[0])+.5,T0+RW);x.moveTo(L0,Math.round(c[1])+.5);x.lineTo(L0+RW,Math.round(c[1])+.5);x.stroke()}
+  x.fillStyle='rgba(28,28,31,1)';x.fillRect(L0,T0,RW,RW);x.fillStyle='#ddd';x.textAlign='center';x.font='600 8.5px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';x.fillText(u,L0+RW/2,T0+12);x.restore()}
+
+/* ---------- export with print resolution (DPI) ---------- */
+const CRCT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRCT[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+async function withDpi(blob,kind,ppi){try{ppi=Math.max(1,Math.min(65535,Math.round(ppi||300)));const b=new Uint8Array(await blob.arrayBuffer());let out;
+  if(kind==='png'){if(b[12]!==0x49||b[13]!==0x48||b[14]!==0x44||b[15]!==0x52)return blob;const ppm=Math.round(ppi/.0254),ch=new Uint8Array(21),dv=new DataView(ch.buffer);dv.setUint32(0,9);ch.set([0x70,0x48,0x59,0x73],4);dv.setUint32(8,ppm);dv.setUint32(12,ppm);ch[16]=1;dv.setUint32(17,crc32(ch.subarray(4,17)));
+    let p=8;while(p+8<=b.length){const len=((b[p]<<24)|(b[p+1]<<16)|(b[p+2]<<8)|b[p+3])>>>0,t=String.fromCharCode(b[p+4],b[p+5],b[p+6],b[p+7]);if(t==='pHYs'){out=new Uint8Array(b.length-len-12+21);out.set(b.subarray(0,p));out.set(ch,p);out.set(b.subarray(p+12+len),p+21);break}if(t==='IDAT'||t==='IEND')break;p+=12+len}
+    if(!out){out=new Uint8Array(b.length+21);out.set(b.subarray(0,33));out.set(ch,33);out.set(b.subarray(33),54)}}
+  else{if(b[0]!==0xFF||b[1]!==0xD8)return blob;if(b[2]===0xFF&&b[3]===0xE0&&b[6]===0x4A&&b[7]===0x46&&b[8]===0x49&&b[9]===0x46){out=b.slice();out[13]=1;out[14]=ppi>>8&255;out[15]=ppi&255;out[16]=ppi>>8&255;out[17]=ppi&255}
+    else{const app=new Uint8Array([0xFF,0xE0,0,16,0x4A,0x46,0x49,0x46,0,1,1,1,ppi>>8&255,ppi&255,ppi>>8&255,ppi&255,0,0]);out=new Uint8Array(b.length+18);out.set(b.subarray(0,2));out.set(app,2);out.set(b.subarray(2),20)}}
+  return new Blob([out],{type:blob.type})}catch(e){return blob}}
 
 /* ---------- click actions ---------- */
 function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
@@ -3281,6 +3472,9 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'swapcol':{const c=TOOL.color;TOOL.color=TOOL.color2;TOOL.color2=c;refreshSwatch();if(PANEL==='colour')drawPanel();break}
     case'sym':TOOL.sym=!TOOL.sym;drawOpt();req();hint(TOOL.sym?'Symmetry on: strokes mirror across the centre':'Symmetry off');break;
     case'grid':VIEW.grid=!VIEW.grid;req();break;
+    case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
+    case'pixels':VIEW.pixels=!VIEW.pixels;try{localStorage.setItem('mp_pix',VIEW.pixels?'1':'0')}catch(e){}req();hint(VIEW.pixels?'Sharp pixels when zoomed in (for pixel-level work)':'Smooth, high-quality zoom');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
+    case'units':unitSheet();break;case'setunit':setUnit(v);if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;case'newsize':closeMenu();newSizeSheet();break;case'nspre':nsPreset(+v);break;case'nsfit':nsFit();break;case'nsbg':NS.bg=v;nsDraw();break;case'nsrot':nsRot();break;case'nsppi':NS.ppi=+v;nsDraw();break;case'nscreate':nsCreate();break;case'setq':setQ(v);break;case'csanc':CS.anc=+v;csDraw();break;case'isppi':isSetPpi(+v);break;
     case'br':{const t=TOOL.t;if(t==='erase')TOOL.ebrush=v;else if(t==='smudge')TOOL.sbrush=v;else if(t==='clone')TOOL.cbrush=v;else if(t==='dodge')TOOL.dbrush=v;else{TOOL.brush=v;if(t!=='brush')setTool('brush')}openPanel('layers');drawOpt();break}
     case'fm':TOOL.fm=v;drawOpt();break;case'allL':TOOL.all=!TOOL.all;drawOpt();break;case'contig':TOOL.contig=!TOOL.contig;drawOpt();break;
     case'fillfg':if(l)fillLayer(l,TOOL.color,l.alock,'Fill layer');break;
@@ -3315,7 +3509,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'save':saveDoc(true).then(()=>hint('Saved'));break;
     case'dupdoc':(async()=>{await saveDoc(true);const r=await IDB.get('des:'+D.id);if(r){const id=lid();r.id=id;r.name=D.name+' copy';await IDB.set('des:'+id,r);const m=(await IDB.get('dlib'))||[];m.unshift({id,name:r.name,thumb:r.thumb,updated:Date.now()});await IDB.set('dlib',m);hint('Copy saved to the gallery')}})();break;
     case'canvas':sizeSheet('canvas');break;case'imgsize':sizeSheet('image');break;
-    case'dosize':{const w=+$('#szW').value,h=+$('#szH').value;sheetEl.hidden=true;if(v==='image')resizeDoc(w,h,0,0,w/D.w,'Image size');else resizeDoc(w,h,Math.round((w-D.w)/2),Math.round((h-D.h)/2),1,'Canvas size');break}
+    case'dosize':if(v==='image')isApply();else csApply();break;
     case'rot':rotateDoc(+v);break;case'flipdoc':flipDoc();break;case'mergevis':flattenAll(true);break;case'flatten':flattenAll(false);break;
     case'hist':histJump(+v);break;
     case'group':groupLayers();break;case'ungroup':ungroup(l&&l.type==='group'?l:parentOf(l));break;case'newgroup':newEmptyGroup();break;case'delgroup':if(l&&l.type==='group')ungroup(l);OPENMENU=null;break;
@@ -3437,6 +3631,7 @@ addEventListener('keydown',e=>{if(labEl.hidden&&homeEl.hidden)return;const typin
     if(kk==='g'){if(alt){if(l)setProp(l,'clip',!l.clip,'Clipping mask')}else if(sh)ungroup(l);else groupLayers();return}
     if(kk==='e'){if(alt&&sh)stampVisible();else if(sh)flattenAll(true);else if(l)mergeDown(l);return}
     if(kk==='t'){setTool('move');return}
+    if(kk==='r'&&!alt){labAct('rulers');return}if(kk==='n'&&alt){newSizeSheet();return}
     if(kk==='a'){selAll();return}if(kk==='d'){selAction(sh?'reselect':'deselect');return}if(kk==='i'){if(sh)selInvert();else if(alt)sizeSheet('image');else applyNow('invert');return}
     if(kk==='l'){labAct('adj:levels');return}if(kk==='m'){labAct('adj:curves');return}if(kk==='u'){if(sh)applyNow('bw');else labAct('adj:hsl');return}if(kk==='b'){labAct('adj:cbal');return}
     if(kk==='c'&&alt){sizeSheet('canvas');return}
