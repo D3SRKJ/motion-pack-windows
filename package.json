@@ -5,8 +5,12 @@
   "description": "Motion Pack garment lookbook",
   "author": "Motion Pack",
   "main": "main.js",
+  "repository": "github:D3SRKJ/motion-pack-windows",
   "scripts": {
-    "dist": "electron-builder --win --x64 --publish never"
+    "dist": "electron-builder --win --x64 --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "latest"
   },
   "devDependencies": {
     "electron": "latest",
@@ -17,6 +21,7 @@
     "productName": "Motion Pack",
     "files": ["main.js", "app/**"],
     "directories": { "output": "dist", "buildResources": "build" },
+    "publish": [{ "provider": "github", "owner": "D3SRKJ", "repo": "motion-pack-windows", "releaseType": "release" }],
     "win": { "icon": "build/icon.ico", "target": ["nsis", "portable"] },
     "nsis": {
       "oneClick": true,
@@ -24,8 +29,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Motion Pack",
-      "artifactName": "Motion Pack Setup.exe"
+      "artifactName": "Motion-Pack-Setup-${version}.${ext}"
     },
-    "portable": { "artifactName": "Motion Pack.exe" }
+    "portable": { "artifactName": "Motion-Pack-Portable-${version}.${ext}" }
   }
 }
