@@ -818,13 +818,13 @@ presentP.addEventListener('click',e=>{const f=e.target.closest('[data-fmt]');if(
 function updMusic(){$('#mName').textContent=MUS?MUS.name:'No music';$('#noMusic').hidden=!MUS}
 IDB.get('music').then(m=>{if(m&&m.blob){MUS=m;updMusic()}}).catch(()=>{});
 $('#afile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;MUS={name:f.name.replace(/\.[^.]+$/,''),blob:f};updMusic();IDB.set('music',{name:MUS.name,blob:f});e.target.value=''});
-const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
+const loadImg=(src,max)=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>{const m=max||1700,k=Math.min(1,m/Math.max(im.naturalWidth,im.naturalHeight));if(k>=1)return r(im);try{const c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c)}catch(e){r(im)}};im.onerror=()=>r(null);im.src=src});
 async function prepFilm(){
   const out=[];
   for(const it of S.items){const main=await loadImg(it.src);if(!main)continue;
     const back=it.back?await loadImg(it.back):null,ways=[];
     for(const w of it.ways||[])if(w.src&&w.src!==it.src){const im=await loadImg(w.src);if(im)ways.push({im,name:w.name||'',hex:w.hex||'#777'})}
-    const pts=[];for(const p of it.points)pts.push({p,img:p.img?await loadImg(p.img):null});
+    const pts=[];for(const p of it.points)pts.push({p,img:p.img?await loadImg(p.img,700):null});
     out.push({it,main,back,ways,pts})}
   return out;
 }
@@ -847,7 +847,7 @@ function buildFilm(G){
   add(3,t=>({title:true,tt:t,end:true}),false);
   return {seg,T};
 }
-function stAt(F,t){const seg=F.seg;let k=0;while(k<seg.length-1&&t>=seg[k].t0+seg[k].d)k++;const s=seg[k];return {st:s.fn(clamp((t-s.t0)/s.d,0,1)),mv:s.mv}}
+function stAt(F,t){const seg=F.seg;let k=0;while(k<seg.length-1&&t>=seg[k].t0+seg[k].d)k++;const s=seg[k];return {st:s.fn(clamp((t-s.t0)/s.d,0,1)),mv:s.mv,t0:s.t0}}
 function chromeFill(c,y,h){const g=c.createLinearGradient(0,y,0,y+h);[[0,'#fff'],[.28,'#d6d6d6'],[.5,'#6a6a6a'],[.63,'#ececec'],[.84,'#9a9a9a'],[1,'#f6f6f6']].forEach(([o,v])=>g.addColorStop(o,v));return g}
 function ell(c,x,y,rx,ry,stops){c.save();c.translate(x,y);c.scale(1,ry/rx);const g=c.createRadialGradient(0,0,0,0,0,rx);stops.forEach(([o,v])=>g.addColorStop(o,v));c.fillStyle=g;c.fillRect(-rx,-rx,rx*2,rx*2);c.restore()}
 function fitDraw(c,im,x,y,w,h){const ar=im.width/im.height;let dw=w,dh=w/ar;if(dh>h){dh=h;dw=h*ar}c.drawImage(im,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
@@ -932,13 +932,14 @@ function drawTitle(c,W,H,st){
   c.restore();
 }
 function renderFrame(F,c,W,H,time,samples){
-  const {st,mv}=stAt(F,time),lx=LP.lx/100+Math.sin(time*.35)*.05,ly=LP.ly/100+Math.cos(time*.27)*.02,li=(st.title?.35:st.li??1)*LP.li;
+  const {st,mv,t0:segStart}=stAt(F,time),lx=LP.lx/100+Math.sin(time*.35)*.05,ly=LP.ly/100+Math.cos(time*.27)*.02,li=(st.title?.35:st.li??1)*LP.li;
   drawLight(c,W,H,li,lx,ly);
   if(st.title){drawOver(c,W,H,li,lx,ly,time);drawTitle(c,W,H,st);return}
   const k=mv&&samples>1?samples:1;
+  if(!st.g){drawOver(c,W,H,li,lx,ly,time);return}
   if(k===1)drawGarment(c,W,H,st,time);
   else{const A=F.acc,B=F.smp,a=A.getContext('2d'),b=B.getContext('2d');a.globalCompositeOperation='source-over';a.clearRect(0,0,W,H);
-    for(let j=0;j<k;j++){b.clearRect(0,0,W,H);drawGarment(b,W,H,stAt(F,Math.max(0,time-j*.011)).st,time);a.globalCompositeOperation='lighter';a.globalAlpha=1/k;a.drawImage(B,0,0);a.globalAlpha=1}
+    for(let j=0;j<k;j++){b.clearRect(0,0,W,H);const sj=stAt(F,Math.max(segStart,time-j*.011)).st;if(sj.g)drawGarment(b,W,H,sj,time);a.globalCompositeOperation='lighter';a.globalAlpha=1/k;a.drawImage(B,0,0);a.globalAlpha=1}
     c.drawImage(A,0,0)}
   drawOver(c,W,H,li,lx,ly,time);drawText(c,W,H,st,F);
 }
@@ -947,7 +948,7 @@ async function startFilm(mode){
   const G=await prepFilm();if(!G.length)return toast('Add a garment first');
   const F=buildFilm(G);F.n=G.length;
   const rec=mode==='record';let W,H;
-  if(rec){[W,H]=FMTS[fmt]}else{const dpr=Math.min(2,devicePixelRatio||1);W=Math.round(innerWidth*dpr);H=Math.round(innerHeight*dpr)}
+  if(rec){[W,H]=FMTS[fmt]}else{const dpr=Math.min(devicePixelRatio||1,Math.sqrt(2.4e6/(innerWidth*innerHeight)));W=Math.round(innerWidth*dpr);H=Math.round(innerHeight*dpr)}
   filmC.width=W;filmC.height=H;F.acc=document.createElement('canvas');F.smp=document.createElement('canvas');F.acc.width=F.smp.width=W;F.acc.height=F.smp.height=H;
   filmC.style.width=rec?'':'100vw';filmC.style.height=rec?'':'100vh';
   const c=filmC.getContext('2d');filmOn=true;FILM=F;filmEl.hidden=false;filmEl.classList.toggle('rec',rec);$('#fLabel').textContent=rec?'Recording':'Playing';
@@ -967,12 +968,12 @@ async function startFilm(mode){
     F.mr=mr;mr.start(500);
   }
   if(audio){try{await audio.play()}catch(e){}}
-  F.audio=audio;F.actx=actx;F.rec=rec;const t0=performance.now();const samples=rec?6:(W*H>4e6?3:5);
+  F.audio=audio;F.actx=actx;F.rec=rec;const t0=performance.now();const samples=rec?5:4;
   const loop=now=>{if(!filmOn||FILM!==F)return;let t=(now-t0)/1000;
     if(t>=F.T){if(rec){finishRec(F);return}t=t%F.T}
     if(!rec&&F.lastLoop!==Math.floor((now-t0)/1000/F.T)){F.lastLoop=Math.floor((now-t0)/1000/F.T)}
     if(rec&&F.gain&&t>F.T-2.5)F.gain.gain.value=Math.max(0,(F.T-t)/2.5);
-    renderFrame(F,c,W,H,t,samples);$('#fProg').style.width=(t/F.T*100).toFixed(1)+'%';requestAnimationFrame(loop)};
+    try{renderFrame(F,c,W,H,t,samples)}catch(err){if(!F.err){F.err=1;console.error(err)}}$('#fProg').style.width=(t/F.T*100).toFixed(1)+'%';requestAnimationFrame(loop)};
   requestAnimationFrame(loop);
 }
 function finishRec(F){try{F.mr&&F.mr.state!=='inactive'&&F.mr.stop()}catch(e){}endFilm(F)}
