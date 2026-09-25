@@ -158,7 +158,13 @@ body.measuring [data-a=measure]{color:#ff6b5a}
 .lib-f .pill.big{width:auto;flex:1;min-width:200px}
 /* access lock */
 .gatebtn{display:none}
-.nolic .gatebtn{display:block}
+.nolic .gatebtn{display:none}
+.nolic #feed,.nolic #dock,.nolic #top,.nolic #nav,.nolic #empty,.nolic #hint,.nolic .sheet,.nolic #library{display:none!important}
+.gate-in>*{animation:gin 1.3s var(--ease) both}
+.gate-in>:nth-child(1){animation-delay:.1s}.gate-in>:nth-child(2){animation-delay:.25s}.gate-in>:nth-child(3){animation-delay:.5s}
+.gate-in>:nth-child(4){animation-delay:.7s}.gate-in>:nth-child(5){animation-delay:.85s}.gate-in>:nth-child(n+6){animation-delay:1s}
+@keyframes gin{from{opacity:0;filter:blur(12px);transform:translateY(14px)}}
+#gate.out{opacity:0;filter:blur(14px);transform:scale(1.06);transition:opacity 1s var(--ease),filter 1s var(--ease),transform 1.2s var(--ease)}
 .nolic .e,.nolic #modeBtn,.nolic [data-cmd=library],.nolic .st,.nolic .lic,.nolic .xbtns{display:none!important}
 #gate{position:fixed;inset:0;z-index:45;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(255,250,242,.1),transparent 70%),#030303;animation:fadein .6s var(--ease)}
 #gate[hidden]{display:none}
@@ -390,7 +396,7 @@ body.dragging #drop{display:grid}
 <div id="gate" hidden role="dialog" aria-label="Private access"><div class="gate-in">
   <p class="gate-k">Private access</p>
   <h2 class="chrome">Motion Pack</h2>
-  <p class="gate-t">Enter your access key to create lookbooks, tech packs and videos on this device.</p>
+  <p class="gate-t">Enter your activation key to continue.</p>
   <textarea id="gateKey" rows="3" placeholder="Paste your access key (starts with MP-)" aria-label="Access key" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
   <button class="pill big" data-cmd="gateok">Unlock</button>
   <p class="gate-m" id="gateMsg" aria-live="polite"></p>
@@ -1378,13 +1384,13 @@ async function verifyKey(k){try{k=String(k||'').replace(/\s+/g,'').replace(/^MP-
   const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},PUBJWK),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
   if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},key,b64d(sg),new TextEncoder().encode(pl)))return null;
   const d=JSON.parse(new TextDecoder().decode(b64d(pl)));return REVOKED.includes(d.id)?null:d}catch(e){return null}}
-function applyLic(){const off=needLic&&!LIC;document.documentElement.classList.toggle('nolic',off);if(off){if(S.mode==='edit'&&S.items.length)setMode('view');setAdding(false)}}
+function applyLic(){const off=needLic&&!LIC;document.documentElement.classList.toggle('nolic',off);if(off)setAdding(false)}
 async function loadLic(){if(!needLic)return;let k=null;try{k=localStorage.getItem('mp_key')}catch(e){}if(!k)k=await IDB.get('mp_key');LIC=k?await verifyKey(k):null;applyLic()}
-function showGate(){const g=$('#gate');$('#gateMsg').textContent='';$('#gateMsg').className='gate-m';g.querySelector('.gate-x').hidden=!S.items.length;g.hidden=false;setTimeout(()=>{try{$('#gateKey').focus()}catch(_){}},200)}
+function showGate(){const g=$('#gate');$('#gateMsg').textContent='';$('#gateMsg').className='gate-m';g.querySelector('.gate-x').hidden=true;g.classList.remove('out');g.hidden=false;setTimeout(()=>{try{$('#gateKey').focus()}catch(_){}},200)}
 async function tryKey(){const v=$('#gateKey').value,m=$('#gateMsg');m.className='gate-m';m.textContent='Checking…';const d=await verifyKey(v);
   if(!d){m.textContent='That key isn\'t valid. Check you copied all of it, including MP- at the start.';return}
   const k=v.replace(/\s+/g,'');try{localStorage.setItem('mp_key',k)}catch(e){}await IDB.set('mp_key',k);LIC=d;applyLic();
-  m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{$('#gate').hidden=true;if(!S.items.length){S.mode='edit';render(true)}toast('Motion Pack unlocked on this device',2200)},700)}
+  m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{const g=$('#gate');g.classList.add('out');if(!S.items.length)S.mode='edit';render(true);setTimeout(()=>{g.hidden=true;g.classList.remove('out')},1100);toast('Motion Pack activated on this device',2200)},700)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cmd]');if(!b)return;const c=b.dataset.cmd;
   if(c==='gate')showGate();else if(c==='gateok')tryKey();else if(c==='gateclose')$('#gate').hidden=true});
 $('#gateKey').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();tryKey()}});
@@ -1403,7 +1409,7 @@ function intro(){
 }
 render(false);
 const loaded=LOCAL&&!S.locked?IDB.get('last').then(l=>{if(l&&!S.items.length&&!S.lid){S.lid=l;KEY='lb:'+l}return IDB.get(KEY)}).then(d=>{if(d&&d.title)S.title=d.title;if(d&&Array.isArray(d.items)&&d.items.length&&(!S.items.length||(d.savedAt||0)>(S.savedAt||0))){const m=S.mode;S.brand=d.brand;S.items=d.items;if(d.light)S.light=d.light;applyLight(S.light,false);S.mode=S.items.length?m:'edit';render(false)}}):Promise.resolve();
-Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC&&!S.items.length)showGate();else if(!ed())setTimeout(hint,900)});
+Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC)showGate();else if(!ed())setTimeout(hint,900)});
 cloud();
 })();
 </script>
