@@ -10,11 +10,11 @@
     "dist": "electron-builder --win --x64 --publish always"
   },
   "dependencies": {
-    "electron-updater": "latest"
+    "electron-updater": "^6.3.9"
   },
   "devDependencies": {
     "electron": "latest",
-    "electron-builder": "latest"
+    "electron-builder": "^26.0.0"
   },
   "build": {
     "appId": "com.motionpack.app",
