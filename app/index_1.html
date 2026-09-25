@@ -246,6 +246,14 @@ html.nojs #top{position:absolute}
 .psheet.ro input,.psheet.ro textarea{border-bottom-color:transparent;pointer-events:none}
 .psheet.ro textarea{min-height:0;field-sizing:content}
 .psheet .row2.e{margin-top:12px}
+/* saved files opened in a phone's file viewer: always the tidy numbered layout */
+@media (max-width:1100px),(max-height:600px){
+  html.nojs .card,html.nojs .links{display:none!important}
+  html.nojs .pt{width:36px;height:36px}
+  html.nojs .pt::before{content:attr(data-n);width:22px;height:22px;display:grid;place-items:center;font:700 10px/1 var(--f);color:#111}
+  html.nojs .plist{display:block}
+  html.nojs .spec .body{max-height:48vh}
+}
 @media (max-width:700px),(max-height:500px) and (pointer:coarse){
   .card,.links{display:none!important}
   .pt{width:36px;height:36px}
