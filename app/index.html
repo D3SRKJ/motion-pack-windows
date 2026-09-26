@@ -783,6 +783,21 @@ html.inlook #dock,html.inlook #nav{visibility:hidden}
 #lab .tags .pset i{height:auto;width:34px;max-height:60px;background:linear-gradient(160deg,#f2f2f2,#cfcfcf);border-color:rgba(255,255,255,.6)}
 #lab .bd.pat{color:#ffd28a;border-color:rgba(255,210,138,.4)}
 #lookB .lk-row button.on{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.08)}
+#lab .lsheet.sty{display:block;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;pointer-events:none;animation:none}
+#lab .lsheet.sty[hidden]{display:none}
+#lab .lsheet.sty>div{pointer-events:auto;position:absolute;left:0;top:0;width:min(640px,calc(100vw - 12px));max-height:min(80vh,660px);padding:12px 16px 16px;background:rgba(18,18,20,.93);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 26px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);transition:opacity .18s}
+#lab .lsheet.sty h3{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;margin:-4px -6px 2px;padding:6px 6px 8px;border-radius:8px;justify-content:flex-start}
+#lab .lsheet.sty h3:hover{background:#1f1f23}
+#lab .lsheet.sty>div.drag{opacity:.85}#lab .lsheet.sty>div.drag h3{cursor:grabbing}
+#lab .lsheet.sty h3 .grip{color:#666;letter-spacing:-.1em;font-size:13px;margin-right:4px}
+#lab .lsheet.sty h3 .ttl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lab .lsheet.sty h3 .hb{display:flex;gap:2px}#lab .lsheet.sty h3 .hb button{width:30px;height:28px;border-radius:7px;font-size:18px;color:#999;letter-spacing:0}#lab .lsheet.sty h3 .hb button:hover{background:rgba(255,255,255,.08);color:#fff}
+#lab .lsheet.sty.mini>div{width:min(340px,calc(100vw - 12px))}
+#lab .lsheet.sty.mini .styw,#lab .lsheet.sty.mini .styw~.rw{display:none}
+#lab .lsheet.sty>div.peek{opacity:.4}
+@media (max-width:760px){#lab .lsheet.sty>div{max-height:52vh;padding:10px 12px 12px}}
+#lab .lsheet.sty h3{position:sticky;top:-12px;z-index:3;background:rgba(22,22,25,.98)}
+@media (max-width:640px){#lab .lsheet.sty .styw nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}#lab .lsheet.sty .styw nav::-webkit-scrollbar{display:none}#lab .lsheet.sty .styw nav button{flex:none;white-space:nowrap}}
 </style>
 </head>
 <body class="edit empty">
@@ -3235,7 +3250,7 @@ function drawStyle(){const S3=STY,l=S3.l,f=l.fx,bi=l.bi,sec=S3.sec,num=(k,lb,mn,
     if(sec==='fb')r+=fabSheetHTML(g)+num('fb.scale','Texture size',25,400,g.scale,'%')+num('fb.amt','Strength',0,100,g.amt,'%')+'<p class="pnote">Put this on the garment layer. The weave follows the folds and shading already in your mockup.</p>';
     if(sec==='co')r+=col('co.col','Colour',g.col)+bsel('co.blend',g.blend)+num('co.op','Opacity',0,100,Math.round(g.op*100),'%');
     if(sec==='go')r+=col('go.c1','From',g.c1)+col('go.c2','To',g.c2)+bsel('go.blend',g.blend)+num('go.ang','Angle',0,360,g.ang,'°')+num('go.op','Opacity',0,100,Math.round(g.op*100),'%')}
-  sheetIn.innerHTML=`<h3>Layer style · ${esc(l.name)}<button data-l="sty:cancel">&times;</button></h3><div class="styw"><nav>${FXN.map(([k,n])=>`<button class="${sec===k?'on':''}" data-l="sty:sec:${k}">${k!=='blend'?`<i class="${f[k].on?'on':''}"></i>`:''}${n}</button>`).join('')}</nav><div class="stybody">${r}</div></div><div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sty:cancel">Cancel</button><button class="lch pri" data-l="sty:ok">OK</button></div>`}
+  sheetIn.innerHTML=`<h3><span class="grip" title="Drag to move · double-click to reset">⋮⋮</span><span class="ttl">Layer style · ${esc(l.name)}</span><span class="hb"><button data-l="sty:min" title="${FLT.mini?'Expand':'Collapse'}">${FLT.mini?'▴':'▾'}</button><button data-l="sty:cancel" title="Cancel">&times;</button></span></h3><div class="styw"><nav>${FXN.map(([k,n])=>`<button class="${sec===k?'on':''}" data-l="sty:sec:${k}">${k!=='blend'?`<i class="${f[k].on?'on':''}"></i>`:''}${n}</button>`).join('')}</nav><div class="stybody">${r}</div></div><div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sty:cancel">Cancel</button><button class="lch pri" data-l="sty:ok">OK</button></div>`;sheetEl.classList.toggle('mini',!!FLT.mini);requestAnimationFrame(fltPlace)}
 sheetEl.addEventListener('input',e=>{const t=e.target;if(!STY)return;const l=STY.l,d=t.dataset;
   if(d.bi){l.bi[d.bi]=+t.value;const p=d.bi[0];if(d.bi.endsWith('b0')&&l.bi[p+'b1']<l.bi[p+'b0'])l.bi[p+'b1']=l.bi[p+'b0'];if(d.bi.endsWith('b1')&&l.bi[p+'b0']>l.bi[p+'b1'])l.bi[p+'b0']=l.bi[p+'b1'];if(d.bi.endsWith('w0')&&l.bi[p+'w1']<l.bi[p+'w0'])l.bi[p+'w1']=l.bi[p+'w0'];if(d.bi.endsWith('w1')&&l.bi[p+'w0']>l.bi[p+'w1'])l.bi[p+'w0']=l.bi[p+'w1'];styLive();return}
   if(!d.sty)return;const k=d.sty,v=t.type==='checkbox'?t.checked:t.type==='range'?+t.value:t.value;
@@ -3244,11 +3259,12 @@ sheetEl.addEventListener('input',e=>{const t=e.target;if(!STY)return;const l=STY
 sheetEl.addEventListener('change',e=>{if(STY&&(e.target.type==='checkbox'||e.target.tagName==='SELECT'))drawStyle()});
 let styT=0;function styLive(){l0:{const l=STY.l;l.fxk='';dirtyComp=true;clearTimeout(styT);styT=setTimeout(req,TOUCH?90:16)}}
 function styAct(a){const S3=STY;if(!S3)return;const l=S3.l;
+  if(a==='min'){fltMini();return}
   if(a.startsWith('sec:')){S3.sec=a.slice(4);drawStyle();return}
   if(a.startsWith('fab:')){l.fx.fb.type=a.slice(4);l.fx.fb.on=true;drawStyle();styLive();return}
   if(a==='rmwhite'){Object.assign(l.bi,{tw0:190,tw1:250});drawStyle();styLive();return}if(a==='rmblack'){Object.assign(l.bi,{tb0:6,tb1:70});drawStyle();styLive();return}if(a==='bireset'){Object.assign(l.bi,biDef());drawStyle();styLive();return}
-  if(a==='ok'){if(!fxOn(l.fx))l.fx=null;if(!biOn(l.bi))l.bi=null;const after=snapSt();pushH({k:'st',b:S3.b,a:after},'Layer style');STY=null;sheetEl.hidden=true;sheetEl.classList.remove('sty');touchAll();return}
-  if(a==='cancel'){restSt(S3.b);STY=null;sheetEl.hidden=true;sheetEl.classList.remove('sty');touchAll()}}
+  if(a==='ok'){if(!fxOn(l.fx))l.fx=null;if(!biOn(l.bi))l.bi=null;const after=snapSt();pushH({k:'st',b:S3.b,a:after},'Layer style');STY=null;sheetEl.hidden=true;sheetEl.classList.remove('sty','mini');touchAll();return}
+  if(a==='cancel'){restSt(S3.b);STY=null;sheetEl.hidden=true;sheetEl.classList.remove('sty','mini');touchAll()}}
 
 /* ---------- guide ---------- */
 function helpSheet(){sheetIn.innerHTML=`<h3>Design Lab guide<button data-l="sheetclose">&times;</button></h3>
@@ -3661,6 +3677,22 @@ function guideOverlay(x,h){const G=D.guides;if(!G||VIEW.guides===false)return;co
   const s=G.safe;x.setLineDash([7*h,6*h]);x.strokeStyle='rgba(90,170,255,.9)';x.lineWidth=h*1.2;x.beginPath();if(G.circle)x.arc(tx+tw/2,ty+th/2,Math.min(tw,th)/2-s,0,TAU);else x.rect(tx+s,ty+s,tw-2*s,th-2*s);x.stroke();
   x.strokeStyle='rgba(255,170,60,.95)';G.folds.forEach(([o,at])=>{x.beginPath();if(o==='h'){x.moveTo(0,at);x.lineTo(D.w,at)}else{x.moveTo(at,0);x.lineTo(at,D.h)}x.stroke()});
   x.setLineDash([]);G.holes.forEach(([cx0,cy0,r])=>{x.fillStyle='rgba(20,20,22,.18)';x.strokeStyle='rgba(40,40,44,.9)';x.beginPath();x.arc(cx0,cy0,r,0,TAU);x.fill();x.stroke();x.beginPath();x.moveTo(cx0-r*1.5,cy0);x.lineTo(cx0+r*1.5,cy0);x.moveTo(cx0,cy0-r*1.5);x.lineTo(cx0,cy0+r*1.5);x.stroke()});x.restore()}
+/* ---------- floating, draggable layer-style panel ---------- */
+const FLT={x:null,y:null,mini:false};try{Object.assign(FLT,JSON.parse(localStorage.getItem('mp_flt')||'{}'))}catch(e){}
+const fltSave=()=>{try{localStorage.setItem('mp_flt',JSON.stringify(FLT))}catch(e){}};
+function fltPlace(){if(!sheetEl.classList.contains('sty')||sheetEl.hidden)return;const b=sheetIn,W=innerWidth,H=innerHeight,w=b.offsetWidth,h=b.offsetHeight;let x=FLT.x,y=FLT.y;
+  if(x==null||y==null){if(desk()){x=W-w-14;y=H-h-14}else{x=(W-w)/2;y=H-h-66}}
+  x=clampN(x,Math.min(6,W-w-6),Math.max(6,W-w-6));y=clampN(y,6,Math.max(6,H-Math.min(h,56)-6));b.style.left=Math.round(x)+'px';b.style.top=Math.round(y)+'px'}
+let FDR=null;
+sheetIn.addEventListener('pointerdown',e=>{if(!sheetEl.classList.contains('sty'))return;
+  if(e.target.matches('input[type=range]')){sheetIn.classList.add('peek');return}
+  const hd=e.target.closest('h3');if(!hd||e.target.closest('button'))return;e.preventDefault();const r=sheetIn.getBoundingClientRect();FDR={dx:e.clientX-r.left,dy:e.clientY-r.top,id:e.pointerId};hd.setPointerCapture(e.pointerId);sheetIn.classList.add('drag')});
+sheetIn.addEventListener('pointermove',e=>{if(!FDR||e.pointerId!==FDR.id)return;FLT.x=e.clientX-FDR.dx;FLT.y=e.clientY-FDR.dy;fltPlace()});
+const fltUp=e=>{sheetIn.classList.remove('peek');if(!FDR)return;FDR=null;sheetIn.classList.remove('drag');fltSave()};
+addEventListener('pointerup',fltUp);addEventListener('pointercancel',fltUp);
+sheetIn.addEventListener('dblclick',e=>{if(sheetEl.classList.contains('sty')&&e.target.closest('h3')&&!e.target.closest('button')){FLT.x=null;FLT.y=null;fltSave();fltPlace()}});
+addEventListener('resize',()=>requestAnimationFrame(fltPlace));
+function fltMini(){FLT.mini=!FLT.mini;fltSave();sheetEl.classList.toggle('mini',FLT.mini);const b=sheetIn.querySelector('[data-l="sty:min"]');if(b){b.textContent=FLT.mini?'▴':'▾';b.title=FLT.mini?'Expand':'Collapse'}requestAnimationFrame(fltPlace)}
 let PTSNAP=null,PTRAF=0;
 
 /* ---------- click actions ---------- */
