@@ -993,6 +993,7 @@ body.arranging .ah{display:block}
   #lab .lpop[hidden]~.lstat{right:0}
   #labEd:has(.lpop[hidden]) .ldtabs{right:0}
 }
+#lab .lhint{pointer-events:none}@media (min-width:761px){#lab .lhint{top:calc(128px + env(safe-area-inset-top,0px))}}
 /* ---------- v7: stacked panels ---------- */
 @media (min-width:761px){
 #lab .lpop.stk{display:flex;flex-direction:column;gap:3px;padding:3px;overflow:hidden;background:#141416}
@@ -1091,6 +1092,11 @@ body.arranging .ah{display:block}
   background:linear-gradient(180deg,#46474b,#2b2c2f);border:1px solid #0a0a0b;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 30px rgba(0,0,0,.5);font-size:12px;color:#e8e8ea;white-space:nowrap}
 #smBar[hidden]{display:none}
 @media (max-width:760px){#smBar{top:auto;bottom:calc(70px + env(safe-area-inset-bottom,0px))}}
+#lab .sepk{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:10px}
+#lab .sepk label{display:flex;align-items:center;gap:8px;padding:6px;border-radius:6px;background:#1c1c1f;border:1px solid #0b0b0c;font-size:11.5px;color:#ddd}
+#lab .sepk input{width:34px;height:28px;padding:0;border:0;background:none}
+#lab .sepk i{display:block;font-style:normal;font-size:10px;color:#888}
+#lab .sepc{align-items:center;gap:14px}#lab .sepc input{width:70px;height:26px;margin-left:4px}#lab .sepc b{font-size:12px;color:#e8e8ea}
 </style>
 </head>
 <body class="edit empty">
@@ -1276,7 +1282,7 @@ function slideHTML(it,i){
     `<svg class="hanger" viewBox="0 0 200 64" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#8a8a8a"/><stop offset=".6" stop-color="#e6e6e6"/><stop offset="1" stop-color="#6d6d6d"/></linearGradient></defs><path d="M100 30V20c0-9 13-11 13-3" fill="none" stroke="url(#hg)" stroke-width="3" stroke-linecap="round"/><path d="M100 30L10 56q-6 3 0 5h180q6-2 0-5z" fill="none" stroke="url(#hg)" stroke-width="3.4" stroke-linejoin="round"/></svg><div class="flip"${pgRot(it)}><img class="g" src="${it.src}" style="--ar:${it.ar||1}" alt="${esc(f.name||'Garment')}" draggable="false"><img class="cw" alt=""><i class="sheen"></i>${it.back?`<img class="bk" src="${it.back}" alt="Back of ${esc(f.name||'garment')}">`:''}</div>`+
     measHTML(it)+`<svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>${pts}</div>${pgClose(it)}</div></div>`+
     `<details class="spec"${it.open?' open':''}><summary class="spec-h"><span class="num">${pad(i+1)}</span><span class="nm chrome">${esc(f.name||(ed()?'Tap to name':''))}</span>${rows||it.points.length||it.sizes||(it.meas||[]).length?'<span class="tog">+</span>':''}</summary>${rows||it.points.length||it.sizes||(it.meas||[]).length?`<div class="body">${rows?`<dl>${rows}</dl>`:''}${it.points.length?`<ol class="plist">${it.points.map((p,k)=>`<li><b>${k+1}</b><div><i class="chrome">${esc(p.title||'Detail')}</i>${p.text?`<span>${esc(p.text)}</span>`:''}</div></li>`).join('')}</ol>`:''}${extraHTML(it)}</div>`:''}</details>`+
-    gxHTML(it)+(ed()?`<div class="st"><button data-a="up">Move up</button><button data-a="replace">Replace</button><button data-a="cut">Cut out</button><button data-a="back">${it.back?'Change back':'+ Back'}</button>${it.back?'<button data-a="noback">No back</button>':''}<button data-a="color">+ Colour</button><button data-a="arrange">Arrange</button><button data-a="more">+ Mockup</button><button data-a="measure">+ Measure</button><button data-a="look">${it.outfit?'Edit look':'+ Look'}</button><button data-a="techpack">Tech pack</button>${(it.ways||[]).length>1?'<button data-a="nocolor">Remove colour</button>':''}<button data-a="remove">Delete</button></div>`:'')+`</section>`;
+    gxHTML(it)+(ed()?`<div class="st"><button data-a="up">Move up</button><button data-a="replace">Replace</button><button data-a="cut">Cut out</button><button data-a="back">${it.back?'Change back':'+ Back'}</button>${it.back?'<button data-a="noback">No back</button>':''}<button data-a="color">+ Colour</button>${it.des?'<button data-a="edes">Edit design</button>':''}<button data-a="arrange">Arrange</button><button data-a="more">+ Mockup</button><button data-a="measure">+ Measure</button><button data-a="look">${it.outfit?'Edit look':'+ Look'}</button><button data-a="techpack">Tech pack</button>${(it.ways||[]).length>1?'<button data-a="nocolor">Remove colour</button>':''}<button data-a="remove">Delete</button></div>`:'')+`</section>`;
 }
 function gxHTML(it){const w=it.ways||[];const sw=w.length>1?w.map((x,k)=>`<button class="sw${k===(it.cw||0)?' on':''}" data-a="sw" data-k="${k}" style="--c:${esc(x.hex||'#777')}" title="${esc(x.name||'')}" aria-label="${esc(x.name||'Colour')}"></button>`).join(''):'';
   return sw||it.back?`<div class="gx">${sw}${it.back?'<button class="flipb" data-a="flip" title="Turn around (R)" aria-label="Turn around">&#8635;</button>':''}</div>`:''}
@@ -1447,7 +1453,7 @@ feed.addEventListener('click',e=>{
   const sec=e.target.closest('.slide');if(!sec)return;const it=itemOf(sec);
   const a=e.target.closest('[data-a]');
   if(a){const act=a.dataset.a,pid=(a.closest('.card')||{}).dataset;const p=pid&&it.points.find(q=>q.id===pid.p);changed();
-    if(act==='arrange'){arrStart(sec,it)}else if(act==='more'){arrStart(sec,it);if(ARR.on)moreIn.click()}else if(act==='look'){if(it.outfit)lookOpen(null,it);else lookOpen(it)}else if(extAct(act,a,it,sec)||sizeAct(act,a,it)||measAct(act,a,it,sec)){}
+    if(act==='edes'){LAB.edit(it.des)}else if(act==='arrange'){arrStart(sec,it)}else if(act==='more'){arrStart(sec,it);if(ARR.on)moreIn.click()}else if(act==='look'){if(it.outfit)lookOpen(null,it);else lookOpen(it)}else if(extAct(act,a,it,sec)||sizeAct(act,a,it)||measAct(act,a,it,sec)){}
     else if(act==='del'){it.points=it.points.filter(q=>q!==p);drop(p.ia);rerender(it)}
     else if(act==='img')pick('insert',it,p);
     else if(act==='noimg'){drop(p.ia);p.img=null;p.ia=null;rerender(it)}
@@ -2969,7 +2975,7 @@ function overlays(x){const h=hair();
   if(SELDRAW){x.save();x.lineWidth=h*1.3;x.setLineDash([6*h,5*h]);x.strokeStyle='#fff';x.stroke(SELDRAW.preview());x.restore()}
   if(SHAPE&&SHAPE.pv){x.save();drawShape(x,SHAPE,true);x.restore()}
   if(GRAD){x.save();x.lineWidth=h*2;x.strokeStyle='#fff';x.setLineDash([]);x.beginPath();x.moveTo(GRAD.a[0],GRAD.a[1]);x.lineTo(GRAD.b[0],GRAD.b[1]);x.stroke();[GRAD.a,GRAD.b].forEach(p=>{x.beginPath();x.arc(p[0],p[1],6*h,0,7);x.fillStyle='#fff';x.fill();x.stroke()});x.restore()}
-  if(D.guides)guideOverlay(x,h);tpathOverlay(x,h);
+  if(D.guides)guideOverlay(x,h);tpathOverlay(x,h);liqOverlay(x,h);penOverlay(x,h);
   if(XFORM)xfOverlay(x,h);if(CROP)cropOverlay(x,h);
   if(TOOL.t==='clone'&&CLONE.src){const p=ACT==='stroke'&&STROKE&&STROKE.kind==='clone'?[STROKE.last.x+CLONE.off[0],STROKE.last.y+CLONE.off[1]]:CLONE.src;x.save();x.lineWidth=h*1.5;x.strokeStyle='#fff';x.beginPath();x.moveTo(p[0]-12*h,p[1]);x.lineTo(p[0]+12*h,p[1]);x.moveTo(p[0],p[1]-12*h);x.lineTo(p[0],p[1]+12*h);x.stroke();x.strokeStyle='#000';x.beginPath();x.arc(p[0],p[1],6*h,0,7);x.stroke();x.restore()}
   if(CUR.show&&!TOUCH&&['brush','erase','smudge','clone','dodge'].includes(TOOL.t)){const r=Math.max(1,sizeNow()/2);x.save();x.lineWidth=h;x.strokeStyle='rgba(255,255,255,.85)';x.beginPath();x.arc(CUR.x,CUR.y,r,0,7);x.stroke();x.strokeStyle='rgba(0,0,0,.5)';x.beginPath();x.arc(CUR.x,CUR.y,r+h,0,7);x.stroke();x.restore()}}
@@ -3439,21 +3445,21 @@ const IC={back:'M15 5l-7 7 7 7',move:'M5 3l13 7.5-5.8 1.4L9.5 18z',select:'M4 4h
   layers:'M12 3l9 5-9 5-9-5zM3 12.5l9 5 9-5M3 16.5l9 5 9-5',undo:'M9 7L4 12l5 5M4 12h10a6 6 0 010 12h-2',redo:'M15 7l5 5-5 5M20 12H10a6 6 0 000 12h2',eye:'M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 9a3 3 0 110 6 3 3 0 010-6z',eyeoff:'M3 3l18 18M10.6 5.1A10 10 0 0112 5c6.4 0 10 7 10 7a17 17 0 01-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.6 9.6 0 005.4-1.6',
   hist:'M12 7v5l3 2M3.5 12a8.5 8.5 0 102.5-6L3.5 8.5M3.5 4v4.5H8',help:'M9.5 9a2.5 2.5 0 115 .5c0 1.7-2.5 2-2.5 3.5M12 17h.01M12 2.5a9.5 9.5 0 110 19 9.5 9.5 0 010-19z',swap:'M7 4L4 7l3 3M4 7h11a3 3 0 013 3v1M17 20l3-3-3-3M20 17H9a3 3 0 01-3-3v-1'};
 const icon=n=>`<svg viewBox="0 0 24 24"><path d="${IC[n]}"/></svg>`;
-const TOOLS=[['move','Move','move','V','Move, scale and rotate. Side handles stretch one way; corners keep proportions (Shift = free). Alt scales from the centre, Ctrl-drag a corner to distort.'],['select','Marquee','select','M','Select an area. M = rectangle / ellipse (Shift+M switches), L = freehand lasso.'],['wand','Magic wand','wand','W','Tap an area to select pixels of a similar colour.'],['crop','Crop','crop','C','Drag the area to keep, then press Enter or tap ✓ Crop.'],
+const TOOLS=[['move','Move','move','V','Move, scale and rotate. Side handles stretch one way; corners keep proportions (Shift = free). Alt scales from the centre, Ctrl-drag a corner to distort.'],['select','Marquee','select','M','Select an area. M = rectangle / ellipse (Shift+M switches), L = freehand lasso.'],['pen','Pen','pen','P','Click to add points, drag to curve, click the first point to close. Then make a selection, fill, stroke or a shape layer from the path.'],['wand','Magic wand','wand','W','Tap an area to select pixels of a similar colour.'],['crop','Crop','crop','C','Drag the area to keep, then press Enter or tap ✓ Crop.'],
   ['brush','Brush','brush','B','Paint on the selected layer, or on its mask (black hides, white shows).'],['erase','Eraser','erase','E','Erase pixels. On a mask it paints black (hides).'],['clone','Clone stamp','clone','S','Copy pixels from one spot to another. Alt-click (or Set source) first.'],['smudge','Smudge','smudge','–','Push and blend paint like a finger.'],
   ['dodge','Dodge / Burn','dodge','O','Lighten (dodge) or darken (burn) the layer where you paint. Shift+O switches.'],['gradient','Gradient','gradient','G','Drag to fill with a colour fade. Great on masks. Shift+G switches to the paint bucket.'],['fill','Paint bucket','fill','G','Fill an area with colour, or replace one colour with another.'],
   ['pick','Eyedropper','pick','I','Tap to pick a colour from the canvas.'],['text','Type','text','T','Tap to add editable text. Arc, outline and fonts in the Type panel.'],['shape','Shape','shape','U','Drag to draw a shape on a new layer. Shift+U cycles shapes.'],['hand','Hand','hand','H','Drag to move around the canvas (or hold Space).'],['zoom','Zoom','zoom','Z','Click to zoom in, Alt-click to zoom out.'],['rotv','Rotate view','rotv','R','Drag to turn the canvas like paper. Esc resets.']];
 const toolInfo=t=>TOOLS.find(x=>x[0]===t)||TOOLS[4];
-Object.assign(IC,{crop:'M6 2v16h16M2 6h16v16',zoom:'M10.5 4a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM15.5 15.5L21 21M8 10.5h5M10.5 8v5',rotv:'M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M18 3v4h-4M6 21v-4h4',folder:'M3 6.5A1.5 1.5 0 014.5 5H9l2 2h8.5A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z'});
+Object.assign(IC,{pen:'M12 20l7-7-4-4-7 7-1 5zM15 9l-3-3M4 21l4-1M11.5 12.5l1 1',crop:'M6 2v16h16M2 6h16v16',zoom:'M10.5 4a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM15.5 15.5L21 21M8 10.5h5M10.5 8v5',rotv:'M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M18 3v4h-4M6 21v-4h4',folder:'M3 6.5A1.5 1.5 0 014.5 5H9l2 2h8.5A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z'});
 
 /* ---------- top bar + menus ---------- */
 const MENUS={
-  File:[['new','New design…','Ctrl+N'],['timelapse','Timelapse replay (video)…'],['printpdf','Print PDF with cut lines…'],['newpat','New pattern tile…'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a lookbook'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
-  Edit:[['undo','Undo','Ctrl+Z'],['redo','Redo','Ctrl+Shift+Z'],['undo','Step backward','Ctrl+Alt+Z'],['panel:history','History panel'],['-'],['xf:free','Free transform','Ctrl+T'],['xf:distort','Distort (perspective)'],['xf:warp','Warp'],['xf:fh','Flip horizontal'],['xf:fv','Flip vertical'],['-'],['fillsheet','Fill…','Shift+F5'],['strokesheet','Stroke selection…'],['sa:clear','Clear','Del'],['-'],['pensheet','Apple Pencil & pressure…'],['keys','Keyboard shortcuts…','?']],
+  File:[['new','New design…','Ctrl+N'],['timelapse','Timelapse replay (video)…'],['printpdf','Print PDF with cut lines…'],['newpat','New pattern tile…'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a lookbook (stays linked)'],['sepsheet','Colour separations (screen print)…'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
+  Edit:[['undo','Undo','Ctrl+Z'],['redo','Redo','Ctrl+Shift+Z'],['undo','Step backward','Ctrl+Alt+Z'],['panel:history','History panel'],['-'],['cafill','Content-aware fill (select the spot first)'],['-'],['xf:free','Free transform','Ctrl+T'],['xf:distort','Distort (perspective)'],['xf:warp','Warp'],['xf:fh','Flip horizontal'],['xf:fv','Flip vertical'],['-'],['fillsheet','Fill…','Shift+F5'],['strokesheet','Stroke selection…'],['sa:clear','Clear','Del'],['-'],['pensheet','Apple Pencil & pressure…'],['keys','Keyboard shortcuts…','?']],
   Image:[['gcpick','✦ Smart garment colour'],['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
-  Select:[['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
-  Filter:[['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
+  Select:[['selsubj','Select subject'],['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
+  Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
   View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
   <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
@@ -3574,6 +3580,133 @@ function smBanner(){let b=document.getElementById('smBar');const on=D&&SMS.lengt
 let smLC={id:'',t:0};popEl.addEventListener('click',e=>{const r=e.target.closest('.lyr[data-ly]');if(!r||e.target.closest('input,select,.ey,.lmore,button'))return;const id=r.dataset.ly,now=performance.now();if(smLC.id===id&&now-smLC.t<450){smLC={id:'',t:0};const l=D&&D.layers.find(x=>x.id===id);if(l&&l.sm){e.preventDefault();setTimeout(()=>smEdit(l),0)}return}smLC={id,t:now}},true);
 popEl.addEventListener('dblclick',e=>{const r=e.target.closest('.lyr[data-ly]');if(!r||e.target.closest('input,select,.ey,.lmore'))return;const l=D&&D.layers.find(x=>x.id===r.dataset.ly);if(l&&l.sm){e.preventDefault();smEdit(l)}});
 
+
+/* ================= v9: select subject, content-aware fill, liquify, pen, separations, linked lookbook ================= */
+/* ---- select subject (on-device) ---- */
+function selectSubject(mode){if(!D)return;hint('Finding the subject…',1500);setTimeout(()=>{const src=mk(D.w,D.h);composite(src,false);dirtyComp=true;
+  const f=Math.max(1,Math.sqrt(D.w*D.h/.6e6)),w=Math.max(8,Math.round(D.w/f)),h=Math.max(8,Math.round(D.h/f)),sm=mk(w,h),sx=cx2(sm);sx.imageSmoothingQuality='high';sx.drawImage(src,0,0,w,h);relc(src);
+  const d=sx.getImageData(0,0,w,h).data,N=w*h,B=[];for(let i=0;i<w;i+=2){B.push(i,(h-1)*w+i)}for(let j=0;j<h;j+=2){B.push(j*w,j*w+w-1)}
+  const Cb=kmeans(B.map(k=>[d[k*4],d[k*4+1],d[k*4+2]]),5),F=[],st=Math.max(1,Math.floor(N/50000));for(let k=0;k<N;k+=st)if(cdist(Cb,d[k*4],d[k*4+1],d[k*4+2])>60)F.push([d[k*4],d[k*4+1],d[k*4+2]]);
+  if(F.length<40){hint('Could not find a clear subject – try the Magic wand or lasso',3000);return}const Cf=kmeans(F,6),P=new Float32Array(N);
+  for(let k=0;k<N;k++){const r=d[k*4],g=d[k*4+1],b=d[k*4+2],db=cdist(Cb,r,g,b),df=cdist(Cf,r,g,b);P[k]=db/(db+df+1e-3)}
+  const bg=new Uint8Array(N),S2=[],push=k=>{if(!bg[k]&&P[k]<.5){bg[k]=1;S2.push(k)}};for(let i=0;i<w;i++){push(i);push((h-1)*w+i)}for(let j=0;j<h;j++){push(j*w);push(j*w+w-1)}
+  while(S2.length){const k=S2.pop(),i=k%w;if(i>0)push(k-1);if(i<w-1)push(k+1);if(k>=w)push(k-w);if(k<N-w)push(k+w)}
+  const A=new Float32Array(N);let n=0;for(let k=0;k<N;k++){A[k]=bg[k]?0:1;n+=A[k]}if(n<N*.005||n>N*.97){hint('Could not find a clear subject – try the Magic wand or lasso',3000);return}bblur(A,w,h,1);
+  const am=mk(w,h),ax=cx2(am),ai=ax.createImageData(w,h);for(let k=0;k<N;k++){ai.data[k*4]=ai.data[k*4+1]=ai.data[k*4+2]=255;ai.data[k*4+3]=Math.round(clampN((A[k]-.3)/.4,0,1)*255)}ax.putImageData(ai,0,0);
+  const mc=mk(D.w,D.h),mx=cx2(mc);mx.imageSmoothingEnabled=true;mx.imageSmoothingQuality='high';mx.drawImage(am,0,0,D.w,D.h);selCombine(mc,mode||'new');hint('Subject selected – Shift adds, Alt subtracts with the other selection tools',2600)},30)}
+function bblur(A,w,h,r){const T=new Float32Array(A.length);for(let y=0;y<h;y++){let s=0;const o=y*w;for(let i=-r;i<=r;i++)s+=A[o+clampN(i,0,w-1)];for(let q=0;q<w;q++){T[o+q]=s/(2*r+1);s+=A[o+Math.min(w-1,q+r+1)]-A[o+Math.max(0,q-r)]}}for(let q=0;q<w;q++){let s=0;for(let i=-r;i<=r;i++)s+=T[clampN(i,0,h-1)*w+q];for(let y=0;y<h;y++){A[y*w+q]=s/(2*r+1);s+=T[Math.min(h-1,y+r+1)*w+q]-T[Math.max(0,y-r)*w+q]}}}
+/* ---- content-aware fill ---- */
+function caFill(){const l=curL();if(!needPx(l,'Content-aware fill'))return;if(l.lock)return hint('This layer is locked');if(l.type==='text')return hint('Rasterize the type first');if(!D.sel)return hint('Lasso or select the spot to remove first, then choose Content-aware fill',3200);
+  const sb=selBox();if(!sb)return;hint('Filling from the surrounding fabric…',4000);setTimeout(()=>{try{caRun(l,sb)}catch(e){console.error(e);hint('Content-aware fill failed')}},40)}
+function caRun(l,sb){const bx=sb[0],by=sb[1],bw=sb[2]-sb[0],bh=sb[3]-sb[1],mg=Math.max(24,Math.round(Math.max(bw,bh)*.7)),X0=Math.max(0,Math.floor(bx-mg)),Y0=Math.max(0,Math.floor(by-mg)),X1=Math.min(D.w,Math.ceil(bx+bw+mg)),Y1=Math.min(D.h,Math.ceil(by+bh+mg)),RW=X1-X0,RH=Y1-Y0;
+  const lc=cx2(l.cv),before=lc.getImageData(X0,Y0,RW,RH),smask=cx2(D.sel.mask).getImageData(X0,Y0,RW,RH).data;let hole=0;for(let k=3;k<smask.length;k+=4)if(smask[k]>100)hole++;if(!hole)return hint('Nothing selected');
+  const s=Math.min(1,Math.sqrt(18000/hole),Math.sqrt(250000/(RW*RH))),w=Math.max(8,Math.round(RW*s)),h=Math.max(8,Math.round(RH*s)),N=w*h;
+  const rc=mk(RW,RH);cx2(rc).putImageData(before,0,0);const wc=mk(w,h),wx=cx2(wc);wx.imageSmoothingQuality='high';wx.drawImage(rc,0,0,w,h);const img=wx.getImageData(0,0,w,h),d=img.data;
+  const H=new Uint8Array(N);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const sx=Math.min(RW-1,Math.floor((x+.5)/s)),sy=Math.min(RH-1,Math.floor((y+.5)/s));if(smask[(sy*RW+sx)*4+3]>100)H[y*w+x]=1}
+  for(let k=0;k<N;k++)if(H[k]){const y=(k/w)|0,x=k-y*w;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=x+dx;if(yy>=0&&xx>=0&&yy<h&&xx<w)H[yy*w+xx]=H[yy*w+xx]||2}}
+  for(let k=0;k<N;k++)if(H[k])H[k]=1;
+  const R=3,src=[];for(let y=R;y<h-R;y+=1)for(let x=R;x<w-R;x+=1){let ok=true;for(let dy=-R;dy<=R&&ok;dy+=R)for(let dx=-R;dx<=R;dx+=R)if(H[(y+dy)*w+x+dx]){ok=false;break}if(ok)src.push(y*w+x)}
+  if(src.length<20)return hint('Not enough surrounding area to copy from – select a smaller spot',3000);
+  const known=new Uint8Array(N);for(let k=0;k<N;k++)known[k]=H[k]?0:1;const map=new Int32Array(N).fill(-1);
+  const cost=(p,q,best)=>{const py=(p/w)|0,px=p-py*w,qy=(q/w)|0,qx=q-qy*w;let c=0,n=0;for(let dy=-R;dy<=R;dy++){const a=py+dy,b=qy+dy;if(a<0||a>=h||b<0||b>=h)continue;for(let dx=-R;dx<=R;dx++){const e=px+dx,f=qx+dx;if(e<0||e>=w||f<0||f>=w)continue;const pk=a*w+e;if(!known[pk])continue;const qk=b*w+f,i=pk*4,j=qk*4;c+=(d[i]-d[j])**2+(d[i+1]-d[j+1])**2+(d[i+2]-d[j+2])**2;n++;if(c>best*n)return 1e12}}return n?c/n:1e12};
+  let front=[];const isF=k=>{if(known[k])return false;const y=(k/w)|0,x=k-y*w;return (x>0&&known[k-1])||(x<w-1&&known[k+1])||(y>0&&known[k-w])||(y<h-1&&known[k+w])};
+  for(let k=0;k<N;k++)if(isF(k))front.push(k);let guard=0;
+  while(front.length&&guard++<4000){const next=[];for(const p of front){if(known[p])continue;const py=(p/w)|0,px=p-py*w;let best=1e12,bq=-1;
+      for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){const nx=px+dx,ny=py+dy;if(nx<0||ny<0||nx>=w||ny>=h)continue;const nk=ny*w+nx;if(map[nk]<0)continue;const my=((map[nk]/w)|0)-dy,mx=map[nk]%w-dx;if(mx<R||my<R||mx>=w-R||my>=h-R)continue;const q=my*w+mx;if(H[q]&&!known[q])continue;const c=cost(p,q,best);if(c<best){best=c;bq=q}}
+      for(let t=0;t<70;t++){const q=src[(Math.random()*src.length)|0],c=cost(p,q,best);if(c<best){best=c;bq=q}}
+      if(bq<0)bq=src[(Math.random()*src.length)|0];let qq=bq;for(let t=0;t<12;t++){const qy=((qq/w)|0)+((Math.random()*5)|0)-2,qx=qq%w+((Math.random()*5)|0)-2;if(qx<R||qy<R||qx>=w-R||qy>=h-R)continue;const q=qy*w+qx;if(H[q])continue;const c=cost(p,q,best);if(c<best){best=c;bq=q;qq=q}}
+      map[p]=bq;const i=p*4,j=bq*4;d[i]=d[j];d[i+1]=d[j+1];d[i+2]=d[j+2];d[i+3]=d[j+3];known[p]=1}
+    for(const p of front){const y=(p/w)|0,x=p-y*w;for(const q of [p-1,p+1,p-w,p+w]){if(q<0||q>=N)continue;const qy=(q/w)|0,qx=q-qy*w;if(Math.abs(qx-x)>1)continue;if(!known[q]&&isF(q))next.push(q)}}front=[...new Set(next)]}
+  const out=lc.getImageData(X0,Y0,RW,RH),o=out.data,od=before.data;
+  for(let y=0;y<RH;y++)for(let x=0;x<RW;x++){const i=(y*RW+x)*4,a=smask[i+3]/255;if(a<=0)continue;const wx2=Math.min(w-1,Math.floor(x*s)),wy2=Math.min(h-1,Math.floor(y*s)),k=wy2*w+wx2;let r,g,b,al;
+    if(map[k]>=0){const qy=(map[k]/w)|0,qx=map[k]%w,sx=clampN(Math.round(x+(qx-wx2)/s),0,RW-1),sy=clampN(Math.round(y+(qy-wy2)/s),0,RH-1),j=(sy*RW+sx)*4;r=od[j];g=od[j+1];b=od[j+2];al=od[j+3]}else{const j=k*4;r=d[j];g=d[j+1];b=d[j+2];al=d[j+3]}
+    o[i]=od[i]+(r-od[i])*a;o[i+1]=od[i+1]+(g-od[i+1])*a;o[i+2]=od[i+2]+(b-od[i+2])*a;o[i+3]=od[i+3]+(al-od[i+3])*a}
+  lc.putImageData(out,X0,Y0);pushH(pxEntry(l,false,before,X0,Y0,RW,RH),'Content-aware fill');touch(l,false);hint('Filled – Ctrl+Z to undo, or run it again for a different result',2600)}
+/* ---- liquify ---- */
+let LIQ=null;const LQM=[['push','Forward warp'],['bloat','Bloat'],['pinch','Pucker'],['twirl','Twirl'],['recon','Reconstruct']];
+function liqStart(){const l=curL();if(!needPx(l,'Liquify'))return;if(l.lock)return hint('This layer is locked');if(l.type==='text')rasterize(l,true);if(XFORM)xfCommit();
+  const k=D.w*D.h>9e6?.25:D.w*D.h>2.5e6?.5:1,fw=Math.ceil(D.w*k),fh=Math.ceil(D.h*k);LIQ={l,orig:wholeBefore(l,false),k,fw,fh,DX:new Float32Array(fw*fh),DY:new Float32Array(fw*fh),mode:(LIQ&&LIQ.mode)||'push',size:(LIQ&&LIQ.size)||Math.round(Math.min(D.w,D.h)*.08),pr:(LIQ&&LIQ.pr)||50,last:null,iv:0};
+  openPanel('liq');hint('Drag on the canvas to push the pixels. Bloat, Pucker and Twirl work while you hold',3000)}
+function liqHTML(){const L=LIQ;if(!L)return '';return `<h4>Liquify<button data-l="liq:cancel">&times;</button></h4><div class="adjg">${LQM.map(([k,n])=>`<button class="lch${L.mode===k?' on':''}" data-l="liq:m:${k}">${n}</button>`).join('')}</div>
+  <label class="lbl">Brush size <b id="lqSv">${L.size}</b> px</label><input type="range" min="4" max="${Math.round(Math.max(D.w,D.h)/2)}" value="${L.size}" data-lq2="size">
+  <label class="lbl">Pressure <b id="lqPv">${L.pr}</b></label><input type="range" min="5" max="100" value="${L.pr}" data-lq2="pr">
+  <div class="rw" style="margin-top:12px"><button class="lch" data-l="liq:reset">Restore all</button><button class="lch" data-l="liq:cancel">Cancel</button><button class="lch pri" data-l="liq:apply">Apply</button></div>
+  <p class="pnote">Forward warp pushes pixels the way you drag. Bloat grows, Pucker shrinks, Twirl spins. Reconstruct paints back to the original.</p>`}
+function liqAct(v){const L=LIQ;if(!L)return;const [a,b]=v.split(':');if(a==='m'){L.mode=b;drawPanel()}else if(a==='reset'){L.DX.fill(0);L.DY.fill(0);cx2(L.l.cv).putImageData(L.orig,0,0);touch(L.l,false)}else if(a==='apply')liqEnd(true);else if(a==='cancel')liqEnd(false)}
+function liqEnd(ok){const L=LIQ;if(!L)return;LIQ=null;clearInterval(L.iv);if(ok)pushH(wholeEntry(L.l,false,L.orig),'Liquify');else cx2(L.l.cv).putImageData(L.orig,0,0);touch(L.l,false);if(PANEL==='liq'){PANEL='layers';drawPanel()}}
+function liqBrush(p,vx,vy){const L=LIQ,k=L.k,cx=p.x*k,cy=p.y*k,R=L.size/2*k,pr=L.pr/100,x0=Math.max(0,Math.floor(cx-R)),x1=Math.min(L.fw-1,Math.ceil(cx+R)),y0=Math.max(0,Math.floor(cy-R)),y1=Math.min(L.fh-1,Math.ceil(cy+R));
+  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const dx=x-cx,dy=y-cy,dd=Math.hypot(dx,dy)/R;if(dd>=1)continue;const f=(1-dd*dd)**2*pr,i=y*L.fw+x;
+    if(L.mode==='push'){L.DX[i]-=vx*f;L.DY[i]-=vy*f}else if(L.mode==='bloat'){L.DX[i]-=dx/k*f*.06;L.DY[i]-=dy/k*f*.06}else if(L.mode==='pinch'){L.DX[i]+=dx/k*f*.06;L.DY[i]+=dy/k*f*.06}
+    else if(L.mode==='twirl'){L.DX[i]+=dy/k*f*.05;L.DY[i]-=dx/k*f*.05}else if(L.mode==='recon'){L.DX[i]*=1-f*.3;L.DY[i]*=1-f*.3}}
+  liqRender(Math.floor(x0/k)-2,Math.floor(y0/k)-2,Math.ceil((x1+1)/k)+2,Math.ceil((y1+1)/k)+2)}
+function liqRender(X0,Y0,X1,Y1){const L=LIQ;X0=Math.max(0,X0);Y0=Math.max(0,Y0);X1=Math.min(D.w,X1);Y1=Math.min(D.h,Y1);const W=X1-X0,Hh=Y1-Y0;if(W<1||Hh<1)return;const o=L.orig.data,out=new ImageData(W,Hh),q=out.data,k=L.k,fw=L.fw,fh=L.fh,DW=D.w,DH=D.h;
+  for(let y=0;y<Hh;y++)for(let x=0;x<W;x++){const X=X0+x,Y=Y0+y,fx=Math.min(fw-1.001,X*k),fy=Math.min(fh-1.001,Y*k),ix=fx|0,iy=fy|0,ax=fx-ix,ay=fy-iy,i=iy*fw+ix,i2=Math.min(fh-1,iy+1)*fw+ix,j=Math.min(fw-1,ix+1)-ix;
+    const dx=(L.DX[i]*(1-ax)+L.DX[i+j]*ax)*(1-ay)+(L.DX[i2]*(1-ax)+L.DX[i2+j]*ax)*ay,dy=(L.DY[i]*(1-ax)+L.DY[i+j]*ax)*(1-ay)+(L.DY[i2]*(1-ax)+L.DY[i2+j]*ax)*ay;
+    const sx=clampN(X+dx,0,DW-1.001),sy=clampN(Y+dy,0,DH-1.001),sx0=sx|0,sy0=sy|0,bx=sx-sx0,by=sy-sy0,p00=(sy0*DW+sx0)*4,p10=p00+(sx0<DW-1?4:0),p01=p00+(sy0<DH-1?DW*4:0),p11=p01+(sx0<DW-1?4:0),t=(y*W+x)*4;
+    for(let c=0;c<4;c++)q[t+c]=(o[p00+c]*(1-bx)+o[p10+c]*bx)*(1-by)+(o[p01+c]*(1-bx)+o[p11+c]*bx)*by}
+  cx2(L.l.cv).putImageData(out,X0,Y0);L.l.v++;dirtyComp=true;req()}
+function liqDown(p){const L=LIQ;if(!L)return;L.last=p;if(L.mode!=='push'){liqBrush(p,0,0);clearInterval(L.iv);L.iv=setInterval(()=>{if(LIQ&&LIQ.last)liqBrush(LIQ.last,0,0)},40)}}
+function liqMove(p){const L=LIQ;if(!L||!L.last)return;const vx=p.x-L.last.x,vy=p.y-L.last.y;if(L.mode==='push'){if(Math.hypot(vx,vy)<1)return;liqBrush(p,vx,vy)}L.last=p}
+function liqUp(){const L=LIQ;if(!L)return;L.last=null;clearInterval(L.iv)}
+function liqOverlay(x,h){if(!LIQ||!CUR.show)return;x.save();x.lineWidth=h*1.5;x.strokeStyle='rgba(255,255,255,.9)';x.beginPath();x.arc(CUR.x,CUR.y,LIQ.size/2,0,7);x.stroke();x.strokeStyle='rgba(0,0,0,.5)';x.beginPath();x.arc(CUR.x,CUR.y,LIQ.size/2+h,0,7);x.stroke();x.restore()}
+popEl.addEventListener('input',e=>{const t=e.target;if(!LIQ||!t.dataset||!t.dataset.lq2)return;LIQ[t.dataset.lq2]=+t.value;const b=$(t.dataset.lq2==='size'?'#lqSv':'#lqPv');if(b)b.textContent=t.value;req()});
+/* ---- pen tool ---- */
+let PTH=null,PD=null;
+function penPath(P){const g=new Path2D(),a=P.pts;if(!a.length)return g;g.moveTo(a[0].x,a[0].y);const seg=(p,q)=>g.bezierCurveTo(p.x+p.ho[0],p.y+p.ho[1],q.x+q.hi[0],q.y+q.hi[1],q.x,q.y);for(let i=1;i<a.length;i++)seg(a[i-1],a[i]);if(P.closed&&a.length>2){seg(a[a.length-1],a[0]);g.closePath()}return g}
+function penDown(p,e){const r=10/V.s;if(!PTH||PTH.closed&&!e.altKey)PTH=PTH&&!PTH.closed?PTH:{pts:[],closed:false};const a=PTH.pts;
+  const hit=a.findIndex(q=>Math.hypot(q.x-p.x,q.y-p.y)<r);if(hit===0&&a.length>2&&!PTH.closed){PTH.closed=true;PD={i:0,close:true};drawOpt();req();return}
+  if(hit>=0){PD={i:hit,move:true,ox:p.x-a[hit].x,oy:p.y-a[hit].y};return}if(PTH.closed)PTH={pts:[],closed:false};PTH.pts.push({x:p.x,y:p.y,hi:[0,0],ho:[0,0]});PD={i:PTH.pts.length-1};drawOpt();req()}
+function penDrag(p){if(!PTH||!PD)return;const q=PTH.pts[PD.i];if(PD.move){q.x=p.x-PD.ox;q.y=p.y-PD.oy}else{q.ho=[p.x-q.x,p.y-q.y];q.hi=[-(p.x-q.x),-(p.y-q.y)]}req()}
+function penUp(){PD=null;req()}
+function penOverlay(x,h){if(TOOL.t!=='pen'||!PTH||!PTH.pts.length)return;const a=PTH.pts;x.save();x.lineWidth=h*1.6;x.strokeStyle='#39a0ff';x.stroke(penPath(PTH));
+  if(!PTH.closed&&CUR.show){const q=a[a.length-1];x.setLineDash([4*h,4*h]);x.beginPath();x.moveTo(q.x,q.y);x.bezierCurveTo(q.x+q.ho[0],q.y+q.ho[1],CUR.x,CUR.y,CUR.x,CUR.y);x.stroke();x.setLineDash([])}
+  a.forEach((q,i)=>{if(q.ho[0]||q.ho[1]){x.strokeStyle='rgba(57,160,255,.7)';x.beginPath();x.moveTo(q.x+q.hi[0],q.y+q.hi[1]);x.lineTo(q.x+q.ho[0],q.y+q.ho[1]);x.stroke();for(const hd of [q.hi,q.ho]){x.fillStyle='#39a0ff';x.beginPath();x.arc(q.x+hd[0],q.y+hd[1],3*h,0,7);x.fill()}}
+    x.fillStyle=i===0&&!PTH.closed?'#39a0ff':'#fff';x.strokeStyle='#1f6fd0';x.fillRect(q.x-4*h,q.y-4*h,8*h,8*h);x.strokeRect(q.x-4*h,q.y-4*h,8*h,8*h)});x.restore()}
+function penOpt(ch){const n=PTH?PTH.pts.length:0;return `<span class="otip">${n?(PTH.closed?'Path closed':'Click the first point to close'):'Click to add points, drag to curve'}</span>`+(n>1?ch(false,'pth:sel','Make selection')+ch(false,'pth:fill','Fill path')+ch(false,'pth:stroke','Stroke path')+ch(false,'pth:shape','New shape layer'):'')+(n?ch(false,'pth:clear','Clear path'):'')}
+function pthAct(v){if(!PTH||PTH.pts.length<2){if(v==='clear'){PTH=null;drawOpt();req()}return}const g=penPath(PTH);
+  if(v==='clear'){PTH=null}
+  else if(v==='sel'){const mc=mk(D.w,D.h),x=cx2(mc);x.fillStyle='#fff';x.fill(g);selCombine(mc,'new');hint('Selection made from the path')}
+  else if(v==='shape'){if(!ensureRoom(1))return limitHint();stOp(()=>{const n=newLayer('Shape');const x=cx2(n.cv);x.fillStyle=TOOL.color;x.fill(g);insertAbove(n)},'Shape from path')}
+  else{const l=curL();if(!needPx(l,'The path'))return;if(l.type==='text')rasterize(l,true);const b=wholeBefore(l,false),x=cx2(l.cv);x.save();if(v==='fill'){x.fillStyle=TOOL.color;x.fill(g)}else{x.strokeStyle=TOOL.color;x.lineWidth=Math.max(1,sizeNow());x.lineCap=x.lineJoin='round';x.stroke(g)}x.restore();pushH(wholeEntry(l,false,b),v==='fill'?'Fill path':'Stroke path');touch(l,false)}
+  drawOpt();req()}
+/* ---- colour separations ---- */
+let SEP=null;
+function sepOpen(){const l=curL();SEP={src:'visible',n:4,ub:false,inks:null,price:25};sepCompute();sepSheet()}
+function sepSource(){const c=mk(D.w,D.h);if(SEP.src==='layer'){const l=curL();if(l&&l.type!=='group')cx2(c).drawImage(l.cv,0,0)}else{const g=D.garment&&D.layers.find(x=>x.id===D.garment),sv=D.layers.map(x=>[x,x.vis,x.clip]);if(g){D.layers.forEach(x=>{if(x===g||x.type==='adj'||(x.clip&&x.blend==='multiply')||/fabric shading/i.test(x.name))x.vis=false;else if(x.clip)x.clip=false})}composite(c,true);sv.forEach(([x,v,cl])=>{x.vis=v;x.clip=cl});D.layers.forEach(x=>{x.v++});dirtyComp=true}return c}
+function sepCompute(){const c=sepSource(),f=Math.max(1,Math.sqrt(D.w*D.h/4e5)),w=Math.round(D.w/f),h=Math.round(D.h/f),s=mk(w,h);cx2(s).drawImage(c,0,0,w,h);relc(c);const d=cx2(s).getImageData(0,0,w,h).data,P=[];for(let k=0;k<d.length;k+=4)if(d[k+3]>128)P.push([d[k],d[k+1],d[k+2]]);
+  SEP.empty=P.length<20;if(SEP.empty){SEP.inks=[];return}const C=kmeans(P,SEP.n,12),cnt=C.map(()=>0);for(const p of P){let bi=0,bd=1e9;C.forEach((c,i)=>{const dd=(p[0]-c[0])**2+(p[1]-c[1])**2+(p[2]-c[2])**2;if(dd<bd){bd=dd;bi=i}});cnt[bi]++}
+  SEP.inks=C.map((c,i)=>({hex:rgbToHex(c[0],c[1],c[2]),n:cnt[i]})).filter(x=>x.n>P.length*.002).sort((a,b)=>b.n-a.n);SEP.total=P.length}
+function sepSheet(){const S2=SEP,scr=S2.inks.length+(S2.ub?1:0);sheetIn.innerHTML=`<h3>Colour separations (screen print)<button data-l="sheetclose">&times;</button></h3>
+  <p class="pnote">Splits the artwork into one solid ink per screen – each becomes a black film you can print on transparency. Runs on this device.</p>
+  <h5>Artwork</h5><div class="rw">${[['visible','Everything except the mockup'],['layer','Selected layer only']].map(([k,n])=>`<button class="lch${S2.src===k?' on':''}" data-l="sep:src:${k}">${n}</button>`).join('')}</div>
+  <h5>Number of inks</h5><div class="rw">${[1,2,3,4,5,6,8].map(n=>`<button class="lch${S2.n===n?' on':''}" data-l="sep:n:${n}">${n}</button>`).join('')}</div>
+  ${S2.empty?'<p class="pnote" style="color:#ff9a9a">No artwork found – pick the layer with your print and choose “Selected layer only”.</p>':`<h5>Inks (tap a colour to change it)</h5><div class="sepk">${S2.inks.map((k,i)=>`<label><input type="color" value="${k.hex}" data-sepc="${i}"><span>Ink ${i+1}<i>${Math.round(k.n/S2.total*100)}%</i></span></label>`).join('')}</div>`}
+  <div class="rw"><button class="lch${S2.ub?' on':''}" data-l="sep:ub">White underbase (dark garments)</button></div>
+  <h5>Setup cost</h5><div class="rw sepc"><label>Price per screen $<input type="number" min="0" value="${S2.price}" data-sepp></label><b>${scr} screen${scr===1?'':'s'} · $${(scr*S2.price).toFixed(2)} setup</b></div>
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sep:layers"${S2.empty?' disabled':''}>Make separation layers</button><button class="lch pri" data-l="sep:pdf"${S2.empty?' disabled':''}>Export films PDF</button></div>`;sheetEl.hidden=false}
+function sepAssign(){const c=sepSource(),d=cx2(c).getImageData(0,0,D.w,D.h).data,C=SEP.inks.map(k=>hexToRgb(k.hex)),N=D.w*D.h,A=new Int8Array(N).fill(-1);
+  for(let k=0;k<N;k++){const q=k*4;if(d[q+3]<=128)continue;let bi=0,bd=1e9;for(let i=0;i<C.length;i++){const e=C[i],dd=(d[q]-e[0])**2+(d[q+1]-e[1])**2+(d[q+2]-e[2])**2;if(dd<bd){bd=dd;bi=i}}A[k]=bi}relc(c);return A}
+function sepFilm(A,i,col){const c=mk(D.w,D.h),x=cx2(c),im=x.createImageData(D.w,D.h),o=im.data,[r,g,b]=col?hexToRgb(col):[0,0,0];for(let k=0;k<A.length;k++){if(i===-2?A[k]<0:A[k]!==i)continue;const q=k*4;o[q]=r;o[q+1]=g;o[q+2]=b;o[q+3]=255}x.putImageData(im,0,0);return c}
+function sepLayers(){if(!ensureRoom(SEP.inks.length+2))return limitHint();hint('Separating…',2000);setTimeout(()=>{const A=sepAssign();stOp(()=>{const g=newGroup('Separations');D.layers.push(g);
+    const mk2=(name,cv)=>{const n=newLayer(name);cx2(n.cv).drawImage(cv,0,0);n.gid=g.id;D.layers.push(n)};if(SEP.ub)mk2('Underbase (white)',sepFilm(A,-2,'#ffffff'));
+    SEP.inks.forEach((k,i)=>mk2('Ink '+(i+1)+' '+k.hex,sepFilm(A,i,k.hex)));relinearize();D.cur=g.id},'Colour separations');sheetEl.hidden=true;hint('Separation layers added in a group – hide the originals to preview the print',3200)},30)}
+async function sepPdf(){hint('Building films…',4000);await new Promise(r=>setTimeout(r,30));const A=sepAssign(),ppi=D.ppi||300,M=Math.round(.6*ppi),W=D.w+M*2,H=D.h+M*2,pages=[],list=[];
+  if(SEP.ub)list.push(['White underbase','#ffffff',-2]);SEP.inks.forEach((k,i)=>list.push(['Ink '+(i+1),k.hex,i]));
+  for(const [name,hex,i] of list){const c=mk(W,H),x=cx2(c);x.fillStyle='#fff';x.fillRect(0,0,W,H);const f=sepFilm(A,i);x.drawImage(f,M,M);relc(f);
+    const reg=(cx,cy)=>{const r=M*.22;x.strokeStyle='#000';x.lineWidth=Math.max(2,ppi/100);x.beginPath();x.arc(cx,cy,r,0,7);x.moveTo(cx-r*1.6,cy);x.lineTo(cx+r*1.6,cy);x.moveTo(cx,cy-r*1.6);x.lineTo(cx,cy+r*1.6);x.stroke()};reg(W/2,M/2);reg(W/2,H-M/2);reg(M/2,H/2);reg(W-M/2,H/2);
+    x.fillStyle='#000';x.font=`600 ${Math.round(M*.16)}px ${FF}`;x.fillText(`${D.name} · ${name} ${hex.toUpperCase()} · ${list.length} screens`,M,M*.45);x.fillStyle=hex;x.fillRect(W-M*1.6,M*.2,M*.5,M*.3);x.strokeRect(W-M*1.6,M*.2,M*.5,M*.3);
+    const b=await new Promise(r=>c.toBlob(r,'image/jpeg',.92));pages.push({jpeg:new Uint8Array(await b.arrayBuffer()),w:W,h:H,pw:W/ppi*72,ph:H/ppi*72});relc(c)}
+  const blob=pdfFromPages(pages),nm=(D.name||'design').toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-separations.pdf';if(await saveBlob(nm,blob))hint(`Films saved – ${list.length} pages, one per screen`,2600)}
+function sepAct(v){const [a,b]=v.split(':');if(a==='src'){SEP.src=b;sepCompute()}else if(a==='n'){SEP.n=+b;sepCompute()}else if(a==='ub')SEP.ub=!SEP.ub;else if(a==='layers')return sepLayers();else if(a==='pdf')return sepPdf();sepSheet()}
+sheetIn.addEventListener('input',e=>{const t=e.target;if(!SEP||!t.dataset)return;if(t.dataset.sepc!=null){SEP.inks[+t.dataset.sepc].hex=t.value}else if(t.dataset.sepp!=null){SEP.price=Math.max(0,+t.value||0);const b=sheetIn.querySelector('.sepc b'),n=SEP.inks.length+(SEP.ub?1:0);if(b)b.textContent=`${n} screen${n===1?'':'s'} · $${(n*SEP.price).toFixed(2)} setup`}});
+/* ---- linked lookbook ---- */
+let EDRET=false;
+async function linkSync(quiet){if(!D||D.inner)return 0;const id=D.id,hit=S.items.filter(it=>it.des===id&&!(it.ways&&it.ways.length>1)),others=[];
+  for(const b of await libGet()){if(b.id===curId())continue;const r=await IDB.get('lb:'+b.id);if(r&&(r.items||[]).some(it=>it.des===id))others.push([b.id,r])}if(!hit.length&&!others.length)return 0;
+  if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),r=await shrink(blob,GMAX);hit.forEach(it=>{it.src=r.src;it.ar=r.ar;it.a=null});if(hit.length){changed();try{render()}catch(_){}}
+  for(const [bid,rec] of others){rec.items.forEach(it=>{if(it.des===id&&!(it.ways&&it.ways.length>1)){it.src=r.src;it.ar=r.ar;it.a=null}});await IDB.set('lb:'+bid,rec)}
+  const n=hit.length+others.length;if(!quiet)hint(`Lookbook updated (${n} linked garment${n>1?'s':''})`,2200);return n}
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -3598,6 +3731,7 @@ function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=
   else if(t==='crop')h+=`<span class="otip">Drag the area to keep</span>`+(CROP?ch(false,'crop:cancel','Cancel (Esc)')+ch(false,'crop:apply','✓ Crop (Enter)','go'):'')+ch(false,'sa:crop','Crop to selection');
   else if(t==='zoom')h+=ch(false,'zin','Zoom in')+ch(false,'zout','Zoom out')+ch(false,'zoom100','100%')+ch(false,'fitview','Fit on screen')+`<span class="otip">Click to zoom in · Alt-click to zoom out</span>`;
   else if(t==='rotv')h+=`<span class="otip">Drag to rotate the view (${Math.round(V.r*180/Math.PI)}°)</span>`+ch(false,'rotreset','Reset view');
+  else if(t==='pen')h+=penOpt(ch);
   else if(t==='shape')h+=[['rect','Rect'],['rrect','Rounded'],['ellipse','Ellipse'],['tri','Triangle'],['star','Star'],['hex','Hexagon'],['line','Line'],['arrow','Arrow']].map(([a,n])=>ch(TOOL.shape.k===a,'shk:'+a,n)).join('')+ch(TOOL.shape.fill,'shfill',TOOL.shape.fill?'Filled':'Outline')+sl('sw','Line width',1,160,TOOL.shape.sw,'px');
   else if(t==='text')h+=`<span class="otip">Tap the canvas to add type, or tap existing type to edit it</span>`+(l&&l.type==='text'?ch(false,'panel:text','Edit type'):'');
   else h+=`<span class="otip">${tip}</span>`;
@@ -3612,17 +3746,17 @@ let PREVT='brush';
 /* ---------- right panel ---------- */
 let MULTI=false,PANEL='layers',TEXTEDIT=null,OPSNAP=null,OPENMENU=null,FCAT='All',COLTGT='fg';
 function openPanel(n){if(n==='colour2'){COLTGT='bg';n='colour'}else if(n==='colour')COLTGT='fg';if(PANEL===n&&!popEl.hidden&&!['text','adjust','fonts'].includes(n)&&n!=='colour'){popEl.hidden=true;updBar();if(desk())fit();return}
-  if(PANEL==='adjust'&&n!=='adjust'&&ADJ)adjEnd(false);if((PANEL==='text'||PANEL==='fonts')&&n!=='text'&&n!=='fonts')commitText();
+  if(PANEL==='liq'&&n!=='liq'&&LIQ)liqEnd(false);if(PANEL==='adjust'&&n!=='adjust'&&ADJ)adjEnd(false);if((PANEL==='text'||PANEL==='fonts')&&n!=='text'&&n!=='fonts')commitText();
   if(n==='text'){const l=curL();if(!l||l.type!=='text')return;if(!TEXTEDIT||TEXTEDIT.l!==l)TEXTEDIT={l,b:snapSt()}}
   const wasHidden=popEl.hidden;PANEL=n;popEl.hidden=false;popEl._t=performance.now();drawPanel();updBar();if(wasHidden&&desk())fit()}
-function closePanel(){if(PANEL==='adjust'&&ADJ)adjEnd(false);if(PANEL==='text'||PANEL==='fonts')commitText();popEl.hidden=true;updBar();if(desk())fit()}
+function closePanel(){if(LIQ)liqEnd(false);if(PANEL==='adjust'&&ADJ)adjEnd(false);if(PANEL==='text'||PANEL==='fonts')commitText();popEl.hidden=true;updBar();if(desk())fit()}
 function commitText(){const T2=TEXTEDIT;if(!T2)return;TEXTEDIT=null;const a=snapSt();if(JSON.stringify(a.layers.map(o=>o.m.t))!==JSON.stringify(T2.b.layers.map(o=>o.m.t)))pushH({k:'st',b:T2.b,a},'Edit type');touch(T2.l,false)}
 let rpT=0;function refreshPanels(){if(popEl.hidden||!D)return;if(PANEL==='layers'||PANEL==='history'){clearTimeout(rpT);rpT=setTimeout(drawPanel,60)}stat()}
 function tabs(){return `<div class="ptabs">${[['layers','Layers'],['colour','Colour'],['history','History']].map(([k,n])=>`<button class="${PANEL===k||(k==='colour'&&PANEL==='colour')?'on':''}" data-l="panel:${k}">${n}</button>`).join('')}<button class="px" data-l="closepanel" title="Close panel">&times;</button></div>`}
 function drawPanel(){if(!D||popEl.hidden)return;if((PANEL==='text'||PANEL==='fonts')&&!TEXTEDIT)PANEL='layers';if(PANEL==='adjust'&&!ADJ)PANEL='layers';const n=PANEL;let h='';
   if(desk()&&(n==='colour'||n==='history')){if(n==='history')STK.lt='history';else STK.ct='color';PANEL=n='layers'}popEl.classList.toggle('stk',n==='layers'&&desk());if(n==='layers'&&desk())h=stackHTML();else if(n==='layers')h=tabs()+layersHTML();else if(n==='colour')h=tabs()+colourHTML();else if(n==='history')h=tabs()+historyHTML();
   else if(n==='brushes')h=`<h4>Brushes<button data-l="panel:layers">&times;</button></h4><div class="bl">${BR.map(b=>`<button class="${curBrush().id===b.id?'on':''}" data-l="br:${b.id}"><span>${b.n}</span><canvas data-bprev="${b.id}" width="220" height="68"></canvas></button>`).join('')}</div>`;
-  else if(n==='text')h=textHTML();else if(n==='pattern')h=patHTML();else if(n==='fonts')h=fontsHTML();else if(n==='adjust')h=adjHTML();
+  else if(n==='text')h=textHTML();else if(n==='pattern')h=patHTML();else if(n==='fonts')h=fontsHTML();else if(n==='adjust')h=adjHTML();else if(n==='liq')h=liqHTML();
   else if(n==='feather')h=`<h4>Feather selection<button data-l="panel:layers">&times;</button></h4><p class="pnote">Softens the edge of the selection so paint and masks fade out.</p><label class="lbl">Radius <b id="fthv">12</b> px</label><input type="range" min="1" max="120" value="12" id="fthr"><div class="rw" style="margin-top:12px"><button class="lch pri" data-l="dofeather">Feather</button></div>`;
   popEl.innerHTML=h;
   if(n==='brushes')popEl.querySelectorAll('[data-bprev]').forEach(c=>brushPreview(c,brOf(c.dataset.bprev)));
@@ -3781,7 +3915,7 @@ async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('
   relinearize();D.lsel=new Set();if(!D.layers.find(l=>l.id===D.cur))D.cur=D.layers[D.layers.length-1].id;
   for(const l of D.layers)if(l.type==='text'){if(!fontReady(l.t.font))await ensureFont(l.t.font);try{await document.fonts.load(`40px ${fontCss(l.t.font)}`)}catch(e){}renderText(l);park(l,true)}
   openEditor()}
-async function leaveEditor(){if(SMS.length&&D&&D.id===SMS[SMS.length-1].inner)return smReturn();if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();closeMenu();await saveDoc(true);if(D&&D.pat){try{await patSave(true)}catch(e){}}edEl.hidden=true;galEl.hidden=false;D=null;freeTmp();drawGallery()}
+async function leaveEditor(){if(SMS.length&&D&&D.id===SMS[SMS.length-1].inner)return smReturn();if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();closeMenu();try{await linkSync(true)}catch(e){console.error(e)}await saveDoc(true);if(D&&D.pat){try{await patSave(true)}catch(e){}}edEl.hidden=true;galEl.hidden=false;D=null;freeTmp();drawGallery();if(EDRET){EDRET=false;labEl.hidden=true;H2.classList.remove('inlab');kick()}}
 async function drawGallery(){const m=(await IDB.get('dlib'))||[];$('#labGrid').innerHTML=`<div class="dg" style="--i:0"><button class="dg-o dg-new" data-l="new"><b>+</b></button><span class="dg-n">New design</span><span class="dg-m">Your mockup or a blank canvas</span></div>`+
   m.map((d,i)=>`<div class="dg" style="--i:${i+1}"><button class="dg-o" data-l="dopen:${d.id}" style="background-image:url(${d.thumb||''})"></button><span class="dg-n chrome">${esc(d.name)}</span><span class="dg-m">${new Date(d.updated).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span><div class="dg-a"><button data-l="dren:${d.id}">Rename</button><button data-l="ddup:${d.id}">Duplicate</button><button data-l="ddel:${d.id}">Delete</button></div></div>`).join('')}
 
@@ -3825,7 +3959,7 @@ async function exportDoc(kind){const c=flatten(kind==='clear');let blob;if(kind=
 async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));sheetIn.innerHTML=`<h3>Send to a lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Your design is added as a new garment with a transparent background, so scenes and lighting sit behind it.</p><h5>Lookbooks</h5><div class="tpl">
   <button data-l="sendto:__new"><i>+ New</i><span>New lookbook</span></button>${l.map(b=>`<button data-l="sendto:${esc(b.id)}"><i style="background:#0c0c0c ${b.cover?`url(${b.cover}) center/contain no-repeat`:''}"></i><span>${esc(b.name||'Untitled')}${b.id===(S.lid||'default')?' · current':''}</span></button>`).join('')}${l.length?'':`<button data-l="sendto:__cur"><i>Current</i><span>Current lookbook</span></button>`}</div>`;sheetEl.hidden=false}
 async function sendToLookbook(target){hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
-  try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
+  try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false,des:D.id});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
     requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+name+'" added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the design')}}
 $('#labFont').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const buf=await f.arrayBuffer(),n=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+(regular|normal)$/i,'').trim()||'My font';await addFontBuf(n,buf,'Yours',false);FCAT='Yours';TOOL.font=n;if(TEXTEDIT){TEXTEDIT.l.t.font=n;renderText(TEXTEDIT.l)}drawPanel();hint('Font added: '+n)}catch(err){toast('That font file could not be read')}});
 /* ---------- HD: original-quality images ---------- */
@@ -4409,7 +4543,7 @@ let PTSNAP=null,PTRAF=0;
 /* ---------- click actions ---------- */
 function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
   switch(k){
-    case'home':closeLab();break;case'gallery':leaveEditor();break;case'new':closeMenu();templateSheet();break;case'sheetclose':sheetEl.hidden=true;if(STY)styAct('cancel');break;
+    case'home':closeLab(EDRET);break;case'gallery':leaveEditor();break;case'new':closeMenu();templateSheet();break;case'sheetclose':sheetEl.hidden=true;if(STY)styAct('cancel');break;
     case'blank':{sheetEl.hidden=true;const [w,h]=v.split('x').map(Number);newDoc({ar:w/h});break}
     case'photo':sheetEl.hidden=true;importMode='new';$('#labFile').click();break;case'lbnew':importMode='new';lbPickSheet();break;
     case'lbitem':{sheetEl.hidden=true;const it=S.items.find(x=>x.id===v);if(it)loadIm(it.src).then(im=>placeImg(im,(it.fields||{}).name||'Garment',importMode==='new'));break}
@@ -4467,7 +4601,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'zin':zoomBy(1.25);break;case'zout':zoomBy(.8);break;
     case'exp':exportDoc(v);break;case'sendlb':sendSheet();break;case'sendto':sheetEl.hidden=true;sendToLookbook(v);break;
     case'rename':askName('Rename design',D.name,nv=>{if(nv){D.name=nv;D.changed=true;schedSave();updBar()}});break;
-    case'save':saveDoc(true).then(()=>hint('Saved'));break;
+    case'save':saveDoc(true).then(async()=>{const n=await linkSync(true).catch(()=>0);hint(n?'Saved – linked lookbook updated':'Saved')});break;
     case'dupdoc':(async()=>{await saveDoc(true);const r=await IDB.get('des:'+D.id);if(r){const id=lid();r.id=id;r.name=D.name+' copy';await IDB.set('des:'+id,r);const m=(await IDB.get('dlib'))||[];m.unshift({id,name:r.name,thumb:r.thumb,updated:Date.now()});await IDB.set('dlib',m);hint('Copy saved to the gallery')}})();break;
     case'canvas':sizeSheet('canvas');break;case'imgsize':sizeSheet('image');break;
     case'dosize':if(v==='image')isApply();else csApply();break;
@@ -4475,7 +4609,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'hist':histJump(+v);break;
     case'group':groupLayers();break;case'ungroup':ungroup(l&&l.type==='group'?l:parentOf(l));break;case'newgroup':newEmptyGroup();break;case'delgroup':if(l&&l.type==='group')ungroup(l);OPENMENU=null;break;
     case'stamp':stampVisible();break;case'fillsheet':fillSheet();break;case'dofill':doFill();break;case'strokesheet':strokeSheet();break;case'dostroke':doStroke();break;case'keys':keysSheet();break;
-    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
+    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'selsubj':selectSubject(v||'new');break;case'cafill':caFill();break;case'liquify':liqStart();break;case'liq':liqAct(v);break;case'pth':pthAct(v);break;case'sepsheet':sepOpen();break;case'sep':sepAct(v);break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
     case'collapse':{const g=byId(v);if(g){g.collapsed=!g.collapsed;D.changed=true;schedSave();drawPanel()}break}
     case'desat':applyNow('bw');break;case'invertnow':applyNow('invert');break;
     case'noedges':VIEW.noedges=!VIEW.noedges;req();hint(VIEW.noedges?'Selection edges hidden (Ctrl+H)':'Selection edges shown');break;
@@ -4557,9 +4691,9 @@ function selModeOf(e){return e.shiftKey?'add':e.altKey?'sub':TOOL.selMode}
 function layerAt(p){const x=Math.floor(p.x),y=Math.floor(p.y);if(x<0||y<0||x>=D.w||y>=D.h)return null;for(let i=D.layers.length-1;i>=0;i--){const l=D.layers[i];if(l.type==='group'||!effVis(l))continue;const p=pieceOf(l);if(!p.c)continue;const px=x-p.x,py=y-p.y;if(px<0||py<0||px>=p.c.width||py>=p.c.height)continue;if(cx2(p.c).getImageData(px,py,1,1).data[3]>10)return l}return null}
 function toolDown(p,e){const t=TOOL.t;
   if(TPATH){TPATH.pts=[[p.x,p.y]];ACT='tpath';return}
-  if(GCPICK){gcAt(p);return}
+  if(LIQ){liqDown(p);ACT='liq';return}if(GCPICK){gcAt(p);return}
   if(['brush','erase','smudge','clone','dodge'].includes(t)){strokeStart(p,e);if(STROKE)ACT='stroke';return}
-  if(t==='pick'){pickAt(p.x,p.y);ACT='pick';return}
+  if(t==='pen'){penDown(p,e);ACT='pen';return}if(t==='pick'){pickAt(p.x,p.y);ACT='pick';return}
   if(t==='fill'){if(TOOL.fm==='recolour')recolour(p.x,p.y);else floodFill(p.x,p.y);return}
   if(t==='wand'){wandAt(p.x,p.y,selModeOf(e));return}
   if(t==='gradient'){if(gradStart(p))ACT='grad';return}
@@ -4572,12 +4706,12 @@ function toolDown(p,e){const t=TOOL.t;
   if(t==='move'){const onH=XFORM&&xfHit(p).k!=='out'&&xfHit(p).k!=='move';if(!onH&&(TOOL.autosel||e.ctrlKey||e.metaKey)&&!(XFORM&&xfHit(p).k==='move'&&!(e.ctrlKey||e.metaKey))){const hit=layerAt(p);if(hit&&hit.id!==D.cur){if(XFORM)xfCommit();D.cur=hit.id;D.lsel=new Set();drawPanel();stat();xfStart()}}
     if(!XFORM)xfStart();if(XFORM){xfDown(p,e);ACT='xf'}}}
 let ROTV=null;
-function toolMove(p,e,ev){if(ACT==='tpath'){const L=TPATH.pts,q=L[L.length-1];if(Math.hypot(p.x-q[0],p.y-q[1])>3/V.s)L.push([p.x,p.y]);req();return}if(ACT==='stroke')strokeMove(p);else if(ACT==='pick')pickAt(p.x,p.y);else if(ACT==='grad')gradMove(p);else if(ACT==='shape'){SHAPE.b=[p.x,p.y];SHAPE.sq=e.shiftKey;req()}
+function toolMove(p,e,ev){if(ACT==='liq'){liqMove(p);return}if(ACT==='pen'){penDrag(p);return}if(ACT==='tpath'){const L=TPATH.pts,q=L[L.length-1];if(Math.hypot(p.x-q[0],p.y-q[1])>3/V.s)L.push([p.x,p.y]);req();return}if(ACT==='stroke')strokeMove(p);else if(ACT==='pick')pickAt(p.x,p.y);else if(ACT==='grad')gradMove(p);else if(ACT==='shape'){SHAPE.b=[p.x,p.y];SHAPE.sq=e.shiftKey;req()}
   else if(ACT==='sel'){const L2=SELDRAW.pts,q=L2[L2.length-1];if(SELDRAW.m!=='lasso'){let b=[p.x,p.y];if(e.shiftKey&&SELDRAW.mode==='new'){const a=L2[0],s=Math.max(Math.abs(b[0]-a[0]),Math.abs(b[1]-a[1]));b=[a[0]+Math.sign(b[0]-a[0]||1)*s,a[1]+Math.sign(b[1]-a[1]||1)*s]}L2[1]=b}else if(Math.hypot(p.x-q[0],p.y-q[1])>2/V.s)L2.push([p.x,p.y]);req()}
   else if(ACT==='crop'){CROP.b=[clampN(p.x,0,D.w),clampN(p.y,0,D.h)];req()}
   else if(ACT==='rotv'){const r=cv.getBoundingClientRect(),E=ev||e,a=Math.atan2(E.clientY-r.top-V.y,E.clientX-r.left-V.x);let nr=ROTV.r0+a-ROTV.a0;if(e.shiftKey)nr=Math.round(nr/(Math.PI/12))*(Math.PI/12);V.r=nr;req();drawOpt()}
   else if(ACT==='xf')xfMove(p,e)}
-function toolUp(p,e){const a=ACT;ACT=null;if(a==='tpath'){tpathEnd();return}if(a==='stroke')strokeEnd();else if(a==='grad')gradEnd();else if(a==='shape')shapeCommit();
+function toolUp(p,e){const a=ACT;ACT=null;if(a==='liq'){liqUp();return}if(a==='pen'){penUp();return}if(a==='tpath'){tpathEnd();return}if(a==='stroke')strokeEnd();else if(a==='grad')gradEnd();else if(a==='shape')shapeCommit();
   else if(a==='sel'){const s=SELDRAW;SELDRAW=null;const ok=s.m==='lasso'?s.pts.length>3:s.pts.length>1&&Math.hypot(s.pts[1][0]-s.pts[0][0],s.pts[1][1]-s.pts[0][1])>4;if(ok){const sh=s.m==='lasso'?{type:'lasso',pts:s.pts}:{type:s.m,pts:[s.pts[0],s.pts[1]]},path=selPath(sh);selCombine(pathMask(path),s.mode,s.mode==='new'?path:null)}else if(s.mode==='new'){if(D.sel)D.lastSel=D.sel;D.sel=null;req();drawOpt()}}
   else if(a==='crop'){if(Math.abs(CROP.b[0]-CROP.a[0])<6||Math.abs(CROP.b[1]-CROP.a[1])<6)CROP=null;drawOpt();req()}
   else if(a==='xf'){XD=null;req();xfFields()}else if(a==='pick')setTool(PREVT||'brush')}
@@ -4626,7 +4760,7 @@ addEventListener('keydown',e=>{if(labEl.hidden&&homeEl.hidden)return;const typin
     case'o':if(sh&&TOOL.t==='dodge'){TOOL.dodge=TOOL.dodge==='dodge'?'burn':'dodge';drawOpt()}else setTool('dodge');break;
     case't':setTool('text');break;case'u':if(sh&&TOOL.t==='shape'){const ks=['rect','rrect','ellipse','tri','star','hex','line','arrow'];TOOL.shape.k=ks[(ks.indexOf(TOOL.shape.k)+1)%ks.length];drawOpt()}else setTool('shape');break;
     case'h':if(sh)labAct('flipview');else setTool('hand');break;case'r':setTool('rotv');break;case'z':setTool('zoom');break;
-    case'x':labAct('swapcol');break;case'd':TOOL.color='#000000';TOOL.color2='#ffffff';refreshSwatch();if(PANEL==='colour'||$('#cpSV'))drawPanel();hint('Default colours');break;
+    case'p':labAct('tool:pen');break;case'x':labAct('swapcol');break;case'd':TOOL.color='#000000';TOOL.color2='#ffffff';refreshSwatch();if(PANEL==='colour'||$('#cpSV'))drawPanel();hint('Default colours');break;
     case'f':labAct('fullscreen');break;case'q':hint('Quick mask isn’t available – use a layer mask (Layer → Add mask)',2600);break}},true);
 addEventListener('keyup',e=>{if(e.key===' '&&SPACE){SPACE=false;labEl.classList.remove('pan')}},true);
 addEventListener('resize',()=>{if(D&&!edEl.hidden)req()});
@@ -4647,7 +4781,7 @@ function openLab(){H2.classList.add('inlab');labEl.hidden=false;if(!D){galEl.hid
 async function closeLab(toBooks){if(D)await leaveEditor();labEl.hidden=true;H2.classList.remove('inlab');if(!toBooks)showHome();else kick()}
 let inited=false;async function init(){if(inited)return;inited=true;MYPAL=(await IDB.get('dpal'))||[];await loadStoredFonts()}
 init();
-return {home:showHome,open:openLab,isOpen:()=>!labEl.hidden||!homeEl.hidden};
+return {home:showHome,open:openLab,isOpen:()=>!labEl.hidden||!homeEl.hidden,edit:async id=>{if(!await IDB.get('des:'+id))return toast('That design was deleted from the Design Lab');await flush();EDRET=true;H2.classList.add('inlab');labEl.hidden=false;homeEl.hidden=true;galEl.hidden=true;await openDoc(id)}};
 })();
 
 /* ================= look builder: stack pieces into one outfit ================= */
