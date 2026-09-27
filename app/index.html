@@ -1242,6 +1242,11 @@ body.arranging .ah{display:block}
 html{cursor:var(--ca)}
 button,a,summary,select,label,[role=button],[data-cmd],[data-home],[data-hq],[data-hrec]{cursor:var(--cp)}
 input,textarea,[contenteditable=true],[contenteditable=plaintext-only]{cursor:text}
+#lab .lopt .wpl{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+#lab .lopt .wpl select{background:#1c1d1f;color:#eee;border:1px solid #0a0a0b;border-radius:5px;padding:3px 6px;font:inherit;font-size:12px}
+#lab .lopt .wpl input[type=range]{width:90px}
+#lab .lopt .wpl input:disabled{opacity:.35}
+#lab .lopt .wpl output{min-width:38px;font-size:11px;color:#aaa}
 </style>
 </head>
 <body class="edit empty">
@@ -3372,7 +3377,7 @@ function xfTextApply(X){const a=X.r;X.tx.forEach(o=>{const t=o.l.t,t0=o.t0;if(X.
   t.kx=(t0.kx||1)*Math.abs(X.sx);t.ky=(t0.ky||1)*Math.abs(X.sy);t.fx=(t0.fx||1)*Math.sign(X.sx||1);t.fy=(t0.fy||1)*Math.sign(X.sy||1);renderText(o.l)})}
 function xfMode(m){const X=XFORM;if(!X)return;if(m===X.mode)return;if(m!=='free'&&!xfSingle()){hint('Distort and Warp work on one pixel layer at a time (rasterize type first)',2600);return}
   if(m==='distort')X.q=X.mode==='warp'?[X.g[0],X.g[3],X.g[15],X.g[12]].map(p=>p.slice()):freePts(X);
-  else if(m==='warp'){const map=sq2quad(X.mode==='distort'?X.q:freePts(X));X.g=[];for(let j=0;j<4;j++)for(let i=0;i<4;i++)X.g.push(map(i/3,j/3))}
+  else if(m==='warp'){const q0=(X.mode==='distort'?X.q:freePts(X)).map(p=>p.slice()),map=sq2quad(q0);X.g=[];for(let j=0;j<4;j++)for(let i=0;i<4;i++)X.g.push(map(i/3,j/3));X.wb=q0;X.wp={k:'custom',b:50,h:0,v:0,vert:false}}
   else if(m==='free')Object.assign(X,{tx_:0,ty_:0,sx:1,sy:1,r:0});X.mode=m;dirtyComp=true;req();drawOpt()}
 function sq2quad(q){const [x0,y0]=q[0],[x1,y1]=q[1],[x2,y2]=q[2],[x3,y3]=q[3],sx=x0-x1+x2-x3,sy=y0-y1+y2-y3;let a,b,c,d,e,f,g,h;
   if(Math.abs(sx)<1e-9&&Math.abs(sy)<1e-9){a=x1-x0;b=x3-x0;c=x0;d=y1-y0;e=y3-y0;f=y0;g=0;h=0}else{const dx1=x1-x2,dx2=x3-x2,dy1=y1-y2,dy2=y3-y2,den=dx1*dy2-dx2*dy1;g=(sx*dy2-dx2*sy)/den;h=(dx1*sy-sx*dy1)/den;a=x1-x0+g*x1;b=x3-x0+h*x3;c=x0;d=y1-y0+g*y1;e=y3-y0+h*y3;f=y0}
@@ -3388,11 +3393,11 @@ function meshDraw(x,img,bx,by,bw,bh,map,N,inv){const P=[];for(let j=0;j<=N;j++){
   for(let j=0;j<N;j++)for(let i=0;i<N;i++){const s=(ii,jj)=>{const px=bx+bw*ii/N,py=by+bh*jj/N;if(!inv)return [px,py];const q=inv.transformPoint(new DOMPoint(px,py));return [q.x,q.y]},a=s(i,j),b=s(i+1,j),c=s(i+1,j+1),d=s(i,j+1);drawTri(x,img,a,b,c,P[j][i],P[j][i+1],P[j+1][i+1]);drawTri(x,img,a,c,d,P[j][i],P[j+1][i+1],P[j+1][i])}}
 function xfM(X){const m=xfMat(X),d=180/Math.PI;return new DOMMatrix().translate(m.C[0],m.C[1]).rotate((X.r0+X.r)*d).scale(X.sx,X.sy).rotate(-X.r0*d).translate(-X.c0[0],-X.c0[1])}
 function xfRender(x,X,o,N){const snap=o.snap;if(X.mode==='free'){const m=xfMat(X);x.save();x.translate(m.C[0],m.C[1]);x.rotate(X.r0+X.r);x.scale(X.sx,X.sy);x.rotate(-X.r0);x.translate(-X.c0[0],-X.c0[1]);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(o.so)drawSo(x,o.so,Math.sqrt(Math.abs(X.sx*X.sy)));else x.drawImage(snap,0,0);x.restore()}
-  else{x.save();x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(o.so){const P=soPick(o.so,soScale(o.so.m));meshDraw(x,P.c,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):warpMap(X.g),N,new DOMMatrix().scale(P.f,P.f).multiply(o.so.m.inverse()))}else meshDraw(x,snap,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):warpMap(X.g),N);x.restore()}}
+  else{x.save();x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';if(o.so){const P=soPick(o.so,soScale(o.so.m));meshDraw(x,P.c,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):xfWarpMap(X),N,new DOMMatrix().scale(P.f,P.f).multiply(o.so.m.inverse()))}else meshDraw(x,snap,X.bx,X.by,X.bw,X.bh,X.mode==='distort'?sq2quad(X.q):xfWarpMap(X),N);x.restore()}}
 function xfPreviewFor(l){const o=XFORM.px.find(p=>p.l===l),c=T('xf'),x=cx2(c);x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);xfRender(x,XFORM,o,XFORM.mode==='free'?1:(TOUCH?10:14));return c}
 function xfHandles(X){if(X.mode==='distort')return {pts:X.q};if(X.mode==='warp')return {pts:X.g,warp:true};const [x0,y0,x1,y1]=X.rect,xm=(x0+x1)/2,ym=(y0+y1)/2,loc=[[x0,y0],[x1,y0],[x1,y1],[x0,y1],[xm,y0],[x1,ym],[xm,y1],[x0,ym]];return {pts:loc.map(([u,v])=>xfP(X,u,v)),loc,C:xfP(X,xm,ym),cl:[xm,ym]}}
 function xfOverlay(x,h){const X=XFORM,H3=xfHandles(X),hs=7*h;x.save();x.lineWidth=h*1.4;x.strokeStyle='rgba(120,170,255,.95)';
-  if(H3.warp){const m=warpMap(X.g);for(let k=0;k<=3;k++){x.beginPath();for(let i=0;i<=24;i++){const p=m(i/24,k/3);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke();x.beginPath();for(let i=0;i<=24;i++){const p=m(k/3,i/24);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke()}
+  if(H3.warp){const m=xfWarpMap(X);for(let k=0;k<=3;k++){x.beginPath();for(let i=0;i<=24;i++){const p=m(i/24,k/3);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke();x.beginPath();for(let i=0;i<=24;i++){const p=m(k/3,i/24);i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke()}
     x.strokeStyle='rgba(255,255,255,.4)';for(let j=0;j<4;j++){x.beginPath();for(let i=0;i<4;i++){const p=X.g[j*4+i];i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])}x.stroke()}
     X.g.forEach((p,i)=>{const cn=[0,3,12,15].includes(i);x.fillStyle=cn?'#fff':'#7aa8ff';x.beginPath();x.arc(p[0],p[1],hs*(cn?1:.8),0,7);x.fill();x.strokeStyle='#1d3f7a';x.stroke()})}
   else{const P=H3.pts.slice(0,4);x.beginPath();P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.stroke();
@@ -3405,7 +3410,7 @@ function xfHit(p){const X=XFORM;if(!X)return null;const tol=16/V.s,H3=xfHandles(
   if(X.mode!=='free'){let bi=-1,bd=tol;H3.pts.forEach((q,i)=>{const dd=d(q);if(dd<bd){bd=dd;bi=i}});return bi>=0?{k:'pt',i:bi}:{k:'move'}}
   if(X._rot&&d(X._rot)<tol)return {k:'rot'};let bi=-1,bd=tol;H3.pts.forEach((q,i)=>{const dd=d(q);if(dd<bd){bd=dd;bi=i}});if(bi>=0)return {k:'h',i:bi};
   const box=H3.pts.slice(0,4);if(insidePoly(p,box))return {k:'move'};if(box.some(q=>d(q)<44/V.s))return {k:'rot'};return {k:'out'}}
-function xfDown(p,e){const X=XFORM;if(!X)return;let h=xfHit(p);
+function xfDown(p,e){const X=XFORM;if(!X)return;let h=xfHit(p);if(X.mode==='warp'&&X.wp&&X.wp.k!=='custom'&&h&&h.k==='pt'){X.wp.k='custom';drawOpt()}
   if(X.mode==='free'&&h.k==='h'&&h.i<4&&e&&(e.ctrlKey||e.metaKey)&&xfSingle()){xfMode('distort');h={k:'pt',i:h.i}}
   if(X.mode!=='free'){const pts=X.mode==='distort'?X.q:X.g;XD={mode:h.k==='pt'?'pt':'move',i:h.i,p0:[p.x,p.y],orig:pts.map(q=>q.slice())};return}
   const H3=xfHandles(X);XD={mode:h.k==='h'?'scale':h.k==='rot'?'rot':'move',i:h.i,p0:[p.x,p.y],st:{tx_:X.tx_,ty_:X.ty_,sx:X.sx,sy:X.sy,r:X.r},C:H3.C};
@@ -4501,6 +4506,44 @@ function accWire(e){
 {const o=propsHTML;propsHTML=function(){const l=curL();return o()+(l&&l.acc?`<div class="accpp"><div class="phd">Accessory</div>${accPropsHTML(l)}</div>`:'')}}
 
 
+/* ---------- v11: Photoshop-style warp presets ---------- */
+const WPS=[['custom','Custom'],['arc','Arc'],['arclo','Arc Lower'],['arcup','Arc Upper'],['arch','Arch'],['bulge','Bulge'],['shlo','Shell Lower'],['shup','Shell Upper'],['flag','Flag'],['wave','Wave'],['fish','Fish'],['rise','Rise'],['fisheye','Fisheye'],['inflate','Inflate'],['squeeze','Squeeze'],['twist','Twist']];
+function wpShape(k,b,s,t,w,h){const X0=s*w/2,Y0=t*h/2,lo=(t+1)/2,up=(1-t)/2,S=Math.PI;
+  switch(k){
+    case'arc':{const tm=Math.min(S*.62,w/(h*.56)),th=b*tm;if(Math.abs(th)<1e-4)return [X0,Y0];const R=w/th,a=X0/R,r=R-Y0;return [r*Math.sin(a),R-r*Math.cos(a)]}
+    case'arclo':return [X0*(1+b*.28*lo),Y0+b*h*.55*(1-s*s)*lo];
+    case'arcup':return [X0*(1+b*.28*up),Y0-b*h*.55*(1-s*s)*up];
+    case'arch':return [X0,Y0-b*h*.55*(1-s*s)];
+    case'bulge':return [X0*(1+b*.12*(1-t*t)),Y0+b*h*.42*(1-s*s)*t];
+    case'shlo':return [X0*(1+b*.22*lo),Y0+b*h*.55*(s*s-.35)*lo];
+    case'shup':return [X0*(1+b*.22*up),Y0-b*h*.55*(s*s-.35)*up];
+    case'flag':return [X0,Y0-b*h*.3*Math.sin(S*(s+1))];
+    case'wave':return [X0,Y0-b*h*.28*Math.sin(S*(s+1)+t*S*.5)];
+    case'fish':return [X0,Y0-b*h*.34*t*Math.sin(S*(s+1))*-1];
+    case'rise':return [X0,Y0-b*h*.42*(s*(1.5-.5*s*s))];
+    case'fisheye':{const r2=(s*s+t*t)/2,k2=1+b*.55*(1-r2);return [X0*k2,Y0*k2]}
+    case'inflate':return [X0*(1+b*.32*(1-t*t)),Y0*(1+b*.32*(1-s*s))];
+    case'squeeze':return [X0*(1-b*.32*(1-t*t)),Y0*(1+b*.32*(1-s*s))];
+    case'twist':{const r=Math.min(1,Math.sqrt(s*s+t*t)/Math.SQRT2),a=b*S*.75*(1-r)*(1-r),c=Math.cos(a),n=Math.sin(a),s2=s*c-t*n,t2=s*n+t*c;return [s2*w/2,t2*h/2]}
+    default:return [X0,Y0]}}
+function wpMap(X){const P=X.wp,q=X.wb,w=Math.max(1,Math.hypot(q[1][0]-q[0][0],q[1][1]-q[0][1])),h=Math.max(1,Math.hypot(q[3][0]-q[0][0],q[3][1]-q[0][1])),base=sq2quad(q),b=P.b/100,hd=P.h/100,vd=P.v/100;
+  return (u,v)=>{let s=u*2-1,t=v*2-1,xy;if(P.vert){const r=wpShape(P.k,b,t,s,h,w);xy=[r[1],r[0]]}else xy=wpShape(P.k,b,s,t,w,h);let [x,y]=xy;
+    if(hd){const f=1+hd*.5*x/(w/2);y*=f}if(vd){const f=1+vd*.5*y/(h/2);x*=f}return base(x/w+.5,y/h+.5)}}
+let WPINV=null;function wpFitInv(){if(WPINV)return WPINV;const n=16,A=[],N=9;for(let j=0;j<N;j++)for(let i=0;i<N;i++){const u=i/(N-1),v=j/(N-1),r=[];for(let b=0;b<4;b++)for(let a=0;a<4;a++)r.push(B3[a](u)*B3[b](v));A.push(r)}
+  const M=[...Array(n)].map((_,r)=>[...Array(n)].map((_,c)=>A.reduce((s,row)=>s+row[r]*row[c],0))),I=[...Array(n)].map((_,r)=>[...Array(n)].map((_,c)=>+(r===c)));
+  for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;[M[c],M[p]]=[M[p],M[c]];[I[c],I[p]]=[I[p],I[c]];const d=M[c][c];for(let k=0;k<n;k++){M[c][k]/=d;I[c][k]/=d}for(let r=0;r<n;r++)if(r!==c){const f=M[r][c];if(f)for(let k=0;k<n;k++){M[r][k]-=f*M[c][k];I[r][k]-=f*I[c][k]}}}
+  return WPINV={A,I,N}}
+function wpFit(map){const {A,I,N}=wpFitInv(),S=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++)S.push(map(i/(N-1),j/(N-1)));const bx=[],by=[];for(let r=0;r<16;r++){let sx=0,sy=0;A.forEach((row,k)=>{sx+=row[r]*S[k][0];sy+=row[r]*S[k][1]});bx.push(sx);by.push(sy)}
+  return I.map(row=>[row.reduce((s,v,k)=>s+v*bx[k],0),row.reduce((s,v,k)=>s+v*by[k],0)])}
+function xfWarpMap(X){return X.wp&&X.wp.k!=='custom'&&X.wb?wpMap(X):warpMap(X.g)}
+function xfWarpPts(X){if(!(X.wp&&X.wp.k!=='custom'&&X.wb))return X.g;const m=wpMap(X),o=X.g.slice();for(let i=0;i<=8;i++)for(const [u,v] of [[i/8,0],[i/8,1],[0,i/8],[1,i/8],[i/8,.5],[.5,i/8]])o.push(m(u,v));return o}
+function wpApply(){const X=XFORM;if(!X||X.mode!=='warp')return;if(X.wp.k!=='custom')X.g=wpFit(wpMap(X));dirtyComp=true;req()}
+function wpUI(ch){const X=XFORM,P=X.wp||{k:'custom'},on=P.k!=='custom',sl=(k,n,val)=>`<label class="wpl">${n}<input type="range" min="-100" max="100" value="${val}" data-wp="${k}"${on?'':' disabled'}><output>${val}%</output></label>`;
+  return `<label class="wpl">Warp<select data-wp="k">${WPS.map(([k,n])=>`<option value="${k}"${P.k===k?' selected':''}>${n}</option>`).join('')}</select></label>`+ch(!P.vert,'wpo:h','⇆','','Horizontal')+ch(!!P.vert,'wpo:v','⇅','','Vertical')+sl('b','Bend',P.b)+sl('h','H distort',P.h)+sl('v','V distort',P.v)+(on?'':'<span class="otip">Pick a style, or drag the dots</span>')}
+function wpSet(k,val){const X=XFORM;if(!X||X.mode!=='warp'||!X.wp)return;if(k==='k'){if(val!=='custom'&&X.wp.k==='custom'){X.wb=[X.g[0],X.g[3],X.g[15],X.g[12]].map(p=>p.slice());X.wp.b=X.wp.b==null?50:X.wp.b}X.wp.k=val;wpApply();drawOpt();return}X.wp[k]=val;wpApply()}
+optEl.addEventListener('input',e=>{const k=e.target.dataset.wp;if(!k||k==='k')return;const v=+e.target.value,o=e.target.nextElementSibling;if(o)o.textContent=v+'%';wpSet(k,v)});
+optEl.addEventListener('change',e=>{const k=e.target.dataset.wp;if(k==='k')wpSet('k',e.target.value)});
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -4520,7 +4563,7 @@ function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=
     if(D.sel)h+='<span class="osep"></span>'+['fill:Fill','clear:Clear','copy:Layer via copy','xform:Move pixels','invert:Invert','crop:Crop','deselect:Deselect'].map(s=>{const [a,n]=s.split(':');return ch(false,'sa:'+a,n,a==='deselect'?'go':'')}).join('')+ch(false,'panel:feather','Feather…')+ch(false,'strokesheet','Stroke…');else h+=ch(false,'sa:all','Select all')+ch(false,'sa:layer','Load layer pixels')}
   else if(t==='move'){h+=ch(TOOL.autosel,'autosel','Auto-select layer','','Click the canvas to pick the layer under the pointer (or Ctrl-click)');if(XFORM){h+='<span class="osep"></span>'+[['free','Free'],['distort','Distort'],['warp','Warp']].map(([a,n])=>ch(XFORM.mode===a,'xf:'+a,n)).join('');
       if(XFORM.mode==='free')h+=`<span class="osep"></span><label>W<input type="number" step="0.1" data-xn="w" value="${Math.round(XFORM.sx*1000)/10}" class="xn">%</label>${ch(TOOL.xflink,'xflink','🔗','','Link width and height')}<label>H<input type="number" step="0.1" data-xn="h" value="${Math.round(XFORM.sy*1000)/10}" class="xn">%</label><label>∠<input type="number" step="0.1" data-xn="a" value="${Math.round(XFORM.r*1800/Math.PI)/10}" class="xn">°</label><span class="xdim" data-xd title="Real size at the document resolution">${xfDimStr()}</span>`+ch(TOOL.xffree,'xffree','Free corners','','Corners stretch freely without holding Shift')+['fh:Flip H','fv:Flip V','r90:↻ 90°','r-90:↺ 90°','ch:Centre ↔','cv:Centre ↕','fitw:Fit width','fith:Fit height'].map(s=>{const [a,n]=s.split(':');return ch(false,'xf:'+a,n)}).join('');
-      else h+=`<span class="otip">${XFORM.mode==='warp'?'Drag the dots to bend the layer onto folds':'Drag each corner to set perspective'}</span>`;
+      else h+=XFORM.mode==='warp'?wpUI(ch):'<span class="otip">Drag each corner to set perspective</span>';
       h+=ch(false,'xf:reset','Reset')+ch(false,'xf:cancel','Cancel (Esc)')+ch(false,'xf:apply','✓ Commit (Enter)','go')}else h+=`<span class="otip">Pick a layer with something on it</span>`}
   else if(t==='crop')h+=`<span class="otip">Drag the area to keep</span>`+(CROP?ch(false,'crop:cancel','Cancel (Esc)')+ch(false,'crop:apply','✓ Crop (Enter)','go'):'')+ch(false,'sa:crop','Crop to selection');
   else if(t==='zoom')h+=ch(false,'zin','Zoom in')+ch(false,'zout','Zoom out')+ch(false,'zoom100','100%')+ch(false,'fitview','Fit on screen')+`<span class="otip">Click to zoom in · Alt-click to zoom out</span>`;
@@ -4765,7 +4808,7 @@ function setSo(l,img,m,fmt){l.so={img,m:m instanceof DOMMatrix?m:new DOMMatrix(m
 function capImg(im,max){const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,k=Math.min(1,Math.sqrt((max||SOMAX)/(w*h))),c=mk(Math.max(1,Math.round(w*k)),Math.max(1,Math.round(h*k))),x=cx2(c);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
   if(k<.5&&c.width*c.height*4<=MAXAREA){const t=mk(c.width*2,c.height*2),y=cx2(t);y.imageSmoothingQuality='high';y.drawImage(im,0,0,t.width,t.height);x.drawImage(t,0,0,c.width,c.height)}else x.drawImage(im,0,0,c.width,c.height);return c}
 function fileIm(f){return new Promise((res,rej)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>{res(i);setTimeout(()=>URL.revokeObjectURL(u),60000)};i.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('bad image'))};i.src=u})}
-function xfRegion(X){const P=X.mode==='distort'?X.q:X.mode==='warp'?X.g:freePts(X);let x0=X.bx,y0=X.by,x1=X.bx+X.bw,y1=X.by+X.bh;P.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});
+function xfRegion(X){const P=X.mode==='distort'?X.q:X.mode==='warp'?xfWarpPts(X):freePts(X);let x0=X.bx,y0=X.by,x1=X.bx+X.bw,y1=X.by+X.bh;P.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});
   x0=Math.max(0,Math.floor(x0-4));y0=Math.max(0,Math.floor(y0-4));x1=Math.min(D.w,Math.ceil(x1+4));y1=Math.min(D.h,Math.ceil(y1+4));return [x0,y0,Math.max(1,x1-x0),Math.max(1,y1-y0)]}
 function xfDimStr(){const X=XFORM;if(!X||X.mode!=='free'||!X.rect)return '';const w=(X.rect[2]-X.rect[0])*Math.abs(X.sx),h=(X.rect[3]-X.rect[1])*Math.abs(X.sy);return UNIT==='px'?Math.round(w)+' × '+Math.round(h)+' px':fmtU(w)+' × '+fmtU(h)+' '+UNIT}
 function sizeBad(w,h,n){if(!(w>=1&&h>=1))return 'Enter a width and height';if(w>MAXSIDE||h>MAXSIDE)return `Too large – this device allows up to ${MAXSIDE.toLocaleString()} px per side`;if(w*h>MAXAREA)return `Too large – this device allows up to ${(MAXAREA/1e6).toFixed(1)} megapixels`;if(D&&n==null){if(memUse()*(w*h)/(D.w*D.h)+2*w*h*4>MEMB)return 'Too large for this design’s layers on this device – lower the size, or merge some layers first'}else if(estLayers(w,h)<Math.max(3,n||3))return 'Too large for this device – lower the size or resolution';return ''}
@@ -5419,7 +5462,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'hist':histJump(+v);break;
     case'group':groupLayers();break;case'ungroup':ungroup(l&&l.type==='group'?l:parentOf(l));break;case'newgroup':newEmptyGroup();break;case'delgroup':if(l&&l.type==='group')ungroup(l);OPENMENU=null;break;
     case'stamp':stampVisible();break;case'fillsheet':fillSheet();break;case'dofill':doFill();break;case'strokesheet':strokeSheet();break;case'dostroke':doStroke();break;case'keys':keysSheet();break;
-    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'selsubj':selectSubject(v||'new');break;case'cafill':caFill();break;case'liquify':liqStart();break;case'liq':liqAct(v);break;case'pth':pthAct(v);break;case'sepsheet':sepOpen();break;case'sep':sepAct(v);break;case'acclib':closeMenu();accToggle();break;case'acc':accAct(v);break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
+    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'selsubj':selectSubject(v||'new');break;case'cafill':caFill();break;case'liquify':liqStart();break;case'liq':liqAct(v);break;case'pth':pthAct(v);break;case'sepsheet':sepOpen();break;case'sep':sepAct(v);break;case'acclib':closeMenu();accToggle();break;case'acc':accAct(v);break;case'wpo':wpSet('vert',v==='v');drawOpt();break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
     case'collapse':{const g=byId(v);if(g){g.collapsed=!g.collapsed;D.changed=true;schedSave();drawPanel()}break}
     case'desat':applyNow('bw');break;case'invertnow':applyNow('invert');break;
     case'noedges':VIEW.noedges=!VIEW.noedges;req();hint(VIEW.noedges?'Selection edges hidden (Ctrl+H)':'Selection edges shown');break;
