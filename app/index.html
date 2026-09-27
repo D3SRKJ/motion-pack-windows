@@ -942,6 +942,57 @@ body.arranging .ah{display:block}
 #unbox.s2 .ub-tag{opacity:0}
 @keyframes ubs{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-5deg)}}
 .ub-skip{position:absolute;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#888}
+/* ---------- v7: chrome studio theme for the Design Lab ---------- */
+#lab{--cm1:#f1f1f3;--cm2:#c4c5c9;--cm3:#8f9095;--gm1:#3a3b3f;--gm2:#27282b;--gm3:#18191b;--selb:#3f6fb8}
+#lab .lb-ed{background:#1d1d1f}
+#lab .lbar{background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.035) 1px 3px),linear-gradient(180deg,#f4f4f6 0%,#cfd0d3 38%,#a4a5a9 52%,#c3c4c8 70%,#e6e6e9 100%);border-bottom:1px solid #0c0c0d;box-shadow:inset 0 1px 0 #fff,0 2px 8px rgba(0,0,0,.6);color:#111}
+#lab .lbar .lmb{color:#141414;font-weight:500;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#lab .lbar .lmb:hover,#lab .lbar .lmb.on{background:linear-gradient(#fdfdfd,#c9cacd);color:#000;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+#lab .lbar .lbtn{color:#1a1a1a;border-radius:6px}
+#lab .lbar .lbtn:hover{background:rgba(255,255,255,.55)}
+#lab .lbar .lbtn:first-child{background:linear-gradient(#3b3c40,#141416);color:#e8e8e8;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(0,0,0,.5)}
+#lab .lbar .lbtn.on{background:linear-gradient(#fff,#bfc0c4);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)}
+#lab .lbar .lname{color:#3a3a3d;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#lab .lopt{background:linear-gradient(180deg,#46474b,#2b2c2f 55%,#232427);border-bottom:1px solid #0b0b0c;box-shadow:inset 0 1px 0 rgba(255,255,255,.14);color:#d6d6d8}
+#lab .lopt .otool{padding-right:12px;border-right:1px solid rgba(0,0,0,.6);box-shadow:1px 0 0 rgba(255,255,255,.08)}
+#lab .lopt .ch,#lab .lch,#lab .lfoot button{background:linear-gradient(180deg,#56575c,#35363a 50%,#2a2b2e);border:1px solid #0d0d0e;box-shadow:inset 0 1px 0 rgba(255,255,255,.22);color:#e4e4e6;border-radius:4px}
+#lab .lopt .ch:hover,#lab .lch:hover,#lab .lfoot button:hover{background:linear-gradient(180deg,#67686d,#404145 50%,#323336)}
+#lab .lopt .ch.on,#lab .lch.on,#lab .lch.pri,#lab .lopt .ch.go{background:linear-gradient(180deg,#fefefe,#c7c8cc 55%,#a9aaae);color:#000;border-color:#111}
+#lab input[type=range]{accent-color:#d9dadd}
+#lab select,#lab .lctl select{background:linear-gradient(#4a4b4f,#2c2d30);border:1px solid #0d0d0e;border-radius:4px;color:#eee}
+#lab .ltools{background:linear-gradient(90deg,#2d2e31,#232427 60%,#1c1d1f);border-right:1px solid #0a0a0b;box-shadow:inset -1px 0 0 rgba(255,255,255,.07)}
+#lab .ltool{color:#d4d4d6;border-radius:5px}
+#lab .ltool:hover{background:rgba(255,255,255,.08)}
+#lab .ltool.on{background:linear-gradient(180deg,#fdfdfd,#cfd0d3 50%,#a7a8ac);box-shadow:inset 0 0 0 1px #0d0d0e,0 1px 3px rgba(0,0,0,.5);color:#000}
+#lab .lpop{background:linear-gradient(180deg,#303134,#232427 30%,#1e1f21);border-left:1px solid #0a0a0b;box-shadow:inset 1px 0 0 rgba(255,255,255,.08)}
+#lab .ptabs{background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(180deg,#d9dadd,#a3a4a8 55%,#8a8b90);border-bottom:1px solid #0b0b0c;box-shadow:inset 0 1px 0 #fff;padding:5px 8px 0;gap:3px}
+#lab .ptabs button{height:30px;border-radius:5px 5px 0 0;color:#1b1b1d;font-weight:600;background:transparent;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+#lab .ptabs button.on{background:linear-gradient(180deg,#3b3c40,#2a2b2e);color:#fff;text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),1px 0 0 #0b0b0c,-1px 0 0 #0b0b0c}
+#lab .ptabs .px{color:#222}
+#lab .lctl{background:rgba(0,0,0,.18);border:1px solid rgba(0,0,0,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);border-radius:4px;padding:8px}
+#lab .lyr{border-radius:0;background:linear-gradient(180deg,#2e2f32,#26272a);border:0;border-bottom:1px solid #111214;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+#lab .lyr.sel{background:linear-gradient(180deg,#5584cc,#3a67b0);border:0;box-shadow:inset 0 0 0 1px #8fb4ef}
+#lab .lrows{border:1px solid #0c0c0d;border-radius:3px;overflow:hidden}
+#lab .lfoot{border-top:1px solid #0b0b0c;padding-top:8px}
+#lab .lstat{background:linear-gradient(180deg,#34353a,#232427);border:1px solid #0b0b0c;box-shadow:inset 0 1px 0 rgba(255,255,255,.1);border-radius:3px;color:#cfcfd2}
+#lab .lsheet>div,#labDD{background:linear-gradient(180deg,#2e2f32,#1f2022);border:1px solid #0a0a0b;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 24px 60px rgba(0,0,0,.7)}
+#lab .lsheet h3{background:linear-gradient(180deg,#e2e3e6,#a9aaae);color:#111;margin:-1px -1px 12px;padding:10px 14px;border-bottom:1px solid #0b0b0c;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+#lab .lsheet h3 button{color:#111}
+#lab ::-webkit-scrollbar{width:11px;height:11px}#lab ::-webkit-scrollbar-track{background:#1a1a1c}#lab ::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#7b7c80,#c9cacd,#7b7c80);border:2px solid #1a1a1c;border-radius:6px}
+.ldtabs{display:none}
+@media (min-width:761px){
+  #lab .ltools{width:56px;padding:6px 6px;gap:3px}
+  #lab .ltool{padding:9px 2px;gap:0}#lab .ltool b,#lab .ltool kbd{display:none}
+  #lab .lopt{left:56px;height:70px;align-items:flex-start;padding-top:8px}
+  #lab .ldtabs{display:flex;position:absolute;z-index:5;top:calc(90px + env(safe-area-inset-top,0px));left:56px;right:330px;height:26px;align-items:flex-end;gap:1px;padding:0 6px;background:#161618;border-bottom:1px solid #0a0a0b;overflow:hidden}
+  #lab .ldt{display:flex;align-items:center;gap:10px;height:24px;padding:0 12px;font-size:11.5px;color:#e8e8ea;background:linear-gradient(180deg,#46474b,#303134);border:1px solid #0b0b0c;border-bottom:0;border-radius:4px 4px 0 0;box-shadow:inset 0 1px 0 rgba(255,255,255,.2);white-space:nowrap}
+  #lab .ldt i{font-style:normal;color:#aaa;cursor:pointer}#lab .ldt i:hover{color:#fff}
+  #lab .ldt.dim{background:linear-gradient(180deg,#2c2d30,#232427);color:#9a9a9e}
+  #lab .lpop{top:calc(90px + env(safe-area-inset-top,0px))}
+  #lab .lstat{left:56px;right:330px;bottom:0;border-radius:0;max-width:none;padding:5px 12px}
+  #lab .lpop[hidden]~.lstat{right:0}
+  #labEd:has(.lpop[hidden]) .ldtabs{right:0}
+}
 </style>
 </head>
 <body class="edit empty">
@@ -1032,6 +1083,7 @@ body.arranging .ah{display:block}
     <div class="lside" id="labSide"></div>
     <div class="ltools" id="labTools"></div>
     <div class="lopt" id="labOpt"></div>
+    <div class="ldtabs" id="labTabs"></div>
     <div class="lpop" id="labPop" hidden></div>
     <div class="lhint" id="labHint"></div>
     <div class="lstat" id="labStat"></div>
@@ -2797,13 +2849,13 @@ function composite(target,noBg){const x=cx2(target);x.setTransform(1,0,0,1,0,0);
 const V={s:1,r:0,x:0,y:0,fx:1};let rq=0,dpr=1;
 function req(){if(!rq)rq=requestAnimationFrame(draw)}
 const desk=()=>innerWidth>760;
-function fit(){const rr=VIEW.rulers?20:0,W=cv.clientWidth,H=cv.clientHeight,l=(desk()?84:16)+rr,r=desk()&&!popEl.hidden?340:16,t=(desk()?104:112)+rr,b=desk()?40:84;const s=Math.min((W-l-r)/D.w,(H-t-b)/D.h)*(D.pat&&D.pat.show?.5:1);V.s=s;V.r=0;V.x=l+(W-l-r)/2;V.y=t+(H-t-b)/2;req();stat()}
+function fit(){const rr=VIEW.rulers?20:0,W=cv.clientWidth,H=cv.clientHeight,l=(desk()?84:16)+rr,r=desk()&&!popEl.hidden?340:16,t=(desk()?134:112)+rr,b=desk()?40:84;const s=Math.min((W-l-r)/D.w,(H-t-b)/D.h)*(D.pat&&D.pat.show?.5:1);V.s=s;V.r=0;V.x=l+(W-l-r)/2;V.y=t+(H-t-b)/2;req();stat()}
 function toDoc(sx,sy){const dx=sx-V.x,dy=sy-V.y,c=Math.cos(-V.r),s=Math.sin(-V.r);return [(dx*c-dy*s)/V.s*V.fx+D.w/2,(dx*s+dy*c)/V.s+D.h/2]}
 function toScr(x,y){const px=(x-D.w/2)*V.fx*V.s,py=(y-D.h/2)*V.s,c=Math.cos(V.r),s=Math.sin(V.r);return [V.x+px*c-py*s,V.y+px*s+py*c]}
 let checker=null;
 function draw(){rq=0;if(!D||edEl.hidden)return;dpr=Math.min(3,devicePixelRatio||1);const W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
   if(dirtyComp){composite(T('comp'));dirtyComp=false;compN++}
-  const x=vx;x.setTransform(1,0,0,1,0,0);x.fillStyle='#1b1b1d';x.fillRect(0,0,cv.width,cv.height);
+  const x=vx;x.setTransform(1,0,0,1,0,0);x.fillStyle='#29292c';x.fillRect(0,0,cv.width,cv.height);
   x.setTransform(dpr,0,0,dpr,0,0);x.translate(V.x,V.y);x.rotate(V.r);x.scale(V.s*V.fx,V.s);x.translate(-D.w/2,-D.h/2);
   x.save();x.shadowColor='rgba(0,0,0,.6)';x.shadowBlur=40;x.shadowOffsetY=12;x.fillStyle='#000';x.fillRect(0,0,D.w,D.h);x.restore();
   if(!D.bgOn){if(!checker){const c=mk(16,16),g=c.getContext('2d');g.fillStyle='#e6e6e6';g.fillRect(0,0,16,16);g.fillStyle='#c9c9c9';g.fillRect(0,0,8,8);g.fillRect(8,8,8,8);checker=x.createPattern(c,'repeat')}x.save();x.scale(1/V.s,1/V.s);x.fillStyle=checker;x.fillRect(0,0,D.w*V.s,D.h*V.s);x.restore()}
@@ -2823,7 +2875,7 @@ function overlays(x){const h=hair();
   if(XFORM)xfOverlay(x,h);if(CROP)cropOverlay(x,h);
   if(TOOL.t==='clone'&&CLONE.src){const p=ACT==='stroke'&&STROKE&&STROKE.kind==='clone'?[STROKE.last.x+CLONE.off[0],STROKE.last.y+CLONE.off[1]]:CLONE.src;x.save();x.lineWidth=h*1.5;x.strokeStyle='#fff';x.beginPath();x.moveTo(p[0]-12*h,p[1]);x.lineTo(p[0]+12*h,p[1]);x.moveTo(p[0],p[1]-12*h);x.lineTo(p[0],p[1]+12*h);x.stroke();x.strokeStyle='#000';x.beginPath();x.arc(p[0],p[1],6*h,0,7);x.stroke();x.restore()}
   if(CUR.show&&!TOUCH&&['brush','erase','smudge','clone','dodge'].includes(TOOL.t)){const r=Math.max(1,sizeNow()/2);x.save();x.lineWidth=h;x.strokeStyle='rgba(255,255,255,.85)';x.beginPath();x.arc(CUR.x,CUR.y,r,0,7);x.stroke();x.strokeStyle='rgba(0,0,0,.5)';x.beginPath();x.arc(CUR.x,CUR.y,r+h,0,7);x.stroke();x.restore()}}
-const VIEW={grid:false,pixels:false,rulers:false};try{VIEW.rulers=localStorage.getItem('mp_rul')==='1';VIEW.pixels=localStorage.getItem('mp_pix')==='1'}catch(e){}
+const VIEW={grid:false,pixels:false,rulers:false};try{VIEW.rulers=localStorage.getItem('mp_rul')!=='0';VIEW.pixels=localStorage.getItem('mp_pix')==='1'}catch(e){}
 let compN=0;const MIP={n:-1,w:0,h:0,l:[]};
 function half(c){const n=mk(Math.max(1,Math.round(c.width/2)),Math.max(1,Math.round(c.height/2))),x=cx2(n);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(c,0,0,n.width,n.height);return n}
 function mipFor(eff){if(MIP.n!==compN||MIP.w!==D.w||MIP.h!==D.h){MIP.l=[];MIP.n=compN;MIP.w=D.w;MIP.h=D.h}let c=T('comp'),s=1,i=0;while(eff<s*.5&&c.width>64){c=MIP.l[i]||(MIP.l[i]=half(c));s/=2;i++}return c}
@@ -3321,7 +3373,8 @@ function updSide(){if(!D)return;sideEl.innerHTML=`<div class="vsl" data-vs="size
 function updVs(){const k=sizeKey();sideEl.querySelectorAll('.vsl').forEach(e=>{const isS=e.dataset.vs==='size';const v=isS?s2v(TOOL.size[k]||20):(TOOL.op[k]||1);e.style.setProperty('--v',(v*100).toFixed(1)+'%');e.querySelector('b').textContent=isS?Math.round(TOOL.size[k]||20)+' px':Math.round((TOOL.op[k]||1)*100)+'%'})}
 sideEl.addEventListener('pointerdown',e=>{const vs=e.target.closest('.vsl');if(!vs)return;e.preventDefault();vs.setPointerCapture(e.pointerId);vs.classList.add('act');const set=ev=>{const r=vs.getBoundingClientRect(),v=clampN(1-(ev.clientY-r.top)/r.height,0,1),k=sizeKey();if(vs.dataset.vs==='size')TOOL.size[k]=Math.round(v2s(v));else TOOL.op[k]=Math.max(.01,+v.toFixed(2));updVs();CUR.show=true;CUR.x=D.w/2;CUR.y=D.h/2;req()};set(e);
   const mv=ev=>set(ev),up=()=>{vs.classList.remove('act');vs.removeEventListener('pointermove',mv);vs.removeEventListener('pointerup',up);CUR.show=false;req();drawOpt()};vs.addEventListener('pointermove',mv);vs.addEventListener('pointerup',up)});
-function stat(){if(!D||!statEl)return;const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
+function docTab(){const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
+function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
 /* ---------- options bar ---------- */
 function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=curL(),ch=(on,a,txt,cls,ti)=>`<button class="ch${on?' on':''}${cls?' '+cls:''}" data-l="${a}"${ti?` title="${ti}"`:''}>${txt}</button>`,sl=(o,label,min,max,val,unit)=>`<label>${label}<input type="range" min="${min}" max="${max}" value="${val}" data-o="${o}"><output>${val}${unit||''}</output></label>`;
