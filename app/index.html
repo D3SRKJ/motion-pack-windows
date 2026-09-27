@@ -993,6 +993,90 @@ body.arranging .ah{display:block}
   #lab .lpop[hidden]~.lstat{right:0}
   #labEd:has(.lpop[hidden]) .ldtabs{right:0}
 }
+/* ---------- v7: stacked panels ---------- */
+@media (min-width:761px){
+#lab .lpop.stk{display:flex;flex-direction:column;gap:3px;padding:3px;overflow:hidden;background:#141416}
+#lab .pp{flex:none;display:flex;flex-direction:column;min-height:0;background:linear-gradient(180deg,#313236,#26272a);border:1px solid #0a0a0b;box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}
+#lab .plyr{flex:1}
+#lab .pph{flex:none;display:flex;align-items:flex-end;gap:2px;height:30px;padding:0 6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.03) 1px 3px),linear-gradient(180deg,#e4e5e8,#a8a9ad 60%,#8e8f94);border-bottom:1px solid #0a0a0b;box-shadow:inset 0 1px 0 #fff}
+#lab .pph button{height:24px;padding:0 12px;font-size:11.5px;font-weight:600;color:#1a1a1c;border-radius:4px 4px 0 0;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+#lab .pph button.on{background:linear-gradient(180deg,#46474b,#313236);color:#fff;text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),1px 0 0 #0a0a0b,-1px 0 0 #0a0a0b}
+#lab .pph .ppx{align-self:center;height:22px;padding:0 6px;font-size:16px;color:#222;border-radius:4px}
+#lab .ppb{padding:8px 10px;min-height:0}
+#lab .pscr{overflow:auto;max-height:100%}
+#lab .plyr .pscr{flex:1}
+#lab .cmini{display:flex;gap:10px}
+#lab .cfb{position:relative;flex:none;width:44px;height:52px}
+#lab .cfb .fgc,#lab .cfb .bgc{position:absolute;width:28px;height:28px;background:var(--c);border:2px solid #d9d9dc;box-shadow:0 0 0 1px #000}
+#lab .cfb .fgc{left:0;top:0;z-index:2}#lab .cfb .bgc{left:14px;top:16px}
+#lab .cfb .on{outline:1px dashed #fff;outline-offset:2px}
+#lab .cfb .cswp{position:absolute;left:30px;top:-3px;font-size:12px;color:#ddd}
+#lab .cmr{flex:1;min-width:0}
+#lab .pcol .cpick{aspect-ratio:auto;height:96px;border-radius:2px;box-shadow:0 0 0 1px #000}
+#lab .pcol .chue{height:12px;border-radius:2px;margin-top:6px;box-shadow:0 0 0 1px #000}
+#lab .pcol .chex{margin-top:6px;gap:5px}
+#lab .pcol .chex input{flex:1;min-width:0;height:24px;padding:0 6px;font-size:11px;background:#141416;border:1px solid #0a0a0b;color:#eee;border-radius:3px}
+#lab .pcol .chex #cpPrev{width:22px;height:22px;border-radius:3px}
+#lab .pcol .chex .lch{height:24px;padding:0 8px;font-size:10.5px}
+#lab .sws{max-height:150px;display:flex;flex-direction:column;gap:5px}
+#lab .sws .cswr{grid-template-columns:repeat(14,1fr);gap:3px}
+#lab .sws .cswr button{border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.6)}
+#lab .pkind{display:flex;align-items:center;gap:8px;font-size:12px;color:#e6e6e8;padding:2px 0 8px;border-bottom:1px solid rgba(0,0,0,.5);box-shadow:0 1px 0 rgba(255,255,255,.05)}
+#lab .psec h6{font-size:11.5px;font-weight:600;color:#f0f0f2;margin:8px 0 6px}
+#lab .ptf{display:grid;grid-template-columns:26px 1fr 1fr;gap:5px 10px;align-items:center}
+#lab .ptf .plink{grid-row:1/3;height:48px;border-radius:3px;color:#bbb}#lab .ptf .plink.on{color:#fff;background:rgba(255,255,255,.08)}
+#lab .ptf label{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#cfcfd2}
+#lab .ptf input{width:100%;min-width:0;height:24px;padding:0 6px;font-size:11.5px;background:#141416;border:1px solid #0a0a0b;border-radius:3px;color:#fff;box-shadow:inset 0 1px 2px rgba(0,0,0,.6)}
+#lab .ptf label i{font-style:normal;font-size:10px;color:#888;margin-left:-40px;pointer-events:none;width:30px;text-align:right}
+#lab .ptf .pang{grid-column:2}#lab .ptf .pfl{grid-column:3;display:flex;gap:6px;justify-content:flex-end}
+#lab .pfl button,#lab .pal button{width:28px;height:26px;display:grid;place-items:center;color:#e0e0e2;border-radius:3px}
+#lab .pfl button:hover,#lab .pal button:hover{background:rgba(255,255,255,.1)}
+#lab .pal{display:flex;gap:4px}#lab .pal button:nth-child(4){margin-left:12px}
+#lab .lfilt,#lab .lbo,#lab .llk{flex:none;display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid rgba(0,0,0,.45);box-shadow:0 1px 0 rgba(255,255,255,.04);font-size:11.5px;color:#d6d6d8}
+#lab .lfilt .lkd{flex:none;font-size:11px;color:#ddd;padding:3px 6px;background:#1a1a1c;border:1px solid #0a0a0b;border-radius:3px}
+#lab .lfilt input{flex:1;min-width:0;height:24px;padding:0 6px;font-size:11px;background:#141416;border:1px solid #0a0a0b;border-radius:3px;color:#eee}
+#lab .lfilt button,#lab .llk button{width:24px;height:24px;display:grid;place-items:center;color:#cfcfd2;border-radius:3px}
+#lab .lfilt button.on,#lab .llk button.on{background:linear-gradient(#fdfdfd,#b9babe);color:#000}
+#lab .lbo select{flex:1;min-width:0;height:26px;font-size:12px;padding:0 6px}
+#lab .lbl2{flex:none;color:#cfcfd2}
+#lab .pnum{position:relative;display:inline-flex;align-items:center;width:64px;height:24px;background:#141416;border:1px solid #0a0a0b;border-radius:3px}
+#lab .pnum input[type=number]{width:44px;height:22px;padding:0 0 0 6px;background:none;border:0;color:#fff;font-size:11.5px;-moz-appearance:textfield}
+#lab .pnum input::-webkit-inner-spin-button{display:none}
+#lab .pnum i{font-style:normal;font-size:11px;color:#aaa}
+#lab .pnum .pdr{position:absolute;right:0;top:100%;z-index:9;width:150px;padding:8px;background:#2a2b2e;border:1px solid #0a0a0b;box-shadow:0 8px 20px rgba(0,0,0,.6);display:none}
+#lab .pnum:focus-within .pdr,#lab .pnum:hover .pdr{display:block}
+#lab .llk .msc{font-size:10.5px;color:#9cc0ff}
+#lab .lrows2{flex:1;min-height:0;overflow:auto;background:#1f2022}
+#lab .plyr .lyr{position:relative;display:flex;align-items:center;gap:6px;height:44px;padding:0 6px 0 calc(4px + var(--d,0) * 16px);border-radius:0;border:0;border-bottom:1px solid #111213;background:linear-gradient(180deg,#2f3033,#27282b);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+#lab .plyr .lyr[hidden]{display:none}
+#lab .plyr .lyr:hover{background:linear-gradient(180deg,#38393d,#2e2f32)}
+#lab .plyr .lyr.sel{background:linear-gradient(180deg,#5b8ad2,#3b68b2);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+#lab .plyr .lyr.msel{background:linear-gradient(180deg,#44628f,#34507c)}
+#lab .plyr .lyr.hid .nm,#lab .plyr .lyr.hid canvas{opacity:.45}
+#lab .plyr .lyr .ey{flex:none;width:26px;height:26px;display:grid;place-items:center;color:#e8e8ea;border-right:1px solid rgba(0,0,0,.35);margin-right:2px}
+#lab .plyr .lyr .hd{width:8px;opacity:0;font-size:12px}#lab .plyr .lyr:hover .hd{opacity:.6}
+#lab .plyr .lyr canvas,#lab .plyr .lyr .gico,#lab .plyr .lyr .tth,#lab .plyr .lyr-bg .sw{flex:none;width:44px;height:34px;border-radius:0;border:1px solid #0a0a0b;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+#lab .plyr .lyr canvas.tg{box-shadow:0 0 0 2px #e9e9ec}
+#lab .plyr .lyr .gico,#lab .plyr .lyr .tth{display:grid;place-items:center;background:#1a1a1c;color:#e9e9ec}
+#lab .plyr .lyr .gico{width:26px;border:0;box-shadow:none;background:none;color:#e9e9ec}
+#lab .plyr .lyr .gtw{flex:none;width:14px;color:#ddd;font-size:10px}
+#lab .plyr .lch2{flex:none;color:#ccc;margin:0 -2px}
+#lab .plyr .lyr .nm{flex:1;min-width:0}
+#lab .plyr .lyr .nm b{display:block;font-size:12.5px;font-weight:400;letter-spacing:0;text-transform:none;color:#f2f2f4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lab .plyr .lyr .nm em{font-style:italic}
+#lab .plyr .lyr .clar{font-style:normal;color:#cfe0ff;margin-right:4px}
+#lab .plyr .lyr.clp{padding-left:calc(18px + var(--d,0) * 16px)}
+#lab .plyr .fxb{flex:none;font-size:11px;font-style:italic;font-weight:700;color:#fff;padding:0 4px;cursor:pointer}
+#lab .plyr .lkb{flex:none;color:#cfcfd2;display:grid;place-items:center}
+#lab .plyr .lmore{width:22px;height:22px;opacity:0;color:#eee}#lab .plyr .lyr:hover .lmore,#lab .plyr .lyr.sel .lmore{opacity:.8}
+#lab .plyr .lyr-bg{padding-left:4px}
+#lab .plyr .lmenu{background:#1a1a1c;padding:8px;border-bottom:1px solid #0a0a0b}
+#lab .lfoot2{flex:none;display:flex;justify-content:flex-end;gap:2px;padding:5px 6px;border-top:1px solid #0a0a0b;background:linear-gradient(180deg,#333438,#28292c);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+#lab .lfoot2 button{width:30px;height:28px;display:grid;place-items:center;color:#e6e6e8;border-radius:3px}
+#lab .lfoot2 button b{font-style:italic;font-size:13px}
+#lab .lfoot2 button:hover{background:rgba(255,255,255,.1)}#lab .lfoot2 button.on{background:linear-gradient(#fdfdfd,#b9babe);color:#000}
+#lab .plyr .hlist{max-height:none}
+}
 </style>
 </head>
 <body class="edit empty">
@@ -3361,7 +3445,7 @@ function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gal
   <span class="fgbg"><button class="fg" data-l="panel:colour" style="--c:${TOOL.color}" title="Foreground colour"></button><button class="bg" data-l="panel:colour2" style="--c:${TOOL.color2}" title="Background colour"></button><button class="sw" data-l="swapcol" title="Swap colours (X) · D = default">${icon('swap')}</button></span>`;
   toolsEl.innerHTML=TOOLS.map(([t,n,i,k,tip])=>`<button class="ltool${TOOL.t===t?' on':''}" data-l="tool:${t}" title="${n}${k&&k!=='–'?' ('+k+')':''} – ${tip}"><span>${icon(i)}</span><b>${n}</b>${k&&k!=='–'?`<kbd>${k}</kbd>`:''}</button>`).join('');
   updSide();drawOpt();stat()}
-function refreshSwatch(){const f=barEl.querySelector('.fg'),b=barEl.querySelector('.bg');if(f)f.style.setProperty('--c',TOOL.color);if(b)b.style.setProperty('--c',TOOL.color2)}
+function refreshSwatch(){{const pf=popEl.querySelector('.fgc'),pb=popEl.querySelector('.bgc');if(pf)pf.style.setProperty('--c',TOOL.color);if(pb)pb.style.setProperty('--c',TOOL.color2)}const f=barEl.querySelector('.fg'),b=barEl.querySelector('.bg');if(f)f.style.setProperty('--c',TOOL.color);if(b)b.style.setProperty('--c',TOOL.color2)}
 let DDM=null;
 function openMenu(m,btn){if(DDM===m){closeMenu();return}DDM=m;const r=btn.getBoundingClientRect(),ls=m==='__adj'?ADJS.map(([k,n])=>['adj:'+k,n]):MENUS[m];
   ddEl.innerHTML=ls.map(it=>it[0]==='-'?'<hr>':`<button data-l="${it[0]}"><span>${it[1]}</span>${it[2]?`<kbd>${it[2]}</kbd>`:''}</button>`).join('');ddEl.hidden=false;ddEl.style.left=Math.min(r.left,innerWidth-ddEl.offsetWidth-8)+'px';ddEl.style.top=(r.bottom+4)+'px';barEl.querySelectorAll('.lmb').forEach(b=>b.classList.toggle('on',b.dataset.l==='menu:'+m))}
@@ -3373,6 +3457,67 @@ function updSide(){if(!D)return;sideEl.innerHTML=`<div class="vsl" data-vs="size
 function updVs(){const k=sizeKey();sideEl.querySelectorAll('.vsl').forEach(e=>{const isS=e.dataset.vs==='size';const v=isS?s2v(TOOL.size[k]||20):(TOOL.op[k]||1);e.style.setProperty('--v',(v*100).toFixed(1)+'%');e.querySelector('b').textContent=isS?Math.round(TOOL.size[k]||20)+' px':Math.round((TOOL.op[k]||1)*100)+'%'})}
 sideEl.addEventListener('pointerdown',e=>{const vs=e.target.closest('.vsl');if(!vs)return;e.preventDefault();vs.setPointerCapture(e.pointerId);vs.classList.add('act');const set=ev=>{const r=vs.getBoundingClientRect(),v=clampN(1-(ev.clientY-r.top)/r.height,0,1),k=sizeKey();if(vs.dataset.vs==='size')TOOL.size[k]=Math.round(v2s(v));else TOOL.op[k]=Math.max(.01,+v.toFixed(2));updVs();CUR.show=true;CUR.x=D.w/2;CUR.y=D.h/2;req()};set(e);
   const mv=ev=>set(ev),up=()=>{vs.classList.remove('act');vs.removeEventListener('pointermove',mv);vs.removeEventListener('pointerup',up);CUR.show=false;req();drawOpt()};vs.addEventListener('pointermove',mv);vs.addEventListener('pointerup',up)});
+
+/* ---------- v7: stacked Colour / Properties / Layers panels (desktop) ---------- */
+const STK={ct:'color',lt:'layers',f:'',fk:''};
+const SI=(d,w)=>`<svg viewBox="0 0 24 24" width="${w||16}" height="${w||16}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const SIC={pix:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-5 4 4 3-3 6 6"/>',adj:'<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/>',type:'<path d="M5 6V4h14v2M12 4v16M9 20h6"/>',grp:'<path d="M3 7h6l2 2h10v10H3z"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',mask:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="12" cy="12" r="4.2" fill="currentColor"/>',
+  newl:'<rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M12 8v8M8 12h8"/>',dup:'<rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  lockA:'<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',lockT:'<rect x="4" y="4" width="16" height="16"/><path d="M4 12h16M12 4v16" stroke-dasharray="2 2"/><rect x="4" y="4" width="8" height="8" fill="currentColor" stroke="none"/><rect x="12" y="12" width="8" height="8" fill="currentColor" stroke="none"/>',
+  multi:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/>',chain:'<path d="M9 7H7a5 5 0 0 0 0 10h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/>',fh:'<path d="M12 3v18M9 7l-5 5 5 5V7zM15 7l5 5-5 5V7z"/>',fv:'<path d="M3 12h18M7 9l5-5 5 5H7zM7 15l5 5 5-5H7z"/>',
+  al:'<path d="M4 3v18"/><rect x="7" y="6" width="10" height="4"/><rect x="7" y="14" width="6" height="4"/>',ach:'<path d="M12 3v18"/><rect x="6" y="6" width="12" height="4"/><rect x="8" y="14" width="8" height="4"/>',ar:'<path d="M20 3v18"/><rect x="7" y="6" width="10" height="4"/><rect x="11" y="14" width="6" height="4"/>',
+  at:'<path d="M3 4h18"/><rect x="6" y="7" width="4" height="10"/><rect x="14" y="7" width="4" height="6"/>',acv:'<path d="M3 12h18"/><rect x="6" y="6" width="4" height="12"/><rect x="14" y="8" width="4" height="8"/>',ab:'<path d="M3 20h18"/><rect x="6" y="7" width="4" height="10"/><rect x="14" y="11" width="4" height="6"/>'};
+const ic=(k,w)=>SI(SIC[k],w);
+function ppTabs(list,cur,k,close){return `<div class="pph">${list.map(([v,n])=>`<button class="${cur===v?'on':''}" data-l="stk:${k}:${v}">${n}</button>`).join('')}<span class="grow"></span>${close?'<button class="ppx" data-l="closepanel" title="Close panels">&times;</button>':''}</div>`}
+function stackHTML(){return `<section class="pp pcol">${ppTabs([['color','Color'],['swatches','Swatches']],STK.ct,'ct',1)}<div class="ppb">${STK.ct==='color'?colMini():swatchHTML()}</div></section>
+  <section class="pp pprop">${ppTabs([['props','Properties']],'props','pt')}<div class="ppb">${propsHTML()}</div></section>
+  <section class="pp plyr">${ppTabs([['layers','Layers'],['history','History']],STK.lt,'lt')}${STK.lt==='layers'?layersPS():'<div class="ppb pscr">'+historyHTML()+'</div>'}</section>`}
+function colMini(){return `<div class="cmini"><div class="cfb"><button class="fgc${COLTGT==='fg'?' on':''}" data-l="coltgt:fg" style="--c:${TOOL.color}" title="Foreground"></button><button class="bgc${COLTGT==='bg'?' on':''}" data-l="coltgt:bg" style="--c:${TOOL.color2}" title="Background"></button><button class="cswp" data-l="swapcol" title="Swap colours (X)">&#8646;</button></div>
+  <div class="cmr"><div class="cpick" id="cpSV"><canvas width="300" height="200"></canvas><i></i></div><div class="chue" id="cpH"><canvas width="300" height="22"></canvas><i></i></div>
+  <div class="chex"><span id="cpPrev" style="--c:${colNow()}"></span><input type="text" id="cpHex" value="${colNow()}" maxlength="7" aria-label="Hex colour">${D.garment?'<button class="lch" data-l="fillgarment" title="Recolour the mockup garment">Garment</button>':''}<button class="lch" data-l="fillfg" title="Fill the layer">Fill</button></div></div></div>`}
+function swatchHTML(){const sw=c=>`<button style="--c:${c}" data-l="col:${c}" title="${c}"></button>`;return `<div class="pscr sws">${RECENT.length?`<div class="cswr">${RECENT.map(sw).join('')}</div>`:''}${Object.keys(PAL).map(k=>`<div class="cswr">${PAL[k].map(sw).join('')}</div>`).join('')}<div class="cswr">${MYPAL.map(sw).join('')}<button class="add" data-l="paladd" title="Add current colour">+</button></div></div>`}
+const LBX=new Map();
+function lbox(l){if(!l)return null;if(l.type==='group'){let b=null;descOf(l).forEach(x=>{if(x.type==='group')return;const q=lbox(x);if(q)b=b?[Math.min(b[0],q[0]),Math.min(b[1],q[1]),Math.max(b[2],q[2]),Math.max(b[3],q[3])]:q.slice()});return b}
+  if(l.type==='adj')return null;if(l.type==='text'&&l.t){try{const P=textCorners(l);return [Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1]))]}catch(_){}}
+  const k=LBX.get(l.id);if(k&&k.v===l.v)return k.b;const p=pieceOf(l);let b=null;if(p.c){const w=p.c.width,h=p.c.height,d=cx2(p.c).getImageData(0,0,w,h).data,st=Math.max(1,Math.round(Math.sqrt(w*h/4e6)));let x0=w,y0=h,x1=-1,y1=-1;
+    for(let y=0;y<h;y+=st){const r=y*w*4;for(let x=0;x<w;x+=st)if(d[r+x*4+3]>4){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}if(x1>=0)b=[p.x+x0,p.y+y0,p.x+Math.min(w,x1+st),p.y+Math.min(h,y1+st)]}
+  LBX.set(l.id,{v:l.v,b});return b}
+function propsHTML(){const l=curL();if(!l)return '<p class="pnote">No layer selected</p>';const g=l.type==='group',kind=g?['grp','Group']:l.type==='text'?['type','Type Layer']:l.type==='adj'?['adj','Adjustment Layer']:['pix',l.so?'Pixel Layer (original kept)':'Pixel Layer'];
+  let b=null;if(XFORM&&XFORM.mode==='free'){const P=freePts(XFORM);b=[Math.min(...P.map(p=>p[0])),Math.min(...P.map(p=>p[1])),Math.max(...P.map(p=>p[0])),Math.max(...P.map(p=>p[1]))]}else b=lbox(l);
+  const v=n=>b?Math.round(n):'',a=XFORM&&XFORM.mode==='free'?(XFORM.r*180/Math.PI).toFixed(2):'0.00',dis=l.type==='adj'?' disabled':'';
+  return `<div class="pkind">${ic(kind[0],18)}<span>${kind[1]}</span></div>
+  <div class="psec"><h6>&#9662; Transform</h6><div class="ptf"><button class="plink${TOOL.xflink?' on':''}" data-l="xflink" title="Keep proportions">${ic('chain',15)}</button>
+    <label>W<input data-pp="w" value="${b?v(b[2]-b[0]):''}"${dis}><i>px</i></label><label>X<input data-pp="x" value="${b?v(b[0]):''}"${dis}><i>px</i></label>
+    <label>H<input data-pp="h" value="${b?v(b[3]-b[1]):''}"${dis}><i>px</i></label><label>Y<input data-pp="y" value="${b?v(b[1]):''}"${dis}><i>px</i></label>
+    <label class="pang">&#8736;<input data-pp="a" value="${a}"${dis}><i>&deg;</i></label><span class="pfl"><button data-l="lm:fh" title="Flip horizontal">${ic('fh',15)}</button><button data-l="lm:fv" title="Flip vertical">${ic('fv',15)}</button></span></div></div>
+  <div class="psec"><h6>&#9662; Align to canvas</h6><div class="pal">${[['l','al','Align left edges'],['ch','ach','Align horizontal centres'],['r','ar','Align right edges'],['t','at','Align top edges'],['cv','acv','Align vertical centres'],['b','ab','Align bottom edges']].map(([k,i,t])=>`<button data-l="palign:${k}" title="${t}"${dis}>${ic(i,16)}</button>`).join('')}</div></div>`}
+function ppApply(k,v){if(!isFinite(v))return;const l=curL();if(!l||l.type==='adj')return;const own=!XFORM;if(own)xfStart('free');const X=XFORM;if(!X||X.mode!=='free')return;
+  const bw=X.bw||(X.rect[2]-X.rect[0]),bh=X.bh||(X.rect[3]-X.rect[1]);
+  if(k==='w'&&v>0)xfNum('w',v/bw*100);else if(k==='h'&&v>0)xfNum('h',v/bh*100);else if(k==='a')xfNum('a',v);
+  else if(k==='x'||k==='y'){const P=freePts(X),mx=Math.min(...P.map(p=>p[0])),my=Math.min(...P.map(p=>p[1]));xfNudge(k==='x'?v-mx:0,k==='y'?v-my:0)}
+  if(own)xfCommit();setTimeout(drawPanel,30)}
+function palign(k){const l=curL();if(!l||l.type==='adj')return;const own=!XFORM;if(own)xfStart('free');const X=XFORM;if(!X||X.mode!=='free')return;const P=freePts(X),x0=Math.min(...P.map(p=>p[0])),x1=Math.max(...P.map(p=>p[0])),y0=Math.min(...P.map(p=>p[1])),y1=Math.max(...P.map(p=>p[1]));
+  xfNudge(k==='l'?-x0:k==='r'?D.w-x1:k==='ch'?(D.w-x0-x1)/2:0,k==='t'?-y0:k==='b'?D.h-y1:k==='cv'?(D.h-y0-y1)/2:0);if(own)xfCommit();setTimeout(drawPanel,30)}
+popEl.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.pp)ppApply(t.dataset.pp,parseFloat(t.value))});
+popEl.addEventListener('keydown',e=>{const t=e.target;if(t.dataset&&t.dataset.pp&&e.key==='Enter'){e.preventDefault();t.blur()}e.stopPropagation&&t.tagName==='INPUT'&&e.stopPropagation()});
+popEl.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.lq!=null){STK.f=t.value;lfilter()}});
+popEl.addEventListener('contextmenu',e=>{const r=e.target.closest('.plyr .lyr[data-ly]');if(!r)return;e.preventDefault();labAct('lmenu:'+r.dataset.ly)});
+function lmatch(x){const q=STK.f.trim().toLowerCase();if(q&&!String(x.name||'').toLowerCase().includes(q))return false;if(STK.fk){const t=x.type==='group'?'grp':x.type==='text'?'type':x.type==='adj'?'adj':'pix';if(t!==STK.fk)return false}return true}
+function lfilter(){popEl.querySelectorAll('.plyr .lyr[data-ly]').forEach(r=>{const x=D.layers.find(q=>q.id===r.dataset.ly);r.hidden=!!x&&!lmatch(x)})}
+function stkAct(v){const [k,a]=v.split(':');if(k==='ct')STK.ct=a;else if(k==='lt')STK.lt=a;else if(k==='fk')STK.fk=STK.fk===a?'':a;drawPanel()}
+function layersPS(){const l=curL(),sel=selSet(),grp=l&&l.type==='group',pc=(n,d,k)=>`<span class="pnum"><input type="number" min="0" max="100" value="${n}" ${d}="${k}"><i>%</i><input type="range" class="pdr" min="0" max="100" value="${n}" ${d}="${k}"></span>`;
+  const top=`<div class="lfilt"><span class="lkd">&#9906; Kind</span><input data-lq value="${esc(STK.f)}" placeholder="Filter by name" aria-label="Filter layers">${[['pix','Pixel layers'],['adj','Adjustment layers'],['type','Type layers'],['grp','Groups']].map(([k,t])=>`<button class="${STK.fk===k?'on':''}" data-l="stk:fk:${k}" title="Show only ${t}">${ic(k,15)}</button>`).join('')}</div>`+
+    (l?`<div class="lbo"><select data-lblend="${l.id}">${grp?`<option value="pass"${l.blend==='pass'?' selected':''}>Pass Through</option>`:''}${BLENDS.map(([k,n])=>`<option value="${k}"${l.blend===k?' selected':''}>${n}</option>`).join('')}</select><span class="lbl2">Opacity:</span>${pc(Math.round(l.op*100),'data-lop',l.id)}</div>
+    <div class="llk"><span class="lbl2">Lock:</span>${grp?'':`<button class="${l.alock?'on':''}" data-l="lm:alock" title="Lock transparent pixels">${ic('lockT',15)}</button>`}<button class="${l.lock?'on':''}" data-l="lm:lock" title="Lock all">${ic('lockA',15)}</button>${sel.size>1?`<span class="msc">${sel.size} selected</span>`:''}<span class="grow"></span>${grp?'':`<span class="lbl2">Fill:</span>${pc(Math.round(l.fillOp*100),'data-lfill',l.id)}`}</div>`:'');
+  const rows=displayList().map(({l:x,d})=>{const isSel=x.id===D.cur,ms=sel.has(x.id)&&!isSel,g=x.type==='group',hid=!effVis(x);
+    return `<div class="lyr${isSel?' sel':''}${ms?' msel':''}${x.clip?' clp':''}${hid?' hid':''}${g?' grp':''}" data-ly="${x.id}" style="--d:${d}"${lmatch(x)?'':' hidden'}><button class="ey" data-l="vis:${x.id}" title="Show / hide (Alt-click = show only this)">${icon(x.vis?'eye':'eyeoff')}</button><span class="hd" data-drag="${x.id}" title="Drag to reorder">⋮</span>`+
+      (g?`<button class="gtw" data-l="collapse:${x.id}">${x.collapsed?'▸':'▾'}</button><span class="gico${x.tgt!=='mask'?' tg':''}" data-l="${x.mask?'tgt:'+x.id+':px':'noop'}">${ic('grp',18)}</span>`:(x.type==='text'?`<span class="tth${x.tgt!=='mask'?' tg':''}" data-l="tgt:${x.id}:px">${ic('type',18)}</span>`:x.type==='adj'?`<span class="tth adj${x.tgt!=='mask'?' tg':''}" data-l="adjedit:${x.id}">${ic('adj',18)}</span>`:`<canvas class="${x.tgt!=='mask'?'tg':''}" data-th="${x.id}" data-l="tgt:${x.id}:px" width="88" height="88"></canvas>`))+
+      (x.mask?`<i class="lch2">${ic('link',12)}</i><canvas class="mk${x.tgt==='mask'?' tg':''}${x.maskOn?'':' off'}" data-th="${x.id}" data-mk="1" data-l="tgt:${x.id}:mask" width="88" height="88" title="Mask"></canvas>`:'')+
+      `<span class="nm"><b>${x.clip?'<em class="clar">↳</em>':''}${esc(x.name)}</b></span>${fxOn(x.fx)?'<i class="fxb" data-l="style" title="Layer styles">fx</i>':''}${x.lock?`<i class="lkb">${ic('lockA',12)}</i>`:''}<button class="lmore" data-l="lmenu:${x.id}" title="Options">⋯</button></div>`+(OPENMENU===x.id?layerMenu(x):'')}).join('');
+  return top+`<div class="lrows2">${rows}<div class="lyr lyr-bg" data-l="bgsel"><button class="ey" data-l="bgtoggle">${icon(D.bgOn?'eye':'eyeoff')}</button><span class="sw" style="background:${D.bg}"></span><span class="nm"><b><em>Background</em></b></span><i class="lkb">${ic('lockA',13)}</i></div></div>
+  <div class="lfoot2"><button data-l="lm:clip" title="Clip to the layer below">${ic('link')}</button><button data-l="style" title="Layer styles"><b>fx</b></button><button data-l="mask:reveal" title="Add a layer mask">${ic('mask')}</button><button data-l="adjlmenu" title="New adjustment layer">${ic('adj')}</button><button data-l="${sel.size>1?'group':'newgroup'}" title="${sel.size>1?'Group selected layers':'New group'}">${ic('grp')}</button><button class="${MULTI?'on':''}" data-l="multi" title="Select several layers">${ic('multi')}</button><button data-l="lm:dup" title="Duplicate layer">${ic('dup')}</button><button data-l="addlayer" title="New layer">${ic('newl')}</button><button data-l="lm:del" title="Delete layer">${ic('trash')}</button></div>`}
+
 function docTab(){const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -3419,14 +3564,14 @@ function commitText(){const T2=TEXTEDIT;if(!T2)return;TEXTEDIT=null;const a=snap
 let rpT=0;function refreshPanels(){if(popEl.hidden||!D)return;if(PANEL==='layers'||PANEL==='history'){clearTimeout(rpT);rpT=setTimeout(drawPanel,60)}stat()}
 function tabs(){return `<div class="ptabs">${[['layers','Layers'],['colour','Colour'],['history','History']].map(([k,n])=>`<button class="${PANEL===k||(k==='colour'&&PANEL==='colour')?'on':''}" data-l="panel:${k}">${n}</button>`).join('')}<button class="px" data-l="closepanel" title="Close panel">&times;</button></div>`}
 function drawPanel(){if(!D||popEl.hidden)return;if((PANEL==='text'||PANEL==='fonts')&&!TEXTEDIT)PANEL='layers';if(PANEL==='adjust'&&!ADJ)PANEL='layers';const n=PANEL;let h='';
-  if(n==='layers')h=tabs()+layersHTML();else if(n==='colour')h=tabs()+colourHTML();else if(n==='history')h=tabs()+historyHTML();
+  if(desk()&&(n==='colour'||n==='history')){if(n==='history')STK.lt='history';else STK.ct='color';PANEL=n='layers'}popEl.classList.toggle('stk',n==='layers'&&desk());if(n==='layers'&&desk())h=stackHTML();else if(n==='layers')h=tabs()+layersHTML();else if(n==='colour')h=tabs()+colourHTML();else if(n==='history')h=tabs()+historyHTML();
   else if(n==='brushes')h=`<h4>Brushes<button data-l="panel:layers">&times;</button></h4><div class="bl">${BR.map(b=>`<button class="${curBrush().id===b.id?'on':''}" data-l="br:${b.id}"><span>${b.n}</span><canvas data-bprev="${b.id}" width="220" height="68"></canvas></button>`).join('')}</div>`;
   else if(n==='text')h=textHTML();else if(n==='pattern')h=patHTML();else if(n==='fonts')h=fontsHTML();else if(n==='adjust')h=adjHTML();
   else if(n==='feather')h=`<h4>Feather selection<button data-l="panel:layers">&times;</button></h4><p class="pnote">Softens the edge of the selection so paint and masks fade out.</p><label class="lbl">Radius <b id="fthv">12</b> px</label><input type="range" min="1" max="120" value="12" id="fthr"><div class="rw" style="margin-top:12px"><button class="lch pri" data-l="dofeather">Feather</button></div>`;
   popEl.innerHTML=h;
   if(n==='brushes')popEl.querySelectorAll('[data-bprev]').forEach(c=>brushPreview(c,brOf(c.dataset.bprev)));
   if(n==='layers')popEl.querySelectorAll('canvas[data-th]').forEach(c=>{const l=D.layers.find(x=>x.id===c.dataset.th);if(l)thumb(c,c.dataset.mk?l.mask:(l.type==='group'?null:(l._c||l._p)))});if(n==='layers'){const s0=popEl.querySelector('.lyr.sel');if(s0&&s0.scrollIntoView&&!popEl._noscroll)s0.scrollIntoView({block:'nearest'})}
-  if(n==='colour')initPicker();if(n==='adjust')initAdjUI();
+  if(n==='colour'||(n==='layers'&&desk()&&$('#cpSV')))initPicker();if(n==='adjust')initAdjUI();
   const f=$('#fthr');if(f)f.oninput=()=>$('#fthv').textContent=f.value}
 function brushPreview(c,b){const x=c.getContext('2d'),w=c.width,h=c.height;x.clearRect(0,0,w,h);const tint=['stitch','spray','halftone'].includes(b.tip)?null:tintTip(b.tip,'#f1f1f1');
   if(b.tip==='stitch'){x.strokeStyle='#f1f1f1';x.lineWidth=4;x.lineCap='round';x.setLineDash([16,12]);x.beginPath();for(let i=0;i<=40;i++){const X=10+i*(w-20)/40,Y=h/2+Math.sin(i/40*6.28)*h*.25;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();return}
@@ -3455,7 +3600,7 @@ function historyHTML(){const items=[['Open',0],...H.u.map((e,i)=>[e.n,i+1])],red
 const PAL={Fabric:['#111111','#2b2b2d','#3f3f42','#8e8d89','#b9b8b4','#e6e3dc','#f5f2ea','#ffffff','#1d2440','#2748a8','#6f93c7','#1f3b2c','#5c5a3a','#8a8157','#cdb892','#5a3d2b','#5a1624','#b3202a','#d9621e','#e8c547','#e9a3b8','#b9a7d8'],Neon:['#39ff14','#ff2bd6','#00e5ff','#fff200','#ff5f1f','#8a2be2'],Metal:['#c9a44c','#e6c878','#c0c0c0','#8c8c8c','#b87333']};
 let RECENT=[],MYPAL=[];
 function addRecent(c){RECENT=[c,...RECENT.filter(x=>x!==c)].slice(0,9)}
-function setColor(c){if(COLTGT==='bg'&&PANEL==='colour'&&!popEl.hidden)TOOL.color2=c;else TOOL.color=c;refreshSwatch();if(PANEL==='colour'&&!popEl.hidden)syncPicker()}
+function setColor(c){const cv2=(PANEL==='colour'||!!$('#cpSV'))&&!popEl.hidden;if(COLTGT==='bg'&&cv2)TOOL.color2=c;else TOOL.color=c;refreshSwatch();if(cv2)syncPicker()}
 const HSV={h:0,s:0,v:0};
 function hex2hsv(h){const [r,g,b]=hexToRgb(h).map(v=>v/255),mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let hh=0;if(d){hh=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;hh/=6;if(hh<0)hh+=1}return {h:hh,s:mx?d/mx:0,v:mx}}
 function hsv2hex(h,s,v){const f=n=>{const k=(n+h*6)%6;return v-v*s*Math.max(0,Math.min(k,4-k,1))};return rgbToHex(f(5)*255,f(3)*255,f(1)*255)}
@@ -4227,7 +4372,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'tool':setTool(v);break;
     case'panel':if(v==='fonts'&&PANEL==='text'){PANEL='fonts';drawPanel()}else if(v==='text'&&PANEL==='fonts'){PANEL='text';drawPanel()}else if(v==='brushes'&&PANEL==='brushes'&&!popEl.hidden)openPanel('layers');else openPanel(v);break;
     case'closepanel':closePanel();break;case'undo':undo();break;case'redo':redo();break;case'help':helpSheet();break;
-    case'swapcol':{const c=TOOL.color;TOOL.color=TOOL.color2;TOOL.color2=c;refreshSwatch();if(PANEL==='colour')drawPanel();break}
+    case'swapcol':{const c=TOOL.color;TOOL.color=TOOL.color2;TOOL.color2=c;refreshSwatch();if(PANEL==='colour'||$('#cpSV'))drawPanel();break}
     case'sym':TOOL.sym=!TOOL.sym;drawOpt();req();hint(TOOL.sym?'Symmetry on: strokes mirror across the centre':'Symmetry off');break;
     case'grid':VIEW.grid=!VIEW.grid;req();break;
     case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
@@ -4274,7 +4419,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'hist':histJump(+v);break;
     case'group':groupLayers();break;case'ungroup':ungroup(l&&l.type==='group'?l:parentOf(l));break;case'newgroup':newEmptyGroup();break;case'delgroup':if(l&&l.type==='group')ungroup(l);OPENMENU=null;break;
     case'stamp':stampVisible();break;case'fillsheet':fillSheet();break;case'dofill':doFill();break;case'strokesheet':strokeSheet();break;case'dostroke':doStroke();break;case'keys':keysSheet();break;
-    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
+    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
     case'collapse':{const g=byId(v);if(g){g.collapsed=!g.collapsed;D.changed=true;schedSave();drawPanel()}break}
     case'desat':applyNow('bw');break;case'invertnow':applyNow('invert');break;
     case'noedges':VIEW.noedges=!VIEW.noedges;req();hint(VIEW.noedges?'Selection edges hidden (Ctrl+H)':'Selection edges shown');break;
@@ -4425,7 +4570,7 @@ addEventListener('keydown',e=>{if(labEl.hidden&&homeEl.hidden)return;const typin
     case'o':if(sh&&TOOL.t==='dodge'){TOOL.dodge=TOOL.dodge==='dodge'?'burn':'dodge';drawOpt()}else setTool('dodge');break;
     case't':setTool('text');break;case'u':if(sh&&TOOL.t==='shape'){const ks=['rect','rrect','ellipse','tri','star','hex','line','arrow'];TOOL.shape.k=ks[(ks.indexOf(TOOL.shape.k)+1)%ks.length];drawOpt()}else setTool('shape');break;
     case'h':if(sh)labAct('flipview');else setTool('hand');break;case'r':setTool('rotv');break;case'z':setTool('zoom');break;
-    case'x':labAct('swapcol');break;case'd':TOOL.color='#000000';TOOL.color2='#ffffff';refreshSwatch();if(PANEL==='colour')drawPanel();hint('Default colours');break;
+    case'x':labAct('swapcol');break;case'd':TOOL.color='#000000';TOOL.color2='#ffffff';refreshSwatch();if(PANEL==='colour'||$('#cpSV'))drawPanel();hint('Default colours');break;
     case'f':labAct('fullscreen');break;case'q':hint('Quick mask isn’t available – use a layer mask (Layer → Add mask)',2600);break}},true);
 addEventListener('keyup',e=>{if(e.key===' '&&SPACE){SPACE=false;labEl.classList.remove('pan')}},true);
 addEventListener('resize',()=>{if(D&&!edEl.hidden)req()});
