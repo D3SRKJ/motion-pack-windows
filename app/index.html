@@ -1394,6 +1394,12 @@ body.coldrag{user-select:none;-webkit-user-select:none}
 #hgP .hg-steps i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px;color:#000;background:linear-gradient(100deg,#8c8c8c,#f7f7f7 28%,#7b7b7b 52%,#e4e4e4 78%,#9e9e9e)}
 #hgP .hg-none{color:#888;margin-top:24px}
 @media (max-width:640px){#hgP{padding:0}#hgP .hg-in{border-radius:0;height:100%}#hgP header{padding:calc(env(safe-area-inset-top) + 16px) 18px 6px}#hgP h2{font-size:24px}#hgP .hg-bar,#hgP .hg-body{padding-left:18px;padding-right:18px}#hgP .hg-tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}#hgP .hg-tabs::-webkit-scrollbar{display:none}#hgP .hg-tabs button{flex:none}#hgP .hg-keys{grid-template-columns:1fr}}
+.scolw{margin:8px 0}.scolw .scol{margin:0 0 6px}
+.stysw{display:flex;flex-wrap:wrap;gap:5px}
+.stysw button{width:20px;height:20px;border-radius:50%;padding:0;border:1px solid rgba(255,255,255,.28);background:var(--c);cursor:var(--cp,pointer);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.stysw button:hover{transform:scale(1.15);border-color:#7aa8ff}
+.stysw button.on{box-shadow:0 0 0 2px #0b0b0c,0 0 0 3px #7aa8ff}
+.stysw button.add{background:rgba(255,255,255,.06);color:#ddd;font-size:13px;line-height:18px;border-style:dashed}
 </style>
 </head>
 <body class="edit empty">
@@ -3378,7 +3384,7 @@ function layerOut(l,below){
   const FXPRE=bi&&fx?(()=>{const c=T('lbpre'),q=cx2(c);q.save();q.globalAlpha=1;q.globalCompositeOperation='copy';q.drawImage(b,0,0);q.restore();return c})():null;if(bi)applyBI(b,l.bi,below);
   if(!keep&&l.fxc){relc(l.fxc);l.fxc=null}let out;if(live||!keep||biUnder(l.bi))out=T('lout');else{if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h)l.fxc=mk(D.w,D.h);out=l.fxc}
   const o=cx2(out);o.save();o.globalAlpha=1;o.globalCompositeOperation='source-over';o.clearRect(0,0,D.w,D.h);
-  if(fx){FXPUNCH=!!FXPRE||l.fillOp<1;fxBelow(o,FXPRE||b,l.fx);FXPUNCH=false}o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;if(fx)fxAbove(o,b,l.fx);o.restore();
+  if(fx){const F=l.fx;if(FXPRE){const off={on:false};fxBelow(o,fxShape(b,'fxs'),Object.assign({},F,{st:off,st2:off}));FXPUNCH=true;fxBelow(o,fxShape(FXPRE,'fxs2'),{st:F.st,st2:F.st2});FXPUNCH=false}else{FXPUNCH=l.fillOp<1;fxBelow(o,fxShape(b,'fxs'),F);FXPUNCH=false}}o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;if(fx)fxAbove(o,fxShape(b,'fxa'),l.fx);o.restore();
   l.fxk=(!live&&keep&&!biUnder(l.bi))?key:'';return out}
 function src(l){
   if(xfHas(l))return xfPreviewFor(l);
@@ -3722,7 +3728,7 @@ function clearLayer(l){if(!needPx(l,'Clear'))return;if(l.lock)return hint('This 
 function flipLayer(l,dir){if(!needPx(l,'Flip'))return;if(l.lock)return;if(l.type==='text'){stOp(()=>{if(dir==='h')l.t.fx=-(l.t.fx||1);else l.t.fy=-(l.t.fy||1)},'Flip');renderText(l);return}const b=wholeBefore(l,false),x=cx2(l.cv),s=cx2(T('backup'));s.globalCompositeOperation='copy';s.drawImage(l.cv,0,0);s.globalCompositeOperation='source-over';x.save();x.clearRect(0,0,D.w,D.h);if(dir==='h'){x.translate(D.w,0);x.scale(-1,1)}else{x.translate(0,D.h);x.scale(1,-1)}x.drawImage(T('backup'),0,0);x.restore();pushH(wholeEntry(l,false,b),dir==='h'?'Flip horizontal':'Flip vertical');touch(l,false)}
 function bakeLayer(l){const c=mk(D.w,D.h);const s=itemOut(l,T('comp'),0);dI(cx2(c),s);return c}
 function mergeDown(l){if(l&&l.type==='adj')return hint('Adjustment layers can’t be merged down – use Stamp visible (Ctrl+Alt+Shift+E) to bake them into pixels',3600);if(l.type==='group'||(D.lsel&&D.lsel.size)){mergeItems(topItems());return}const sib=kids(l.gid||null),si=sib.indexOf(l);if(si<1)return hint('Nothing below to merge into');const i=idxOf(l);if(i<1)return hint('Nothing below to merge into');const lo=sib[si-1];if(lo.type==='group')return hint('The layer below is a group – merge the group first (Ctrl+E on it)',2600);if(lo.lock)return hint('The layer below is locked');const list=[];
-  const sb0=snapSt();if(lo.type==='text')lo.type='px';const b=wholeBefore(lo,false),x=cx2(lo.cv);let s=bakeLayer(l);if(l.clip){const g=cx2(s);g.globalCompositeOperation='destination-in';g.drawImage(lo.mask&&lo.maskOn?(()=>{const t=mk(D.w,D.h),tx=cx2(t);tx.drawImage(lo.cv,0,0);tx.globalCompositeOperation='destination-in';tx.drawImage(maskAlpha(lo),0,0);return t})():lo.cv,0,0)}
+  const sb0=snapSt();if(lo.type==='text')lo.type='px';const b=wholeBefore(lo,false),x=cx2(lo.cv);let s=bakeLayer(l);if(l.clip&&!lo.clip){const g=cx2(s);g.globalCompositeOperation='destination-in';g.drawImage(lo.mask&&lo.maskOn?(()=>{const t=mk(D.w,D.h),tx=cx2(t);tx.drawImage(lo.cv,0,0);tx.globalCompositeOperation='destination-in';tx.drawImage(maskAlpha(lo),0,0);return t})():lo.cv,0,0)}
   x.save();x.globalAlpha=l.vis?l.op:0;x.globalCompositeOperation=l.blend;x.drawImage(s,0,0);x.restore();list.push({k:'st',b:sb0,a:snapSt()});list.push(wholeEntry(lo,false,b));
   const sb=snapSt();D.layers.splice(i,1);D.cur=lo.id;list.push({k:'st',b:sb,a:snapSt()});pushH({k:'multi',list},'Merge down');touchAll();hint('Merged down')}
 function flattenAll(visibleOnly){const c=mk(D.w,D.h);composite(c,true);dirtyComp=true;stOp(()=>{const n=newLayer(visibleOnly?'Merged':'Flattened');cx2(n.cv).drawImage(c,0,0);if(visibleOnly){const keep=D.layers.filter(l=>!l.vis);D.layers=[...keep,n]}else D.layers=[n];D.cur=n.id;D.garment=null},visibleOnly?'Merge visible':'Flatten')}
@@ -3743,7 +3749,7 @@ function removeBgData(d,W,H2,tol){const a=d.data,bord=[];for(let x=0;x<W;x+=Math
   const T0=tol*2.2,T1=T0*1.6,dist=k=>Math.max(Math.abs(a[k]-med[0]),Math.abs(a[k+1]-med[1]),Math.abs(a[k+2]-med[2])),seen=new Uint8Array(W*H2),st=[];
   for(let x=0;x<W;x++){st.push(x);st.push((H2-1)*W+x)}for(let y=0;y<H2;y++){st.push(y*W);st.push(y*W+W-1)}let n=0;
   while(st.length){const i=st.pop();if(seen[i])continue;const k=i*4;if(a[k+3]===0){seen[i]=1;}else{const dd=dist(k);if(dd>T1)continue;seen[i]=1;if(dd<=T0){a[k+3]=0;n++}else{a[k+3]=Math.round(a[k+3]*(dd-T0)/(T1-T0));continue}}
-    const x=i%W,y=(i/W)|0;if(x>0&&!seen[i-1])st.push(i-1);if(x<W-1&&!seen[i+1])st.push(i+1);if(y>0&&!seen[i-W])st.push(i-W);if(y<H2-1&&!seen[i+W])st.push(i+W)}return n}
+    const x=i%W,y=(i/W)|0;if(x>0&&!seen[i-1])st.push(i-1);if(x<W-1&&!seen[i+1])st.push(i+1);if(y>0&&!seen[i-W])st.push(i-W);if(y<H2-1&&!seen[i+W])st.push(i+W)}for(let i=0,N2=W*H2;i<N2;i++)if(seen[i]&&a[i*4+3]<56)a[i*4+3]=0;return n}
 function removeBgLayer(l,tol){if(!needPx(l,'Remove background'))return;if(!l||l.type!=='px'||l.lock)return hint(l&&l.type==='text'?'Rasterize the type first':'This layer is locked');const b=wholeBefore(l,false),d=cx2(l.cv).getImageData(0,0,D.w,D.h),n=removeBgData(d,D.w,D.h,tol||18);if(!n)return hint('No plain background found around the edges',2400);cx2(l.cv).putImageData(d,0,0);pushH(wholeEntry(l,false,b),'Remove background');touch(l,false);hint('Background removed')}
 function knockLayer(l,which){if(!needPx(l,'Knock out'))return;stOp(()=>{l.bi=Object.assign(biDef(),l.bi||{});if(which==='white'){l.bi.tw0=190;l.bi.tw1=250}else{l.bi.tb0=6;l.bi.tb1=70}},which==='white'?'Knock out white':'Knock out black');hint('Adjust it any time in Blending Options',2200)}
 
@@ -3825,8 +3831,8 @@ function dupItems(items){stOp(()=>{let last=null;items.forEach(it=>{const map=ne
     if(it.type==='group'){const ds=descOf(it);ds.forEach((d,i)=>{made[i+1].gid=map.get(d.gid)})}D.layers.push(...made);const lvl=kids(pg).filter(x=>x!==n),i=lvl.indexOf(it);lvl.splice(i+1,0,n);relinearize(new Map([[pg,lvl]]));last=n});if(last)D.cur=last.id;D.lsel=new Set()},'Duplicate');hint('Duplicated')}
 function mergeItems(items,name){if(items.length===1&&items[0].type!=='group'){mergeDown(items[0]);return}const c=mk(D.w,D.h),x=cx2(c);
   const all=items.length===1?[items[0]]:items;const saved=D.layers.map(l=>l.vis);D.layers.forEach(l=>{l._keep=all.includes(l)||all.some(g=>g.type==='group'&&isDesc(l,g))});
-  const hv=D.layers.filter(l=>!l._keep&&l.type!=='group');hv.forEach(l=>l._v=l.vis);hv.forEach(l=>l.vis=false);composite(c,true);hv.forEach(l=>l.vis=l._v);D.layers.forEach(l=>delete l._keep);dirtyComp=true;
-  stOp(()=>{const top=all[all.length-1],pg=top.gid||null,n=newLayer(name||(items.length===1?items[0].name:'Merged'));cx2(n.cv).drawImage(c,0,0);n.gid=pg;const kill=new Set();all.forEach(it=>{kill.add(it);if(it.type==='group')descOf(it).forEach(d=>kill.add(d))});
+  const baseOf=l=>{let i=idxOf(l)-1;while(i>=0&&D.layers[i].clip)i--;return i>=0?D.layers[i]:null};const unc=all.filter(it=>it.clip&&!all.includes(baseOf(it))),keepClip=unc.length&&unc.length===all.length;unc.forEach(it=>it.clip=false);const hv=D.layers.filter(l=>!l._keep&&l.type!=='group');hv.forEach(l=>l._v=l.vis);hv.forEach(l=>l.vis=false);composite(c,true);hv.forEach(l=>l.vis=l._v);unc.forEach(it=>it.clip=true);D.layers.forEach(l=>delete l._keep);dirtyComp=true;
+  stOp(()=>{const top=all[all.length-1],pg=top.gid||null,n=newLayer(name||(items.length===1?items[0].name:'Merged'));cx2(n.cv).drawImage(c,0,0);n.gid=pg;if(keepClip)n.clip=true;const kill=new Set();all.forEach(it=>{kill.add(it);if(it.type==='group')descOf(it).forEach(d=>kill.add(d))});
     D.layers.push(n);const lvl=kids(pg).filter(x=>x!==n),pos=lvl.indexOf(top);lvl.splice(pos+1,0,n);D.layers=D.layers.filter(x=>!kill.has(x));relinearize(new Map([[pg,lvl.filter(x=>!kill.has(x))]]));D.cur=n.id;D.lsel=new Set()},items.length===1?'Merge group':'Merge layers')}
 function moveItem(l,dir){if(!l)return;const pg=l.gid||null,lvl=kids(pg),i=lvl.indexOf(l);let j=dir==='up'?i+1:dir==='down'?i-1:dir==='top'?lvl.length-1:0;j=clampN(j,0,lvl.length-1);if(j===i)return;stOp(()=>{lvl.splice(i,1);lvl.splice(j,0,l);relinearize(new Map([[pg,lvl]]))},'Arrange layer')}
 function selAdjacent(dir){const L=displayList().map(r=>r.l);const i=L.indexOf(curL());const j=clampN(i+(dir==='up'?-1:1),0,L.length-1);if(L[j]){if(XFORM)xfCommit();D.cur=L[j].id;D.lsel=new Set();if(TOOL.t==='move')xfStart();drawPanel();drawOpt();stat()}}
@@ -5178,6 +5184,19 @@ function hgOpen(tab){let e=document.getElementById('hgP');if(tab)HGTAB=tab;
 function hgClose(){const e=document.getElementById('hgP');if(!e)return;e.classList.remove('in');setTimeout(()=>{e.hidden=true},220)}
 addEventListener('keydown',e=>{const g=document.getElementById('hgP');if(!g||g.hidden)return;e.stopImmediatePropagation();if(e.key==='Escape')hgClose()},true);
 
+/* ---------- v15: saved colours in Blending options ---------- */
+let STYCOLS=(()=>{try{const a=JSON.parse(localStorage.getItem('mp_stycols')||'null');if(Array.isArray(a)&&a.length)return a}catch(e){}return ['#000000','#ffffff','#b3202a','#c9a44c','#1f2a44']})();
+function styColSave(){try{localStorage.setItem('mp_stycols',JSON.stringify(STYCOLS))}catch(e){}}
+function styColAdd(c){c=String(c||'').toLowerCase();if(!/^#[0-9a-f]{6}$/.test(c))return;STYCOLS=[c,...STYCOLS.filter(x=>x!==c)].slice(0,24);styColSave()}
+function styColHTML(k,lb,v){return `<div class="scolw"><label class="scol">${lb}<input type="color" value="${v}" data-sty="${k}"></label><div class="stysw">${STYCOLS.map(c=>`<button class="${String(v).toLowerCase()===c?'on':''}" data-l="sty:pc:${k}:${c}" style="--c:${c}" title="${c} – right-click to remove"></button>`).join('')}<button class="add" data-l="sty:ps:${k}" title="Save this colour to your swatches">＋</button></div></div>`}
+function styColAct(a){const S3=STY;if(!S3)return;const l=S3.l,[op,key,c]=a.split(':'),[s,p]=key.split('.');if(!l.fx||!l.fx[s])return;
+  if(op==='pc'){l.fx[s][p]=c;l.fx[s].on=true;styColAdd(c)}else if(op==='ps'){styColAdd(l.fx[s][p]);hint('Colour saved to your swatches',1400)}drawStyle();styLive()}
+sheetEl.addEventListener('change',e=>{const t=e.target;if(STY&&t.type==='color'&&t.dataset.sty){styColAdd(t.value);drawStyle()}});
+sheetEl.addEventListener('contextmenu',e=>{const b=e.target.closest('[data-l^="sty:pc:"]');if(!b||!STY)return;e.preventDefault();const c=b.dataset.l.split(':').pop();STYCOLS=STYCOLS.filter(x=>x!==c);styColSave();drawStyle()});
+/* ---------- effects ignore faint leftover pixels (e.g. a removed background) ---------- */
+function fxShape(src,name){const c=T(name||'fxs'),x=cx2(c);x.save();x.globalAlpha=1;x.globalCompositeOperation='copy';x.drawImage(src,0,0);x.restore();
+  const im=x.getImageData(0,0,c.width,c.height),a=im.data;let ch=false;for(let i=3;i<a.length;i+=4){const v=a[i];if(v&&v<26){a[i]=0;ch=true}}if(ch)x.putImageData(im,0,0);return c}
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -5313,8 +5332,8 @@ function initAdjUI(){const A=ADJ;if(!A)return;const hc=$('#histC');if(hc){const 
 const FXDEF={ds:{on:false,col:'#000000',op:.6,ang:120,dist:14,size:16,blend:'multiply'},og:{on:false,col:'#ffffff',op:.75,size:26,spread:10,blend:'screen'},is:{on:false,col:'#000000',op:.5,ang:120,dist:6,size:10,blend:'multiply'},st:{on:false,col:'#000000',op:1,size:6},co:{on:false,col:'#b3202a',op:1,blend:'source-over'},st2:{on:false,col:'#ffffff',op:1,size:10},pf:{on:false,size:16,soft:10,ang:120,hi:70,sh:60},em:{on:false,dens:6,ang:45,depth:80,raise:50,border:0,bcol:'#111111'},fb:{on:false,type:'denim',scale:100,amt:80},wp:{on:false,str:45,soft:6},vt:{on:false,crack:65,grain:40,fade:25,scale:100},go:{on:false,c1:'#000000',c2:'#ffffff',ang:90,op:1,blend:'source-over'}};
 const FXN=[['blend','Blending options'],['ds','Drop shadow'],['og','Outer glow'],['st','Stroke (outline)'],['st2','Double outline'],['is','Inner shadow'],['pf','Puff print / bevel'],['em','Embroidery'],['fb','Fabric texture'],['wp','Auto-warp to folds'],['vt','Vintage / distressed'],['co','Colour overlay'],['go','Gradient overlay']];
 let STY=null;
-function openStyle(sec){const l=curL();if(!needPx(l,'Layer styles'))return;l.fx=Object.assign(JSON.parse(JSON.stringify(FXDEF)),l.fx||{});l.bi=Object.assign(biDef(),l.bi||{});STY={l,b:snapSt(),sec:sec||'blend'};drawStyle();sheetEl.hidden=false;sheetEl.classList.add('sty')}
-function drawStyle(){const S3=STY,l=S3.l,f=l.fx,bi=l.bi,sec=S3.sec,num=(k,lb,mn,mx,v,unit,st)=>`<label class="lbl">${lb} <b>${v}${unit||''}</b></label><input type="range" min="${mn}" max="${mx}" step="${st||1}" value="${v}" data-sty="${k}">`,col=(k,lb,v)=>`<label class="scol">${lb}<input type="color" value="${v}" data-sty="${k}"></label>`,bsel=(k,v)=>`<label class="lbl">Blend mode</label><select data-sty="${k}">${BLENDS.map(([a,n])=>`<option value="${a}"${a===v?' selected':''}>${n}</option>`).join('')}</select>`;
+function openStyle(sec){const l=curL();if(!(l&&l.sm&&l.type!=='group')&&!needPx(l,'Layer styles'))return;l.fx=Object.assign(JSON.parse(JSON.stringify(FXDEF)),l.fx||{});l.bi=Object.assign(biDef(),l.bi||{});STY={l,b:snapSt(),sec:sec||'blend'};drawStyle();sheetEl.hidden=false;sheetEl.classList.add('sty')}
+function drawStyle(){const S3=STY,l=S3.l,f=l.fx,bi=l.bi,sec=S3.sec,num=(k,lb,mn,mx,v,unit,st)=>`<label class="lbl">${lb} <b>${v}${unit||''}</b></label><input type="range" min="${mn}" max="${mx}" step="${st||1}" value="${v}" data-sty="${k}">`,col=(k,lb,v)=>styColHTML(k,lb,v),bsel=(k,v)=>`<label class="lbl">Blend mode</label><select data-sty="${k}">${BLENDS.map(([a,n])=>`<option value="${a}"${a===v?' selected':''}>${n}</option>`).join('')}</select>`;
   let r='';
   if(sec==='blend'){const bar=(p,lb)=>`<div class="bif"><span class="lbl">${lb}</span><div class="bifbar"><i style="left:${bi[p+'b0']/2.55}%"></i><i style="left:${bi[p+'b1']/2.55}%"></i><i class="w" style="left:${bi[p+'w0']/2.55}%"></i><i class="w" style="left:${bi[p+'w1']/2.55}%"></i></div>
       <div class="bifr"><label>Black from<input type="range" min="0" max="255" value="${bi[p+'b0']}" data-bi="${p}b0"></label><label>Black to<input type="range" min="0" max="255" value="${bi[p+'b1']}" data-bi="${p}b1"></label><label>White from<input type="range" min="0" max="255" value="${bi[p+'w0']}" data-bi="${p}w0"></label><label>White to<input type="range" min="0" max="255" value="${bi[p+'w1']}" data-bi="${p}w1"></label></div></div>`;
@@ -5342,7 +5361,7 @@ sheetEl.addEventListener('input',e=>{const t=e.target;if(!STY)return;const l=STY
 sheetEl.addEventListener('change',e=>{if(STY&&(e.target.type==='checkbox'||e.target.tagName==='SELECT'))drawStyle()});
 let styT=0;function styLive(){l0:{const l=STY.l;l.fxk='';dirtyComp=true;clearTimeout(styT);styT=setTimeout(req,TOUCH?90:16)}}
 function styAct(a){const S3=STY;if(!S3)return;const l=S3.l;
-  if(a==='min'){fltMini();return}
+  if(a==='min'){fltMini();return}if(a.startsWith('pc:')||a.startsWith('ps:')){styColAct(a);return}
   if(a.startsWith('sec:')){S3.sec=a.slice(4);drawStyle();return}
   if(a.startsWith('fab:')){l.fx.fb.type=a.slice(4);l.fx.fb.on=true;drawStyle();styLive();return}
   if(a==='rmwhite'){Object.assign(l.bi,{tw0:190,tw1:250});drawStyle();styLive();return}if(a==='rmblack'){Object.assign(l.bi,{tb0:6,tb1:70});drawStyle();styLive();return}if(a==='bireset'){Object.assign(l.bi,biDef());drawStyle();styLive();return}
