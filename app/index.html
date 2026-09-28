@@ -5538,10 +5538,20 @@ async function syConnect(tok){tok=syTokFrom(tok);if(!tok)throw new Error('Paste 
   else if(!r.ok)throw new Error('Could not open “'+SYREPO+'” ('+r.status+')');
   if(r.j&&r.j.private===false)throw new Error('“'+SYREPO+'” is public. Your designs must stay private – make it private in GitHub (Settings › Danger zone › Change visibility) and try again.');
   const cfg={tok,owner,repo:SYREPO,branch:(r.j&&r.j.default_branch)||'main',auto:true,at:Date.now()};await IDB.set('ghsync',cfg);return cfg}
-/* blobs ↔ JSON */
-async function syEnc(v){if(v instanceof Blob)return {$b:await b64Blob(v),t:v.type||''};if(Array.isArray(v)){const o=[];for(const x of v)o.push(await syEnc(x));return o}
-  if(v&&typeof v==='object'&&!(v instanceof Date)){if(ArrayBuffer.isView(v)||v instanceof ArrayBuffer)return null;const o={};for(const k of Object.keys(v)){const x=v[k];if(typeof x==='function'||(typeof HTMLCanvasElement!=='undefined'&&x instanceof HTMLCanvasElement)||(typeof ImageBitmap!=='undefined'&&x instanceof ImageBitmap))continue;o[k]=await syEnc(x)}return o}return v}
-function syDec(v){if(Array.isArray(v))return v.map(syDec);if(v&&typeof v==='object'){if(typeof v.$b==='string'){const s=atob(v.$b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new Blob([u],{type:v.t||''})}const o={};for(const k of Object.keys(v))o[k]=syDec(v[k]);return o}return v}
+/* blobs ↔ JSON. Big images go into separate 6 MB pieces (stored once, reused between syncs) so any size design syncs */
+const SYCH=6*1024*1024,SYINL=48*1024;
+async function syGsha(u8){const h=new TextEncoder().encode('blob '+u8.length+'\0'),all=new Uint8Array(h.length+u8.length);all.set(h);all.set(u8,h.length);const d=await crypto.subtle.digest('SHA-1',all);return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function syChunks(u8,C){const refs=[];for(let i=0;i<u8.length;i+=SYCH){const part=u8.slice(i,Math.min(u8.length,i+SYCH)),sha=await syGsha(part);if(!C.map.has(sha))C.map.set(sha,part);C.refs.add(sha);refs.push(sha)}return refs}
+async function syEnc(v,C){if(v instanceof Blob){if(!C||v.size<=SYINL)return {$b:await b64Blob(v),t:v.type||''};return {$c:await syChunks(new Uint8Array(await v.arrayBuffer()),C),t:v.type||''}}
+  if(typeof v==='string'){if(C&&v.length>SYINL*1.4&&v.startsWith('data:')&&v.indexOf(';base64,')>0&&v.indexOf(';base64,')<120){const m=v.slice(5,v.indexOf(';base64,'));try{const u8=new Uint8Array(await (await fetch(v)).arrayBuffer());return {$d:await syChunks(u8,C),m}}catch(e){}}return v}
+  if(Array.isArray(v)){const o=[];for(const x of v)o.push(await syEnc(x,C));return o}
+  if(v&&typeof v==='object'&&!(v instanceof Date)){if(ArrayBuffer.isView(v)||v instanceof ArrayBuffer)return null;const o={};for(const k of Object.keys(v)){const x=v[k];if(typeof x==='function'||(typeof HTMLCanvasElement!=='undefined'&&x instanceof HTMLCanvasElement)||(typeof ImageBitmap!=='undefined'&&x instanceof ImageBitmap))continue;o[k]=await syEnc(x,C)}return o}return v}
+async function syDec(v,G){if(Array.isArray(v)){const o=[];for(const x of v)o.push(await syDec(x,G));return o}
+  if(v&&typeof v==='object'){if(typeof v.$b==='string'){const s=atob(v.$b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new Blob([u],{type:v.t||''})}
+    if(Array.isArray(v.$c)){const parts=[];for(const h of v.$c)parts.push(await G(h));return new Blob(parts,{type:v.t||''})}
+    if(Array.isArray(v.$d)){const parts=[];for(const h of v.$d)parts.push(await G(h));return 'data:'+(v.m||'application/octet-stream')+';base64,'+await b64Blob(new Blob(parts))}
+    const o={};for(const k of Object.keys(v))o[k]=await syDec(v[k],G);return o}return v}
+async function syBin(cfg,sha,files){const real=(files&&files.get(SYDIR+'b/'+sha))||sha;try{const r=await fetch(SYAPI+`/repos/${cfg.owner}/${cfg.repo}/git/blobs/${real}`,{cache:'no-store',headers:{Authorization:'Bearer '+cfg.tok,Accept:'application/vnd.github.raw+json','X-GitHub-Api-Version':'2022-11-28'}});if(!r.ok)throw 0;return new Uint8Array(await r.arrayBuffer())}catch(e){throw new Error('Could not download part of a design – try Sync now again')}}
 /* what this device has */
 async function syLocal(dev){const out=new Map();const dl=(await IDB.get('dlib'))||[];for(const d of dl)out.set('des/'+d.id,{kind:'des',id:d.id,name:d.name,u:String(d.updated||0)});
   for(const e of await libGet()){if(!e||!e.id)continue;const rk=e.id==='default'?'lb/d_'+dev:'lb/'+e.id;const d=await IDB.get('lb:'+e.id);if(!d)continue;out.set(rk,{kind:'lb',id:e.id,name:e.name||d.title||'Lookbook',u:String(d.savedAt||0)})}
@@ -5582,27 +5592,38 @@ async function syOnce(cfg,opts){const R=`/repos/${cfg.owner}/${cfg.repo}`,T=cfg.
   for(const k of keys){if(k==='index')continue;const L=local.get(k),path=SYDIR+k+'.json',Rs=files.get(path),ix=idx.items[k],Sx=last[k];
     const kind=k.split('/')[0],id=lid2(k);if(kind==='des'&&id===openDes)continue;
     const lc=!!L&&(!Sx||Sx.u!==L.u),rc=!!Rs&&(!Sx||Sx.sha!==Rs),rdel=!Rs&&ix&&ix.del;
-    const down=async(copyFirst)=>{const b=await syFetch('GET',`${R}/git/blobs/${Rs}`,null,T,true);if(!b.ok)throw new Error('Could not download “'+((ix&&ix.name)||k)+'”');if(copyFirst&&L){await syCopyLocal(L);again=true}const u=await syUnpack(syDec(JSON.parse(b.t)),id);changedLocal=true;nU[1]++;
+    const down=async(copyFirst)=>{const b=await syFetch('GET',`${R}/git/blobs/${Rs}`,null,T,true);if(!b.ok)throw new Error('Could not download “'+((ix&&ix.name)||k)+'”');if(copyFirst&&L){await syCopyLocal(L);again=true}const u=await syUnpack(await syDec(JSON.parse(b.t),h=>syBin(cfg,h,files)),id);changedLocal=true;nU[1]++;
       const L2=(await syLocal(dev)).get(k);last[k]={u:L2?L2.u:(u||''),sha:Rs}};
     if(L&&!Rs&&!rdel){ups.push(k)}
     else if(L&&rdel){if(lc)ups.push(k);else{if(await syDelLocal(L)){delete last[k];changedLocal=true;nU[2]++}}}
     else if(!L&&Rs){if(Sx&&!rc){dels.push(k)}else await down(false)}
     else if(!L&&!Rs){delete last[k]}
-    else if(L&&Rs){if(lc&&!rc)ups.push(k);else if(rc&&!lc)await down(false);else if(lc&&rc){const ru=ix&&+ix.u||0,luN=+L.u||0;if(kind==='misc'){await IDB.set('syncbak:'+id,await IDB.get(id));await down(false)}else if(ru>luN)await down(true);else{await syCopyRemote(k,Rs,id,cfg);again=true;changedLocal=true;ups.push(k)}}
+    else if(L&&Rs){if(lc&&!rc)ups.push(k);else if(rc&&!lc)await down(false);else if(lc&&rc){const ru=ix&&+ix.u||0,luN=+L.u||0;if(kind==='misc'){await IDB.set('syncbak:'+id,await IDB.get(id));await down(false)}else if(ru>luN)await down(true);else{await syCopyRemote(k,Rs,id,cfg,files);again=true;changedLocal=true;ups.push(k)}}
       else if(!Sx)last[k]={u:L.u,sha:Rs}}}
-  const tree=[];for(const k of ups){const L=(await syLocal(dev)).get(k);if(!L)continue;const o=await syPack(L);if(!o)continue;const txt=JSON.stringify(await syEnc(o));
-    const bl=await syFetch('POST',`${R}/git/blobs`,{content:txt,encoding:'utf-8'},T);if(!bl.ok)throw new Error('Upload failed for “'+L.name+'” ('+bl.status+')'+(bl.status===422?' – it may be too big':''));
-    tree.push({path:SYDIR+k+'.json',mode:'100644',type:'blob',sha:bl.j.sha});idx.items[k]={name:L.name,u:L.u,dev,at:Date.now(),size:txt.length};last[k]={u:L.u,sha:bl.j.sha,at:Date.now()};nU[0]++}
+  const tree=[],fails=[],sent=new Set();let ui=0;
+  for(const k of ups){const L=(await syLocal(dev)).get(k);if(!L)continue;ui++;
+    try{const o=await syPack(L);if(!o)continue;const C={map:new Map(),refs:new Set()};const txt=JSON.stringify(await syEnc(o,C));
+      const need=[...C.map.keys()].filter(h=>!files.has(SYDIR+'b/'+h)&&!sent.has(h));let pi=0;const add=[];
+      for(const h of need){pi++;syStat(`Uploading “${L.name}”${need.length>1?` – part ${pi} of ${need.length}`:''}…`);
+        const bl=await syFetch('POST',`${R}/git/blobs`,{content:await b64Blob(new Blob([C.map.get(h)])),encoding:'base64'},T);
+        if(!bl.ok)throw new Error(bl.status===0?'connection dropped':'GitHub said '+bl.status);add.push({path:SYDIR+'b/'+h,mode:'100644',type:'blob',sha:bl.j.sha});sent.add(h)}
+      const bl=await syFetch('POST',`${R}/git/blobs`,{content:txt,encoding:'utf-8'},T);if(!bl.ok)throw new Error('GitHub said '+bl.status);
+      tree.push(...add,{path:SYDIR+k+'.json',mode:'100644',type:'blob',sha:bl.j.sha});idx.items[k]={name:L.name,u:L.u,dev,at:Date.now(),size:txt.length,refs:[...C.refs]};last[k]={u:L.u,sha:bl.j.sha,at:Date.now()};nU[0]++}
+    catch(err){console.error(err);fails.push('“'+L.name+'” ('+(err&&err.message||'error')+')')}}
+  // tidy: remove pieces nothing uses any more
+  if(tree.length||dels.length){const used=new Set();for(const it of Object.values(idx.items))if(it&&!it.del&&Array.isArray(it.refs))it.refs.forEach(h=>used.add(h));
+    for(const p2 of files.keys())if(p2.startsWith(SYDIR+'b/')){const h=p2.slice((SYDIR+'b/').length);if(!used.has(h)&&!sent.has(h))tree.push({path:p2,mode:'100644',type:'blob',sha:null})}}
   for(const k of dels){if(files.has(SYDIR+k+'.json'))tree.push({path:SYDIR+k+'.json',mode:'100644',type:'blob',sha:null});idx.items[k]=Object.assign({},idx.items[k]||{},{del:true,at:Date.now(),dev});delete last[k];nU[2]++}
   if(tree.length){const ib=await syFetch('POST',`${R}/git/blobs`,{content:JSON.stringify(idx),encoding:'utf-8'},T);tree.push({path:SYDIR+'index.json',mode:'100644',type:'blob',sha:ib.j&&ib.j.sha});
     const nt=await syFetch('POST',`${R}/git/trees`,{base_tree:cm.j.tree.sha,tree},T);if(!nt.ok)throw new Error('Sync save failed ('+nt.status+')');
     const nc=await syFetch('POST',`${R}/git/commits`,{message:'Motion Pack sync from '+(typeof actDevName==='function'?actDevName():'device'),tree:nt.j.sha,parents:[head]},T);if(!nc.ok)throw new Error('Sync save failed ('+nc.status+')');
     const up=await syFetch('PATCH',`${R}/git/refs/heads/${cfg.branch}`,{sha:nc.j.sha,force:false},T);if(!up.ok){if(up.status===422)return 'retry';throw new Error('Sync save failed ('+up.status+')')}}
   st.at=Date.now();await IDB.set('syncstate',st);SYB.last=Date.now();
-  syStat(nU[0]||nU[1]||nU[2]?`Synced – ${nU[0]} sent, ${nU[1]} received${nU[2]?', '+nU[2]+' removed':''}`:'Everything is up to date');
+  if(fails.length){syStat(`Synced ${nU[0]} sent, ${nU[1]} received – but ${fails.length} couldn’t upload: ${fails.join(', ')}. Tap Sync now to try again.`,true)}
+  else syStat(nU[0]||nU[1]||nU[2]?`Synced – ${nU[0]} sent, ${nU[1]} received${nU[2]?', '+nU[2]+' removed':''}`:'Everything is up to date');
   if(changedLocal)syRefresh();return again?'again':'ok'}
 function syRefresh(){try{if(!homeEl.hidden)showHome();if(!labEl.hidden&&!galEl.hidden)drawGallery()}catch(e){}}
-async function syCopyRemote(k,sha,id,cfg){const b=await syFetch('GET',`/repos/${cfg.owner}/${cfg.repo}/git/blobs/${sha}`,null,cfg.tok,true);if(!b.ok)return;const o=syDec(JSON.parse(b.t));const nid=o.kind==='des'?Math.random().toString(36).slice(2,10):uid();
+async function syCopyRemote(k,sha,id,cfg,files){const b=await syFetch('GET',`/repos/${cfg.owner}/${cfg.repo}/git/blobs/${sha}`,null,cfg.tok,true);if(!b.ok)return;const o=await syDec(JSON.parse(b.t),h=>syBin(cfg,h,files));const nid=o.kind==='des'?Math.random().toString(36).slice(2,10):uid();
   if(o.kind==='des'&&o.rec){o.rec.name=(o.rec.name||'Design')+' (other device)';if(o.meta)o.meta.name=o.rec.name}if(o.kind==='lb'){if(o.d)o.d.title=((o.d&&o.d.title)||'Lookbook')+' (other device)';if(o.meta)o.meta.name=o.d.title}await syUnpack(o,nid)}
 function syAuto(){if(Date.now()-(SYB.tried||0)<60000)return;syCfg().then(c=>{if(c&&c.auto){SYB.tried=Date.now();syRun()}})}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')setTimeout(syAuto,1500)});
