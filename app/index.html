@@ -1415,6 +1415,9 @@ body.coldrag{user-select:none;-webkit-user-select:none}
 #syP .sy-ck{display:flex;gap:8px;align-items:center;margin:0 0 12px;font-size:12.5px;color:#cfcfcf;cursor:pointer}
 #syP .sy-b{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}#syP .sy-b .pill{flex:1;min-width:140px}
 #syP .sy-x{position:absolute;top:10px;right:12px;background:none;border:0;color:#aaa;font-size:24px;line-height:1;cursor:pointer;padding:4px 8px}
+#syP .sy-tw{position:relative;margin:0 0 10px}#syP .sy-tw .sy-tok{margin:0;padding-right:64px}
+#syP .sy-eye{position:absolute;right:6px;top:6px;height:30px;padding:0 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);font-size:11px;color:#ddd;background:rgba(255,255,255,.06)}
+#syP .sy-mk{display:flex;align-items:center;justify-content:center;text-decoration:none;flex:1}
 #presentP .pr-f{display:flex;align-items:center;gap:10px;margin:8px 0}
 #presentP .pr-f span{flex:none;width:96px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9a9a9a}
 #presentP .pr-f input{flex:1;min-width:0;height:36px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.45);color:#fff;font:13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
@@ -5521,11 +5524,17 @@ const syHash=s=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeA
 async function syCfg(){return await IDB.get('ghsync')}
 async function syDevId(){let v=null;try{v=localStorage.getItem('mp_sydev')}catch(e){}if(!v)v=await IDB.get('mp_sydev');if(!v){v=Math.random().toString(36).slice(2,8);try{localStorage.setItem('mp_sydev',v)}catch(e){}await IDB.set('mp_sydev',v)}return v}
 async function syFetch(m,path,body,tok,raw){try{const r=await fetch(SYAPI+path,{method:m,cache:'no-store',headers:Object.assign({Authorization:'Bearer '+tok,Accept:raw?'application/vnd.github.raw+json':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},body?{'Content-Type':'application/json'}:{}),body:body?JSON.stringify(body):undefined});
-  if(raw){const t=r.ok?await r.text():null;return {ok:r.ok,status:r.status,t}}let j=null;try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,j}}catch(e){return {ok:false,status:0,j:null}}}
-async function syConnect(tok){tok=String(tok||'').trim();if(!tok)throw new Error('Paste your GitHub token first');
-  const u=await syFetch('GET','/user',null,tok);if(u.status===0)throw new Error('Could not reach GitHub – check your internet connection');if(!u.ok)throw new Error('GitHub did not accept that token. Make a classic token with the “repo” box ticked.');const owner=u.j.login;
+  if(raw){const t=r.ok?await r.text():null;return {ok:r.ok,status:r.status,t}}let j=null;try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,j,h:r.headers}}catch(e){return {ok:false,status:0,j:null}}}
+function syTokFrom(v){v=String(v||'');const m=v.match(/(github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,})/);return m?m[1]:v.replace(/\s+/g,'').replace(/^["'“”‘’]+|["'“”‘’.,;]+$/g,'')}
+async function syConnect(tok){tok=syTokFrom(tok);if(!tok)throw new Error('Paste your GitHub token first');
+  if(!/^(ghp_|github_pat_|gho_|ghu_)/.test(tok))throw new Error('That doesn’t look like a GitHub token. It starts with ghp_ and is about 40 letters and numbers long. Use the copy button next to the token on GitHub.');
+  if(/^ghp_/.test(tok)&&tok.length!==40)throw new Error('That token looks cut off – it has '+tok.length+' characters but a full one has 40. Go back to GitHub and use the copy button next to the token.');
+  const u=await syFetch('GET','/user',null,tok);if(u.status===0)throw new Error('Could not reach GitHub – check your internet connection');
+  if(u.status===401)throw new Error('GitHub says this token is wrong, expired or deleted (401). GitHub shows a token only once – make a new one with the button above and copy it with its copy button.');
+  if(!u.ok)throw new Error('GitHub refused the token ('+u.status+(u.j&&u.j.message?': '+u.j.message:'')+').');const owner=u.j.login;
+  const sc=u.h&&u.h.get('x-oauth-scopes');if(/^ghp_/.test(tok)&&sc!=null&&!/(^|[ ,])repo([ ,]|$)/.test(sc))throw new Error('This token works (signed in as '+owner+') but the “repo” box wasn’t ticked, so it can’t make your private sync space. Make a new token with the button above – “repo” is already ticked there.');
   let r=await syFetch('GET',`/repos/${owner}/${SYREPO}`,null,tok);
-  if(r.status===404){r=await syFetch('POST','/user/repos',{name:SYREPO,private:true,auto_init:true,description:'Private sync for Motion Pack – designs and lookbooks',has_issues:false,has_wiki:false,has_projects:false},tok);if(!r.ok)throw new Error('Could not create your private sync space: '+((r.j&&r.j.message)||r.status)+'. Make sure the token has the “repo” box ticked.');await new Promise(s=>setTimeout(s,1500))}
+  if(r.status===404){r=await syFetch('POST','/user/repos',{name:SYREPO,private:true,auto_init:true,description:'Private sync for Motion Pack – designs and lookbooks',has_issues:false,has_wiki:false,has_projects:false},tok);if(!r.ok)throw new Error('Signed in as '+owner+', but GitHub wouldn’t create the private sync space ('+((r.j&&r.j.message)||r.status)+'). '+(/^github_pat_/.test(tok)?'This is a fine-grained token – use a classic token instead (the button above makes one with the right box ticked).':'Make sure the token has the “repo” box ticked.'));await new Promise(s=>setTimeout(s,1500))}
   else if(!r.ok)throw new Error('Could not open “'+SYREPO+'” ('+r.status+')');
   if(r.j&&r.j.private===false)throw new Error('“'+SYREPO+'” is public. Your designs must stay private – make it private in GitHub (Settings › Danger zone › Change visibility) and try again.');
   const cfg={tok,owner,repo:SYREPO,branch:(r.j&&r.j.default_branch)||'main',auto:true,at:Date.now()};await IDB.set('ghsync',cfg);return cfg}
@@ -5609,16 +5618,19 @@ async function syDraw(){const e=document.getElementById('syP');if(!e)return;cons
     <p class="sy-n">Designs, lookbooks, the collection planner, your mockup slots and My Assets sync. To add another device, open Sync devices there and paste the same token.</p>
     <div class="sy-b"><button class="pill" data-sy="off">Disconnect this device</button></div>`
   :`<p class="sy-n">Everything you make on this device goes to a <b>private</b> space on your GitHub, and your other devices pick it up. Free, and only you can see it.</p>
-    <ol class="sy-steps"><li>On github.com, open <b>Settings → Developer settings → Personal access tokens → Tokens (classic)</b>.</li><li>Click <b>Generate new token (classic)</b>. Name it “Motion Pack sync”, set Expiration to <b>No expiration</b>, and tick the <b>repo</b> box.</li><li>Click <b>Generate token</b>, copy it and paste it below. Keep a copy somewhere private – you paste the same token on each device.</li></ol>
-    <input class="sy-tok" type="password" placeholder="Paste your GitHub token (starts with ghp_)" autocomplete="off" spellcheck="false">
+    <ol class="sy-steps"><li>Sign in to <b>github.com</b> in this browser, then tap <b>Make my token</b> below. It opens GitHub with the name filled in and the <b>repo</b> box already ticked.</li><li>Set <b>Expiration</b> to <b>No expiration</b>, scroll down and tap <b>Generate token</b>.</li><li>Tap the <b>copy</b> icon next to the new token (starts with <b>ghp_</b>), come back here, paste it and tap <b>Connect &amp; sync</b>. Keep a copy somewhere private – you paste the same token on each device.</li></ol>
+    <div class="sy-b"><a class="pill sy-mk" href="https://github.com/settings/tokens/new?scopes=repo&amp;description=Motion%20Pack%20sync" target="_blank" rel="noopener">Make my token on GitHub ↗</a></div>
+    <div class="sy-tw"><input class="sy-tok" type="password" value="${esc(SYB.draft||'')}" placeholder="Paste your token (starts with ghp_)" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button type="button" class="sy-eye" data-sy="eye" aria-label="Show token">Show</button></div>
     <p class="sy-m${SYB.err?' err':''}" aria-live="polite">${esc(SYB.msg||'')}</p>
     <div class="sy-b"><button class="pill big" data-sy="connect">Connect &amp; sync</button></div>`)+`</div>`}
 async function syOpen(){let e=document.getElementById('syP');if(!e){e=document.createElement('div');e.id='syP';e.setAttribute('role','dialog');e.setAttribute('aria-label','Sync devices');document.body.appendChild(e);
     e.addEventListener('click',async ev=>{if(ev.target===e){syClose();return}const b=ev.target.closest('[data-sy]');if(!b)return;const a=b.dataset.sy;
       if(a==='close')syClose();
-      else if(a==='connect'){const t=e.querySelector('.sy-tok');SYB.err='';syStat('Connecting…');try{await syConnect(t&&t.value);SYB.msg='Connected. First sync…';await syDraw();await syRun()}catch(err){syStat(err.message||'Could not connect',true)}}
+      else if(a==='eye'){const t=e.querySelector('.sy-tok');if(t){t.type=t.type==='password'?'text':'password';b.textContent=t.type==='password'?'Show':'Hide'}}
+      else if(a==='connect'){const t=e.querySelector('.sy-tok');SYB.draft=t?t.value:'';SYB.err='';syStat('Connecting…');try{await syConnect(SYB.draft);SYB.draft='';SYB.msg='Connected. First sync…';await syDraw();await syRun()}catch(err){syStat(err.message||'Could not connect',true)}}
       else if(a==='now'){SYB.err='';await syRun({manual:true})}
       else if(a==='off'){if(!confirm('Disconnect this device from sync? Nothing is deleted – your work stays on this device and in your sync space.'))return;await IDB.set('ghsync',null);await IDB.set('syncstate',null);SYB.msg='Disconnected';syDraw()}});
+    e.addEventListener('input',ev=>{if(ev.target.classList.contains('sy-tok'))SYB.draft=ev.target.value});
     e.addEventListener('change',async ev=>{if(ev.target.dataset.sy==='auto'){const c=await syCfg();if(c){c.auto=ev.target.checked;await IDB.set('ghsync',c)}}})}
   e.hidden=false;await syDraw()}
 setTimeout(()=>{if(LOCAL&&!S.locked)syAuto()},4000);
