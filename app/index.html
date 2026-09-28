@@ -1361,6 +1361,39 @@ body.coldrag{user-select:none;-webkit-user-select:none}
 
 #gate .gate-buy{display:flex;align-items:center;justify-content:center;width:100%;height:42px;margin-top:10px;text-decoration:none;text-align:center;box-sizing:border-box;flex:none}
 #gate .gate-buy:hover{background:rgba(255,255,255,.1);color:#fff}
+#hgP{position:fixed;inset:0;z-index:2147482990;display:grid;place-items:center;padding:clamp(0px,3vw,32px);background:rgba(0,0,0,.66);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .22s}
+#hgP.in{opacity:1}#hgP[hidden]{display:none}
+#hgP .hg-in{position:relative;display:flex;flex-direction:column;width:min(980px,100%);height:min(820px,100%);border-radius:18px;overflow:hidden;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(255,255,255,.07),transparent 70%),#0b0b0c;border:1px solid rgba(255,255,255,.13);box-shadow:0 40px 100px rgba(0,0,0,.75);color:#e8e8e8;font:14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;transform:translateY(10px) scale(.985);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+#hgP.in .hg-in{transform:none}
+#hgP header{display:flex;justify-content:space-between;align-items:flex-start;padding:24px 26px 10px}
+#hgP .hg-k{margin:0;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#8a8a8a}
+#hgP h2{margin:4px 0 0;font-size:30px;font-weight:200;letter-spacing:.06em}
+#hgP .hg-x{background:none;border:0;color:#aaa;font-size:30px;line-height:1;cursor:var(--cp,pointer);padding:0 4px}#hgP .hg-x:hover{color:#fff}
+#hgP .hg-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:6px 26px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+#hgP .hg-tabs{display:flex;gap:6px;flex-wrap:wrap}
+#hgP .hg-tabs button{height:34px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03);color:#cfcfcf;font:600 10px "Helvetica Neue",Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:var(--cp,pointer);transition:background .2s,color .2s}
+#hgP .hg-tabs button:hover{background:rgba(255,255,255,.09);color:#fff}
+#hgP .hg-tabs button.on{background:linear-gradient(100deg,#8c8c8c,#f7f7f7 28%,#7b7b7b 52%,#e4e4e4 78%,#9e9e9e);color:#000;border-color:transparent}
+#hgP .hg-q{flex:1;min-width:200px;height:36px;padding:0 14px;border-radius:999px;background:#141416;border:1px solid rgba(255,255,255,.14);color:#fff;font:13px system-ui,sans-serif;outline:none}#hgP .hg-q:focus{border-color:rgba(255,255,255,.4)}
+#hgP .hg-body{flex:1;overflow:auto;padding:6px 26px 30px;overscroll-behavior:contain}
+#hgP h4{margin:22px 0 10px;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:#9a9a9a;font-weight:600}
+#hgP .hg-note{margin:16px 0 0;font-size:12.5px;color:#8f8f8f}
+#hgP .hg-keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px 22px}
+#hgP .hg-keys>div{display:flex;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+#hgP kbd{flex:none;min-width:34px;text-align:center;padding:3px 8px;border-radius:6px;background:linear-gradient(180deg,#2c2d31,#1b1c1f);border:1px solid #3a3b40;border-bottom-width:2px;color:#f2f2f2;font:600 11.5px ui-monospace,Menlo,Consolas,monospace;white-space:nowrap}
+#hgP .hg-keys span{color:#cfcfcf;font-size:13px}
+#hgP .hg-tools,#hgP .hg-feat{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+#hgP .hg-tools>div,#hgP .hg-feat>div{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)}
+#hgP .hg-tools b,#hgP .hg-feat b{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#fff;font-weight:600}
+#hgP .hg-tools p,#hgP .hg-feat p{margin:5px 0 0;font-size:12.5px;color:#a9a9a9}
+#hgP .hg-tools .gi{float:left;margin:0 10px 0 0;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#18191b;border:1px solid #2a2b2f}
+#hgP .hg-tools .gi svg{width:17px;height:17px;fill:none;stroke:#e8e8e8;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#hgP .hg-tools kbd{min-width:0;font-size:10.5px;padding:1px 6px}
+#hgP .hg-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#hgP .hg-steps li{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);font-size:14px;color:#dcdcdc}
+#hgP .hg-steps i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px;color:#000;background:linear-gradient(100deg,#8c8c8c,#f7f7f7 28%,#7b7b7b 52%,#e4e4e4 78%,#9e9e9e)}
+#hgP .hg-none{color:#888;margin-top:24px}
+@media (max-width:640px){#hgP{padding:0}#hgP .hg-in{border-radius:0;height:100%}#hgP header{padding:calc(env(safe-area-inset-top) + 16px) 18px 6px}#hgP h2{font-size:24px}#hgP .hg-bar,#hgP .hg-body{padding-left:18px;padding-right:18px}#hgP .hg-tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}#hgP .hg-tabs::-webkit-scrollbar{display:none}#hgP .hg-tabs button{flex:none}#hgP .hg-keys{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="edit empty">
@@ -1435,7 +1468,7 @@ body.coldrag{user-select:none;-webkit-user-select:none}
       </button></div><i class="hm-shd"></i></div>
       <div class="hm-mid">
         <div class="hm-px" style="--dz:2;--i:1;--ph:-2.6s"><div class="hm-fl"><div class="hm-card sm hm-clock"><span class="hm-k">Today</span><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div></div><i class="hm-shd"></i></div>
-        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
+        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
       </div>
       <div class="hm-px" style="--dz:1.1;--i:3;--ph:-1.4s"><div class="hm-fl"><button class="hm-card big" data-home="books">
         <div class="hm-art"><div class="hm-frames"><i></i><i></i><i id="hmCover"></i></div></div>
@@ -5089,6 +5122,62 @@ optEl.addEventListener('keydown',e=>{if(e.target.dataset.otx&&e.key==='Enter'){e
 /* ---------- glyphs live on the left toolbar ---------- */
 const glToolBtn=()=>`<button class="ltool gltool${GLF.open?' on':''}" data-l="glyphs" title="Glyphs – symbols, dingbats and fancy text"><span><b class="glyI">&Omega;</b></span><b>Glyphs</b></button>`;
 
+
+/* ---------- v14: Help & shortcuts guide (home) ---------- */
+let HGTAB='start',HGQ='';
+const HG_LB_KEYS=[['↑ ↓ · Space · Page Up/Down','Next / previous garment'],['Scroll wheel or + −','Zoom in and out (with motion blur)'],['Drag while zoomed','Look around the garment'],['Esc','Zoom back out'],['F','Full screen'],['L','Magnifier lens'],['K','Cycle the lighting'],['R','Flip to the back side'],['P','Present / video / share'],['S','Shuffle (when the Shake effect is on)']];
+const HG_LB_TOUCH=[['Swipe up / down','Next / previous garment'],['Pinch','Zoom in and out'],['Double-tap','Quick zoom on that spot'],['Drag while zoomed','Look around the garment'],['Tap a point','Open its detail card']];
+const HG_ARR_KEYS=[['Arrows','Nudge the selected mockup (Shift = bigger steps)'],['[ ]','Send back / bring to front'],['Delete','Remove the extra mockup'],['Enter or Esc','Done arranging']];
+const HG_LAB_TOUCH=[['Pinch','Zoom and rotate the canvas'],['Two-finger tap','Undo'],['Three-finger tap','Redo'],['Two-finger drag','Pan around']];
+const HG_FEAT=[
+  ['Smart garment colour','Image → Smart garment colour, then tap the fabric. Pick any colour – folds, shadows and prints stay. Colourways can go straight into a lookbook.'],
+  ['Accessories library','The ✦ button (top bar or Layers). 270+ chains, patches, zips, studs and hardware with 1,600+ variations. Drag onto the garment, then use the Realism sliders to wrap them to the folds.'],
+  ['Photo → accessory','Accessories → Photo → accessory. Snap or upload a real patch or chain and it becomes a reusable cut-out.'],
+  ['Warp to fabric','Ctrl+T (Move tool) → Warp. Arc, Wave, Flag, Bulge and the other Photoshop presets, or drag the mesh. Layer styles → Auto-warp to folds bends art along the garment.'],
+  ['Type on the canvas','T, click the canvas and type. Font, size, colour circle and outline are in the top bar. Esc or click outside to finish.'],
+  ['Glyphs','Ω on the left toolbar: symbols, dingbats and fancy text styles. Tap one to drop it into your type.'],
+  ['Blending options & Blend If','Right-click a layer → Blending options. Remove black / Remove white knocks out a background; strokes and shadows stay.'],
+  ['Right-click layers','Right-click any layer row for every option: rename, mask, clip, merge, rasterize, duplicate, delete.'],
+  ['Pen & selections','P draws paths; turn them into selections, fills or shapes. Every point and selection can be undone.'],
+  ['Collection planner','Home → Quick start → Collection planner. Plan drops, prices, costs and status on a board.']];
+const HG_LB_FEAT=[
+  ['Points','Edit mode → Point, then tap anywhere on a garment to pin a detail (fabric, print, price). Drag to place it exactly.'],
+  ['Studio','Scenes, lighting, effects and looks. Try a scene, then K to cycle the light.'],
+  ['Present','▶ Present plays the lookbook full screen, records a video or makes a share link.'],
+  ['Phone links','Present → Share → Phone link publishes a buyer version to your GitHub Pages. Buyers can look but can’t edit.'],
+  ['Preview vs Edit','The Preview / Edit button switches between how buyers see it and editing.'],
+  ['Arrange','Add extra mockups next to a garment, drag them anywhere, and line them up.']];
+const HG_START=[['1','Open the Design Lab and tap New design. Pick a mockup slot and drop in your garment photo.'],['2','Put your art on the Design layer – it’s clipped to the garment. Add accessories with ✦ and type with T.'],['3','Recolour the garment: Image → Smart garment colour, then tap the fabric.'],['4','File → Send to a lookbook. Add points, pick a scene in Studio.'],['5','▶ Present to show it off, record a video, or share a phone link with buyers.']];
+function hgRows(list){const q=HGQ.trim().toLowerCase();return list.filter(([a,b])=>!q||(a+' '+b).toLowerCase().includes(q))}
+function hgKeys(list){const r=hgRows(list);return r.length?`<div class="hg-keys">${r.map(([k,d])=>`<div><kbd>${esc(k)}</kbd><span>${esc(d)}</span></div>`).join('')}</div>`:''}
+function hgFeat(list){const r=hgRows(list);return r.length?`<div class="hg-feat">${r.map(([k,d])=>`<div><b>${esc(k)}</b><p>${esc(d)}</p></div>`).join('')}</div>`:''}
+function hgSec(t,body){return body?`<h4>${t}</h4>${body}`:''}
+function hgBody(){const q=HGQ.trim();
+  if(q){const out=hgSec('Design Lab tools',hgRows(TOOLS.map(([t,n,i,k,tip])=>[n+(k&&k!=='–'?' ('+k+')':''),tip])).length?`<div class="hg-tools">${hgRows(TOOLS.map(([t,n,i,k,tip])=>[n+(k&&k!=='–'?' ('+k+')':''),tip,i])).map(([n,tip,i])=>`<div><span class="gi">${icon(i)}</span><b>${esc(n)}</b><p>${esc(tip)}</p></div>`).join('')}</div>`:'')+
+      hgSec('Design Lab features',hgFeat(HG_FEAT))+KEYS.map(([g,ks])=>hgSec('Shortcuts · '+g,hgKeys(ks))).join('')+hgSec('Design Lab on phone & iPad',hgKeys(HG_LAB_TOUCH))+
+      hgSec('Lookbooks · keyboard',hgKeys(HG_LB_KEYS))+hgSec('Lookbooks · touch',hgKeys(HG_LB_TOUCH))+hgSec('Lookbook features',hgFeat(HG_LB_FEAT))+hgSec('Arranging mockups',hgKeys(HG_ARR_KEYS));
+    return out||`<p class="hg-none">Nothing matches “${esc(q)}”.</p>`}
+  if(HGTAB==='start')return `<h4>Your first drop in 5 steps</h4><ol class="hg-steps">${HG_START.map(([n,t])=>`<li><i>${n}</i><span>${esc(t)}</span></li>`).join('')}</ol>
+    <h4>Good to know</h4><div class="hg-feat"><div><b>Works offline</b><p>After the first unlock, everything runs without internet on Windows, iPhone and iPad.</p></div><div><b>Saving</b><p>Designs and lookbooks save on this device automatically. Ctrl+S saves right away in the Design Lab.</p></div><div><b>On a Mac</b><p>Use ⌘ for Ctrl and ⌥ Option for Alt.</p></div><div><b>This guide</b><p>Press ? on the home screen or in the Design Lab any time.</p></div></div>`;
+  if(HGTAB==='tools')return `<h4>Tools</h4><p class="hg-note">Left toolbar on a computer, bottom bar on phone. The letter is the shortcut key.</p><div class="hg-tools">${TOOLS.map(([t,n,i,k,tip])=>`<div><span class="gi">${icon(i)}</span><b>${esc(n)}${k&&k!=='–'?` <kbd>${esc(k)}</kbd>`:''}</b><p>${esc(tip)}</p></div>`).join('')}</div>`+hgSec('Standout features',hgFeat(HG_FEAT));
+  if(HGTAB==='keys')return `<p class="hg-note">Photoshop-style shortcuts for the Design Lab. On a Mac use ⌘ for Ctrl and ⌥ for Alt.</p>`+KEYS.map(([g,ks])=>hgSec(g,hgKeys(ks))).join('')+hgSec('Phone & iPad gestures',hgKeys(HG_LAB_TOUCH));
+  if(HGTAB==='books')return hgSec('Keyboard',hgKeys(HG_LB_KEYS))+hgSec('Touch',hgKeys(HG_LB_TOUCH))+hgSec('Features',hgFeat(HG_LB_FEAT))+hgSec('Arranging extra mockups',hgKeys(HG_ARR_KEYS));
+  if(HGTAB==='keys2')return '';
+  return `<h4>Your access key</h4><div class="hg-feat"><div><b>New phone or computer?</b><p>Home → Quick start → This device & key → Remove this device on the old one, then paste your key on the new one.</p></div><div><b>First unlock</b><p>Each device needs internet once to activate. After that it works offline.</p></div><div><b>“Already on 2 devices”</b><p>Remove the key from one of your devices, or contact whoever sold it to you to free a slot.</p></div><div><b>Lost your key?</b><p>Search your email for “Motion Pack access key”, or ask the seller to resend it.</p></div></div>`}
+function hgDraw(){const e=document.getElementById('hgP');if(!e||e.hidden)return;const tabs=[['start','Start here'],['tools','Design Lab'],['keys','Shortcuts'],['books','Lookbooks'],['key','Your key']];
+  e.querySelector('.hg-tabs').innerHTML=tabs.map(([k,n])=>`<button class="${HGTAB===k&&!HGQ.trim()?'on':''}" data-hg="${k}">${n}</button>`).join('');e.querySelector('.hg-body').innerHTML=hgBody();const on=e.querySelector('.hg-tabs .on');if(on){const n=on.parentNode;n.scrollLeft=on.offsetLeft-(n.clientWidth-on.offsetWidth)/2}}
+function hgOpen(tab){let e=document.getElementById('hgP');if(tab)HGTAB=tab;
+  if(!e){e=document.createElement('div');e.id='hgP';e.setAttribute('role','dialog');e.setAttribute('aria-label','Help and shortcuts');
+    e.innerHTML=`<div class="hg-in"><header><div><p class="hg-k">Help &amp; shortcuts</p><h2 class="chrome">Motion Pack guide</h2></div><button class="hg-x" data-hg="close" aria-label="Close">&times;</button></header>
+      <div class="hg-bar"><nav class="hg-tabs"></nav><input class="hg-q" type="search" placeholder="Search controls, e.g. undo, warp, zoom" aria-label="Search the guide"></div><div class="hg-body"></div></div>`;
+    document.body.appendChild(e);
+    e.addEventListener('click',ev=>{if(ev.target===e){hgClose();return}const b=ev.target.closest('[data-hg]');if(!b)return;const k=b.dataset.hg;if(k==='close'){hgClose();return}HGTAB=k;HGQ='';e.querySelector('.hg-q').value='';hgDraw();e.querySelector('.hg-body').scrollTop=0});
+    e.querySelector('.hg-q').addEventListener('input',ev=>{HGQ=ev.target.value;hgDraw()});
+}
+  e.hidden=false;requestAnimationFrame(()=>e.classList.add('in'));hgDraw()}
+function hgClose(){const e=document.getElementById('hgP');if(!e)return;e.classList.remove('in');setTimeout(()=>{e.hidden=true},220)}
+addEventListener('keydown',e=>{const g=document.getElementById('hgP');if(!g||g.hidden)return;e.stopImmediatePropagation();if(e.key==='Escape')hgClose()},true);
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -5975,7 +6064,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'menu':openMenu(v,b);return;case'adjmenu':openMenu('__adj',barEl.querySelector('[data-l="menu:Image"]'));return;
     case'tool':setTool(v);break;
     case'panel':if(v==='fonts'&&PANEL==='text'){PANEL='fonts';drawPanel()}else if(v==='text'&&PANEL==='fonts'){PANEL='text';drawPanel()}else if(v==='brushes'&&PANEL==='brushes'&&!popEl.hidden)openPanel('layers');else openPanel(v);break;
-    case'closepanel':closePanel();break;case'undo':undo();break;case'redo':redo();break;case'help':helpSheet();break;
+    case'closepanel':closePanel();break;case'undo':undo();break;case'redo':redo();break;case'help':hgOpen('tools');break;
     case'swapcol':{const c=TOOL.color;TOOL.color=TOOL.color2;TOOL.color2=c;refreshSwatch();if(PANEL==='colour'||$('#cpSV'))drawPanel();break}
     case'sym':TOOL.sym=!TOOL.sym;drawOpt();req();hint(TOOL.sym?'Symmetry on: strokes mirror across the centre':'Symmetry off');break;
     case'grid':VIEW.grid=!VIEW.grid;req();break;
@@ -6135,7 +6224,7 @@ function hitText(l,p){const t=l.t,bb=l.bb||[-50,-20,50,20],[sx,sy]=tS(t),dx=p.x-
 function applyNow(type){if(!adjStart(type))return;if(type==='bw'||type==='invert'){adjEnd(true);hint(type==='bw'?'Desaturated':'Inverted')}}
 function cycle(tool,alts){if(TOOL.t===tool)return alts();setTool(tool)}
 addEventListener('keydown',e=>{if(labEl.hidden&&homeEl.hidden)return;const typing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable;e.stopPropagation();
-  if(!homeEl.hidden){if(e.key==='1')pickHome('lab');else if(e.key==='2')pickHome('books');return}
+  if(!homeEl.hidden){if(e.key==='1')pickHome('lab');else if(e.key==='2')pickHome('books');else if(e.key==='?')hgOpen('start');return}
   if(e.key==='Escape'){if(!ddEl.hidden){closeMenu();return}if(!sheetEl.hidden){if(STY)styAct('cancel');sheetEl.hidden=true;return}}
   if(typing||!D||edEl.hidden)return;const k=e.key.toLowerCase(),code=e.code||'',mod=e.ctrlKey||e.metaKey,alt=e.altKey,sh=e.shiftKey,l=curL(),pd=()=>e.preventDefault();
   if(e.key===' '){SPACE=true;labEl.classList.add('pan');pd();return}
@@ -6165,7 +6254,7 @@ addEventListener('keydown',e=>{if(labEl.hidden&&homeEl.hidden)return;const typin
   if(e.key==='Tab'){pd();labAct('hidepanels');return}
   if(code==='BracketLeft'||code==='BracketRight'||e.key==='['||e.key===']'){const up=code==='BracketRight'||e.key===']',sk=sizeKey();TOOL.size[sk]=clampN(Math.round(TOOL.size[sk]*(up?1.15:.87)+(up?1:-1)),1,SMAX);updVs();drawOpt();CUR.show=true;req();return}
   if(/^[0-9]$/.test(e.key)&&['brush','erase','smudge','clone','dodge','gradient'].includes(TOOL.t)){const v=e.key==='0'?1:+e.key/10,sk=TOOL.t==='gradient'?'brush':sizeKey();TOOL.op[sk]=v;updVs();drawOpt();hint('Opacity '+Math.round(v*100)+'%');return}
-  if(e.key==='?'){keysSheet();return}if(e.key==='/'){if(l&&l.type!=='group')setProp(l,'alock',!l.alock,'Lock transparency');return}
+  if(e.key==='?'){hgOpen('keys');return}if(e.key==='/'){if(l&&l.type!=='group')setProp(l,'alock',!l.alock,'Lock transparency');return}
   switch(k){
     case'v':setTool('move');break;case'm':if(TOOL.t==='select'&&sh)TOOL.sel=TOOL.sel==='rect'?'ellipse':'rect';else{if(TOOL.sel==='lasso')TOOL.sel='rect';setTool('select')}drawOpt();break;
     case'l':TOOL.sel='lasso';setTool('select');break;case'w':setTool('wand');break;case'c':setTool('crop');break;case'i':setTool('pick');break;
@@ -6199,7 +6288,7 @@ homeEl.addEventListener('click',async e=>{const q=e.target.closest('[data-hq]');
   if(k==='new'){hideHome();openLab();templateSheet()}
   else if(k==='last'&&HML){hideHome();if(HML.k==='d'){openLab();openDoc(HML.id)}else await openBook(HML.id)}
   else if(k==='acc'){const d=((await IDB.get('dlib'))||[])[0];hideHome();openLab();if(d){await openDoc(d.id);setTimeout(()=>accToggle(true),300)}else{templateSheet();hint('Pick a canvas – then tap ✦ in the top bar to open Accessories',3600)}}
-  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}else if(k==='lic'){licSheet()}},true);
+  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}else if(k==='help'){hgOpen('start')}else if(k==='lic'){licSheet()}},true);
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.clientX/innerWidth-.5)*2).toFixed(3));homeEl.style.setProperty('--py',((e.clientY/innerHeight-.5)*2).toFixed(3))},{passive:true});
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
