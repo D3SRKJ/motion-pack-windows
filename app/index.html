@@ -1348,6 +1348,16 @@ body.coldrag{user-select:none;-webkit-user-select:none}
 #lab .otxq button:hover{transform:scale(1.2);border-color:#7aa8ff}
 #lab .otxok{background:#2f6fe0!important;color:#fff!important;border-color:#2f6fe0!important;font-weight:700}
 #lab .ltool .glyI{font:600 17px/1 Georgia,'Times New Roman',serif;display:block;text-align:center}
+#licP{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:16px}
+#licP[hidden]{display:none}
+#licP .lic-in{position:relative;width:min(420px,100%);padding:26px 24px 22px;border-radius:16px;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.07),transparent 60%),#0c0c0d;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.7);color:#e8e8e8;font:14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif}
+#licP .lic-k{margin:0;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#8a8a8a}
+#licP h3{margin:6px 0 14px;font-size:24px;font-weight:300;letter-spacing:.06em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#licP dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 14px;font-size:13px}#licP dt{color:#8a8a8a}#licP dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+#licP .lic-n{margin:0 0 8px;font-size:12px;color:#9a9a9a}#licP .lic-m{min-height:18px;margin:0 0 10px;font-size:12.5px;color:#cfe8d3}
+#licP .lic-b{display:flex;gap:10px;flex-wrap:wrap}#licP .lic-b .pill{flex:1;min-width:140px}#licP .lic-rm{border-color:rgba(255,138,122,.45)!important;color:#ffb3a8!important}
+#licP .lic-x{position:absolute;top:10px;right:12px;background:none;border:0;color:#aaa;font-size:24px;line-height:1;cursor:pointer;padding:4px 8px}
+#gate .gate-m{white-space:normal}
 </style>
 </head>
 <body class="edit empty">
@@ -1394,7 +1404,7 @@ body.coldrag{user-select:none;-webkit-user-select:none}
   <textarea id="gateKey" rows="3" placeholder="Paste your access key (starts with MP-)" aria-label="Access key" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
   <button class="pill big" data-cmd="gateok">Unlock</button>
   <p class="gate-m" id="gateMsg" aria-live="polite"></p>
-  <p class="gate-f">No key yet? Ask the owner of Motion Pack for one.</p>
+  <p class="gate-f">No key yet? Ask the owner of Motion Pack for one. The first unlock on each device needs internet; after that it works offline.</p>
   <button class="gate-x" data-cmd="gateclose" hidden>View only</button>
 </div></div>
 <div class="sheet psheet" id="measP" hidden role="dialog" aria-label="Measurement">
@@ -1421,7 +1431,7 @@ body.coldrag{user-select:none;-webkit-user-select:none}
       </button></div><i class="hm-shd"></i></div>
       <div class="hm-mid">
         <div class="hm-px" style="--dz:2;--i:1;--ph:-2.6s"><div class="hm-fl"><div class="hm-card sm hm-clock"><span class="hm-k">Today</span><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div></div><i class="hm-shd"></i></div>
-        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
+        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
       </div>
       <div class="hm-px" style="--dz:1.1;--i:3;--ph:-1.4s"><div class="hm-fl"><button class="hm-card big" data-home="books">
         <div class="hm-art"><div class="hm-frames"><i></i><i></i><i id="hmCover"></i></div></div>
@@ -2506,12 +2516,53 @@ async function verifyKey(k){try{k=String(k||'').replace(/\s+/g,'').replace(/^MP-
   const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},PUBJWK),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
   if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},key,b64d(sg),new TextEncoder().encode(pl)))return null;
   const d=JSON.parse(new TextDecoder().decode(b64d(pl)));return REVOKED.includes(d.id)?null:d}catch(e){return null}}
-function applyLic(){const off=needLic&&!LIC;document.documentElement.classList.toggle('nolic',off);if(off)setAdding(false)}
-async function loadLic(){if(!needLic)return;let k=null;try{k=localStorage.getItem('mp_key')}catch(e){}if(!k)k=await IDB.get('mp_key');LIC=k?await verifyKey(k):null;applyLic()}
-function showGate(){const g=$('#gate');$('#gateMsg').textContent='';$('#gateMsg').className='gate-m';g.querySelector('.gate-x').hidden=true;g.classList.remove('out');g.hidden=false;setTimeout(()=>{try{$('#gateKey').focus()}catch(_){}},200)}
+/* ---------- device activation (Cloudflare key checker) ---------- */
+const ACT_URL='https://motion-pack-keys.kjjackson416.workers.dev';
+const ACT_PUB={"kty":"EC","crv":"P-256","x":"5rSnTzzIoS7ww8yGuiy4BpteF8vSanrq7MPAuHXXZK0","y":"C3rprFneBs_hNW9CRtw4uCwRtt6Pj1tJy5jj-HZ0lu8"};
+let ACTERR='';
+function actDevName(){const u=navigator.userAgent||'';if(/iPad/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1))return 'iPad';if(/iPhone/.test(u))return 'iPhone';if(/Android/.test(u))return /Mobile/.test(u)?'Android phone':'Android tablet';if(/Windows/.test(u))return 'Windows PC';if(/CrOS/.test(u))return 'Chromebook';if(/Mac/.test(u))return 'Mac';if(/Linux/.test(u))return 'Linux PC';return 'Device'}
+async function actDev(){let v=null;try{v=localStorage.getItem('mp_dev')}catch(e){}if(!v)v=await IDB.get('mp_dev');if(!v||!/^[A-Za-z0-9_-]{8,64}$/.test(v)){const a=crypto.getRandomValues(new Uint8Array(15));v=btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}try{localStorage.setItem('mp_dev',v)}catch(e){}await IDB.set('mp_dev',v);return v}
+async function actGet(){let a=null;try{a=JSON.parse(localStorage.getItem('mp_act')||'null')}catch(e){}if(!a)a=await IDB.get('mp_act');return a||null}
+async function actSet(a){try{if(a)localStorage.setItem('mp_act',JSON.stringify(a));else localStorage.removeItem('mp_act')}catch(e){}await IDB.set('mp_act',a||null)}
+async function actValid(d){const a=await actGet();if(!a||!a.tok||!d)return false;try{const [pl,sg]=String(a.tok).split('.');const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},ACT_PUB),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+  if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},key,b64d(sg),new TextEncoder().encode(pl)))return false;const o=JSON.parse(new TextDecoder().decode(b64d(pl)));return o.id===d.id&&o.dev===await actDev()}catch(e){return false}}
+async function actRun(op,k,d,ms){const dev=await actDev();let j=null;
+  try{const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||12000);const r=await fetch(ACT_URL+'/'+op,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,dev,name:actDevName()}),signal:c.signal,cache:'no-store'});clearTimeout(t);j=await r.json()}catch(e){return {ok:false,err:'offline'}}
+  if(!j||typeof j!=='object')return {ok:false,err:'offline'};
+  if(op==='deactivate')return j;
+  if(j.ok&&j.tok){const prev=await actGet();await actSet({tok:j.tok,id:d.id,used:j.used,lim:j.lim,last:Date.now()});if(!await actValid(d)){await actSet(prev);return {ok:false,err:'bad'}}return j}
+  return j.ok?{ok:false,err:'bad'}:j}
+function actMsg(r){const e=r&&r.err;
+  if(e==='limit'){const n=r.lim||2,names=(r.devices||[]).map(x=>x.name).filter(Boolean);return 'This key is already on '+n+' device'+(n===1?'':'s')+(names.length?' ('+names.join(', ')+')':'')+'. On one of those, open Home → This device & key → Remove this device, then try again here. Or ask whoever sold you the key to free up a slot.'}
+  if(e==='blocked')return 'This key has been switched off. Contact whoever sold it to you.';
+  if(e==='removed')return 'This device was taken off your key. Paste your key again to re-activate it here.';
+  if(e==='invalid')return 'That key isn\'t valid. Check you copied all of it, including MP- at the start.';
+  if(e==='bad')return 'The activation reply couldn\'t be verified. Please try again.';
+  return 'Couldn\'t reach the activation server. Connect to the internet and try again – each device only needs it the first time.'}
+async function actRecheck(k,d,force){const a=await actGet();if(!a||!k||!d)return;if(!force&&Date.now()-(a.last||0)<7*864e5)return;if(navigator.onLine===false)return;
+  const r=await actRun('check',k,d,10000);if(r.ok||(r.err!=='blocked'&&r.err!=='removed'))return;await actSet(null);LIC=null;ACTERR=actMsg(r);applyLic();licClose();showGate()}
+async function actKeyStored(){let k=null;try{k=localStorage.getItem('mp_key')}catch(e){}if(!k)k=await IDB.get('mp_key');return k}
+function licClose(){const e=document.getElementById('licP');if(e)e.hidden=true}
+async function licSheet(){if(!LIC)return;let e=document.getElementById('licP');if(!e){e=document.createElement('div');e.id='licP';e.setAttribute('role','dialog');e.setAttribute('aria-label','This device and key');document.body.appendChild(e);
+    e.addEventListener('click',async ev=>{const b=ev.target.closest('[data-lic]');if(ev.target===e||(b&&b.dataset.lic==='close')){licClose();return}if(!b)return;
+      if(b.dataset.lic==='remove'){if(!confirm('Remove Motion Pack from this device?\n\nThis frees a slot on your key so you can use it on another device. Your designs and lookbooks stay on this device, and you can paste your key again later to come back.'))return;
+        const m=e.querySelector('.lic-m');m.textContent='Removing…';const k=await actKeyStored(),r=await actRun('deactivate',k,LIC);
+        if(!r.ok&&r.err==='offline'){m.textContent='Connect to the internet to remove this device, so the slot is freed for another one.';return}
+        await actSet(null);try{localStorage.removeItem('mp_key')}catch(_){}await IDB.set('mp_key',null);LIC=null;applyLic();licClose();ACTERR='This device was removed. Its slot is free for another device. Paste your key here to use Motion Pack on this device again.';showGate()}
+      if(b.dataset.lic==='recheck'){const m=e.querySelector('.lic-m');m.textContent='Checking…';const k=await actKeyStored(),r=await actRun('check',k,LIC,10000);if(r.ok){m.textContent='All good – this device is active.';licSheet()}else if(r.err==='offline')m.textContent='You\'re offline. Motion Pack keeps working; it checks again next time you\'re online.';else{await actRecheck(k,LIC,true)}}})}
+  const a=await actGet()||{},d=LIC,esc2=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  e.innerHTML='<div class="lic-in"><button class="lic-x" data-lic="close" aria-label="Close">&times;</button><p class="lic-k">This device &amp; key</p><h3 class="chrome">'+esc2(d.n||'Motion Pack')+'</h3>'+
+    '<dl><dt>Key ID</dt><dd>'+esc2(d.id)+'</dd><dt>This device</dt><dd>'+esc2(actDevName())+'</dd><dt>Devices on this key</dt><dd>'+(a.used&&a.lim?(a.lim>=999?a.used+' (no limit)':a.used+' of '+a.lim):'—')+'</dd><dt>Last checked</dt><dd>'+(a.last?new Date(a.last).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'—')+'</dd></dl>'+
+    '<p class="lic-n">Getting a new phone or computer? Remove this device first to free up its slot, then paste your key on the new one.</p><p class="lic-m" aria-live="polite"></p>'+
+    '<div class="lic-b"><button class="pill" data-lic="recheck">Check now</button><button class="pill lic-rm" data-lic="remove">Remove this device</button></div></div>';e.hidden=false}
+
+function applyLic(){const off=needLic&&!LIC;document.documentElement.classList.toggle('nolic',off);if(off)setAdding(false);const hb=document.getElementById('hmLic');if(hb)hb.hidden=!(needLic&&LIC)}
+async function loadLic(){if(!needLic)return;const k=await actKeyStored();const d=k?await verifyKey(k):null;LIC=null;if(d){if(await actValid(d))LIC=d;else{const r=await actRun('activate',k,d,7000);if(r.ok)LIC=d;else ACTERR=actMsg(r)}}if(LIC)setTimeout(()=>actRecheck(k,d),5000);applyLic()}
+function showGate(){const g=$('#gate');$('#gateMsg').textContent=ACTERR||'';ACTERR='';$('#gateMsg').className='gate-m';g.querySelector('.gate-x').hidden=true;g.classList.remove('out');g.hidden=false;setTimeout(()=>{try{$('#gateKey').focus()}catch(_){}},200)}
 async function tryKey(){const v=$('#gateKey').value,m=$('#gateMsg');m.className='gate-m';m.textContent='Checking…';const d=await verifyKey(v);
   if(!d){m.textContent='That key isn\'t valid. Check you copied all of it, including MP- at the start.';return}
-  const k=v.replace(/\s+/g,'');try{localStorage.setItem('mp_key',k)}catch(e){}await IDB.set('mp_key',k);LIC=d;applyLic();
+  const k=v.replace(/\s+/g,'');m.textContent='Activating on this device…';const ar=await actRun('activate',k,d);if(!ar.ok){m.textContent=actMsg(ar);return}
+  try{localStorage.setItem('mp_key',k)}catch(e){}await IDB.set('mp_key',k);LIC=d;applyLic();
   m.className='gate-m ok';m.textContent='Welcome'+(d.n?', '+d.n:'')+'.';setTimeout(()=>{const g=$('#gate');g.classList.add('out');if(!S.items.length)S.mode='edit';render(true);setTimeout(()=>{g.hidden=true;g.classList.remove('out');goHome()},1100);toast('Motion Pack activated on this device',2200)},700)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cmd]');if(!b)return;const c=b.dataset.cmd;
   if(c==='gate')showGate();else if(c==='gateok')tryKey();else if(c==='gateclose')$('#gate').hidden=true});
@@ -6143,7 +6194,7 @@ homeEl.addEventListener('click',async e=>{const q=e.target.closest('[data-hq]');
   if(k==='new'){hideHome();openLab();templateSheet()}
   else if(k==='last'&&HML){hideHome();if(HML.k==='d'){openLab();openDoc(HML.id)}else await openBook(HML.id)}
   else if(k==='acc'){const d=((await IDB.get('dlib'))||[])[0];hideHome();openLab();if(d){await openDoc(d.id);setTimeout(()=>accToggle(true),300)}else{templateSheet();hint('Pick a canvas – then tap ✦ in the top bar to open Accessories',3600)}}
-  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}},true);
+  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}else if(k==='lic'){licSheet()}},true);
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.clientX/innerWidth-.5)*2).toFixed(3));homeEl.style.setProperty('--py',((e.clientY/innerHeight-.5)*2).toFixed(3))},{passive:true});
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
