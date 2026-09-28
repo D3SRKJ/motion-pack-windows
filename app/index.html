@@ -1273,6 +1273,50 @@ input,textarea,[contenteditable=true],[contenteditable=plaintext-only]{cursor:te
 @keyframes pubspin{to{transform:rotate(360deg)}}
 #pubP .publi{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}#pubP .publi>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 #pubP .publi span{font:11px ui-monospace,Menlo,monospace;color:#9ab;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#pubP .publi em{font-style:normal;font-size:10px;color:#666}
+/* v12: realism sliders, photo capture, collections */
+.arl{display:grid;grid-template-columns:96px 1fr 30px;align-items:center;gap:6px;margin:3px 0;font-size:11px;color:#c9c9cc}
+.arl input[type=range]{width:100%}.arl output{font-size:10px;color:#8d8e93;text-align:right}
+.arl .atx,.arl select{grid-column:2/4;background:#17181a;border:1px solid #0a0a0b;border-radius:6px;color:#eee;padding:6px 8px;font:inherit}
+#capP{position:absolute;inset:40px 40px 40px 84px;z-index:60;display:flex;flex-direction:column;background:linear-gradient(180deg,#2d2e31,#1d1e20);border:1px solid #0b0b0c;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.8);color:#ddd;font:12px system-ui,sans-serif;overflow:hidden}
+#capP[hidden]{display:none}
+#capP .caph{display:flex;align-items:center;padding:9px 12px;background:linear-gradient(180deg,#f4f4f6,#c9cacd 55%,#dedfe2);color:#111}#capP .caph .grow{flex:1}#capP .ax{border:0;background:none;font-size:20px;color:#111}
+#capP .capb{flex:1;display:flex;min-height:0}#capP .capview{flex:1;display:grid;place-items:center;padding:14px;min-width:0}#capP #capCv{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;touch-action:none;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#capP .capside{width:300px;padding:12px;overflow:auto;border-left:1px solid rgba(0,0,0,.6)}#capP .achs{margin:8px 0}#capP .apri{border:1px solid #0b0b0c;background:linear-gradient(#5b8fe0,#3f6fb8);color:#fff;border-radius:8px;padding:9px 12px;font:inherit;font-weight:600;cursor:var(--cp)}#capP .anote{color:#8d8e93;font-size:11px;line-height:1.45}
+@media (max-width:760px){#capP{inset:0;border-radius:0}#capP .capb{flex-direction:column}#capP .capview{height:48vh;flex:none}#capP .capside{width:auto;border-left:0;border-top:1px solid rgba(0,0,0,.6)}}
+#colP{position:fixed;inset:0;z-index:40;overflow:auto;color:#e6e6e8;background:#030303;font:13px system-ui,-apple-system,Segoe UI,sans-serif;animation:fadein .5s var(--ease)}
+#colP[hidden]{display:none}
+#colP .colbg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(210,225,255,.12),transparent 70%),radial-gradient(ellipse 60% 40% at 50% 110%,rgba(255,255,255,.05),transparent 70%)}
+#colP .colin{position:relative;max-width:1400px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top,0px)) 18px 40px}
+#colP .colh{display:flex;align-items:center;gap:12px}#colP .colh h2{margin:0;font-size:clamp(24px,4vw,40px);font-weight:200;letter-spacing:.14em;text-transform:uppercase}#colP .grow{flex:1}
+#colP .colx{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:#ddd;border-radius:999px;padding:7px 14px;font:inherit;cursor:var(--cp)}
+#colP .coltabs{display:flex;gap:8px;margin:16px 0;overflow-x:auto;scrollbar-width:none}#colP .coltabs button{flex:none;display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.03);color:#ccc;border-radius:999px;padding:8px 14px;font:inherit;letter-spacing:.06em;cursor:var(--cp)}
+#colP .coltabs button.on{background:var(--chrome-x);color:#111;border-color:transparent}#colP .coltabs small{opacity:.6}
+#colP .colsum{position:relative;border-radius:18px;padding:16px;background:linear-gradient(160deg,#232428,#0f1012);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 30px 70px rgba(0,0,0,.6);margin-bottom:16px}
+#colP .cs-name{display:flex;flex-wrap:wrap;gap:12px;align-items:center}#colP .cs-name>input{flex:1;min-width:200px;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.15);color:#fff;font-size:22px;font-weight:300;letter-spacing:.06em;padding:4px 0;outline:none}
+#colP .cs-name label{display:flex;gap:6px;align-items:center;color:#8a8d92;font-size:11px;letter-spacing:.12em;text-transform:uppercase}#colP .cs-name label input{background:#17181a;border:1px solid #2a2b2e;border-radius:6px;color:#eee;padding:6px 8px;font:inherit;width:auto;max-width:150px}
+#colP .cs-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0 10px}#colP .cs-stats div{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+#colP .cs-stats b{display:block;font-size:22px;font-weight:300;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}#colP .cs-stats b small{font-size:.6em}#colP .cs-stats span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#777}
+#colP .cs-bar{height:3px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}#colP .cs-bar i{display:block;height:100%;background:var(--chrome-x)}
+#colP .colsum textarea{width:100%;box-sizing:border-box;margin-top:12px;min-height:48px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:#ddd;padding:10px;font:inherit;resize:vertical}
+#colP .colboard{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:10px}
+#colP .colc{min-height:200px;border-radius:16px;padding:10px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.07);transition:border-color .2s,background .2s}
+#colP .colc.over{border-color:#7aa8ff;background:rgba(122,168,255,.08)}#colP .colc h4{margin:2px 4px 10px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9a9da3}
+#colP .cc{display:flex;gap:10px;align-items:center;padding:8px;margin-bottom:8px;border-radius:12px;background:linear-gradient(160deg,#26282c,#141517);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 24px rgba(0,0,0,.5);cursor:grab;user-select:none;touch-action:pan-y;transition:box-shadow .2s}
+#colP .cc:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 14px 30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.18)}#colP .cc.drag{position:relative;z-index:5;opacity:.92;cursor:grabbing;box-shadow:0 30px 60px rgba(0,0,0,.8),0 0 0 1px #7aa8ff}
+#colP .cc i{flex:none;width:54px;height:66px;border-radius:8px;background:#0d0d0f center/contain no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.08)}#colP .cc b{display:block;font-weight:500;font-size:12.5px}#colP .cc span{display:block;font-size:11px;color:#9a9da3;margin-top:3px}#colP .cc em{font-style:normal;color:#9fd29f}#colP .cc em.lo{color:#e0a060}#colP .cc small{display:block;color:#666;font-size:10.5px;margin-top:3px}
+#colP .cadd{width:100%;border:1px dashed rgba(255,255,255,.2);background:none;color:#aaa;border-radius:12px;padding:12px;font:inherit;cursor:var(--cp)}
+#colP .colf{margin-top:18px;text-align:right}#colP .pill{cursor:var(--cp)}
+#colP .colsheet{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+#colP .colsh-in{position:relative;width:min(520px,100%);max-height:88vh;overflow:auto;border-radius:18px;padding:18px;background:linear-gradient(160deg,#2a2b2f,#141517);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 40px 100px rgba(0,0,0,.8)}
+#colP .colsh-in h3{margin:0 0 12px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:13px}#colP .colx2{position:absolute;right:12px;top:10px;border:0;background:none;color:#aaa;font-size:22px;cursor:var(--cp)}
+#colP .colsh-in label{display:block;margin-bottom:10px}#colP .colsh-in label span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#888;margin-bottom:4px}
+#colP .colsh-in input,#colP .colsh-in select,#colP .colsh-in textarea{width:100%;box-sizing:border-box;background:#17181a;border:1px solid #2a2b2e;border-radius:8px;color:#eee;padding:9px;font:inherit}#colP .ce3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#colP .ce-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}#colP .colpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px}#colP .colpick button{border:1px solid rgba(255,255,255,.1);background:#1a1b1e;border-radius:12px;padding:8px;color:#ccc;font:inherit;font-size:11px;cursor:var(--cp)}#colP .colpick i{display:grid;place-items:center;aspect-ratio:4/5;border-radius:8px;background:#0d0d0f center/contain no-repeat;margin-bottom:6px;font-style:normal;font-size:24px}
+#colP .note{color:#8a8d92;font-size:12px}
+@media (max-width:760px){#colP .cs-stats{grid-template-columns:repeat(2,1fr)}#colP .colboard{grid-template-columns:repeat(5,78vw)}}
+body.coldrag{user-select:none;-webkit-user-select:none}
+#accLib .apri.sec{margin-top:6px;background:linear-gradient(#404145,#2c2d30);color:#ddd}
+@media (max-width:560px){#colP .colh h2{font-size:18px;letter-spacing:.1em}#colP .colh .pill,#colP .colx{white-space:nowrap;padding:6px 10px;font-size:11px}}
 </style>
 </head>
 <body class="edit empty">
@@ -1346,7 +1390,7 @@ input,textarea,[contenteditable=true],[contenteditable=plaintext-only]{cursor:te
       </button></div><i class="hm-shd"></i></div>
       <div class="hm-mid">
         <div class="hm-px" style="--dz:2;--i:1;--ph:-2.6s"><div class="hm-fl"><div class="hm-card sm hm-clock"><span class="hm-k">Today</span><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div></div><i class="hm-shd"></i></div>
-        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
+        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
       </div>
       <div class="hm-px" style="--dz:1.1;--i:3;--ph:-1.4s"><div class="hm-fl"><button class="hm-card big" data-home="books">
         <div class="hm-art"><div class="hm-frames"><i></i><i></i><i id="hmCover"></i></div></div>
@@ -4464,19 +4508,19 @@ function accDraw(a,P,sd,H,thumb){const R=accRng(sd||1);let c;try{
 const accKey=l=>JSON.stringify(l.acc);
 function accPathPts(v){const q=v.path;if(q.pen)return bez(q.pen,q.closed);const [ax,ay]=q.a,[bx,by]=q.b,d=Math.hypot(bx-ax,by-ay),mx=(ax+bx)/2,my=(ay+by)/2;return bezLine([ax,ay],[mx,my+2*(q.sag||0)*d],[bx,by])}
 function accRender(l){const v=l.acc,a=accItem(v.k);if(!a)return;const P=accP(a,v);
-  if(v.path){const c=l.cv,x=cx2(c);x.save();x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);const pts=accPathPts(v);if(pts.length>1){try{AG[a.g].s(x,samp(pts,Math.max(1,v.w*.04)),v.w,P,accRng(v.sd))}catch(e){console.error(e)}}x.restore()}
-  else{const img=accDraw(a,P,v.sd,v.rs);if(!img)return;const so=l.so;let m;if(so){const o=so.m,w0=so.img.width,h0=so.img.height,k=(so.rs||v.rs)/v.rs,cx=o.a*w0/2+o.c*h0/2+o.e,cy=o.b*w0/2+o.d*h0/2+o.f;m=DOMMatrix.fromMatrix(o).scale(k,k);m.e=cx-(m.a*img.width/2+m.c*img.height/2);m.f=cy-(m.b*img.width/2+m.d*img.height/2)}else m=new DOMMatrix().translate((D.w-img.width)/2,(D.h-img.height)/2);
+  if(v.path){const c=l.cv,x=cx2(c);x.save();x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);const pts=accPathPts(v);if(pts.length>1){try{AG[a.g].s(x,samp(pts,Math.max(1,v.w*.04)),v.w,P,accRng(v.sd))}catch(e){console.error(e)}}x.restore();{const RR=accRealOf(v);if(RR.wear){const b=contentBox(c);if(b){const t=mk(b[2]-b[0],b[3]-b[1]);cx2(t).drawImage(c,-b[0],-b[1]);accWear(t,accMatOf(a),RR.wear,v.sd);const x2=cx2(c);x2.clearRect(b[0],b[1],t.width,t.height);x2.drawImage(t,b[0],b[1])}}}}
+  else{const img=accDraw(a,P,v.sd,v.rs);if(!img)return;{const RR=accRealOf(v);if(RR.wear)accWear(img,accMatOf(a),RR.wear,v.sd)}const so=l.so;let m;if(so){const o=so.m,w0=so.img.width,h0=so.img.height,k=(so.rs||v.rs)/v.rs,cx=o.a*w0/2+o.c*h0/2+o.e,cy=o.b*w0/2+o.d*h0/2+o.f;m=DOMMatrix.fromMatrix(o).scale(k,k);m.e=cx-(m.a*img.width/2+m.c*img.height/2);m.f=cy-(m.b*img.width/2+m.d*img.height/2)}else m=new DOMMatrix().translate((D.w-img.width)/2,(D.h-img.height)/2);
     setSo(l,img,m,'image/png');l.so.rs=v.rs;const c=l.cv,x=cx2(c);x.save();x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);drawSo(x,l.so);x.restore()}
-  l._acck=accKey(l);l.v++;dirtyComp=true}
+  accPost(l);l._apk=accPK(l);l._acck=accKey(l);l.v++;dirtyComp=true}
 function accSync(){if(!D)return;for(const l of D.layers){if(!l.acc)continue;const v=l.acc;if(!v.path&&!l.so){l.acc=null;continue}const a=accItem(v.k);if(!a){if(v.k&&v.k.startsWith('my/')&&!MYA.length&&!accLoaded)accLoad().then(()=>{touchAll()});continue}
     if(a.my&&!MYIMG.has(a.id)){myImg(a.id).then(()=>{if(D)accSync(),req()});continue}const k=accKey(l);if(l._acck===undefined){l._acck=k;if(l.so&&!l.so.rs)l.so.rs=v.rs}
-    if(k!==l._acck){accRender(l);continue}
+    if(k!==l._acck){accRender(l);continue}{const RR=accRealOf(v);if(!v.path&&l.so&&(RR.wrap||RR.light||RR.embed)){const pk=accPK(l);if(l._apk===undefined)l._apk=pk;else if(pk!==l._apk){accRedrawPost(l);continue}}}
     if(!v.path&&l.so){const s=soScale(l.so.m),cap=a.strip?Math.round(3600/a.len):Math.round(2800/Math.max(1,a.ar));if(s>1.15&&v.rs<cap){l.acc=Object.assign({},v,{rs:Math.min(cap,Math.round(v.rs*s*1.1))});accRender(l)}}}}
 function accSize(a){const L=Math.min(D.w,D.h)*(a.sz||(a.strip?.55:.26));const long=a.strip?a.len:Math.max(a.ar,1),rs=clampN(Math.round(L*1.35/long),90,a.strip?Math.round(3600/a.len):Math.round(2800/Math.max(1,a.ar)));return {L,rs}}
 async function accPlace(k,at,vi){await accLoad();const a=accItem(k.split('#')[0]);if(!a||!D)return;if(a.my)await myImg(a.id);if(XFORM)xfCommit();if(ADJ)adjEnd(false);commitText();if(!ensureRoom(1))return limitHint();
-  const i=k.includes('#')?+k.split('#')[1]:vi,p=Object.assign({},accVarP(a,i),accFilterP(a)),v={k:a.id,p,vi:i>=0?i:-1,sd:(Math.random()*2e9|0)+1},{L,rs}=accSize(a),c=at||[D.w/2,D.h*(desk()?.5:.36)];let n;
+  const i=k.includes('#')?+k.split('#')[1]:vi,p=Object.assign({},accVarP(a,i),accFilterP(a)),v={k:a.id,p,vi:i>=0?i:-1,sd:(Math.random()*2e9|0)+1,real:accDefReal(a)},{L,rs}=accSize(a),c=at||[D.w/2,D.h*(desk()?.5:.36)];let n;
   if(a.live){v.path={a:[c[0]-L/2,c[1]],b:[c[0]+L/2,c[1]],sag:a.g==='chain'||a.g==='cord'||a.g==='gemrow'?.12:0};v.w=L/a.len*a.wf}else v.rs=rs;
-  stOp(()=>{n=newLayer(a.name);n.acc=v;if(!v.path){const img=accDraw(a,accP(a,v),v.sd,rs),s=L/Math.max(img.width,img.height);setSo(n,img,[s,0,0,s,c[0]-img.width*s/2,c[1]-img.height*s/2],'image/png');n.so.rs=rs;drawSo(cx2(n.cv),n.so)}else accRenderInto(n);
+  stOp(()=>{n=newLayer(a.name);n.acc=v;if(!v.path){const img=accDraw(a,accP(a,v),v.sd,rs),s=L/Math.max(img.width,img.height);setSo(n,img,[s,0,0,s,c[0]-img.width*s/2,c[1]-img.height*s/2],'image/png');n.so.rs=rs;drawSo(cx2(n.cv),n.so);accPost(n);n._apk=accPK(n)}else accRenderInto(n);
     n._acck=accKey(n);D.layers.push(n);n.gid=null;n.clip=false;relinearize();D.cur=n.id;D.lsel=new Set()},'Add '+a.name);
   accStat(k);if(a.live){if(TOOL.t!=='move')setTool('move');else{if(XFORM)xfCommit();}if(XFORM){XFORM=null;XD=null}hint('Drag the round handles to set the ends and the droop · use Free transform to move it',3200)}else{setTool('move');hint('Placed – drag, scale or rotate it · everything stays editable',2200)}
   AF.mode='edit';accDraw2();req()}
@@ -4519,6 +4563,10 @@ function accAct(v){const [c,a,b]=(v||'').split(':'),l=accCur();
     case'rast':stOp(()=>accTargets().concat(l?[l]:[]).forEach(x=>{x.acc=null}),'Rasterize accessory');hint('Now a plain pixel layer');break;
     case'warp':labAct('xf:warp');hint('Warp: drag the grid to wrap it around a sleeve, leg or chest · tap ✓ Done. (After warping it becomes pixels – undo to get the editable version back)',4200);break;
     case'flip':labAct('xf:fh');break;
+    case'real':accSet(o=>{o.real=Object.assign(accRealOf(o),{[a]:+b})},'Realism',true);break;
+    case'realauto':accSet(o=>{o.real=accDefReal(accItem(o.k),1)},'Make it real',true);hint('Wrapped to the folds, matched to the light and pressed in',2200);break;
+    case'realoff':accSet(o=>{o.real={wrap:0,light:0,embed:0,wear:0}},'Realism off',true);break;
+    case'capture':capOpen();break;
     case'tab':AF.tab=a;AF.mode='lib';accDraw2();break;
     case'mode':AF.mode=a;accDraw2();break;
     case'fav':{const i=ACCST.fav.indexOf(a);if(i>=0)ACCST.fav.splice(i,1);else ACCST.fav.unshift(a);IDB.set('accst',ACCST);accDraw2();break}
@@ -4541,7 +4589,7 @@ function accName(k){const a=accItem(k.split('#')[0]);if(!a)return null;const i=k
 function accLibHTML(){const sel=(key,ph,opts)=>`<select data-afs="${key}"><option value="">${ph}</option>${opts.map(([v,n])=>`<option value="${v}"${AF[key]===v?' selected':''}>${n}</option>`).join('')}</select>`;
   const tabs=[['all','All'],['fav','★ Favourites'],['rec','Recent'],['most','Most used'],['my','My Assets']].map(([k,n])=>`<button class="${AF.tab===k?'on':''}" data-l="acc:tab:${k}">${n}</button>`).join('');
   let h=`<div class="atabs">${tabs}</div>`;
-  if(AF.tab==='my'){const list=MYA.filter(m=>!AF.myFold||m.folder===AF.myFold);h+=`<div class="amy"><button class="apri" data-l="acc:import">＋ Import PNG, SVG, JPG, WEBP</button><div class="afold">${MYF.map(f=>`<button class="${AF.myFold===f?'on':''}" data-l="acc:mfold:${esc(f)}">${esc(f)}</button>`).join('')}<button data-l="acc:newfold">＋ Folder</button></div></div>`;
+  if(AF.tab==='my'){const list=MYA.filter(m=>!AF.myFold||m.folder===AF.myFold);h+=`<div class="amy"><button class="apri" data-l="acc:capture">&#128247;&#xFE0E; Photo → accessory (camera or photo)</button><button class="apri sec" data-l="acc:import">＋ Import PNG, SVG, JPG, WEBP</button><div class="afold">${MYF.map(f=>`<button class="${AF.myFold===f?'on':''}" data-l="acc:mfold:${esc(f)}">${esc(f)}</button>`).join('')}<button data-l="acc:newfold">＋ Folder</button></div></div>`;
     h+=list.length?`<div class="agrid">${list.map(m=>`<div class="at amt" data-ak="${esc(m.id)}" title="${esc(m.name)}"><img src="${m.thumb}" alt=""><span>${esc(m.name)}</span><i class="adel" data-l="acc:mydel:${esc(m.id)}" title="Remove">×</i></div>`).join('')}</div>`:`<p class="anote">Import your own logos, graphics, patches and hardware. Transparent PNG and SVG stay transparent. They save on this device and can be recoloured and transformed like the built-in items.</p>`;return h}
   h+=`<input class="aq" data-aq type="search" placeholder="Search ${ACI.length+ACI.reduce((n,a)=>n+(a.vars?a.vars.length:0),0)} accessories" value="${esc(AF.q)}"><div class="afil">${sel('cat','Category',ACAT.map(c=>[c.id,c.name]))}${sel('mat','Material',AMATS)}${sel('sty','Style',ASTY)}${sel('fab','Fabric',AFABS)}${sel('con','Construction',ACONS)}</div>
   <div class="asw"><span>Colour</span>${ACOLS.slice(0,14).map(c=>`<button class="${AF.col===c?'on':''}" style="--c:${c}" data-l="acc:fcol:${c}" title="Show and place in this colour"></button>`).join('')}</div><div class="asw afn"><span>Hardware</span>${FINS.map(([k,n])=>`<button class="${AF.fin===k?'on':''}" style="--g:linear-gradient(135deg,${ACCF[k][1]},${ACCF[k][3]},${ACCF[k][0]})" data-l="acc:ffin:${k}" title="${n}"></button>`).join('')}${AF.q||AF.cat||AF.mat||AF.sty||AF.fab||AF.con||AF.col||AF.fin?'<button class="aclr" data-l="acc:clear">Clear</button>':''}</div>`;
@@ -4555,7 +4603,7 @@ function accPropsHTML(l){const v=l.acc,a=accItem(v.k);if(!a)return '';const P=ac
   if(a.fin)h+=`<div class="apr"><span>Finish</span><div class="achs">${FINS.map(([k,n])=>ch(P.fin===k,'fin:'+k,n)).join('')}</div></div>`;
   if(a.txt)h+=`<div class="apr"><span>Text</span><input class="atx" data-acc-in="txt" value="${esc(P.txt||'')}" maxlength="24"></div>`;
   if(v.path)h+=`<div class="apr"><span>Width</span><input type="range" min="2" max="${Math.round(Math.min(D.w,D.h)*.15)}" value="${Math.round(v.w)}" data-acc-in="w"></div>`+(v.path.pen?'':`<div class="apr"><span>Droop</span><input type="range" min="-60" max="120" value="${Math.round((v.path.sag||0)*100)}" data-acc-in="sag"></div>`);
-  h+=`<div class="achs aact">${a.my?'':ch(false,'seed','↻ Shuffle','New random variation – no two look the same')}${a.strip&&!v.path?ch(false,'two','⟷ Between two points','Attach the ends to two points'):''}${a.strip?ch(false,'pen','〰 Follow pen path','Stretch it along a seam or edge drawn with the Pen tool'):''}${v.path?ch(false,'obj','▭ Make object','Back to a normal movable object'):''}${v.path?'':ch(false,'warp','⌇ Warp to fit','Wrap it around a sleeve or curve')}${v.path?'':ch(false,'flip','⇋ Flip')}<button class="ach" data-l="lm:dup">⧉ Duplicate</button>${ch(false,'rast','Rasterize','Turn into plain pixels')}</div><p class="anote">Opacity, lock, hide, group and order are in Layers. Select several accessory layers to recolour them together.</p>`;return h}
+  h+=accRealHTML(l);h+=`<div class="achs aact">${a.my?'':ch(false,'seed','↻ Shuffle','New random variation – no two look the same')}${a.strip&&!v.path?ch(false,'two','⟷ Between two points','Attach the ends to two points'):''}${a.strip?ch(false,'pen','〰 Follow pen path','Stretch it along a seam or edge drawn with the Pen tool'):''}${v.path?ch(false,'obj','▭ Make object','Back to a normal movable object'):''}${v.path?'':ch(false,'warp','⌇ Warp to fit','Wrap it around a sleeve or curve')}${v.path?'':ch(false,'flip','⇋ Flip')}<button class="ach" data-l="lm:dup">⧉ Duplicate</button>${ch(false,'rast','Rasterize','Turn into plain pixels')}</div><p class="anote">Opacity, lock, hide, group and order are in Layers. Select several accessory layers to recolour them together.</p>`;return h}
 let accRQ=0,accSig='',accLid='';function accRefresh(){if(!ACCOPEN||accRQ)return;accRQ=requestAnimationFrame(()=>{accRQ=0;const l=accCur(),id=l?l.id:'';if(id!==accLid){accLid=id;AF.mode=l?'edit':'lib'}const s=(l?id+accKey(l):'')+'|'+AF.mode;if(s===accSig)return;const e=document.getElementById('accLib');if(e&&e.contains(document.activeElement)&&document.activeElement.matches('input[type=text],input:not([type]),input[type=search],input[type=color]'))return;accDraw2()})}
 let accIO=null;
 function accDraw2(){const e=document.getElementById('accLib');accPrev(null,false);if(!e||e.hidden)return;const l=accCur();if(!l&&AF.mode==='edit')AF.mode='lib';accLid=l?l.id:'';accSig=(l?l.id+accKey(l):'')+'|'+AF.mode;
@@ -4678,6 +4726,169 @@ function glWire(e){e.addEventListener('click',ev=>{const g=ev.target.closest('[d
   e.addEventListener('change',ev=>{if(ev.target.matches('[data-glcat]')){GLF.cat=+ev.target.value;GLF.q='';glDraw()}});
   e.addEventListener('input',ev=>{const t=ev.target;if(t.matches('[data-glq]')){GLF.q=t.value;clearTimeout(t._t);t._t=setTimeout(()=>{const p=t.selectionStart;glDraw();const n=e.querySelector('[data-glq]');if(n){n.focus();try{n.setSelectionRange(p,p)}catch(_){}}},200)}
     if(t.matches('[data-gltxt]')){GLF.txt=t.value;clearTimeout(t._t);t._t=setTimeout(()=>{const p=t.selectionStart;glDraw();const n=e.querySelector('[data-gltxt]');if(n){n.focus();try{n.setSelectionRange(p,p)}catch(_){}}},200)}})}
+
+
+/* ---------- v12: accessory realism (wear, fabric wrap, lighting match, embed) ---------- */
+const REALK=['wrap','light','embed','wear'];
+function accRealOf(v){const r=v&&v.real||{};return {wrap:+r.wrap||0,light:+r.light||0,embed:+r.embed||0,wear:+r.wear||0}}
+function accMatOf(a){if(!a)return 'fabric';const t=a.tags||[];if(a.my)return 'photo';if(a.fin||t.includes('metal'))return 'metal';if(t.includes('gem'))return 'gem';if(t.includes('leather'))return 'leather';if(t.includes('plastic')||t.includes('rubber'))return 'plastic';return 'fabric'}
+function vnoise(R,w,h,cell){const gw=Math.ceil(w/cell)+2,gh=Math.ceil(h/cell)+2,g=new Float32Array(gw*gh);for(let i=0;i<g.length;i++)g[i]=R();const o=new Float32Array(w*h);
+  for(let y=0;y<h;y++){const fy=y/cell,iy=fy|0,ty=fy-iy,sy=ty*ty*(3-2*ty);for(let x=0;x<w;x++){const fx=x/cell,ix=fx|0,tx=fx-ix,sx=tx*tx*(3-2*tx),a=g[iy*gw+ix],b=g[iy*gw+ix+1],c=g[(iy+1)*gw+ix],d=g[(iy+1)*gw+ix+1];o[y*w+x]=a+(b-a)*sx+(c-a)*sy+(a-b-c+d)*sx*sy}}return o}
+function fbm(R,w,h,cell){const a=vnoise(R,w,h,cell),b=vnoise(R,w,h,Math.max(2,cell/2.3)),c=vnoise(R,w,h,Math.max(1.5,cell/5.5));for(let i=0;i<a.length;i++)a[i]=a[i]*.55+b[i]*.3+c[i]*.15;return a}
+/* wear & age – applied to the accessory image itself, so it moves with the item */
+function accWear(c,mat,amt,sd){if(!amt||!c||c.width<4)return c;const k=amt/100,w=c.width,h=c.height,x=cx2(c),im=x.getImageData(0,0,w,h),d=im.data,R=accRng((sd||1)*7+3),S=Math.max(w,h);
+  const A=new Float32Array(w*h);for(let i=0;i<w*h;i++)A[i]=d[i*4+3]/255;const Ab=A.slice();boxBlur(Ab,w,h,Math.max(1,Math.round(S*.006)));
+  const N=fbm(R,w,h,Math.max(4,S/14)),F=vnoise(R,w,h,Math.max(2,S/70));
+  for(let i=0;i<w*h;i++){const j=i*4;if(!d[j+3])continue;let r=d[j],g=d[j+1],b=d[j+2];const L=(r*.3+g*.59+b*.11),edge=Math.max(0,1-Ab[i]/Math.max(.05,A[i]))*1.6,n=N[i],f=F[i];
+    if(mat==='metal'){const grime=Math.max(0,n-.42)*1.9*k*(1-L/300);r*=1-grime*.75;g*=1-grime*.72;b*=1-grime*.62;const brass=edge*k*.9;r+=(255-r)*brass*.35;g+=(235-g)*brass*.3;b+=(200-b)*brass*.2;const dull=k*.35;r=r+(L-r)*dull;g=g+(L-g)*dull;b=b+(L-b)*dull}
+    else if(mat==='gem'||mat==='plastic'){const s=k*.5;r=r+(L*.95+12-r)*s;g=g+(L*.95+12-g)*s;b=b+(L*.95+12-b)*s;const sc=Math.max(0,f-.7)*k*1.6;r+=(235-r)*sc;g+=(235-g)*sc;b+=(235-b)*sc}
+    else{const fade=k*(.35+.4*n);const Lt=L*.82+34;r=r+(Lt+6-r)*fade;g=g+(Lt+2-g)*fade;b=b+(Lt-6-b)*fade;const grime=Math.max(0,.5-n)*k*.7;r*=1-grime;g*=1-grime;b*=1-grime*1.05;
+      if(f>.78&&R()<k*.5){const p=(f-.78)*4;r+=(245-r)*p*.6;g+=(240-g)*p*.6;b+=(230-b)*p*.6}
+      if(mat!=='photo'&&mat!=='leather'){const er=edge*(.45+n)*k*1.4;if(er>.25)d[j+3]*=Math.max(0,1-(er-.25)*1.6)}}
+    d[j]=clampN(r,0,255);d[j+1]=clampN(g,0,255);d[j+2]=clampN(b,0,255)}
+  x.putImageData(im,0,0);
+  x.save();x.globalCompositeOperation='source-atop';const nsc=Math.round((mat==='metal'?46:mat==='leather'?30:mat==='fabric'?18:22)*k);
+  for(let i=0;i<nsc;i++){const x0=R()*w,y0=R()*h,a=R()*Math.PI,L=S*(mat==='fabric'?.03+R()*.05:.06+R()*.22);x.strokeStyle=mat==='fabric'?`rgba(250,245,232,${.25+R()*.3})`:mat==='leather'?`rgba(20,12,8,${.3+R()*.3})`:`rgba(255,255,255,${.12+R()*.28})`;x.lineWidth=Math.max(.6,S*(mat==='fabric'?.003:.0016));x.beginPath();x.moveTo(x0,y0);x.quadraticCurveTo(x0+Math.cos(a)*L*.5+(R()-.5)*L*.2,y0+Math.sin(a)*L*.5+(R()-.5)*L*.2,x0+Math.cos(a)*L,y0+Math.sin(a)*L);x.stroke()}
+  x.restore();
+  if(mat==='fabric'&&k>.25){x.save();x.lineCap='round';for(let i=0;i<Math.round(30*k);i++){let tries=0,px,py;do{px=R()*w|0;py=R()*h|0;tries++}while(tries<30&&!(A[py*w+px]>.5&&Ab[py*w+px]<.8));if(tries>=30)continue;const a=R()*6.28,L=S*(.02+R()*.05);x.strokeStyle=`rgba(240,234,220,${.4+R()*.4})`;x.lineWidth=Math.max(.6,S*.0025);x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+Math.cos(a)*L*.6+(R()-.5)*L,py+Math.sin(a)*L*.6+(R()-.5)*L,px+Math.cos(a)*L,py+Math.sin(a)*L);x.stroke()}x.restore()}
+  return c}
+/* doc-space pass: fold wrap + lighting match + embed, sampled from the garment photo under the item */
+function accGarment(l){const g=D.garment&&D.layers.find(x=>x.id===D.garment&&x!==l);if(g)return g;return null}
+function accPost(l){const v=l.acc,P=accRealOf(v);if(!P.wrap&&!P.light&&!P.embed)return;const g=accGarment(l);const b=contentBox(l.cv);if(!b)return;const U=Math.min(D.w,D.h),m=Math.round(U*.035);
+  const x0=Math.max(0,b[0]-m),y0=Math.max(0,b[1]-m),x1=Math.min(D.w,b[2]+m),y1=Math.min(D.h,b[3]+m),w=x1-x0,h=y1-y0;if(w<4||h<4)return;
+  const c=l.cv,cx=cx2(c),src=cx.getImageData(x0,y0,w,h),s=src.data,out=cx.createImageData(w,h),o=out.data,a=accItem(v.k),mat=accMatOf(a),rigid=mat==='metal'||mat==='gem'||mat==='plastic';
+  let G=null,Gf=null,Gl=null,mean=128,hi=235,tint=[1,1,1];
+  if(g&&(P.wrap||P.light)){const gd=cx2(g.cv).getImageData(x0,y0,w,h).data;G=new Float32Array(w*h);let n=0,sum=0;const his=[];for(let i=0;i<w*h;i++){const L=gd[i*4+3]?lum(gd[i*4],gd[i*4+1],gd[i*4+2]):NaN;G[i]=L}
+    for(let i=0;i<w*h;i++){if(isNaN(G[i]))G[i]=128;else{sum+=G[i];n++;if(i%7===0)his.push(i)}}mean=n?sum/n:128;
+    for(let i=0;i<w*h;i++)if(isNaN(G[i]))G[i]=mean;
+    Gf=G.slice();boxBlur(Gf,w,h,Math.max(1,Math.round(U*.004)));Gl=G.slice();boxBlur(Gl,w,h,Math.max(2,Math.round(Math.max(w,h)*.22)));
+    const hs=his.map(i=>G[i]).sort((p,q)=>p-q);hi=hs.length?hs[Math.floor(hs.length*.985)]:235;
+    let tr=0,tg=0,tb=0,tn=0;his.forEach(i=>{if(G[i]>=hi*.8){tr+=gd[i*4];tg+=gd[i*4+1];tb+=gd[i*4+2];tn++}});if(tn){const av=(tr+tg+tb)/(3*tn)||1;tint=[tr/tn/av,tg/tn/av,tb/tn/av]}}
+  const A=new Float32Array(w*h);for(let i=0;i<w*h;i++)A[i]=s[i*4+3]/255;
+  // normalise the fold/light signals so they read on black and white garments alike
+  let Fs=1,Ls=1,Gn=0;if(Gf){let s1=0,s2=0,t1=0,t2=0,nn=0,q1=0,q2=0;for(let i=0;i<w*h;i+=2){const f=Gf[i]-Gl[i],t=Gl[i]-mean,gg=G[i]-Gf[i];s1+=f;s2+=f*f;t1+=t;t2+=t*t;q1+=gg;q2+=gg*gg;nn++}Fs=Math.max(1.5,Math.sqrt(Math.max(0,s2/nn-(s1/nn)**2)));Ls=Math.max(2,Math.sqrt(Math.max(0,t2/nn-(t1/nn)**2)));Gn=Math.min(14,Math.sqrt(Math.max(0,q2/nn-(q1/nn)**2)))}
+  const W2=P.wrap/100,dispK=W2*U*.018*(rigid?.3:1),shadeK=W2*(rigid?.22:.34),L2=P.light/100,NR=accRng((v.sd||1)*13+5);
+  let accMean=mean;if(Gl){let sm=0,sn=0;for(let i=0;i<w*h;i+=3)if(A[i]>.5){sm+=Gl[i];sn++}accMean=sn?sm/sn:mean}
+  const exp=1+(Math.min(1.04,Math.max(.62,hi/240))-1)*L2;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,j=i*4;let sx=x,sy=y,fn=0;
+    if(Gf){fn=clampN((Gf[i]-Gl[i])/(2.2*Fs),-1.4,1.4);if(dispK){const ix1=Math.min(w-1,x+2),ix0=Math.max(0,x-2),iy1=Math.min(h-1,y+2),iy0=Math.max(0,y-2);const gx=((Gf[y*w+ix1]-Gl[y*w+ix1])-(Gf[y*w+ix0]-Gl[y*w+ix0]))/(2.2*Fs),gy=((Gf[iy1*w+x]-Gl[iy1*w+x])-(Gf[iy0*w+x]-Gl[iy0*w+x]))/(2.2*Fs);sx=x-gx*dispK*1.6;sy=y-fn*dispK*.5-gy*dispK*1.6}}
+    const ix=Math.round(sx),iy=Math.round(sy);if(ix<0||iy<0||ix>=w||iy>=h){o[j+3]=0;continue}const k=(iy*w+ix)*4;let r=s[k],gg=s[k+1],bb=s[k+2];const al=s[k+3];if(!al){o[j+3]=0;continue}
+    let mul=1;if(Gf&&shadeK)mul*=clampN(1+fn*shadeK,.5,1.45);
+    if(Gl&&L2){const rel=clampN((Gl[i]-accMean)/(2.5*Ls),-1.2,1.2);mul*=(1+rel*.28*L2)*exp;const Lp=r*.3+gg*.59+bb*.11,ds=.14*L2;r=r+(Lp-r)*ds;gg=gg+(Lp-gg)*ds;bb=bb+(Lp-bb)*ds;r*=1+(tint[0]-1)*L2*.7;gg*=1+(tint[1]-1)*L2*.7;bb*=1+(tint[2]-1)*L2*.7}
+    r*=mul;gg*=mul;bb*=mul;if(Gn&&L2){const nz=(NR()-.5)*Gn*2.2*L2;r+=nz;gg+=nz;bb+=nz}
+    o[j]=clampN(r,0,255);o[j+1]=clampN(gg,0,255);o[j+2]=clampN(bb,0,255);o[j+3]=al}
+  // embed + cast shadow drawn under the item
+  const sh=new Float32Array(w*h);for(let i=0;i<w*h;i++)sh[i]=o[i*4+3]/255;const Ai=sh.slice();
+  let lx=.35,ly=.9;if(Gl){let gx=0,gy=0,n=0;for(let y=2;y<h-2;y+=4)for(let x=2;x<w-2;x+=4){const i=y*w+x;gx+=Gl[i+1]-Gl[i-1];gy+=Gl[i+w]-Gl[i-w];n++}const ll=Math.hypot(gx,gy);if(ll>n*.05){lx=-gx/ll;ly=-gy/ll}}
+  const E=P.embed/100,Sd=Math.max(E*.8,L2*.55);
+  if(Sd>0){const sb=sh.slice();boxBlur(sb,w,h,Math.max(1,Math.round(U*(.0025+.004*L2))));const ox=Math.round(lx*U*(.002+.006*L2)),oy=Math.round(ly*U*(.003+.006*L2));const ab=Ai.slice();boxBlur(ab,w,h,Math.max(1,Math.round(U*.002)));
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,j=i*4,sxp=x-ox,syp=y-oy;const sv=sxp>=0&&syp>=0&&sxp<w&&syp<h?sb[syp*w+sxp]:0,sa=Math.min(1,sv*(.35*L2+.55*E));
+      const fa=o[j+3]/255;if(fa>0&&E){const inner=Math.max(0,1-ab[i]/Math.max(.05,fa));const dk=1-E*.5*Math.min(1,inner*1.8);o[j]*=dk;o[j+1]*=dk;o[j+2]*=dk}
+      if(sa>0.003){const na=fa+sa*(1-fa);if(na>0){const f=fa/na;o[j]=o[j]*f;o[j+1]=o[j+1]*f;o[j+2]=o[j+2]*f;o[j+3]=na*255}}}}
+  cx.putImageData(out,x0,y0);l.v++;dirtyComp=true}
+const accPK=l=>{const s=l.so&&l.so.m;return (s?[s.a,s.b,s.c,s.d,s.e,s.f].map(q=>(+q).toFixed(3)).join():'')+'|'+JSON.stringify(accRealOf(l.acc))+'|'+(D.garment||'')};
+function accRedrawPost(l){if(!l.so)return;const c=l.cv,x=cx2(c);x.save();x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);drawSo(x,l.so);x.restore();accPost(l);l._apk=accPK(l);l.v++;dirtyComp=true}
+function accRealHTML(l){const P=accRealOf(l.acc),sl=(k,n,t)=>`<label class="arl" title="${t}"><span>${n}</span><input type="range" min="0" max="100" value="${P[k]}" data-acc-real="${k}"><output>${P[k]}</output></label>`;
+  return `<div class="apr"><span>Realism</span>${sl('wrap','Fabric wrap','Bends it with the garment’s folds and shades it like the fabric')}${sl('light','Match lighting','Takes the light, brightness and warmth of the garment photo, and casts a shadow')}${sl('embed','Embed','Presses it into the fabric with a contact shadow')}${sl('wear','Wear & age','Scratches, tarnish, fading and frayed edges')}
+    <div class="achs">${`<button class="ach" data-l="acc:realauto">✦ Make it real</button><button class="ach" data-l="acc:realoff">Off</button>`}</div>${D.garment?'':'<p class="anote">Fabric wrap and lighting read the garment mockup – start the design from a mockup to use them.</p>'}</div>`}
+/* ---------- photo capture: phone photo → clean cutout in My Assets ---------- */
+const CAP={};
+function capOpen(){const f=document.createElement('input');f.type='file';f.accept='image/*';f.setAttribute('capture','environment');f.onchange=async()=>{if(!f.files[0])return;try{const b=await bmpOf(f.files[0]);capStart(b,f.files[0].name)}catch(e){hint('Could not read that photo')}};f.click()}
+async function capStart(bm,name){const W0=bm.width||bm.naturalWidth,H0=bm.height||bm.naturalHeight,k=Math.min(1,1600/Math.max(W0,H0)),w=Math.round(W0*k),h=Math.round(H0*k),c=mk(w,h);cx2(c).drawImage(bm,0,0,w,h);if(bm.close)bm.close();
+  Object.assign(CAP,{src:c,w,h,name:(name||'Photo').replace(/\.[a-z0-9]+$/i,'').slice(0,40),tol:28,soft:1,keep:true,edge:0,mode:'auto',brush:Math.round(Math.max(w,h)*.03),q:[[w*.08,h*.08],[w*.92,h*.08],[w*.92,h*.92],[w*.08,h*.92]],straight:false,mask:null,drag:null});capAuto();capUI()}
+function capAuto(){const {w,h}=CAP,d=cx2(CAP.src).getImageData(0,0,w,h);removeBgData(d,w,h,CAP.tol);const M=new Float32Array(w*h);for(let i=0;i<w*h;i++)M[i]=d.data[i*4+3]/255;
+  if(CAP.keep){const lab=new Int32Array(w*h).fill(-1),sizes=[];let id=0;for(let i=0;i<w*h;i++){if(lab[i]>=0||M[i]<.5)continue;let n=0;const st=[i];lab[i]=id;while(st.length){const p=st.pop();n++;const x=p%w,y=(p/w)|0;for(const q of [x>0?p-1:-1,x<w-1?p+1:-1,y>0?p-w:-1,y<h-1?p+w:-1])if(q>=0&&lab[q]<0&&M[q]>=.5){lab[q]=id;st.push(q)}}sizes.push(n);id++}
+    if(sizes.length){const big=Math.max(...sizes);for(let i=0;i<w*h;i++){const L=lab[i];if(L>=0&&sizes[L]<big*.12)M[i]=0;else if(L<0&&M[i]<.5){const x=i%w,y=(i/w)|0;let near=false;for(const q of [i-1,i+1,i-w,i+w])if(q>=0&&q<w*h&&lab[q]>=0&&sizes[lab[q]]>=big*.12){near=true;break}if(!near)M[i]=0}}
+      // fill holes fully enclosed by the object
+      const out=new Uint8Array(w*h),st=[];for(let x=0;x<w;x++){st.push(x,(h-1)*w+x)}for(let y=0;y<h;y++){st.push(y*w,y*w+w-1)}while(st.length){const p=st.pop();if(out[p]||M[p]>=.5)continue;out[p]=1;const x=p%w,y=(p/w)|0;if(x>0)st.push(p-1);if(x<w-1)st.push(p+1);if(y>0)st.push(p-w);if(y<h-1)st.push(p+w)}
+      for(let i=0;i<w*h;i++)if(!out[i]&&M[i]<.5&&d.data[i*4+3]===0)M[i]=1}}
+  CAP.base=M;capFinish();if(!CAP.qset){let x0=w,y0=h,x1=0,y1=0;for(let y=0;y<h;y+=2)for(let x=0;x<w;x+=2)if(M[y*w+x]>.5){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}if(x1>x0)CAP.q=[[x0,y0],[x1,y0],[x1,y1],[x0,y1]]}}
+function capFinish(){const {w,h}=CAP;let M=CAP.base.slice();if(CAP.paint){for(let i=0;i<w*h;i++){const p=CAP.paint[i];if(p===1)M[i]=1;else if(p===2)M[i]=0}}
+  if(CAP.edge){const B=M.slice();boxBlur(B,w,h,Math.abs(CAP.edge));for(let i=0;i<w*h;i++)M[i]=CAP.edge>0?clampN(B[i]/.35,0,1):clampN((B[i]-.65)/.35,0,1)}
+  if(CAP.soft>0){boxBlur(M,w,h,CAP.soft)}CAP.mask=M}
+function capRender(){const cv0=document.getElementById('capCv');if(!cv0)return;const {w,h}=CAP,k=Math.min((cv0.clientWidth||600)/w,(cv0.clientHeight||600)/h),dw=Math.round(w*k),dh=Math.round(h*k);cv0.width=dw;cv0.height=dh;CAP.k=k;const x=cv0.getContext('2d');
+  const t=mk(w,h),tx=cx2(t);tx.drawImage(CAP.src,0,0);const im=tx.getImageData(0,0,w,h),d=im.data;const show=CAP.view!=='orig';for(let i=0;i<w*h;i++){if(show)d[i*4+3]=Math.round(CAP.mask[i]*255)}tx.putImageData(im,0,0);
+  const sz=Math.max(8,Math.round(14*k));for(let yy=0;yy<dh;yy+=sz)for(let xx=0;xx<dw;xx+=sz){x.fillStyle=((xx/sz+yy/sz)&1)?'#3a3b3f':'#2a2b2e';x.fillRect(xx,yy,sz,sz)}x.drawImage(t,0,0,dw,dh);
+  if(CAP.straight){x.save();x.strokeStyle='#7aa8ff';x.lineWidth=2;x.beginPath();CAP.q.forEach((p,i)=>i?x.lineTo(p[0]*k,p[1]*k):x.moveTo(p[0]*k,p[1]*k));x.closePath();x.stroke();CAP.q.forEach(p=>{x.fillStyle='#fff';x.beginPath();x.arc(p[0]*k,p[1]*k,9,0,6.283);x.fill();x.stroke()});x.restore()}}
+function capUI(){let e=document.getElementById('capP');if(!e){e=document.createElement('div');e.id='capP';edEl.appendChild(e);capWire(e)}e.hidden=false;const ch=(on,a,t)=>`<button class="ach${on?' on':''}" data-cap="${a}">${t}</button>`,sl=(k,n,mn,mx,v)=>`<label class="arl"><span>${n}</span><input type="range" min="${mn}" max="${mx}" value="${v}" data-capv="${k}"><output>${v}</output></label>`;
+  e.innerHTML=`<div class="caph"><b>Photo → accessory</b><span class="grow"></span><button class="ax" data-cap="close">&times;</button></div><div class="capb"><div class="capview"><canvas id="capCv"></canvas></div><div class="capside">
+   <p class="anote">Shoot the item flat on a plain background that contrasts with it. The background is removed automatically – fine-tune below.</p>
+   ${sl('tol','Background tolerance',2,90,CAP.tol)}${sl('soft','Edge softness',0,6,CAP.soft)}${sl('edge','Shrink / grow edge',-4,4,CAP.edge)}
+   <div class="achs">${ch(CAP.keep,'keep','Keep main object only')}${ch(CAP.view==='orig','view','Show original')}</div>
+   <div class="achs">${ch(CAP.mode==='auto','mode:auto','✋ View')}${ch(CAP.mode==='erase','mode:erase','Erase brush')}${ch(CAP.mode==='keep','mode:keep','Restore brush')}</div>${CAP.mode!=='auto'?sl('brush','Brush size',4,200,CAP.brush):''}
+   <div class="achs">${ch(CAP.straight,'straight','⬚ Straighten perspective')}</div>${CAP.straight?'<p class="anote">Drag the 4 corners onto the corners of the item (a label, patch or tag) – it is flattened when you save.</p>':''}
+   <label class="arl"><span>Name</span><input class="atx" data-capname value="${esc(CAP.name)}" maxlength="40"></label>
+   <label class="arl"><span>Folder</span><select data-capfold>${MYF.map(f=>`<option${(AF.myFold||MYF[0])===f?' selected':''}>${esc(f)}</option>`).join('')}</select></label>
+   <div class="achs">${ch(false,'retake','Retake / choose photo')}<button class="apri" data-cap="save">Save to My Assets</button></div></div></div>`;
+  requestAnimationFrame(capRender)}
+function capWire(e){e.addEventListener('click',ev=>{const b=ev.target.closest('[data-cap]');if(!b)return;const a=b.dataset.cap;ev.stopPropagation();
+    if(a==='close'){e.hidden=true;return}if(a==='keep'){CAP.keep=!CAP.keep;capAuto()}else if(a==='view'){CAP.view=CAP.view==='orig'?'':'orig'}else if(a.startsWith('mode:'))CAP.mode=a.slice(5);else if(a==='straight')CAP.straight=!CAP.straight;else if(a==='retake'){e.hidden=true;capOpen();return}else if(a==='save'){capSave();return}capUI()});
+  e.addEventListener('input',ev=>{const t=ev.target,k=t.dataset.capv;if(k){CAP[k]=+t.value;const o=t.nextElementSibling;if(o)o.textContent=t.value;clearTimeout(CAP._t);CAP._t=setTimeout(()=>{if(k==='tol')capAuto();else if(k!=='brush')capFinish();capRender()},120)}if(t.matches('[data-capname]'))CAP.name=t.value});
+  e.addEventListener('change',ev=>{if(ev.target.matches('[data-capfold]'))AF.myFold=ev.target.value});
+  const pt=ev=>{const c=document.getElementById('capCv'),r=c.getBoundingClientRect();return [(ev.clientX-r.left)/CAP.k,(ev.clientY-r.top)/CAP.k]};
+  const paint=(p)=>{const {w,h}=CAP;if(!CAP.paint)CAP.paint=new Uint8Array(w*h);const r=CAP.brush/2,v=CAP.mode==='keep'?1:2;for(let y=Math.max(0,p[1]-r|0);y<Math.min(h,p[1]+r);y++)for(let x=Math.max(0,p[0]-r|0);x<Math.min(w,p[0]+r);x++)if((x-p[0])**2+(y-p[1])**2<=r*r)CAP.paint[y*w+x]=v};
+  e.addEventListener('pointerdown',ev=>{if(ev.target.id!=='capCv')return;const p=pt(ev);if(CAP.straight){const i=CAP.q.findIndex(q=>Math.hypot(q[0]-p[0],q[1]-p[1])<18/CAP.k);if(i>=0){CAP.drag={i};CAP.qset=1;ev.target.setPointerCapture(ev.pointerId);return}}if(CAP.mode==='erase'||CAP.mode==='keep'){CAP.drag={paint:true};paint(p);capFinish();capRender();ev.target.setPointerCapture(ev.pointerId)}});
+  e.addEventListener('pointermove',ev=>{if(!CAP.drag)return;const p=pt(ev);if(CAP.drag.i!=null){CAP.q[CAP.drag.i]=[clampN(p[0],0,CAP.w),clampN(p[1],0,CAP.h)];capRender()}else if(CAP.drag.paint){paint(p);clearTimeout(CAP._pt);CAP._pt=setTimeout(()=>{capFinish();capRender()},30)}});
+  e.addEventListener('pointerup',()=>{if(CAP.drag&&CAP.drag.paint){capFinish();capRender()}CAP.drag=null});addEventListener('resize',()=>{if(!e.hidden)capRender()})}
+async function capSave(){await accLoad();const {w,h}=CAP;const t=mk(w,h),tx=cx2(t);tx.drawImage(CAP.src,0,0);const im=tx.getImageData(0,0,w,h),d=im.data;for(let i=0;i<w*h;i++)d[i*4+3]=Math.round(CAP.mask[i]*d[i*4+3]);tx.putImageData(im,0,0);let out=t;
+  if(CAP.straight){const q=CAP.q,W2=Math.round((Math.hypot(q[1][0]-q[0][0],q[1][1]-q[0][1])+Math.hypot(q[2][0]-q[3][0],q[2][1]-q[3][1]))/2),H2=Math.round((Math.hypot(q[3][0]-q[0][0],q[3][1]-q[0][1])+Math.hypot(q[2][0]-q[1][0],q[2][1]-q[1][1]))/2),map=sq2quad(q),o=mk(W2,H2),od=cx2(o).createImageData(W2,H2),sd=im.data;
+    for(let y=0;y<H2;y++)for(let x=0;x<W2;x++){const [sx,sy]=map((x+.5)/W2,(y+.5)/H2),ix=Math.floor(sx),iy=Math.floor(sy);if(ix<0||iy<0||ix>=w-1||iy>=h-1)continue;const fx=sx-ix,fy=sy-iy,j=(y*W2+x)*4;for(let c=0;c<4;c++){const a=sd[(iy*w+ix)*4+c],b=sd[(iy*w+ix+1)*4+c],cc=sd[((iy+1)*w+ix)*4+c],dd=sd[((iy+1)*w+ix+1)*4+c];od.data[j+c]=a+(b-a)*fx+(cc-a)*fy+(a-b-cc+dd)*fx*fy}}cx2(o).putImageData(od,0,0);out=o}
+  const cr=accCrop(out);const blob=await toBlobP(cr),id='my/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),th=accCv(120,120),k2=Math.min(120/cr.width,120/cr.height);cx2(th).drawImage(cr,(120-cr.width*k2)/2,(120-cr.height*k2)/2,cr.width*k2,cr.height*k2);
+  await IDB.set('mya:'+id,{id,blob});const cc=accCv(cr.width,cr.height);cx2(cc).drawImage(cr,0,0);MYIMG.set(id,cc);MYA.unshift({id,name:CAP.name||'Photo item',folder:AF.myFold||MYF[0]||'Unsorted',w:cr.width,h:cr.height,thumb:th.toDataURL('image/png'),added:Date.now(),photo:1});await IDB.set('myassets',MYA);
+  document.getElementById('capP').hidden=true;hint('Saved to My Assets – drag it onto your design',2400);AF.tab='my';AF.mode='lib';if(!ACCOPEN)accToggle(true);else accDraw2()}
+function accDefReal(a,force){if(!D.garment&&!force)return {wrap:0,light:0,embed:0,wear:0};const mt=accMatOf(a),rg=mt==='metal'||mt==='gem'||mt==='plastic',flat=a&&(a.cat==='stitch'||a.cat==='dist'||a.cat==='cons'||a.cat==='pocket');return {wrap:flat?70:rg?28:55,light:flat?35:60,embed:flat?10:rg?35:45,wear:force&&mt==='fabric'?15:0}}
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.accReal){const o=t.nextElementSibling;if(o)o.textContent=t.value}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.accReal)accAct('real:'+t.dataset.accReal+':'+t.value)});
+
+
+/* ---------- v12: collection planner ---------- */
+const COLST=[['idea','Idea'],['sample','Sampling'],['approved','Approved'],['prod','In production'],['live','Released']];
+let COL=null,COLSEL=null,COLDR=null;
+async function colLoad(){if(COL)return COL;COL=(await IDB.get('collections'))||{drops:[]};if(!COL.drops.length){COL.drops.push({id:lid(),name:'First drop',date:'',target:8,notes:'',cards:[]})}COLSEL=COLSEL||COL.drops[0].id;return COL}
+const colSave=()=>{clearTimeout(colSave.t);colSave.t=setTimeout(()=>IDB.set('collections',COL),250)};
+const colDrop=()=>COL.drops.find(d=>d.id===COLSEL)||COL.drops[0];
+const money=v=>isFinite(v)&&v!==''&&v!=null?'$'+(+v).toLocaleString(undefined,{maximumFractionDigits:2}):'—';
+async function colOpen(){await colLoad();let e=document.getElementById('colP');if(!e){e=document.createElement('div');e.id='colP';document.getElementById('lab').parentNode.appendChild(e);colWire(e)}e.hidden=false;H2.classList.add('incol');await colDraw()}
+function colClose(){const e=document.getElementById('colP');if(e)e.hidden=true;H2.classList.remove('incol')}
+async function colDraw(edit){const e=document.getElementById('colP');if(!e||e.hidden)return;const dl=(await IDB.get('dlib'))||[],dm=new Map(dl.map(d=>[d.id,d])),d=colDrop();
+  const cards=d.cards,rev=cards.reduce((s,c)=>s+(+c.price||0)*(+c.qty||0),0),cost=cards.reduce((s,c)=>s+(+c.cost||0)*(+c.qty||0),0),done=cards.filter(c=>c.status==='live').length,days=d.date?Math.ceil((new Date(d.date+'T12:00')-Date.now())/864e5):null;
+  const img=c=>c.did&&dm.get(c.did)?dm.get(c.did).thumb:(c.img||'');
+  const card=c=>{const m=(+c.price||0)-(+c.cost||0),mp=c.price&&c.cost!==''&&c.cost!=null?Math.round(m/c.price*100):null;return `<div class="cc" draggable="true" data-cc="${c.id}"><i style="background-image:url(${img(c)})"></i><div><b>${esc(c.name||'Untitled piece')}</b><span>${money(c.price)}${c.qty?' · '+c.qty+' pcs':''}${mp!=null?` · <em class="${mp<40?'lo':''}">${mp}% margin</em>`:''}</span>${c.notes?`<small>${esc(c.notes.slice(0,60))}</small>`:''}</div></div>`};
+  e.innerHTML=`<div class="colbg"></div><div class="colin"><header class="colh"><button class="colx" data-co="close">&larr; Home</button><h2 class="chrome">Collections</h2><span class="grow"></span><button class="pill" data-co="newdrop">＋ New drop</button></header>
+  <nav class="coltabs">${COL.drops.map(x=>`<button class="${x.id===d.id?'on':''}" data-co="sel:${x.id}">${esc(x.name)}<small>${x.cards.length}</small></button>`).join('')}</nav>
+  <section class="colsum"><div class="cs-name"><input data-cf="name" value="${esc(d.name)}" aria-label="Drop name"><label>Release <input type="date" data-cf="date" value="${esc(d.date||'')}"></label><label>Target <input type="number" min="0" data-cf="target" value="${esc(d.target||'')}"> pieces</label></div>
+   <div class="cs-stats"><div><b>${cards.length}${d.target?`<small>/${d.target}</small>`:''}</b><span>Pieces</span></div><div><b>${done}</b><span>Released</span></div><div><b>${money(rev)}</b><span>Projected revenue</span></div><div><b>${rev?Math.round((rev-cost)/rev*100)+'%':'—'}</b><span>Avg margin</span></div><div><b>${days==null?'—':days<0?'Out':days}</b><span>${days==null?'Set a date':days<0?'Released':'Days to drop'}</span></div></div>
+   <div class="cs-bar"><i style="width:${d.target?Math.min(100,cards.length/d.target*100):0}%"></i></div><textarea data-cf="notes" placeholder="Notes for this drop – theme, fabrics, inspiration, launch plan…">${esc(d.notes||'')}</textarea></section>
+  <div class="colboard">${COLST.map(([k,n])=>{const L=cards.filter(c=>(c.status||'idea')===k);return `<div class="colc" data-col="${k}"><h4>${n}<small>${L.length}</small></h4>${L.map(card).join('')}${k==='idea'?'<button class="cadd" data-co="add">＋ Add piece</button>':''}</div>`}).join('')}</div>
+  <footer class="colf"><button class="pill sm" data-co="deldrop">Delete this drop</button></footer></div>${edit?colEditHTML(edit,dl):''}`}
+function colEditHTML(id,dl){const d=colDrop(),c=d.cards.find(x=>x.id===id);if(!c)return '';const f=(k,n,t,ex)=>`<label><span>${n}</span><input type="${t||'text'}" data-ce="${k}" value="${esc(c[k]==null?'':c[k])}" ${ex||''}></label>`;
+  return `<div class="colsheet"><div class="colsh-in"><button class="colx2" data-co="edclose">&times;</button><h3>Piece</h3>${f('name','Name')}
+   <label><span>Status</span><select data-ce="status">${COLST.map(([k,n])=>`<option value="${k}"${(c.status||'idea')===k?' selected':''}>${n}</option>`).join('')}</select></label>
+   <div class="ce3">${f('price','Retail price $','number','min="0" step="0.01"')}${f('cost','Cost each $','number','min="0" step="0.01"')}${f('qty','Quantity','number','min="0"')}</div>
+   ${f('sizes','Sizes','text','placeholder="S–XXL"')}${f('colour','Colourways','text','placeholder="Black, bone"')}<label><span>Notes</span><textarea data-ce="notes">${esc(c.notes||'')}</textarea></label>
+   <label><span>Linked design</span><select data-ce="did"><option value="">None</option>${dl.map(x=>`<option value="${x.id}"${c.did===x.id?' selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
+   <div class="ce-act">${c.did?`<button class="pill" data-co="opendes:${c.did}">Open design</button>`:''}<button class="pill" data-co="img:${c.id}">Use a photo</button><button class="pill" data-co="delcard:${c.id}">Remove</button><button class="pill big" data-co="edclose">Done</button></div></div></div>`}
+async function colAddSheet(){const dl=(await IDB.get('dlib'))||[];const e=document.getElementById('colP');const s=document.createElement('div');s.className='colsheet';s.innerHTML=`<div class="colsh-in"><button class="colx2" data-co="addclose">&times;</button><h3>Add a piece</h3><p class="note">Pick a design from your Design Lab, or start a blank card.</p><div class="colpick"><button data-co="addblank"><i>＋</i><span>Blank card</span></button>${dl.map(d=>`<button data-co="adddes:${d.id}"><i style="background-image:url(${d.thumb})"></i><span>${esc(d.name)}</span></button>`).join('')}</div></div>`;e.appendChild(s)}
+function colWire(e){e.addEventListener('click',async ev=>{const b=ev.target.closest('[data-co],[data-cc]');if(!b)return;if(b.dataset.cc&&!ev.target.closest('[data-co]')){if(COLDR&&COLDR.moved)return;colDraw(b.dataset.cc);return}const [a,v]=b.dataset.co.split(/:(.*)/s),d=colDrop();
+    if(a==='close'){colClose();return}
+    if(a==='newdrop'){const n=(prompt('Name this drop (e.g. Fall 26)')||'').trim();if(!n)return;const x={id:lid(),name:n.slice(0,40),date:'',target:8,notes:'',cards:[]};COL.drops.push(x);COLSEL=x.id;colSave();colDraw();return}
+    if(a==='sel'){COLSEL=v;colDraw();return}
+    if(a==='deldrop'){if(COL.drops.length<2){toast('Keep at least one drop – rename this one instead');return}if(!confirm('Delete “'+d.name+'” and its cards? Your designs are not touched.'))return;COL.drops=COL.drops.filter(x=>x!==d);COLSEL=COL.drops[0].id;colSave();colDraw();return}
+    if(a==='add'){colAddSheet();return}if(a==='addclose'){b.closest('.colsheet').remove();return}
+    if(a==='addblank'||a==='adddes'){const dl=(await IDB.get('dlib'))||[],ds=dl.find(x=>x.id===v),c={id:lid(),name:ds?ds.name:'New piece',status:'idea',did:ds?ds.id:'',price:'',cost:'',qty:''};d.cards.push(c);colSave();colDraw(c.id);return}
+    if(a==='edclose'){colDraw();return}
+    if(a==='delcard'){d.cards=d.cards.filter(x=>x.id!==v);colSave();colDraw();return}
+    if(a==='opendes'){colClose();hideHome();openLab();openDoc(v);return}
+    if(a==='img'){const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=async()=>{if(!f.files[0])return;const bm=await bmpOf(f.files[0]),k=Math.min(1,320/Math.max(bm.width,bm.height)),c=mk(Math.round(bm.width*k),Math.round(bm.height*k));cx2(c).drawImage(bm,0,0,c.width,c.height);const card=d.cards.find(x=>x.id===v);if(card){card.img=c.toDataURL('image/jpeg',.82);card.did='';colSave();colDraw(v)}};f.click();return}});
+  e.addEventListener('input',ev=>{const t=ev.target,d=colDrop();if(!d)return;if(t.dataset.cf){d[t.dataset.cf]=t.type==='number'?+t.value:t.value;colSave();if(t.dataset.cf==='name'){const tb=e.querySelector('.coltabs .on');if(tb&&tb.firstChild)tb.firstChild.textContent=t.value}}
+    if(t.dataset.ce){const id=e.querySelector('.colsheet [data-co^="delcard:"]');const cid=id&&id.dataset.co.split(':')[1],c=d.cards.find(x=>x.id===cid);if(c){c[t.dataset.ce]=t.type==='number'?t.value:t.value;colSave()}}});
+  e.addEventListener('change',ev=>{const t=ev.target;if(t.dataset.cf==='date'||t.dataset.cf==='target')colDraw();if(t.dataset.ce==='status'||t.dataset.ce==='did'){const id=e.querySelector('.colsheet [data-co^="delcard:"]');colDraw(id&&id.dataset.co.split(':')[1])}});
+  // drag cards between columns (mouse + touch)
+  e.addEventListener('pointerdown',ev=>{const c=ev.target.closest('[data-cc]');if(!c||ev.button>0)return;COLDR={id:c.dataset.cc,x:ev.clientX,y:ev.clientY,el:c,moved:false,pid:ev.pointerId}});
+  e.addEventListener('dragstart',ev=>{if(ev.target.closest('[data-cc]'))ev.preventDefault()});
+  addEventListener('pointermove',ev=>{if(!COLDR||ev.pointerId!==COLDR.pid)return;const dx=ev.clientX-COLDR.x,dy=ev.clientY-COLDR.y;if(!COLDR.moved&&Math.hypot(dx,dy)>10){COLDR.moved=true;COLDR.el.classList.add('drag');document.body.classList.add('coldrag')}if(COLDR.moved){COLDR.el.style.transform=`translate(${dx}px,${dy}px) rotate(2deg)`;e.querySelectorAll('.colc').forEach(k=>k.classList.remove('over'));const u=document.elementsFromPoint(ev.clientX,ev.clientY).find(n=>n.classList&&n.classList.contains('colc'));if(u)u.classList.add('over')}});
+  const end=ev=>{if(!COLDR||ev.pointerId!==COLDR.pid)return;const D0=COLDR;if(D0.moved){const u=document.elementsFromPoint(ev.clientX,ev.clientY).find(n=>n.classList&&n.classList.contains('colc'));const d=colDrop(),c=d.cards.find(x=>x.id===D0.id);if(u&&c&&u.dataset.col!==c.status){c.status=u.dataset.col;colSave();if(c.status==='live')toast('✦ Released')}document.body.classList.remove('coldrag');setTimeout(()=>{COLDR=null;colDraw()},0)}else COLDR=null};
+  addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
@@ -5773,7 +5984,7 @@ homeEl.addEventListener('click',async e=>{const q=e.target.closest('[data-hq]');
   if(k==='new'){hideHome();openLab();templateSheet()}
   else if(k==='last'&&HML){hideHome();if(HML.k==='d'){openLab();openDoc(HML.id)}else await openBook(HML.id)}
   else if(k==='acc'){const d=((await IDB.get('dlib'))||[])[0];hideHome();openLab();if(d){await openDoc(d.id);setTimeout(()=>accToggle(true),300)}else{templateSheet();hint('Pick a canvas – then tap ✦ in the top bar to open Accessories',3600)}}
-  else if(k==='books'){hideHome();openLibrary()}},true);
+  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}},true);
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.clientX/innerWidth-.5)*2).toFixed(3));homeEl.style.setProperty('--py',((e.clientY/innerHeight-.5)*2).toFixed(3))},{passive:true});
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
