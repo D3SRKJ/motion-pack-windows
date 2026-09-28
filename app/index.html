@@ -2519,18 +2519,19 @@ async function verifyKey(k){try{k=String(k||'').replace(/\s+/g,'').replace(/^MP-
 /* ---------- device activation (Cloudflare key checker) ---------- */
 const ACT_URL='https://motion-pack-keys.kjjackson416.workers.dev';
 const ACT_PUB={"kty":"EC","crv":"P-256","x":"5rSnTzzIoS7ww8yGuiy4BpteF8vSanrq7MPAuHXXZK0","y":"C3rprFneBs_hNW9CRtw4uCwRtt6Pj1tJy5jj-HZ0lu8"};
-let ACTERR='';
+let ACTERR='';const ACT_OWN=['ownxcsbd'];/* owner key: never needs the checker, so you can't lock yourself out */
 function actDevName(){const u=navigator.userAgent||'';if(/iPad/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1))return 'iPad';if(/iPhone/.test(u))return 'iPhone';if(/Android/.test(u))return /Mobile/.test(u)?'Android phone':'Android tablet';if(/Windows/.test(u))return 'Windows PC';if(/CrOS/.test(u))return 'Chromebook';if(/Mac/.test(u))return 'Mac';if(/Linux/.test(u))return 'Linux PC';return 'Device'}
 async function actDev(){let v=null;try{v=localStorage.getItem('mp_dev')}catch(e){}if(!v)v=await IDB.get('mp_dev');if(!v||!/^[A-Za-z0-9_-]{8,64}$/.test(v)){const a=crypto.getRandomValues(new Uint8Array(15));v=btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}try{localStorage.setItem('mp_dev',v)}catch(e){}await IDB.set('mp_dev',v);return v}
 async function actGet(){let a=null;try{a=JSON.parse(localStorage.getItem('mp_act')||'null')}catch(e){}if(!a)a=await IDB.get('mp_act');return a||null}
 async function actSet(a){try{if(a)localStorage.setItem('mp_act',JSON.stringify(a));else localStorage.removeItem('mp_act')}catch(e){}await IDB.set('mp_act',a||null)}
-async function actValid(d){const a=await actGet();if(!a||!a.tok||!d)return false;try{const [pl,sg]=String(a.tok).split('.');const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},ACT_PUB),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+async function actValid(d){if(d&&ACT_OWN.includes(d.id))return true;const a=await actGet();if(!a||!a.tok||!d)return false;try{const [pl,sg]=String(a.tok).split('.');const key=await crypto.subtle.importKey('jwk',Object.assign({ext:true},ACT_PUB),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
   if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},key,b64d(sg),new TextEncoder().encode(pl)))return false;const o=JSON.parse(new TextDecoder().decode(b64d(pl)));return o.id===d.id&&o.dev===await actDev()}catch(e){return false}}
-async function actRun(op,k,d,ms){const dev=await actDev();let j=null;
-  try{const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||12000);const r=await fetch(ACT_URL+'/'+op,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,dev,name:actDevName()}),signal:c.signal,cache:'no-store'});clearTimeout(t);j=await r.json()}catch(e){return {ok:false,err:'offline'}}
+async function actPost(op,body,ms){let last='';for(let i=0;i<2;i++){try{const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||12000);const r=await fetch(ACT_URL+'/'+op,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(body),signal:c.signal,cache:'no-store',credentials:'omit',mode:'cors'});clearTimeout(t);const tx=await r.text();try{return JSON.parse(tx)}catch(e){last='HTTP '+r.status+' '+tx.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,90)}}catch(e){last=(e&&e.name==='AbortError')?'timed out':String(e&&e.message||e).slice(0,90)}if(i===0)await new Promise(r=>setTimeout(r,900))}return {ok:false,err:'offline',detail:last}}
+async function actRun(op,k,d,ms){if(d&&ACT_OWN.includes(d.id)&&op!=='deactivate')return {ok:true,owner:true};const dev=await actDev();const j=await actPost(op,{key:k,dev,name:actDevName()},ms);
   if(!j||typeof j!=='object')return {ok:false,err:'offline'};
   if(op==='deactivate')return j;
   if(j.ok&&j.tok){const prev=await actGet();await actSet({tok:j.tok,id:d.id,used:j.used,lim:j.lim,last:Date.now()});if(!await actValid(d)){await actSet(prev);return {ok:false,err:'bad'}}return j}
+  if(j.err==='server'||j.err==='setup')return {ok:false,err:'offline',detail:'server '+(j.msg||j.err)};
   return j.ok?{ok:false,err:'bad'}:j}
 function actMsg(r){const e=r&&r.err;
   if(e==='limit'){const n=r.lim||2,names=(r.devices||[]).map(x=>x.name).filter(Boolean);return 'This key is already on '+n+' device'+(n===1?'':'s')+(names.length?' ('+names.join(', ')+')':'')+'. On one of those, open Home → This device & key → Remove this device, then try again here. Or ask whoever sold you the key to free up a slot.'}
@@ -2538,8 +2539,8 @@ function actMsg(r){const e=r&&r.err;
   if(e==='removed')return 'This device was taken off your key. Paste your key again to re-activate it here.';
   if(e==='invalid')return 'That key isn\'t valid. Check you copied all of it, including MP- at the start.';
   if(e==='bad')return 'The activation reply couldn\'t be verified. Please try again.';
-  return 'Couldn\'t reach the activation server. Connect to the internet and try again – each device only needs it the first time.'}
-async function actRecheck(k,d,force){const a=await actGet();if(!a||!k||!d)return;if(!force&&Date.now()-(a.last||0)<7*864e5)return;if(navigator.onLine===false)return;
+  return 'Couldn\'t reach the activation server. Connect to the internet and try again – each device only needs it the first time.'+(r&&r.detail?' (Details: '+r.detail+')':'')}
+async function actRecheck(k,d,force){if(d&&ACT_OWN.includes(d.id))return;const a=await actGet();if(!a||!k||!d)return;if(!force&&Date.now()-(a.last||0)<7*864e5)return;if(navigator.onLine===false)return;
   const r=await actRun('check',k,d,10000);if(r.ok||(r.err!=='blocked'&&r.err!=='removed'))return;await actSet(null);LIC=null;ACTERR=actMsg(r);applyLic();licClose();showGate()}
 async function actKeyStored(){let k=null;try{k=localStorage.getItem('mp_key')}catch(e){}if(!k)k=await IDB.get('mp_key');return k}
 function licClose(){const e=document.getElementById('licP');if(e)e.hidden=true}
