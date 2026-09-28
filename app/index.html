@@ -1400,6 +1400,25 @@ body.coldrag{user-select:none;-webkit-user-select:none}
 .stysw button:hover{transform:scale(1.15);border-color:#7aa8ff}
 .stysw button.on{box-shadow:0 0 0 2px #0b0b0c,0 0 0 3px #7aa8ff}
 .stysw button.add{background:rgba(255,255,255,.06);color:#ddd;font-size:13px;line-height:18px;border-style:dashed}
+#syP{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:16px;overflow:auto}
+#syP[hidden]{display:none}
+#syP .sy-in{position:relative;width:min(460px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:26px 24px 22px;border-radius:16px;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.07),transparent 60%),#0c0c0d;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.7);color:#e8e8e8;font:14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;box-sizing:border-box}
+#syP .sy-k{margin:0;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#8a8a8a}
+#syP h3{margin:6px 0 14px;font-size:22px;font-weight:300;letter-spacing:.05em}
+#syP dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 12px;font-size:13px}#syP dt{color:#8a8a8a}#syP dd{margin:0;text-align:right;overflow-wrap:anywhere}
+#syP .sy-pv{display:inline-block;margin-left:6px;padding:0 7px;border-radius:9px;border:1px solid rgba(207,232,211,.4);color:#cfe8d3;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+#syP .sy-n{margin:0 0 12px;font-size:12.5px;color:#a2a2a2}#syP .sy-n b{color:#e8e8e8;font-weight:500}
+#syP .sy-m{min-height:18px;margin:0 0 10px;font-size:12.5px;color:#cfe8d3}#syP .sy-m.err{color:#ffb3a8}
+#syP .sy-steps{margin:0 0 14px;padding-left:20px;font-size:12.5px;color:#cfcfcf}#syP .sy-steps li{margin:0 0 6px}#syP .sy-steps b{color:#fff;font-weight:500}
+#syP .sy-tok{width:100%;box-sizing:border-box;height:42px;margin:0 0 10px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:#000;color:#fff;font:13px ui-monospace,Menlo,Consolas,monospace}
+#syP .sy-tok:focus{outline:none;border-color:rgba(255,255,255,.5)}
+#syP .sy-ck{display:flex;gap:8px;align-items:center;margin:0 0 12px;font-size:12.5px;color:#cfcfcf;cursor:pointer}
+#syP .sy-b{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}#syP .sy-b .pill{flex:1;min-width:140px}
+#syP .sy-x{position:absolute;top:10px;right:12px;background:none;border:0;color:#aaa;font-size:24px;line-height:1;cursor:pointer;padding:4px 8px}
+#presentP .pr-f{display:flex;align-items:center;gap:10px;margin:8px 0}
+#presentP .pr-f span{flex:none;width:96px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9a9a9a}
+#presentP .pr-f input{flex:1;min-width:0;height:36px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.45);color:#fff;font:13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#presentP .pr-f input:focus{outline:none;border-color:rgba(255,255,255,.45)}
 </style>
 </head>
 <body class="edit empty">
@@ -1474,7 +1493,7 @@ body.coldrag{user-select:none;-webkit-user-select:none}
       </button></div><i class="hm-shd"></i></div>
       <div class="hm-mid">
         <div class="hm-px" style="--dz:2;--i:1;--ph:-2.6s"><div class="hm-fl"><div class="hm-card sm hm-clock"><span class="hm-k">Today</span><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div></div><i class="hm-shd"></i></div>
-        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
+        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="sync" id="hmSync"><i>&#8645;&#xFE0E;</i>Sync devices<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
       </div>
       <div class="hm-px" style="--dz:1.1;--i:3;--ph:-1.4s"><div class="hm-fl"><button class="hm-card big" data-home="books">
         <div class="hm-art"><div class="hm-frames"><i></i><i></i><i id="hmCover"></i></div></div>
@@ -1528,6 +1547,13 @@ body.coldrag{user-select:none;-webkit-user-select:none}
     <div class="row2"><button class="pill on" data-fmt="story">Story 9:16</button><button class="pill" data-fmt="square">Square 1:1</button><button class="pill" data-fmt="wide">Wide 16:9</button></div>
     <div class="row2 fsp"><span class="mname" style="flex:none">Speed</span><button class="pill sm" data-fsp="0.5">0.5× Slow-mo</button><button class="pill sm" data-fsp="0.75">0.75×</button><button class="pill sm" data-fsp="1">1× Normal</button><button class="pill sm" data-fsp="1.25">1.25×</button><button class="pill sm" data-fsp="1.5">1.5×</button><button class="pill sm" data-fsp="2">2× Fast</button><button class="pill sm" data-fsp="3">3× Rapid</button></div>
     <div class="row2"><button class="pill big" data-cmd="record">&#9679; Record video</button></div></div>
+  <div class="grp lic" id="prGrp"><h3>Promo ad &middot; 15 s</h3><p class="note">Turns this lookbook into a 15-second ad for socials: your garments, details and colourways with captions, ending on your brand. Uses the size picked in Export video and your music.</p>
+    <div class="row2"><button class="pill on" data-prs="hype">Hype &middot; fast cuts</button><button class="pill" data-prs="luxe">Luxe &middot; slow fades</button></div>
+    <label class="pr-f"><span>Opening line</span><input id="prOpen" maxlength="40" placeholder="NEW DROP"></label>
+    <label class="pr-f"><span>Ending line</span><input id="prEnd" maxlength="40" placeholder="LINK IN BIO"></label>
+    <label class="ck"><input type="checkbox" id="prPrice" checked> Show prices</label>
+    <div class="row2"><span class="mname" id="prLogoN">Your brand name</span><button class="pill" data-pr="logo">Logo image</button><button class="pill" data-pr="nologo" hidden>Remove</button></div>
+    <div class="row2"><button class="pill" style="flex:1" data-pr="play">&#9654;&#xFE0E; Preview</button><button class="pill big" style="flex:2" data-pr="rec">&#9679; Make promo video</button></div></div>
   <div class="grp lic"><h3>Share</h3><p class="note">A link buyers open on any phone – your intro, motion, zoom and points, view-only. Or save it as a file.</p>
     <div class="row2"><button class="pill big" data-cmd="publink">&#128279;&#xFE0E; Publish / update phone link</button></div><div class="row2"><button class="pill" style="flex:1" data-cmd="share">Save as file</button><button class="pill" style="flex:1" data-cmd="publist">My links</button></div></div>
   <div class="grp lic"><h3>Line sheet</h3><p class="note">A wholesale PDF of the whole lookbook: every piece with style number, colourways, sizes, fabric and price, six per page.</p>
@@ -2146,7 +2172,7 @@ function finishCut(keep){
 /* ================= film engine: presentation + video ================= */
 let filmOn=false,FILM=null,fmt='story',MUS=null;const filmEl=$('#film'),filmC=$('#filmC'),presentP=$('#presentP');
 const FMTS={story:[1080,1920],square:[1080,1080],wide:[1920,1080]};
-function openPresent(){if(!S.items.length)return toast('Add a garment first');presentP.hidden=false;updMusic()}
+function openPresent(){if(!S.items.length)return toast('Add a garment first');presentP.hidden=false;updMusic();prUI()}
 presentP.addEventListener('click',e=>{const f=e.target.closest('[data-fmt]');if(f){fmt=f.dataset.fmt;presentP.querySelectorAll('[data-fmt]').forEach(b=>b.classList.toggle('on',b===f))}});
 function updMusic(){$('#mName').textContent=MUS?MUS.name:'No music';$('#noMusic').hidden=!MUS}
 IDB.get('music').then(m=>{if(m&&m.blob){MUS=m;updMusic()}}).catch(()=>{});
@@ -2294,6 +2320,154 @@ function renderFrame(F,c,W,H,time,samples){
   if(S.torch){const tx=W*(.5+Math.sin(time*.55)*.2),ty=H*(.46+Math.cos(time*.42)*.14),rr=Math.min(W,H)*.34;const g=c.createRadialGradient(tx,ty,0,tx,ty,rr);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.35,'rgba(0,0,0,.08)');g.addColorStop(.7,'rgba(0,0,0,.6)');g.addColorStop(1,'rgba(0,0,0,.965)');c.fillStyle=g;c.fillRect(0,0,W,H)}
   drawText(c,W,H,st,F);
 }
+
+/* ================= promo ad maker (15 s) ================= */
+const PRDEF={style:'hype',open:'NEW DROP',end:'LINK IN BIO',price:true};
+let PR=(()=>{try{return Object.assign({},PRDEF,JSON.parse(localStorage.getItem('mp_promo')||'{}'))}catch(e){return Object.assign({},PRDEF)}})(),PRLOGO=null;
+IDB.get('promologo').then(v=>{if(v&&v.blob)PRLOGO=v;prUI()}).catch(()=>{});
+function prSave(){try{localStorage.setItem('mp_promo',JSON.stringify(PR))}catch(e){}}
+function prUI(){const g=document.getElementById('prGrp');if(!g)return;g.querySelectorAll('[data-prs]').forEach(b=>b.classList.toggle('on',b.dataset.prs===PR.style));
+  const o=g.querySelector('#prOpen'),e=g.querySelector('#prEnd'),p=g.querySelector('#prPrice');if(o&&document.activeElement!==o)o.value=PR.open;if(e&&document.activeElement!==e)e.value=PR.end;if(p)p.checked=!!PR.price;
+  const ln=g.querySelector('#prLogoN');if(ln)ln.textContent=PRLOGO?PRLOGO.name:'Your brand name';const lr=g.querySelector('[data-pr=nologo]');if(lr)lr.hidden=!PRLOGO}
+const prEin=t=>t*t*t,prOut=t=>1-Math.pow(1-t,3),prIO=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function prBrand(){const b=(S.brand||'').trim();if(b&&!/^your label$/i.test(b))return b;const t=(S.title||'').trim();return t&&!/^untitled/i.test(t)?t:'NEW COLLECTION'}
+function prFieldName(it,i){const f=it.fields||{};return String(f.name||f.title||('Look '+String(i+1).padStart(2,'0'))).trim()}
+function prPrice(it){const f=it.fields||{};return PR.price&&f.price?String(f.price).trim():''}
+function prShots(G,hype){const HOOK=1.8,END=2.8,MID=15-HOOK-END,n=Math.min(G.length,5),gs=G.slice(0,n);const per=[];
+  gs.forEach((g,i)=>{const it=g.it,list=[{k:'full',g,i,w:1.5}];const ptN=n===1?3:n===2?2:1;
+    g.pts.slice(0,ptN).forEach(q=>list.push({k:'pt',g,i,q,w:1.5}));
+    g.ways.slice(0,n===1?5:3).forEach((w,j)=>list.push({k:'way',g,i,way:w,j,w:hype?.5:.85}));
+    if(g.back)list.push({k:'back',g,i,w:1.1});per.push(list)});
+  const sum=()=>per.reduce((a,l)=>a+l.reduce((b,s)=>b+s.w,0),0);
+  while(sum()>MID*1.12){let big=null;per.forEach(l=>{if(l.length>1&&(!big||l.length>big.length))big=l});if(!big)break;big.pop()}
+  if(sum()<MID*.6){per.forEach(l=>{const g=l[0].g;[[.36,.3],[.62,.62]].forEach(([x,y],k)=>{if(sum()<MID*.8)l.push({k:'pan',g,i:l[0].i,x,y,dir:k,w:1.4})})})}
+  const k=MID/sum(),shots=[];let T=0;const add=s=>{s.t0=T;shots.push(s);T+=s.d};
+  add({k:'hook',g:gs[0],i:0,d:HOOK});per.forEach(l=>l.forEach(s=>{s.d=s.w*k;add(s)}));add({k:'end',d:15-T});
+  shots.forEach((s,j)=>{const p=shots[j-1];s.tr=j===0?'flash':s.k==='end'?(hype?'flash':'fade'):!hype?'fade':s.k==='way'&&p&&p.k==='way'?'cut':s.k==='way'?'flash':'whip';s.j=j});
+  return {shots,T:15,n}}
+function prGeo(W,H,im){const land=W>H*1.2,sq=!land&&W>H*.8;const bw0=land?W*.5:sq?W*.74:W*.94,bh0=land?H*.84:sq?H*.64:H*.64,cx=land?W*.64:W/2,cy=land?H*.5:H*(sq?.43:.41);
+  const ar=im.width/im.height;let bw=bw0,bh=bw/ar;if(bh>bh0){bh=bh0;bw=bh*ar}return {bw,bh,cx,cy,land,sq}}
+function prCover(W,H,im){const c=document.createElement('canvas'),t=document.createElement('canvas');t.width=Math.max(8,Math.round(W/28));t.height=Math.max(8,Math.round(H/28));const x=t.getContext('2d');
+  const ar=im.width/im.height;let dw=t.width,dh=dw/ar;if(dh<t.height){dh=t.height;dw=dh*ar}x.drawImage(im,(t.width-dw)/2,(t.height-dh)/2,dw,dh);
+  c.width=Math.round(W/6);c.height=Math.round(H/6);const y=c.getContext('2d');y.imageSmoothingQuality='high';y.drawImage(t,0,0,c.width,c.height);y.fillStyle='rgba(0,0,0,.58)';y.fillRect(0,0,c.width,c.height);
+  const g=y.createRadialGradient(c.width/2,c.height*.45,0,c.width/2,c.height*.45,Math.max(c.width,c.height)*.7);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.75)');y.fillStyle=g;y.fillRect(0,0,c.width,c.height);return c}
+function prCam(s,lt){const d=s.d,p=clamp(lt/d,0,1);
+  if(s.k==='hook')return {s:1.32-.32*prOut(clamp(lt/1.3,0,1)),fx:.5,fy:.5};
+  if(s.k==='full')return {s:1+.07*p,fx:.5,fy:.5};
+  if(s.k==='pt'){const px=s.q.p.x/100,py=s.q.p.y/100,e=prIO(clamp(lt/(d*.5),0,1)),z=2.35;return {s:1+(z-1)*e+.08*p,fx:.5+(px-.5)*e,fy:.5+(py-.5)*e,mv:lt<d*.5}}
+  if(s.k==='way')return {s:1.03+.03*p,fx:.5,fy:.5,im:s.way.im};
+  if(s.k==='back')return {s:1.02+.05*p,fx:.5,fy:.5,im:s.g.back};
+  if(s.k==='pan'){const a=s.dir?[.62,.62]:[.38,.3],b=s.dir?[.4,.56]:[.62,.36];return {s:1.9+.1*p,fx:a[0]+(b[0]-a[0])*prIO(p),fy:a[1]+(b[1]-a[1])*prIO(p)}}
+  return {s:1,fx:.5,fy:.5}}
+function prWhip(P,s,lt,W){if(!P.hype)return 0;const nx=P.shots[s.j+1];let ox=0;
+  if(s.tr==='whip'&&lt<.22)ox=(1-prOut(lt/.22))*.62*W;
+  if(nx&&nx.tr==='whip'&&s.d-lt<.16)ox=-prEin(1-(s.d-lt)/.16)*.62*W;return ox}
+function prScene(P,c,W,H,t){const {shots}=P;let j=0;while(j<shots.length-1&&t>=shots[j].t0+shots[j].d)j++;const s=shots[j],lt=t-s.t0;
+  if(s.k==='end'){prEndBg(P,c,W,H);if(s.tr==='fade'&&lt<.5){const p=shots[j-1];c.save();c.globalAlpha=1-prIO(lt/.5);prShot(P,c,W,H,p,p.d);c.restore()}return}
+  prShot(P,c,W,H,s,lt);
+  if(s.tr==='fade'&&lt<.45&&j>0){const p=shots[j-1];c.save();c.globalAlpha=1-prIO(lt/.45);prShot(P,c,W,H,p,p.d+lt);c.restore()}}
+function prShot(P,c,W,H,s,lt){const g=s.g,cam=prCam(s,Math.min(lt,s.d)),im=cam.im||g.main,ox=prWhip(P,s,Math.min(lt,s.d),W);const ga=c.globalAlpha;
+  if(P.hype){const cv=P.cov.get(g)||P.cov.get(null);c.drawImage(cv,ox*.35-W*.02,-H*.02,W*1.04,H*1.04)}else c.drawImage(P.bg,0,0,W,H);
+  const {bw,bh,cx,cy}=prGeo(W,H,g.main),sc=cam.s*(s.tr!=='fade'&&lt<.3?1+.05*(1-prOut(lt/.3)):1);
+  const w=bw*sc,h=bh*sc,x=cx-cam.fx*w+ox,y=cy-cam.fy*h;
+  const u=Math.min(W,H)/1080;c.save();c.translate(ox,0);c.globalAlpha=ga*.9;ell(c,cx+(.5-cam.fx)*w,y+h*1.012,w*.44,h*.045,[[0,'rgba(0,0,0,.8)'],[.5,'rgba(0,0,0,.3)'],[1,'rgba(0,0,0,0)']]);c.restore();c.globalAlpha=ga;
+  fitDraw(c,im,x,y,w,h);
+  if(s.k==='pt'){const px=x+s.q.p.x/100*w,py=y+s.q.p.y/100*h,ph=((lt*1000)%1600)/1600;c.globalAlpha=ga*clamp((lt-s.d*.35)/.25,0,1);
+    c.strokeStyle=`rgba(255,255,255,${.8*(1-ph)})`;c.lineWidth=2*u;c.beginPath();c.arc(px,py,(8+30*ph)*u,0,7);c.stroke();
+    const rg=c.createRadialGradient(px-3*u,py-3*u,1,px,py,12*u);rg.addColorStop(0,'#fff');rg.addColorStop(.35,'#d2d2d2');rg.addColorStop(.7,'#5a5a5a');rg.addColorStop(1,'#e2e2e2');c.fillStyle=rg;c.beginPath();c.arc(px,py,12*u,0,7);c.fill();c.globalAlpha=ga}
+  return true}
+function prEndBg(P,c,W,H){c.fillStyle='#050505';c.fillRect(0,0,W,H);ell(c,W/2,H*.46,Math.max(W,H)*.55,Math.max(W,H)*.4,[[0,'rgba(255,255,255,.1)'],[.6,'rgba(255,255,255,.02)'],[1,'rgba(255,255,255,0)']])}
+function prCaps(P,s,G){const tag=n=>String(n+1).padStart(2,'0')+' / '+String(P.n).padStart(2,'0');
+  if(s.k==='hook')return {big:[PR.open||'NEW DROP'],sub:prBrand(),mode:'hook'};
+  if(s.k==='full')return {tag:tag(s.i),big:[prFieldName(s.g.it,s.i)],sub:prPrice(s.g.it)};
+  if(s.k==='pt')return {tag:'Detail',big:[String(s.q.p.title||'The details')],sub:''};
+  if(s.k==='way')return {tag:'Colourway',big:[s.way.name||('Colour '+(s.j+1))],sw:s.way.hex,quick:P.hype};
+  if(s.k==='back')return {tag:tag(s.i),big:['The back'],sub:''};
+  return null}
+function prFitFont(c,txt,wt,size,maxW,ls){let sz=size;for(let k=0;k<12;k++){c.font=`${wt} ${sz}px ${FF}`;try{c.letterSpacing=ls(sz)+'px'}catch(e){}if(c.measureText(txt).width<=maxW)break;sz*=.9}return sz}
+function prText(P,c,W,H,t){const {shots}=P;let j=0;while(j<shots.length-1&&t>=shots[j].t0+shots[j].d)j++;const s=shots[j],lt=t-s.t0,u=Math.min(W,H)/1080,hype=P.hype;
+  const land=W>H*1.2,sq=!land&&W>H*.8;
+  if(s.k==='end')return prEnd(P,c,W,H,lt,u);
+  // brand watermark
+  c.save();c.font=`500 ${20*u}px ${FF}`;try{c.letterSpacing=`${7*u}px`}catch(e){}c.fillStyle='rgba(255,255,255,.72)';c.textBaseline='top';c.fillText(prBrand().toUpperCase(),land?W*.06:54*u,land?H*.08:70*u);c.restore();
+  const cp=prCaps(P,s);if(!cp)return;const out=s.d-lt;
+  let al=1;if(!hype&&out<.35)al=out/.35;
+  const maxW=land?W*.34:W-110*u,x0=land?W*.07:sq?W/2:W/2,center=!land;
+  const bigSz0=(hype?(land?128:140):(land?96:104))*u*(cp.mode==='hook'?1.35:1)*(cp.quick?.8:1);
+  c.save();c.globalAlpha=al;c.textBaseline='top';c.textAlign=center?'center':'left';c.shadowColor='rgba(0,0,0,.55)';c.shadowBlur=36*u;
+  const wt=hype?'800':'200',ls=sz=>hype?sz*.01:sz*.16;
+  let lines=cp.big.map(l=>hype?String(l).toUpperCase():String(l).toUpperCase());
+  const bigSz=Math.min(...lines.map(l=>prFitFont(c,l,wt,bigSz0,maxW,ls)));
+  const lh=bigSz*1.04,blockH=(cp.tag?44*u:0)+lines.length*lh+(cp.sub?70*u:0);
+  let y=land?H/2-blockH/2:sq?H*.8-blockH/2:H*.79-blockH/2;
+  
+  const rv=(d0,dd)=>clamp((lt-d0)/dd,0,1);
+  if(cp.tag){c.font=`500 ${22*u}px ${FF}`;try{c.letterSpacing=`${8*u}px`}catch(e){}c.fillStyle='rgba(235,235,235,.8)';c.globalAlpha=al*rv(.05,.3);c.fillText(String(cp.tag).toUpperCase(),x0,y);c.globalAlpha=al;
+    if(cp.sw){const tw=c.measureText(String(cp.tag).toUpperCase()).width,sx=center?x0-tw/2-26*u:x0+tw+18*u;c.fillStyle=cp.sw;c.beginPath();c.arc(center?sx:sx+8*u,y+11*u,10*u,0,7);c.fill();c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=1.5*u;c.stroke()}
+    y+=44*u}
+  c.font=`${wt} ${bigSz}px ${FF}`;try{c.letterSpacing=ls(bigSz)+'px'}catch(e){}
+  lines.forEach((l,li)=>{const words=l.split(/\s+/);const full=c.measureText(l).width;let xx=center?x0-full/2:x0;const sp=c.measureText(' ').width;
+    c.save();c.beginPath();c.rect(0,y-bigSz*.08,W,lh*1.08);c.clip();c.textAlign='left';
+    words.forEach((wd,wi)=>{const k=li*3+wi,p=prOut(rv(.08+k*(hype?.06:.11),hype?.28:.6));const ww=c.measureText(wd).width;
+      c.globalAlpha=al*(hype?1:p);c.fillStyle=chromeFill(c,y+(1-p)*lh,bigSz);c.fillText(wd,xx,y+(1-p)*lh*1.02);xx+=ww+sp});c.restore();y+=lh});
+  if(cp.sub){c.font=`${hype?'600':'300'} ${34*u}px ${FF}`;try{c.letterSpacing=`${(hype?4:9)*u}px`}catch(e){}c.fillStyle='#e6e6e6';c.globalAlpha=al*rv(.35,.35);c.fillText(String(cp.sub).toUpperCase(),x0,y+22*u)}
+  c.restore()}
+function prEnd(P,c,W,H,lt,u){const land=W>H*1.2;const cy=H*.46;c.save();c.textAlign='center';c.textBaseline='middle';
+  const a=prOut(clamp(lt/.7,0,1));let bottom=cy;
+  if(P.logo){const im=P.logo,mw=W*(land?.34:.6),mh=H*(land?.36:.22),ar=im.width/im.height;let w=mw,h=w/ar;if(h>mh){h=mh;w=h*ar}const sc=1.08-.08*a;c.globalAlpha=a;c.drawImage(im,W/2-w*sc/2,cy-h*sc/2,w*sc,h*sc);bottom=cy+h/2}
+  else{const txt=prBrand().toUpperCase(),sz=prFitFont(c,txt,'300',(land?120:130)*u,W*(land?.7:.84),s=>s*.2);c.font=`300 ${sz}px ${FF}`;try{c.letterSpacing=(sz*.2)+'px'}catch(e){}
+    const oc=P.endC||(P.endC=document.createElement('canvas'));oc.width=W;oc.height=Math.ceil(sz*1.6);const o=oc.getContext('2d');o.font=c.font;try{o.letterSpacing=c.letterSpacing}catch(e){}o.textAlign='center';o.textBaseline='middle';o.fillStyle=chromeFill(o,oc.height/2-sz/2,sz);o.fillText(txt,W/2,oc.height/2);
+    const gx=(-.3+1.6*clamp((lt-.5)/1.2,0,1))*W,gg=o.createLinearGradient(gx-W*.12,0,gx+W*.12,0);gg.addColorStop(0,'rgba(255,255,255,0)');gg.addColorStop(.5,'rgba(255,255,255,.95)');gg.addColorStop(1,'rgba(255,255,255,0)');o.globalCompositeOperation='source-atop';o.fillStyle=gg;o.fillRect(0,0,W,oc.height);
+    c.globalAlpha=a;const sc=1.06-.06*a;c.translate(W/2,cy);c.scale(sc,sc);c.drawImage(oc,-W/2,-oc.height/2);c.setTransform(1,0,0,1,0,0);bottom=cy+sz*.6}
+  const lw=W*(land?.2:.36)*prIO(clamp((lt-.35)/.8,0,1));c.globalAlpha=.7;c.fillStyle='#d8d8d8';c.fillRect(W/2-lw/2,bottom+46*u,lw,1.5*u);
+  if(PR.end){c.font=`500 ${30*u}px ${FF}`;try{c.letterSpacing=`${11*u}px`}catch(e){}c.globalAlpha=clamp((lt-.7)/.5,0,1);c.fillStyle='#f2f2f2';c.fillText(String(PR.end).toUpperCase(),W/2,bottom+104*u)}
+  c.restore()}
+function prFrame(P,c,W,H,t){const {shots}=P;let j=0;while(j<shots.length-1&&t>=shots[j].t0+shots[j].d)j++;const s=shots[j],lt=t-s.t0;
+  const nx=shots[j+1],fast=P.hype&&((s.tr==='whip'&&lt<.22)||(nx&&nx.tr==='whip'&&s.d-lt<.16)),zoom=s.k==='pt'&&lt<s.d*.5;
+  const n=fast?11:zoom||s.k==='hook'&&lt<1.2?4:1;
+  if(n===1){prScene(P,c,W,H,t)}else{const a=P.acc.getContext('2d'),m=P.smp.getContext('2d'),sh=1/30*(fast?1.2:1);
+    for(let i=0;i<n;i++){m.setTransform(1,0,0,1,0,0);m.globalAlpha=1;prScene(P,m,W,H,t-sh*(i/(n-1)-.5));a.globalAlpha=1/(i+1);a.drawImage(P.smp,0,0)}a.globalAlpha=1;c.drawImage(P.acc,0,0)}
+  if(s.k!=='end'){const land=W>H*1.2,sg=land?c.createLinearGradient(0,0,W*.56,0):c.createLinearGradient(0,H*.58,0,H);if(land){sg.addColorStop(0,'rgba(0,0,0,.82)');sg.addColorStop(.6,'rgba(0,0,0,.6)');sg.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sg;c.fillRect(0,0,W*.56,H)}else{sg.addColorStop(0,'rgba(0,0,0,0)');sg.addColorStop(.55,'rgba(0,0,0,.55)');sg.addColorStop(1,'rgba(0,0,0,.8)');c.fillStyle=sg;c.fillRect(0,H*.58,W,H*.42)}}
+  prText(P,c,W,H,t);
+  if(s.tr==='flash'&&lt<.16){c.globalAlpha=.9*(1-lt/.16);c.fillStyle='#fff';c.fillRect(0,0,W,H);c.globalAlpha=1}
+  const vg=c.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.45)');c.fillStyle=vg;c.fillRect(0,0,W,H);
+  c.save();c.globalAlpha=.07;c.globalCompositeOperation='overlay';c.translate(Math.random()*256|0,Math.random()*256|0);c.fillStyle=grainPat(c);c.fillRect(-256,-256,W+512,H+512);c.restore();
+  if(t>14.5){c.globalAlpha=(t-14.5)/.5;c.fillStyle='#000';c.fillRect(0,0,W,H);c.globalAlpha=1}}
+async function startPromo(mode){presentP.hidden=true;if(filmOn)return;toast('Preparing your promo…',1500);
+  const G=await prepFilm();if(!G.length)return toast('Add a garment first');
+  const hype=PR.style!=='luxe',P=prShots(G,hype);P.hype=hype;const rec=mode==='record';let W,H;
+  const [fw,fh]=FMTS[fmt],cssK=Math.min(innerWidth/fw,innerHeight/fh);if(rec){W=fw;H=fh}else{const k=Math.min(1,cssK*Math.min(devicePixelRatio||1,2));W=Math.round(fw*k);H=Math.round(fh*k)}
+  filmC.width=W;filmC.height=H;P.acc=document.createElement('canvas');P.smp=document.createElement('canvas');P.acc.width=P.smp.width=W;P.acc.height=P.smp.height=H;
+  P.cov=new Map();G.slice(0,5).forEach(g=>P.cov.set(g,prCover(W,H,g.main)));P.cov.set(null,P.cov.get(G[0]));
+  P.bg=document.createElement('canvas');P.bg.width=W;P.bg.height=H;try{drawLight(P.bg.getContext('2d'),W,H,1,.5,.34)}catch(e){const x=P.bg.getContext('2d');x.fillStyle='#0b0b0b';x.fillRect(0,0,W,H)}
+  if(PRLOGO&&PRLOGO.blob){P.logo=await new Promise(r=>{const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=URL.createObjectURL(PRLOGO.blob)})}
+  const F={promo:true,rec,T:15};const c=filmC.getContext('2d');filmC.style.width=rec?'':Math.round(fw*cssK)+'px';filmC.style.height=rec?'':Math.round(fh*cssK)+'px';
+  filmOn=true;FILM=F;filmEl.hidden=false;filmEl.classList.toggle('rec',rec);filmEl.classList.add('promo');$('#fLabel').textContent=rec?'Recording promo':'Promo preview';
+  if(!rec){try{(filmEl.requestFullscreen||filmEl.webkitRequestFullscreen).call(filmEl)}catch(e){}}
+  let audio=null,actx=null,mr=null,chunks=[];if(MUS){audio=new Audio(URL.createObjectURL(MUS.blob));audio.volume=1}
+  if(rec){const stream=filmC.captureStream(30);
+    if(audio){try{actx=new (window.AudioContext||window.webkitAudioContext)();const src=actx.createMediaElementSource(audio),dst=actx.createMediaStreamDestination(),gain=actx.createGain();src.connect(gain);gain.connect(dst);gain.connect(actx.destination);F.gain=gain;dst.stream.getAudioTracks().forEach(t=>stream.addTrack(t))}catch(e){}}
+    const types=['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+    const type=types.find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));if(!type){filmEl.classList.remove('promo');stopFilm();return toast('Video recording is not supported in this browser')}
+    mr=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:16e6});mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+    mr.onstop=async()=>{if(F.cancel)return;const blob=new Blob(chunks,{type:type.split(';')[0]}),ext=type.indexOf('mp4')>-1?'mp4':'webm';
+      const nm=(prBrand().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'promo')+'-promo-'+(fmt==='story'?'vertical':fmt)+'.'+ext;
+      if(await saveBlob(nm,blob))toast(ext==='mp4'?'Promo video saved':'Promo saved (WebM – this browser can\'t make MP4)',3500)};
+    F.mr=mr;mr.start(500)}
+  if(audio){try{await audio.play()}catch(e){}}F.audio=audio;F.actx=actx;
+  const t0=performance.now();const loop=now=>{if(!filmOn||FILM!==F){filmEl.classList.remove('promo');return}let t=(now-t0)/1000;
+    if(t>=15){if(rec){filmEl.classList.remove('promo');finishRec(F);return}t=15;filmEl.classList.remove('promo');endFilm(F);return}
+    if(F.gain&&t>13.5)F.gain.gain.value=Math.max(0,(15-t)/1.5);if(audio&&!rec&&t>13.5)audio.volume=Math.max(0,(15-t)/1.5);
+    try{c.setTransform(1,0,0,1,0,0);c.globalAlpha=1;prFrame(P,c,W,H,t)}catch(err){if(!F.err){F.err=1;console.error(err)}}$('#fProg').style.width=(t/15*100).toFixed(1)+'%';requestAnimationFrame(loop)};
+  requestAnimationFrame(loop)}
+presentP.addEventListener('click',e=>{const b=e.target.closest('[data-pr],[data-prs]');if(!b)return;
+  if(b.dataset.prs){PR.style=b.dataset.prs;prSave();prUI();return}const a=b.dataset.pr;
+  if(a==='play')startPromo('play');else if(a==='rec')startPromo('record');
+  else if(a==='logo'){const i=document.createElement('input');i.type='file';i.accept='image/png,image/svg+xml,image/webp,image/jpeg';i.onchange=()=>{const f=i.files[0];if(!f)return;PRLOGO={name:f.name.replace(/\.[^.]+$/,''),blob:f};IDB.set('promologo',{name:PRLOGO.name,blob:f});prUI()};i.click()}
+  else if(a==='nologo'){PRLOGO=null;IDB.set('promologo',null);prUI()}});
+presentP.addEventListener('input',e=>{const t=e.target;if(t.id==='prOpen'){PR.open=t.value.slice(0,40);prSave()}else if(t.id==='prEnd'){PR.end=t.value.slice(0,40);prSave()}else if(t.id==='prPrice'){PR.price=t.checked;prSave()}});
+presentP.addEventListener('change',e=>{if(e.target.id==='prPrice'){PR.price=e.target.checked;prSave()}});
+
 async function startFilm(mode){
   presentP.hidden=true;if(filmOn)return;toast('Preparing…',1500);
   const G=await prepFilm();if(!G.length)return toast('Add a garment first');
@@ -5145,11 +5319,11 @@ const HG_FEAT=[
   ['Blending options & Blend If','Right-click a layer → Blending options. Remove black / Remove white knocks out a background; strokes and shadows stay.'],
   ['Right-click layers','Right-click any layer row for every option: rename, mask, clip, merge, rasterize, duplicate, delete.'],
   ['Pen & selections','P draws paths; turn them into selections, fills or shapes. Every point and selection can be undone.'],
-  ['Collection planner','Home → Quick start → Collection planner. Plan drops, prices, costs and status on a board.']];
+  ['Collection planner','Home → Quick start → Collection planner. Plan drops, prices, costs and status on a board.'],['Sync devices','Home → Quick start → Sync devices. Paste a GitHub token once on each device and your designs and lookbooks follow you between computer, iPhone and iPad.']];
 const HG_LB_FEAT=[
   ['Points','Edit mode → Point, then tap anywhere on a garment to pin a detail (fabric, print, price). Drag to place it exactly.'],
   ['Studio','Scenes, lighting, effects and looks. Try a scene, then K to cycle the light.'],
-  ['Present','▶ Present plays the lookbook full screen, records a video or makes a share link.'],
+  ['Present','▶ Present plays the lookbook full screen, records a video or makes a share link.'],['Promo ad','Present → Promo ad · 15 s. Pick Hype or Luxe, type your opening and ending lines, add your logo, then Make promo video. Your garments, points and colourways become a 15-second ad.'],
   ['Phone links','Present → Share → Phone link publishes a buyer version to your GitHub Pages. Buyers can look but can’t edit.'],
   ['Preview vs Edit','The Preview / Edit button switches between how buyers see it and editing.'],
   ['Arrange','Add extra mockups next to a garment, drag them anywhere, and line them up.']];
@@ -5196,6 +5370,116 @@ sheetEl.addEventListener('contextmenu',e=>{const b=e.target.closest('[data-l^="s
 /* ---------- effects ignore faint leftover pixels (e.g. a removed background) ---------- */
 function fxShape(src,name){const c=T(name||'fxs'),x=cx2(c);x.save();x.globalAlpha=1;x.globalCompositeOperation='copy';x.drawImage(src,0,0);x.restore();
   const im=x.getImageData(0,0,c.width,c.height),a=im.data;let ch=false;for(let i=3;i<a.length;i+=4){const v=a[i];if(v&&v<26){a[i]=0;ch=true}}if(ch)x.putImageData(im,0,0);return c}
+
+
+/* ================= device sync (private GitHub repo) ================= */
+const SYAPI=window.MP_SYNC_API||GHAPI,SYREPO='motion-pack-sync',SYDIR='mp-sync/';
+let SYB={busy:false,msg:'',last:0,err:''},SYQ=null;
+const syHash=s=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h.toString(16)};
+async function syCfg(){return await IDB.get('ghsync')}
+async function syDevId(){let v=null;try{v=localStorage.getItem('mp_sydev')}catch(e){}if(!v)v=await IDB.get('mp_sydev');if(!v){v=Math.random().toString(36).slice(2,8);try{localStorage.setItem('mp_sydev',v)}catch(e){}await IDB.set('mp_sydev',v)}return v}
+async function syFetch(m,path,body,tok,raw){try{const r=await fetch(SYAPI+path,{method:m,cache:'no-store',headers:Object.assign({Authorization:'Bearer '+tok,Accept:raw?'application/vnd.github.raw+json':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},body?{'Content-Type':'application/json'}:{}),body:body?JSON.stringify(body):undefined});
+  if(raw){const t=r.ok?await r.text():null;return {ok:r.ok,status:r.status,t}}let j=null;try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,j}}catch(e){return {ok:false,status:0,j:null}}}
+async function syConnect(tok){tok=String(tok||'').trim();if(!tok)throw new Error('Paste your GitHub token first');
+  const u=await syFetch('GET','/user',null,tok);if(u.status===0)throw new Error('Could not reach GitHub – check your internet connection');if(!u.ok)throw new Error('GitHub did not accept that token. Make a classic token with the “repo” box ticked.');const owner=u.j.login;
+  let r=await syFetch('GET',`/repos/${owner}/${SYREPO}`,null,tok);
+  if(r.status===404){r=await syFetch('POST','/user/repos',{name:SYREPO,private:true,auto_init:true,description:'Private sync for Motion Pack – designs and lookbooks',has_issues:false,has_wiki:false,has_projects:false},tok);if(!r.ok)throw new Error('Could not create your private sync space: '+((r.j&&r.j.message)||r.status)+'. Make sure the token has the “repo” box ticked.');await new Promise(s=>setTimeout(s,1500))}
+  else if(!r.ok)throw new Error('Could not open “'+SYREPO+'” ('+r.status+')');
+  if(r.j&&r.j.private===false)throw new Error('“'+SYREPO+'” is public. Your designs must stay private – make it private in GitHub (Settings › Danger zone › Change visibility) and try again.');
+  const cfg={tok,owner,repo:SYREPO,branch:(r.j&&r.j.default_branch)||'main',auto:true,at:Date.now()};await IDB.set('ghsync',cfg);return cfg}
+/* blobs ↔ JSON */
+async function syEnc(v){if(v instanceof Blob)return {$b:await b64Blob(v),t:v.type||''};if(Array.isArray(v)){const o=[];for(const x of v)o.push(await syEnc(x));return o}
+  if(v&&typeof v==='object'&&!(v instanceof Date)){if(ArrayBuffer.isView(v)||v instanceof ArrayBuffer)return null;const o={};for(const k of Object.keys(v)){const x=v[k];if(typeof x==='function'||(typeof HTMLCanvasElement!=='undefined'&&x instanceof HTMLCanvasElement)||(typeof ImageBitmap!=='undefined'&&x instanceof ImageBitmap))continue;o[k]=await syEnc(x)}return o}return v}
+function syDec(v){if(Array.isArray(v))return v.map(syDec);if(v&&typeof v==='object'){if(typeof v.$b==='string'){const s=atob(v.$b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new Blob([u],{type:v.t||''})}const o={};for(const k of Object.keys(v))o[k]=syDec(v[k]);return o}return v}
+/* what this device has */
+async function syLocal(dev){const out=new Map();const dl=(await IDB.get('dlib'))||[];for(const d of dl)out.set('des/'+d.id,{kind:'des',id:d.id,name:d.name,u:String(d.updated||0)});
+  for(const e of await libGet()){if(!e||!e.id)continue;const rk=e.id==='default'?'lb/d_'+dev:'lb/'+e.id;const d=await IDB.get('lb:'+e.id);if(!d)continue;out.set(rk,{kind:'lb',id:e.id,name:e.name||d.title||'Lookbook',u:String(d.savedAt||0)})}
+  const col=await IDB.get('collections');if(col)out.set('misc/collections',{kind:'misc',id:'collections',name:'Collection planner',u:syHash(JSON.stringify(col))});
+  const sl=await IDB.get('mslots');if(sl)out.set('misc/mslots',{kind:'misc',id:'mslots',name:'Mockup slots',u:syHash(JSON.stringify(sl.map(x=>[x.id,x.name,x.thumb?x.thumb.length:0,x.blob?x.blob.size:0])))});
+  const my=await IDB.get('myassets');if(my&&my.length)out.set('misc/myassets',{kind:'misc',id:'myassets',name:'My Assets',u:syHash(JSON.stringify(my.map(x=>[x.id,x.name,x.folder])))});
+  return out}
+async function syPack(L){const k=L.kind,id=L.id;
+  if(k==='des'){const rec=await IDB.get('des:'+id);if(!rec)return null;const inner=[],seen=new Set();const walk=async r=>{for(const m of r.layers||[]){const iid=m.sm&&m.sm.id;if(iid&&!seen.has(iid)){seen.add(iid);const ir=await IDB.get('des:'+iid);if(ir){inner.push(ir);await walk(ir)}}}};await walk(rec);
+    return {v:1,kind:k,id,rec,inner,pat:await IDB.get('pat:'+id),meta:((await IDB.get('dlib'))||[]).find(x=>x.id===id)||null}}
+  if(k==='lb'){if(id===curId())await flush();return {v:1,kind:k,id,d:await IDB.get('lb:'+id),meta:(await libGet()).find(x=>x.id===id)||null}}
+  if(id==='myassets'){const list=(await IDB.get('myassets'))||[],files=[];for(const x of list){const f=await IDB.get('mya:'+x.id);if(f)files.push(f)}return {v:1,kind:k,id,list,files,folders:await IDB.get('myafold')}}
+  return {v:1,kind:k,id,d:await IDB.get(id)}}
+async function syUnpack(o,localId){const k=o.kind;
+  if(k==='des'){for(const ir of o.inner||[])await IDB.set('des:'+ir.id,ir);const rec=Object.assign({},o.rec,{id:localId});await IDB.set('des:'+localId,rec);if(o.pat)await IDB.set('pat:'+localId,o.pat);
+    const meta=Object.assign({id:localId,name:rec.name,thumb:rec.thumb,updated:rec.updated,w:rec.w,h:rec.h},o.meta||{},{id:localId});const dl=((await IDB.get('dlib'))||[]).filter(x=>x.id!==localId);dl.push(meta);dl.sort((a,b)=>(b.updated||0)-(a.updated||0));await IDB.set('dlib',dl);return String(meta.updated||0)}
+  if(k==='lb'){await IDB.set('lb:'+localId,o.d||{items:[]});const l=(await libGet()).filter(x=>x.id!==localId),meta=Object.assign({},o.meta||{name:(o.d&&o.d.title)||'Lookbook'},{id:localId});l.push(meta);l.sort((a,b)=>(b.updated||0)-(a.updated||0));await IDB.set('lib',l);
+    if(localId===curId()){await switchTo(localId,o.d||{items:[]});const l2=await libGet(),e=l2.find(x=>x.id===localId);if(e){e.updated=meta.updated;await IDB.set('lib',l2)}}return String(meta.updated||0)}
+  if(o.id==='myassets'){for(const f of o.files||[])await IDB.set('mya:'+f.id,f);await IDB.set('myassets',o.list||[]);if(o.folders)await IDB.set('myafold',o.folders)}
+  else await IDB.set(o.id,o.d);return null}
+async function syCopyLocal(L){if(L.kind==='des'){const rec=await IDB.get('des:'+L.id);if(!rec)return;const nid=Math.random().toString(36).slice(2,10),r2=Object.assign({},rec,{id:nid,name:rec.name+' (this device)',updated:Date.now()});await IDB.set('des:'+nid,r2);const dl=(await IDB.get('dlib'))||[];const e=dl.find(x=>x.id===L.id)||{};dl.unshift(Object.assign({},e,{id:nid,name:r2.name,updated:r2.updated}));await IDB.set('dlib',dl)}
+  else if(L.kind==='lb'){if(L.id===curId())await flush();const d=await IDB.get('lb:'+L.id);if(!d)return;const nid=uid(),d2=Object.assign({},d,{title:(d.title||'Lookbook')+' (this device)'});await IDB.set('lb:'+nid,d2);const l=await libGet(),e=l.find(x=>x.id===L.id)||{};l.unshift(Object.assign({},e,{id:nid,name:d2.title,updated:Date.now()}));await IDB.set('lib',l)}}
+async function syDelLocal(L){if(L.kind==='des'){await IDB.set('dlib',((await IDB.get('dlib'))||[]).filter(x=>x.id!==L.id));await IDB.set('des:'+L.id,null)}
+  else if(L.kind==='lb'){if(L.id===curId())return false;await IDB.set('lib',(await libGet()).filter(x=>x.id!==L.id));await IDB.set('lb:'+L.id,null)}return true}
+function syStat(msg,err){SYB.msg=msg;SYB.err=err?msg:'';const e=document.getElementById('syP');if(e&&!e.hidden)syDraw();const q=document.getElementById('hmSync');if(q)q.querySelector('em').textContent=SYB.busy?'…':'→'}
+async function syRun(opts){opts=opts||{};if(SYB.busy)return SYQ;const cfg=await syCfg();if(!cfg||!LOCAL||S.locked)return;if(navigator.onLine===false){syStat('Offline – will sync when you’re back online');return}
+  SYB.busy=true;syStat('Syncing…');SYQ=(async()=>{try{for(let attempt=0;attempt<3;attempt++){const r=await syOnce(cfg,opts);if(r!=='retry'&&r!=='again'){return r}}}catch(e){console.error(e);syStat(e&&e.message?e.message:'Sync failed',true)}finally{SYB.busy=false;const e=document.getElementById('syP');if(e&&!e.hidden)syDraw();const q=document.getElementById('hmSync');if(q)q.querySelector('em').textContent='→'}})();return SYQ}
+async function syOnce(cfg,opts){const R=`/repos/${cfg.owner}/${cfg.repo}`,T=cfg.tok,dev=await syDevId();
+  try{if(D&&D.changed)await saveDoc()}catch(e){}await flush();
+  const ref=await syFetch('GET',`${R}/git/ref/heads/${cfg.branch}`,null,T);if(ref.status===401)throw new Error('GitHub token expired or was removed – reconnect in Sync devices');if(!ref.ok)throw new Error('Could not reach your sync space ('+ref.status+')');
+  const head=ref.j.object.sha,cm=await syFetch('GET',`${R}/git/commits/${head}`,null,T);if(!cm.ok)throw new Error('Could not read your sync space');const tr=await syFetch('GET',`${R}/git/trees/${cm.j.tree.sha}?recursive=1`,null,T);if(!tr.ok)throw new Error('Could not read your sync space');
+  const files=new Map();for(const e of tr.j.tree||[])if(e.type==='blob'&&e.path.startsWith(SYDIR))files.set(e.path,e.sha);
+  let idx={v:1,items:{}};const ip=files.get(SYDIR+'index.json');if(ip){const b=await syFetch('GET',`${R}/git/blobs/${ip}`,null,T,true);if(b.ok)try{idx=JSON.parse(b.t)}catch(e){}}if(!idx.items)idx.items={};
+  const local=await syLocal(dev),st=(await IDB.get('syncstate'))||{last:{}};const last=st.last||(st.last={});
+  const keys=new Set([...local.keys(),...Object.keys(idx.items),...Object.keys(last)]);const openDes=D?D.id:null;
+  const ups=[],dels=[],nU=[0,0,0];let changedLocal=false,again=false;
+  const lid2=k=>{const [kind,id]=k.split('/');if(kind==='lb'&&id==='d_'+dev)return 'default';return id};
+  for(const k of keys){if(k==='index')continue;const L=local.get(k),path=SYDIR+k+'.json',Rs=files.get(path),ix=idx.items[k],Sx=last[k];
+    const kind=k.split('/')[0],id=lid2(k);if(kind==='des'&&id===openDes)continue;
+    const lc=!!L&&(!Sx||Sx.u!==L.u),rc=!!Rs&&(!Sx||Sx.sha!==Rs),rdel=!Rs&&ix&&ix.del;
+    const down=async(copyFirst)=>{const b=await syFetch('GET',`${R}/git/blobs/${Rs}`,null,T,true);if(!b.ok)throw new Error('Could not download “'+((ix&&ix.name)||k)+'”');if(copyFirst&&L){await syCopyLocal(L);again=true}const u=await syUnpack(syDec(JSON.parse(b.t)),id);changedLocal=true;nU[1]++;
+      const L2=(await syLocal(dev)).get(k);last[k]={u:L2?L2.u:(u||''),sha:Rs}};
+    if(L&&!Rs&&!rdel){ups.push(k)}
+    else if(L&&rdel){if(lc)ups.push(k);else{if(await syDelLocal(L)){delete last[k];changedLocal=true;nU[2]++}}}
+    else if(!L&&Rs){if(Sx&&!rc){dels.push(k)}else await down(false)}
+    else if(!L&&!Rs){delete last[k]}
+    else if(L&&Rs){if(lc&&!rc)ups.push(k);else if(rc&&!lc)await down(false);else if(lc&&rc){const ru=ix&&+ix.u||0,luN=+L.u||0;if(kind==='misc'){await IDB.set('syncbak:'+id,await IDB.get(id));await down(false)}else if(ru>luN)await down(true);else{await syCopyRemote(k,Rs,id,cfg);again=true;changedLocal=true;ups.push(k)}}
+      else if(!Sx)last[k]={u:L.u,sha:Rs}}}
+  const tree=[];for(const k of ups){const L=(await syLocal(dev)).get(k);if(!L)continue;const o=await syPack(L);if(!o)continue;const txt=JSON.stringify(await syEnc(o));
+    const bl=await syFetch('POST',`${R}/git/blobs`,{content:txt,encoding:'utf-8'},T);if(!bl.ok)throw new Error('Upload failed for “'+L.name+'” ('+bl.status+')'+(bl.status===422?' – it may be too big':''));
+    tree.push({path:SYDIR+k+'.json',mode:'100644',type:'blob',sha:bl.j.sha});idx.items[k]={name:L.name,u:L.u,dev,at:Date.now(),size:txt.length};last[k]={u:L.u,sha:bl.j.sha,at:Date.now()};nU[0]++}
+  for(const k of dels){if(files.has(SYDIR+k+'.json'))tree.push({path:SYDIR+k+'.json',mode:'100644',type:'blob',sha:null});idx.items[k]=Object.assign({},idx.items[k]||{},{del:true,at:Date.now(),dev});delete last[k];nU[2]++}
+  if(tree.length){const ib=await syFetch('POST',`${R}/git/blobs`,{content:JSON.stringify(idx),encoding:'utf-8'},T);tree.push({path:SYDIR+'index.json',mode:'100644',type:'blob',sha:ib.j&&ib.j.sha});
+    const nt=await syFetch('POST',`${R}/git/trees`,{base_tree:cm.j.tree.sha,tree},T);if(!nt.ok)throw new Error('Sync save failed ('+nt.status+')');
+    const nc=await syFetch('POST',`${R}/git/commits`,{message:'Motion Pack sync from '+(typeof actDevName==='function'?actDevName():'device'),tree:nt.j.sha,parents:[head]},T);if(!nc.ok)throw new Error('Sync save failed ('+nc.status+')');
+    const up=await syFetch('PATCH',`${R}/git/refs/heads/${cfg.branch}`,{sha:nc.j.sha,force:false},T);if(!up.ok){if(up.status===422)return 'retry';throw new Error('Sync save failed ('+up.status+')')}}
+  st.at=Date.now();await IDB.set('syncstate',st);SYB.last=Date.now();
+  syStat(nU[0]||nU[1]||nU[2]?`Synced – ${nU[0]} sent, ${nU[1]} received${nU[2]?', '+nU[2]+' removed':''}`:'Everything is up to date');
+  if(changedLocal)syRefresh();return again?'again':'ok'}
+function syRefresh(){try{if(!homeEl.hidden)showHome();if(!labEl.hidden&&!galEl.hidden)drawGallery()}catch(e){}}
+async function syCopyRemote(k,sha,id,cfg){const b=await syFetch('GET',`/repos/${cfg.owner}/${cfg.repo}/git/blobs/${sha}`,null,cfg.tok,true);if(!b.ok)return;const o=syDec(JSON.parse(b.t));const nid=o.kind==='des'?Math.random().toString(36).slice(2,10):uid();
+  if(o.kind==='des'&&o.rec){o.rec.name=(o.rec.name||'Design')+' (other device)';if(o.meta)o.meta.name=o.rec.name}if(o.kind==='lb'){if(o.d)o.d.title=((o.d&&o.d.title)||'Lookbook')+' (other device)';if(o.meta)o.meta.name=o.d.title}await syUnpack(o,nid)}
+function syAuto(){if(Date.now()-(SYB.tried||0)<60000)return;syCfg().then(c=>{if(c&&c.auto){SYB.tried=Date.now();syRun()}})}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')setTimeout(syAuto,1500)});
+/* ---- sheet ---- */
+function syClose(){const e=document.getElementById('syP');if(e)e.hidden=true}
+async function syDraw(){const e=document.getElementById('syP');if(!e)return;const cfg=await syCfg();const ago=t=>{if(!t)return 'never';const s=(Date.now()-t)/1000;return s<60?'just now':s<3600?Math.round(s/60)+' min ago':s<86400?Math.round(s/3600)+' h ago':new Date(t).toLocaleDateString()};
+  const st=(await IDB.get('syncstate'))||{};const n=Object.keys(st.last||{}).length;
+  e.innerHTML=`<div class="sy-in"><button class="sy-x" data-sy="close" aria-label="Close">&times;</button><p class="sy-k">Sync devices</p><h3 class="chrome">${cfg?'Synced across your devices':'Your work on every device'}</h3>`+
+  (cfg?`<dl><dt>Private sync space</dt><dd>${esc(cfg.owner)}/${esc(cfg.repo)} <span class="sy-pv">private</span></dd><dt>Last sync</dt><dd>${ago(st.at)}</dd><dt>Items synced</dt><dd>${n}</dd></dl>
+    <p class="sy-m${SYB.err?' err':''}" aria-live="polite">${esc(SYB.busy?'Syncing…':SYB.msg||'')}</p>
+    <label class="sy-ck"><input type="checkbox" data-sy="auto"${cfg.auto?' checked':''}> Sync automatically when the app opens</label>
+    <div class="sy-b"><button class="pill big" data-sy="now"${SYB.busy?' disabled':''}>${SYB.busy?'Syncing…':'Sync now'}</button></div>
+    <p class="sy-n">Designs, lookbooks, the collection planner, your mockup slots and My Assets sync. To add another device, open Sync devices there and paste the same token.</p>
+    <div class="sy-b"><button class="pill" data-sy="off">Disconnect this device</button></div>`
+  :`<p class="sy-n">Everything you make on this device goes to a <b>private</b> space on your GitHub, and your other devices pick it up. Free, and only you can see it.</p>
+    <ol class="sy-steps"><li>On github.com, open <b>Settings → Developer settings → Personal access tokens → Tokens (classic)</b>.</li><li>Click <b>Generate new token (classic)</b>. Name it “Motion Pack sync”, set Expiration to <b>No expiration</b>, and tick the <b>repo</b> box.</li><li>Click <b>Generate token</b>, copy it and paste it below. Keep a copy somewhere private – you paste the same token on each device.</li></ol>
+    <input class="sy-tok" type="password" placeholder="Paste your GitHub token (starts with ghp_)" autocomplete="off" spellcheck="false">
+    <p class="sy-m${SYB.err?' err':''}" aria-live="polite">${esc(SYB.msg||'')}</p>
+    <div class="sy-b"><button class="pill big" data-sy="connect">Connect &amp; sync</button></div>`)+`</div>`}
+async function syOpen(){let e=document.getElementById('syP');if(!e){e=document.createElement('div');e.id='syP';e.setAttribute('role','dialog');e.setAttribute('aria-label','Sync devices');document.body.appendChild(e);
+    e.addEventListener('click',async ev=>{if(ev.target===e){syClose();return}const b=ev.target.closest('[data-sy]');if(!b)return;const a=b.dataset.sy;
+      if(a==='close')syClose();
+      else if(a==='connect'){const t=e.querySelector('.sy-tok');SYB.err='';syStat('Connecting…');try{await syConnect(t&&t.value);SYB.msg='Connected. First sync…';await syDraw();await syRun()}catch(err){syStat(err.message||'Could not connect',true)}}
+      else if(a==='now'){SYB.err='';await syRun({manual:true})}
+      else if(a==='off'){if(!confirm('Disconnect this device from sync? Nothing is deleted – your work stays on this device and in your sync space.'))return;await IDB.set('ghsync',null);await IDB.set('syncstate',null);SYB.msg='Disconnected';syDraw()}});
+    e.addEventListener('change',async ev=>{if(ev.target.dataset.sy==='auto'){const c=await syCfg();if(c){c.auto=ev.target.checked;await IDB.set('ghsync',c)}}})}
+  e.hidden=false;await syDraw()}
+setTimeout(()=>{if(LOCAL&&!S.locked)syAuto()},4000);
 
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
@@ -6295,7 +6579,7 @@ function hmClock(){if(homeEl.hidden)return;const d=new Date(),t=$('#hmTime');if(
 setInterval(hmClock,15000);
 function hmDustStart(){const c=$('#hmDust');if(!c||HMD)return;const x=c.getContext('2d');let W=0,H=0,P=[];const rs=()=>{const d=Math.min(2,devicePixelRatio||1);W=c.width=Math.round(innerWidth*d);H=c.height=Math.round(innerHeight*d);P=Array.from({length:Math.round(Math.min(90,W*H/28000))},()=>({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.5+.35)*d,v:(Math.random()*.22+.04)*d,a:Math.random()*.45+.08,p:Math.random()*6.28,b:Math.random()<.12}))};rs();if(!HMDR){HMDR=true;addEventListener('resize',()=>{if(HMD)rs()})}
   const f=t=>{if(homeEl.hidden||document.hidden){HMD=null;return}x.clearRect(0,0,W,H);for(const q of P){q.y-=q.v;q.x+=Math.sin(t/3200+q.p)*.18;if(q.y<-8){q.y=H+8;q.x=Math.random()*W}const tw=.55+.45*Math.sin(t/900+q.p*3),al=q.a*tw;if(q.b){const g=x.createRadialGradient(q.x,q.y,0,q.x,q.y,q.r*7);g.addColorStop(0,`rgba(220,232,255,${(al*.5).toFixed(3)})`);g.addColorStop(1,'rgba(220,232,255,0)');x.fillStyle=g;x.beginPath();x.arc(q.x,q.y,q.r*7,0,6.283);x.fill()}else{x.fillStyle=`rgba(228,234,245,${al.toFixed(3)})`;x.beginPath();x.arc(q.x,q.y,q.r,0,6.283);x.fill()}}HMD=requestAnimationFrame(f)};HMD=requestAnimationFrame(f)}
-async function showHome(){H2.classList.add('inhome');H2.classList.remove('inlab');homeEl.classList.remove('out');homeEl.hidden=false;labEl.hidden=true;
+async function showHome(){setTimeout(syAuto,900);H2.classList.add('inhome');H2.classList.remove('inlab');homeEl.classList.remove('out');homeEl.hidden=false;labEl.hidden=true;
   const b=(S.brand||'').trim(),bn=$('#hmBrand');if(!bn.querySelector('svg'))bn.innerHTML=mpLogoSVG({lite:1});const sub=homeEl.querySelector('.hm-sub');if(sub)sub.textContent=(b&&!/^your label$/i.test(b)?b+'  ·  ':'')+'Garment design & lookbook studio';
   hmClock();hmDustStart();setTimeout(()=>{if(!homeEl.hidden)mplGlint(bn)},1500);
   const [des,books]=await Promise.all([IDB.get('dlib'),LOCAL?libGet():Promise.resolve([])]);const bk=(books||[]).filter(x=>x.count||x.cover);
@@ -6307,7 +6591,7 @@ homeEl.addEventListener('click',async e=>{const q=e.target.closest('[data-hq]');
   if(k==='new'){hideHome();openLab();templateSheet()}
   else if(k==='last'&&HML){hideHome();if(HML.k==='d'){openLab();openDoc(HML.id)}else await openBook(HML.id)}
   else if(k==='acc'){const d=((await IDB.get('dlib'))||[])[0];hideHome();openLab();if(d){await openDoc(d.id);setTimeout(()=>accToggle(true),300)}else{templateSheet();hint('Pick a canvas – then tap ✦ in the top bar to open Accessories',3600)}}
-  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}else if(k==='help'){hgOpen('start')}else if(k==='lic'){licSheet()}},true);
+  else if(k==='books'){hideHome();openLibrary()}else if(k==='col'){colOpen()}else if(k==='help'){hgOpen('start')}else if(k==='lic'){licSheet()}else if(k==='sync'){syOpen()}},true);
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.clientX/innerWidth-.5)*2).toFixed(3));homeEl.style.setProperty('--py',((e.clientY/innerHeight-.5)*2).toFixed(3))},{passive:true});
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
