@@ -1317,6 +1317,37 @@ input,textarea,[contenteditable=true],[contenteditable=plaintext-only]{cursor:te
 body.coldrag{user-select:none;-webkit-user-select:none}
 #accLib .apri.sec{margin-top:6px;background:linear-gradient(#404145,#2c2d30);color:#ddd}
 @media (max-width:560px){#colP .colh h2{font-size:18px;letter-spacing:.1em}#colP .colh .pill,#colP .colx{white-space:nowrap;padding:6px 10px;font-size:11px}}
+/* v13: right-click layer menu, on-canvas type, type option bar, glyph tool */
+#lctx{position:fixed;z-index:120;min-width:236px;max-width:290px;max-height:calc(100vh - 16px);overflow:auto;padding:6px;background:linear-gradient(180deg,#2e2f32,#222326);border:1px solid #0b0b0c;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 16px 44px rgba(0,0,0,.65);color:#e4e4e7;font:12px/1.3 system-ui,-apple-system,Segoe UI,sans-serif;animation:lctxIn .12s ease-out}
+#lctx[hidden]{display:none}
+@keyframes lctxIn{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:none}}
+#lctx .lctxh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:4px 8px 6px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lctx .lctxh small{font-weight:400;color:#8d8e93;font-size:10.5px;flex:none}
+#lctx .lmenu{margin:0;padding:0;background:none;border:0}
+#lctx .lmenu>input{display:block;width:100%;box-sizing:border-box;background:#17181a;border:1px solid #0a0a0b;border-radius:6px;color:#eee;padding:6px 8px;font:inherit}
+#lctx .lmenu .rw{display:flex;flex-direction:column;align-items:stretch;gap:0;margin-top:6px;padding-top:5px;border-top:1px solid rgba(255,255,255,.08)}
+#lctx .lmenu .lch{display:block;width:100%;height:auto;min-height:0;text-align:left;padding:6px 10px;margin:0;border:0;border-radius:6px;background:none;color:#e4e4e7;font:12px/1.3 system-ui,-apple-system,Segoe UI,sans-serif;text-transform:none;letter-spacing:0;box-shadow:none;cursor:var(--cp,pointer)}
+#lctx .lmenu .lch:hover,#lctx .lmenu .lch:focus-visible{background:#2f6fe0;color:#fff}
+#lctx .lmenu .lch.dang{color:#ff8e8e}#lctx .lmenu .lch.dang:hover{background:#b3202a;color:#fff}
+#txIn{position:fixed;z-index:40;margin:0;box-sizing:border-box;border:0;outline:1px dashed rgba(57,160,255,.85);outline-offset:2px;background:transparent;color:transparent;-webkit-text-fill-color:transparent;caret-color:#39a0ff;resize:none;overflow:hidden;white-space:pre;transform-origin:50% 50%;border-radius:2px;min-width:8px}
+#txIn[hidden]{display:none}
+#txIn::selection{background:rgba(57,160,255,.35)}
+#txIn.odd{color:#fff;-webkit-text-fill-color:#fff;background:rgba(18,18,20,.82);outline:1px solid rgba(57,160,255,.7);border-radius:8px;white-space:pre}
+#lab .otxf{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:0;font-size:13px}
+#lab .otxs{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#aaa;white-space:nowrap}
+#lab .otxs input{width:58px;background:#17181a;border:1px solid #0a0a0b;border-radius:6px;color:#eee;padding:4px 6px;font:12px system-ui,sans-serif}
+#lab .otxg{display:inline-flex;gap:2px}
+#lab .otxa svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;display:block}
+#lab .otxc{position:relative;display:inline-grid;place-items:center;width:28px;height:28px;flex:none;cursor:var(--cp,pointer)}
+#lab .otxc.sm{width:22px;height:22px}
+#lab .otxc input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:inherit;border:0;padding:0}
+#lab .otxc i{display:block;width:100%;height:100%;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #0b0b0c,0 0 0 3px rgba(255,255,255,.55),inset 0 1px 2px rgba(255,255,255,.25);pointer-events:none}
+#lab .otxc:hover i{box-shadow:0 0 0 2px #0b0b0c,0 0 0 3px #7aa8ff}
+#lab .otxq{display:inline-flex;gap:4px;align-items:center}
+#lab .otxq button{width:16px;height:16px;border-radius:50%;padding:0;border:1px solid rgba(255,255,255,.35);background:var(--c);cursor:var(--cp,pointer)}
+#lab .otxq button:hover{transform:scale(1.2);border-color:#7aa8ff}
+#lab .otxok{background:#2f6fe0!important;color:#fff!important;border-color:#2f6fe0!important;font-weight:700}
+#lab .ltool .glyI{font:600 17px/1 Georgia,'Times New Roman',serif;display:block;text-align:center}
 </style>
 </head>
 <body class="edit empty">
@@ -3243,7 +3274,7 @@ function fxBelow(o,b,f){
   if(f.ds&&f.ds.on){const g=f.ds,an=g.ang*Math.PI/180;tintInto(T('e1'),b,g.col);blurInto(T('e2'),T('e1'),g.size);o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e2'),-Math.cos(an)*g.dist,Math.sin(an)*g.dist);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
   if(f.og&&f.og.on){const g=f.og;tintInto(T('e1'),b,g.col);let s=T('e1');if(g.spread>0){dilateInto(T('e3'),s,g.size*g.spread/100);s=T('e3')}blurInto(T('e2'),s,g.size);o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'screen';o.drawImage(T('e2'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
   fx2Below(o,b,f);
-  if(f.st&&f.st.on){const g=f.st;tintInto(T('e1'),b,g.col);dilateInto(T('e2'),T('e1'),g.size);o.globalAlpha=g.op;o.drawImage(T('e2'),0,0);o.globalAlpha=1}}
+  if(f.st&&f.st.on){const g=f.st;tintInto(T('e1'),b,g.col);dilateInto(T('e2'),T('e1'),g.size);if(FXPUNCH){const q=cx2(T('e2'));q.save();q.globalCompositeOperation='destination-out';q.drawImage(b,0,0);q.restore()}o.globalAlpha=g.op;o.drawImage(T('e2'),0,0);o.globalAlpha=1}}
 function fxAbove(o,b,f){
   if(f.co&&f.co.on){const g=f.co;tintInto(T('e1'),b,g.col);o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
   if(f.go&&f.go.on){const g=f.go,x=cx2(T('e1')),an=g.ang*Math.PI/180,cx0=D.w/2,cy0=D.h/2,r=Math.hypot(D.w,D.h)/2,dx=Math.cos(an)*r,dy=-Math.sin(an)*r;x.save();x.globalCompositeOperation='copy';const gr=x.createLinearGradient(cx0-dx,cy0-dy,cx0+dx,cy0+dy);gr.addColorStop(0,g.c1);gr.addColorStop(1,g.c2);x.fillStyle=gr;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-in';x.drawImage(b,0,0);x.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
@@ -3255,10 +3286,10 @@ function layerOut(l,below){
   if(!live&&keep&&!biUnder(l.bi)&&l.fxk===key&&l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h)return l.fxc;
   const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!live){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt)}
   if(hasM){bx.globalCompositeOperation='destination-in';bx.drawImage(maskAlpha(l,STROKE&&STROKE.l===l&&STROKE.mask?liveMask(l):null),0,0)}bx.restore();
-  if(bi)applyBI(b,l.bi,below);
+  const FXPRE=bi&&fx?(()=>{const c=T('lbpre'),q=cx2(c);q.save();q.globalAlpha=1;q.globalCompositeOperation='copy';q.drawImage(b,0,0);q.restore();return c})():null;if(bi)applyBI(b,l.bi,below);
   if(!keep&&l.fxc){relc(l.fxc);l.fxc=null}let out;if(live||!keep||biUnder(l.bi))out=T('lout');else{if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h)l.fxc=mk(D.w,D.h);out=l.fxc}
   const o=cx2(out);o.save();o.globalAlpha=1;o.globalCompositeOperation='source-over';o.clearRect(0,0,D.w,D.h);
-  if(fx)fxBelow(o,b,l.fx);o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;if(fx)fxAbove(o,b,l.fx);o.restore();
+  if(fx){FXPUNCH=!!FXPRE||l.fillOp<1;fxBelow(o,FXPRE||b,l.fx);FXPUNCH=false}o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;if(fx)fxAbove(o,b,l.fx);o.restore();
   l.fxk=(!live&&keep&&!biUnder(l.bi))?key:'';return out}
 function src(l){
   if(xfHas(l))return xfPreviewFor(l);
@@ -3311,7 +3342,7 @@ function pixGrid(x){const h=hair(),a=toDoc(0,0),b=toDoc(cv.clientWidth,cv.client
 
 /* ---------- history ---------- */
 const H={u:[],r:[],bytes:0};
-const bytesOf=e=>e.k==='px'?(e.b.data.length+e.a.data.length):e.k==='multi'?e.list.reduce((s,z)=>s+bytesOf(z),0):3000;
+const bytesOf=e=>e.k==='px'?(e.b.data.length+e.a.data.length):e.k==='sel'?(e.a?e.a.a.length:0)+(e.b?e.b.a.length:0)+400:e.k==='multi'?e.list.reduce((s,z)=>s+bytesOf(z),0):3000;
 function soMark(e){if(e.k==='multi'){e.list.forEach(soMark);return}if(e.k==='px'&&!e.m&&e.l){if(!('soA' in e)){e.soB=e.l.so||null;e.soA=null}e.l.so=e.soA;if(!('ptA' in e)){e.ptB=e.l.pt||null;e.ptA=null}e.l.pt=e.ptA}}
 function pushH(e,name){if(!e)return;soMark(e);if(name)e.n=name;if(!e.n)e.n=e.k==='px'?'Paint':'Layer change';H.u.push(e);H.bytes+=bytesOf(e);H.r.forEach(z=>H.bytes-=bytesOf(z));H.r=[];while(H.bytes>MAXH&&H.u.length>1)H.bytes-=bytesOf(H.u.shift());refreshPanels();updSide();tlCap()}
 const PROPS=['name','vis','op','fillOp','blend','clip','alock','lock','type','t','bi','fx','mask','maskOn','tgt','gid','collapsed','pt','adj','sm','acc','so'];
@@ -3322,7 +3353,7 @@ function pxEntry(l,m,before,x,y,w,h){const a=grab(m?l.mask:l.cv,x,y,w,h);if(!a)r
 const wholeBefore=(l,m)=>cx2(m?l.mask:l.cv).getImageData(0,0,D.w,D.h);
 const wholeEntry=(l,m,before,n)=>({k:'px',l,m,x:0,y:0,b:before,a:wholeBefore(l,m),n});
 function stOp(fn,name){const b=snapSt();fn();pushH({k:'st',b,a:snapSt()},name);touchAll()}
-function applyE(e,dir){if(e.k==='px'){cx2(e.m?e.l.mask:e.l.cv).putImageData(dir?e.a:e.b,e.x,e.y);if('soA' in e)e.l.so=dir?e.soA:e.soB;if('ptA' in e)e.l.pt=dir?e.ptA:e.ptB;if(e.m)e.l.mv++;else e.l.v++}else if(e.k==='st')restSt(dir?e.a:e.b);else if(e.k==='off')offsetAll(dir?e.dx:-e.dx,dir?e.dy:-e.dy);else if(e.k==='multi')(dir?e.list:[...e.list].reverse()).forEach(z=>applyE(z,dir))}
+function applyE(e,dir){if(e.k==='px'){cx2(e.m?e.l.mask:e.l.cv).putImageData(dir?e.a:e.b,e.x,e.y);if('soA' in e)e.l.so=dir?e.soA:e.soB;if('ptA' in e)e.l.pt=dir?e.ptA:e.ptB;if(e.m)e.l.mv++;else e.l.v++}else if(e.k==='st')restSt(dir?e.a:e.b);else if(e.k==='off')offsetAll(dir?e.dx:-e.dx,dir?e.dy:-e.dy);else if(e.k==='sel')selPut(dir?e.a:e.b);else if(e.k==='pen')penPut(dir?e.a:e.b);else if(e.k==='multi')(dir?e.list:[...e.list].reverse()).forEach(z=>applyE(z,dir))}
 function undo(){if(STROKE||XFORM||ADJ)return;const e=H.u.pop();if(!e)return hint('Nothing to undo');applyE(e,false);H.r.push(e);touchAll();hint('Undo: '+e.n)}
 function redo(){if(STROKE||XFORM||ADJ)return;const e=H.r.pop();if(!e)return hint('Nothing to redo');applyE(e,true);H.u.push(e);touchAll();hint('Redo: '+e.n)}
 function histJump(n){while(H.u.length>n)undo();while(H.u.length<n&&H.r.length)redo()}
@@ -3676,7 +3707,7 @@ function rotateDoc(dir){const nw=D.h,nh=D.w;const RM=new DOMMatrix().translate(d
 function flipDoc(){const FM=new DOMMatrix([-1,0,0,1,D.w,0]);mapPieces((c,px,py)=>{const n=mk(c.width,c.height),x=cx2(n);x.translate(c.width,0);x.scale(-1,1);x.drawImage(c,0,0);return {c:n,x:D.w-px-c.width,y:py}});D.layers.forEach(l=>{if(l.so)l.so=Object.assign({},l.so,{m:FM.multiply(l.so.m)});if(l.mask){const m=mk(D.w,D.h),y=cx2(m);y.translate(D.w,0);y.scale(-1,1);y.drawImage(l.mask,0,0);l.mask=m}if(l.t){l.t.x=D.w-l.t.x;l.t.fx=-(l.t.fx||1);renderText(l);park(l,true)}l.fxc=null;l.mA=null;l.v++;l.mv++});D.sel=null;H.u=[];H.r=[];H.bytes=0;D.changed=true;touchAll()}
 
 /* ---------- mockups ---------- */
-function shadingFrom(img,w,h){const c=mk(w,h),x=cx2(c);x.drawImage(img,0,0,w,h);const d=x.getImageData(0,0,w,h),a=d.data,vals=[];for(let k=0;k<a.length;k+=64)if(a[k+3]>200)vals.push(lum(a[k],a[k+1],a[k+2]));vals.sort((p,q)=>p-q);const hi=Math.max(40,vals[Math.floor(vals.length*.9)]||255);
+function shadingFrom(img,w,h){return gcShadeCanvas(img,w,h);const c=mk(w,h),x=cx2(c);x.drawImage(img,0,0,w,h);const d=x.getImageData(0,0,w,h),a=d.data,vals=[];for(let k=0;k<a.length;k+=64)if(a[k+3]>200)vals.push(lum(a[k],a[k+1],a[k+2]));vals.sort((p,q)=>p-q);const hi=Math.max(40,vals[Math.floor(vals.length*.9)]||255);
   for(let k=0;k<a.length;k+=4){const y=clampN(lum(a[k],a[k+1],a[k+2])/hi*255,0,255);a[k]=a[k+1]=a[k+2]=y}x.putImageData(d,0,0);return c}
 
 /* ---------- groups, tree helpers ---------- */
@@ -3773,7 +3804,7 @@ const icon=n=>`<svg viewBox="0 0 24 24"><path d="${IC[n]}"/></svg>`;
 const TOOLS=[['move','Move','move','V','Move, scale and rotate. Side handles stretch one way; corners keep proportions (Shift = free). Alt scales from the centre, Ctrl-drag a corner to distort.'],['select','Marquee','select','M','Select an area. M = rectangle / ellipse (Shift+M switches), L = freehand lasso.'],['pen','Pen','pen','P','Click to add points, drag to curve, click the first point to close. Then make a selection, fill, stroke or a shape layer from the path.'],['wand','Magic wand','wand','W','Tap an area to select pixels of a similar colour.'],['crop','Crop','crop','C','Drag the area to keep, then press Enter or tap ✓ Crop.'],
   ['brush','Brush','brush','B','Paint on the selected layer, or on its mask (black hides, white shows).'],['erase','Eraser','erase','E','Erase pixels. On a mask it paints black (hides).'],['clone','Clone stamp','clone','S','Copy pixels from one spot to another. Alt-click (or Set source) first.'],['smudge','Smudge','smudge','–','Push and blend paint like a finger.'],
   ['dodge','Dodge / Burn','dodge','O','Lighten (dodge) or darken (burn) the layer where you paint. Shift+O switches.'],['gradient','Gradient','gradient','G','Drag to fill with a colour fade. Great on masks. Shift+G switches to the paint bucket.'],['fill','Paint bucket','fill','G','Fill an area with colour, or replace one colour with another.'],
-  ['pick','Eyedropper','pick','I','Tap to pick a colour from the canvas.'],['text','Type','text','T','Tap to add editable text. Arc, outline and fonts in the Type panel.'],['shape','Shape','shape','U','Drag to draw a shape on a new layer. Shift+U cycles shapes.'],['hand','Hand','hand','H','Drag to move around the canvas (or hold Space).'],['zoom','Zoom','zoom','Z','Click to zoom in, Alt-click to zoom out.'],['rotv','Rotate view','rotv','R','Drag to turn the canvas like paper. Esc resets.']];
+  ['pick','Eyedropper','pick','I','Tap to pick a colour from the canvas.'],['text','Type','text','T','Click the canvas and start typing. Font, size, colour and outline are in the bar at the top; Esc or click outside to finish.'],['shape','Shape','shape','U','Drag to draw a shape on a new layer. Shift+U cycles shapes.'],['hand','Hand','hand','H','Drag to move around the canvas (or hold Space).'],['zoom','Zoom','zoom','Z','Click to zoom in, Alt-click to zoom out.'],['rotv','Rotate view','rotv','R','Drag to turn the canvas like paper. Esc resets.']];
 const toolInfo=t=>TOOLS.find(x=>x[0]===t)||TOOLS[4];
 Object.assign(IC,{acc:'M12 3l2.2 5.3L20 10.5l-5.8 2.2L12 18l-2.2-5.3L4 10.5l5.8-2.2zM19 16l.8 1.9 1.9.8-1.9.8L19 21.4l-.8-1.9-1.9-.8 1.9-.8z',pen:'M12 20l7-7-4-4-7 7-1 5zM15 9l-3-3M4 21l4-1M11.5 12.5l1 1',crop:'M6 2v16h16M2 6h16v16',zoom:'M10.5 4a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM15.5 15.5L21 21M8 10.5h5M10.5 8v5',rotv:'M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M18 3v4h-4M6 21v-4h4',folder:'M3 6.5A1.5 1.5 0 014.5 5H9l2 2h8.5A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z'});
 
@@ -3787,9 +3818,9 @@ const MENUS={
   Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
   View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
-  <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn accb${ACCOPEN?' on':''}" data-l="acclib" title="Accessories library">${icon('acc')}</button><button class="lbtn${GLF.open?' on':''}" data-l="glyphs" title="Glyphs: symbols and fancy text"><b style="font:600 16px Georgia,serif">&Omega;</b></button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
+  <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn accb${ACCOPEN?' on':''}" data-l="acclib" title="Accessories library">${icon('acc')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
   <span class="fgbg"><button class="fg" data-l="panel:colour" style="--c:${TOOL.color}" title="Foreground colour"></button><button class="bg" data-l="panel:colour2" style="--c:${TOOL.color2}" title="Background colour"></button><button class="sw" data-l="swapcol" title="Swap colours (X) · D = default">${icon('swap')}</button></span>`;
-  toolsEl.innerHTML=TOOLS.map(([t,n,i,k,tip])=>`<button class="ltool${TOOL.t===t?' on':''}" data-l="tool:${t}" title="${n}${k&&k!=='–'?' ('+k+')':''} – ${tip}"><span>${icon(i)}</span><b>${n}</b>${k&&k!=='–'?`<kbd>${k}</kbd>`:''}</button>`).join('');
+  toolsEl.innerHTML=TOOLS.map(([t,n,i,k,tip])=>`<button class="ltool${TOOL.t===t?' on':''}" data-l="tool:${t}" title="${n}${k&&k!=='–'?' ('+k+')':''} – ${tip}"><span>${icon(i)}</span><b>${n}</b>${k&&k!=='–'?`<kbd>${k}</kbd>`:''}</button>`).join('')+glToolBtn();
   updSide();drawOpt();stat()}
 function refreshSwatch(){{const pf=popEl.querySelector('.fgc'),pb=popEl.querySelector('.bgc');if(pf)pf.style.setProperty('--c',TOOL.color);if(pb)pb.style.setProperty('--c',TOOL.color2)}const f=barEl.querySelector('.fg'),b=barEl.querySelector('.bg');if(f)f.style.setProperty('--c',TOOL.color);if(b)b.style.setProperty('--c',TOOL.color2)}
 let DDM=null;
@@ -3848,7 +3879,7 @@ function palign(k){const l=curL();if(!l||l.type==='adj')return;const own=!XFORM;
 popEl.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.pp)ppApply(t.dataset.pp,parseFloat(t.value))});
 popEl.addEventListener('keydown',e=>{const t=e.target;if(t.dataset&&t.dataset.pp&&e.key==='Enter'){e.preventDefault();t.blur()}e.stopPropagation&&t.tagName==='INPUT'&&e.stopPropagation()});
 popEl.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.lq!=null){STK.f=t.value;lfilter()}});
-popEl.addEventListener('contextmenu',e=>{const r=e.target.closest('.plyr .lyr[data-ly]');if(!r)return;e.preventDefault();labAct('lmenu:'+r.dataset.ly)});
+
 function lmatch(x){const q=STK.f.trim().toLowerCase();if(q&&!String(x.name||'').toLowerCase().includes(q))return false;if(STK.fk){const t=x.type==='group'?'grp':x.type==='text'?'type':x.type==='adj'?'adj':'pix';if(t!==STK.fk)return false}return true}
 function lfilter(){popEl.querySelectorAll('.plyr .lyr[data-ly]').forEach(r=>{const x=D.layers.find(q=>q.id===r.dataset.ly);r.hidden=!!x&&!lmatch(x)})}
 function stkAct(v){const [k,a]=v.split(':');if(k==='ct')STK.ct=a;else if(k==='lt')STK.lt=a;else if(k==='fk')STK.fk=STK.fk===a?'':a;drawPanel()}
@@ -4710,9 +4741,9 @@ function glConv(s,st){const out=[];const SC='ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍ�
 const GLF={q:'',cat:0,txt:'Vintage Club',open:false};let GLREC=[];try{GLREC=JSON.parse(localStorage.getItem('mp_glrec')||'[]')}catch(e){}
 function glIns(ch){if(!D||!ch)return;GLREC=[ch,...GLREC.filter(x=>x!==ch)].slice(0,40);try{localStorage.setItem('mp_glrec',JSON.stringify(GLREC))}catch(e){}
   let l=curL();if(!l||l.type!=='text'){if(XFORM)xfCommit();l=newText(D.w/2,D.h/2);l.t.text=ch;renderText(l);touchAll();glDraw();hint('New type layer – keep tapping glyphs to add more, or type in the Text panel',2600);return}
-  if(!TEXTEDIT||TEXTEDIT.l!==l)openPanel('text');const ta=popEl.querySelector('[data-tx="text"]');
+  const txo=TXI&&TXI.l===l?txEl():null;if(!txo&&(!TEXTEDIT||TEXTEDIT.l!==l))openPanel('text');const ta=txo||popEl.querySelector('[data-tx="text"]');
   if(ta){const s=GLF.caret!=null&&GLF.caretId===l.id?Math.min(GLF.caret,ta.value.length):ta.value.length,e=GLF.caretEnd!=null&&GLF.caretId===l.id?Math.min(GLF.caretEnd,ta.value.length):s;ta.value=ta.value.slice(0,s)+ch+ta.value.slice(e);GLF.caret=GLF.caretEnd=s+ch.length;GLF.caretId=l.id;ta.dispatchEvent(new Event('input',{bubbles:true}))}
-  else{l.t.text+=ch;renderText(l);touchAll()}glDraw()}
+  else{l.t.text+=ch;renderText(l);touchAll()}glDraw();if(txo&&desk())txRefocus()}
 document.addEventListener('selectionchange',()=>{const a=document.activeElement;if(a&&a.dataset&&a.dataset.tx==='text'){const l=curL();GLF.caret=a.selectionStart;GLF.caretEnd=a.selectionEnd;GLF.caretId=l&&l.id}});
 function glToggle(f){GLF.open=f==null?!GLF.open:f;let e=document.getElementById('glyLib');if(!e){e=document.createElement('div');e.id='glyLib';edEl.appendChild(e);glWire(e)}e.hidden=!GLF.open;if(GLF.open){if(GLF.cat===0&&!GLREC.length)GLF.cat=1;if(typeof ACCOPEN!=='undefined'&&ACCOPEN)accToggle(false);glDraw()}updBar()}
 function glDraw(){const e=document.getElementById('glyLib');if(!e||e.hidden)return;const q=GLF.q.trim(),l=curL(),cats=[['Recent',GLREC.join('')],...GLC];
@@ -4890,6 +4921,118 @@ function colWire(e){e.addEventListener('click',async ev=>{const b=ev.target.clos
   const end=ev=>{if(!COLDR||ev.pointerId!==COLDR.pid)return;const D0=COLDR;if(D0.moved){const u=document.elementsFromPoint(ev.clientX,ev.clientY).find(n=>n.classList&&n.classList.contains('colc'));const d=colDrop(),c=d.cards.find(x=>x.id===D0.id);if(u&&c&&u.dataset.col!==c.status){c.status=u.dataset.col;colSave();if(c.status==='live')toast('✦ Released')}document.body.classList.remove('coldrag');setTimeout(()=>{COLDR=null;colDraw()},0)}else COLDR=null};
   addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 
+var FXPUNCH=false;
+
+/* ---------- v13: selection + pen history ---------- */
+let SELDEP=0,PENB=null,PENBS=null;
+const selSnap=()=>{if(!D||!D.sel)return null;const bb=selBox();if(!bb)return null;const [x,y,x1,y1]=bb,w=x1-x,h=y1-y;if(w<1||h<1)return null;const d=cx2(D.sel.mask).getImageData(x,y,w,h).data,a=new Uint8Array(w*h);for(let i=0;i<a.length;i++)a[i]=d[i*4+3];return {x,y,w,h,a,p:D.sel.path||null}};
+function selPut(s){if(!s){D.sel=null}else{const c=mk(D.w,D.h),x=cx2(c),im=x.createImageData(s.w,s.h),d=im.data;for(let i=0;i<s.a.length;i++){const k=i*4;d[k]=d[k+1]=d[k+2]=255;d[k+3]=s.a[i]}x.putImageData(im,s.x,s.y);D.sel={mask:c,path:s.p,out:null}}req();drawOpt();stat()}
+function selRec(fn,nm){return function(...a){if(SELDEP||!D)return fn.apply(this,a);SELDEP++;const b=selSnap();let r;try{r=fn.apply(this,a)}finally{SELDEP--}const af=selSnap();if(!b&&!af)return r;pushH({k:'sel',b,a:af},typeof nm==='function'?nm(...a):nm);return r}}
+selCombine=selRec(selCombine,(mc,mode)=>mode==='add'?'Add to selection':mode==='sub'?'Subtract from selection':mode==='int'||mode==='inter'?'Intersect selection':'New selection');
+selAll=selRec(selAll,'Select all');selInvert=selRec(selInvert,'Inverse selection');selFeather=selRec(selFeather,'Feather selection');selFromLayer=selRec(selFromLayer,'Load selection');
+{const _sa=selAction;selAction=function(a){if(a==='deselect'||a==='reselect')return selRec(_sa,a==='deselect'?'Deselect':'Reselect')(a);return _sa(a)}}
+const penClone=()=>PTH?JSON.parse(JSON.stringify(PTH)):null;
+{const _pd=penDown,_pu=penUp,_pa=pthAct;
+ penDown=function(p,e){PENB=penClone();PENBS=JSON.stringify(PTH||null);return _pd(p,e)};
+ penUp=function(){_pu();if(PENBS==null)return;const s=JSON.stringify(PTH||null),b=PENB;if(s!==PENBS){const n=!b||!b.pts.length?'Pen: first point':PTH&&PTH.closed&&!b.closed?'Pen: close path':PTH&&PTH.pts.length>b.pts.length?'Pen: add point':'Pen: move point';pushH({k:'pen',b,a:penClone()},n)}PENB=PENBS=null};
+ pthAct=function(v){if(v==='clear'){const b=penClone();_pa(v);if(b&&b.pts.length)pushH({k:'pen',b,a:penClone()},'Clear path');return}if(v==='sel')return selRec(_pa,'Selection from path')(v);return _pa(v)}}
+function penPut(s){PTH=s?JSON.parse(JSON.stringify(s)):null;if(PTH&&!PTH.pts.length)PTH=null;PD=null;drawOpt();req()}
+
+/* ---------- rasterize layer style (bake fx into pixels) ---------- */
+function rasterStyle(l){if(!l||l.type==='group')return;if(!fxOn(l.fx))return hint('This layer has no styles to rasterize');if(!needPx(l,'Rasterize'))return;
+  const S0=snapSt(),b0=wholeBefore(l,false),bi=l.bi,mo=l.maskOn;l.bi=null;l.maskOn=false;l.fxk='';const o=layerOut(l,null),tmp=mk(D.w,D.h);cx2(tmp).drawImage(o,0,0);l.bi=bi;l.maskOn=mo;
+  if(l.type==='text')l.type='px';const x=cx2(l.cv);x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='copy';x.drawImage(tmp,0,0);x.restore();relc(tmp);l.fx=null;l.fillOp=1;l.fxk='';l.v++;
+  pushH({k:'multi',list:[{k:'st',b:S0,a:snapSt()},wholeEntry(l,false,b0)]},'Rasterize layer style');touch(l,false);hint('Styles baked into the pixels – Blend If now sees the outline too',2600)}
+
+/* ---------- right-click layer menu ---------- */
+function lctxClose(){const m=document.getElementById('lctx');if(m)m.hidden=true}
+function lctxOpen(id,x,y){if(!D)return;const l=byId(id);if(!l)return;if(TXI&&TXI.l!==l)txCommit();if(D.cur!==id||(D.lsel&&D.lsel.size&&!D.lsel.has(id))){if(XFORM)xfCommit();D.cur=id;D.lsel=new Set()}OPENMENU=null;closeMenu();drawPanel();drawOpt();stat();
+  let m=document.getElementById('lctx');if(!m){m=document.createElement('div');m.id='lctx';labEl.appendChild(m);
+    m.addEventListener('change',e=>{const t=e.target;if(t.dataset.lname){const L=byId(t.dataset.lname);const v=t.value.trim();if(L&&v&&v!==L.name)setProp(L,'name',v,'Rename layer')}});
+    m.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.lname){e.preventDefault();e.target.blur();lctxClose()}if(e.key==='Escape'){e.stopPropagation();lctxClose()}});
+    m.addEventListener('click',e=>{if(e.target.closest('[data-l]'))setTimeout(lctxClose,0)});
+    m.addEventListener('contextmenu',e=>e.preventDefault())}
+  m.innerHTML=`<div class="lctxh">${esc(l.name)}<small>${l.type==='group'?'Group':l.type==='text'?'Type layer':l.type==='adj'?'Adjustment layer':'Layer'}</small></div>`+layerMenu(l);m.hidden=false;
+  const r=m.getBoundingClientRect(),W=innerWidth,H=innerHeight;m.style.left=Math.max(8,Math.min(x,W-r.width-8))+'px';m.style.top=Math.max(8,Math.min(y,H-r.height-8))+'px'}
+labEl.addEventListener('contextmenu',e=>{const r=e.target.closest('.lyr[data-ly]');if(!r)return;e.preventDefault();e.stopPropagation();lctxOpen(r.dataset.ly,e.clientX,e.clientY)});
+addEventListener('pointerdown',e=>{const m=document.getElementById('lctx');if(m&&!m.hidden&&!m.contains(e.target))lctxClose()},true);
+addEventListener('keydown',e=>{const t=e.target,ds=(t&&t.dataset)||{};
+  if(e.key==='Enter'&&ds.lname){e.preventDefault();e.stopImmediatePropagation();t.blur();lctxClose();return}
+  if(e.key==='Enter'&&ds.otx){e.preventDefault();e.stopImmediatePropagation();t.blur();return}
+  const esc=e.key==='Escape',ok=e.key==='Enter'&&(e.ctrlKey||e.metaKey);if(!esc&&!ok)return;
+  const m=document.getElementById('lctx');if(esc&&m&&!m.hidden){e.stopImmediatePropagation();lctxClose();return}
+  if(TXI){const ta=document.getElementById('txIn'),ae=document.activeElement;if(ae===ta||!/INPUT|SELECT|TEXTAREA/.test((ae&&ae.tagName)||'')){e.preventDefault();e.stopImmediatePropagation();txCommit()}}},true);
+addEventListener('wheel',e=>{const m=document.getElementById('lctx');if(m&&!m.hidden&&!m.contains(e.target))lctxClose()},{passive:true,capture:true});
+
+/* ---------- type directly on the canvas ---------- */
+let TXI=null,OTXB=null;const TXM=document.createElement('canvas').getContext('2d');
+const txFont=(t,px)=>`${t.it?'italic ':''}${t.bold?'700':'400'} ${px}px ${fontCss(t.font)}`;
+function txW(t){TXM.font=txFont(t,t.size);const tr=t.track*t.size/100;return Math.max(0,...String(t.text||'').split('\n').map(L=>{const cs=[...L];return cs.reduce((s,ch)=>s+TXM.measureText(ch).width,0)+Math.max(0,cs.length-1)*tr}))}
+function txEl(){let ta=document.getElementById('txIn');if(ta)return ta;ta=document.createElement('textarea');ta.id='txIn';ta.hidden=true;ta.spellcheck=false;ta.wrap='off';ta.dataset.tx='text';['autocapitalize','autocomplete','autocorrect'].forEach(k=>ta.setAttribute(k,'off'));ta.setAttribute('aria-label','Type');labEl.appendChild(ta);
+  ta.addEventListener('input',()=>{if(!TXI)return;TXI.l.t.text=ta.value;renderText(TXI.l);TXI.k='';txPos();const pt=popEl.querySelector('[data-tx="text"]');if(pt&&pt!==ta&&pt.value!==ta.value)pt.value=ta.value;touch(TXI.l,false)});
+  ta.addEventListener('keydown',e=>{if(e.key==='Escape'||(e.key==='Enter'&&(e.ctrlKey||e.metaKey))){e.preventDefault();e.stopPropagation();txCommit()}});
+  ta.addEventListener('pointerdown',e=>e.stopPropagation());return ta}
+function txPos(){const X=TXI;if(!X||!D)return;const ta=txEl(),t=X.l.t,r=cv.getBoundingClientRect(),[sx,sy]=toScr(t.x,t.y),[kx,ky]=tS(t),fs=t.size*V.s,n=String(t.text||'').split('\n').length,tr=t.track*t.size/100*V.s,odd=tMode(t)!=='none',
+    pad=fs*.18+3,wc=Math.max(fs*.5,txW(t)*V.s),w=wc+pad*2+(t.align==='center'?tr:0),h=n*fs*t.lh+2;
+  const k=[txFont(t,fs),t.lh,w,h,r.left+sx,r.top+sy,kx,ky,t.rot,V.r,V.fx,tr,t.align,odd,t.color].join('|');if(k===X.k)return;X.k=k;
+  const st=ta.style;st.left=(r.left+sx)+'px';st.top=(r.top+sy)+'px';ta.classList.toggle('odd',odd);
+  if(odd){st.font=`${Math.min(28,Math.max(14,fs*.5))}px/1.25 ${fontCss(t.font)}`;st.width=Math.max(160,Math.min(420,wc*.5+40))+'px';st.height=(n*Math.min(28,Math.max(14,fs*.5))*1.25+20)+'px';st.letterSpacing='0';st.textAlign='center';st.padding='8px 10px';st.transform='translate(-50%,-50%)';return}
+  st.font=`${t.it?'italic ':''}${t.bold?'700':'400'} ${fs}px/${t.lh} ${fontCss(t.font)}`;st.width=w+'px';st.height=h+'px';st.letterSpacing=tr+'px';st.textAlign=t.align;
+  st.padding=`1px ${pad}px 1px ${pad+(t.align==='center'?tr:0)}px`;st.transform=`translate(-50%,-50%) rotate(${t.rot+V.r}rad) scale(${kx*V.fx},${ky})`;
+  const c=hexToRgb(t.color||'#000'),lm=lumA(c[0],c[1],c[2]);st.caretColor=lm>140?'#1d6fe0':'#39a0ff'}
+function txLoop(){if(!TXI)return;if(!D||labEl.hidden||edEl.hidden||!TEXTEDIT||TEXTEDIT.l!==TXI.l||!D.layers.includes(TXI.l)){txEnd();return}const ta=txEl();if(document.activeElement!==ta&&ta.value!==(TXI.l.t.text||'')){ta.value=TXI.l.t.text||'';TXI.k=''}txPos();requestAnimationFrame(txLoop)}
+function txBegin(l,isNew,b){if(TEXTEDIT&&TEXTEDIT.l!==l)commitText();if(!TEXTEDIT)TEXTEDIT={l,b:b||snapSt()};TXI={l,isNew,k:''};const ta=txEl();ta.value=l.t.text||'';ta.hidden=false;txPos();try{ta.focus({preventScroll:true})}catch(e){ta.focus()}const n=ta.value.length;ta.setSelectionRange(n,n);requestAnimationFrame(txLoop);if(PANEL==='text'&&!popEl.hidden)drawPanel();drawOpt();req()}
+function txEnd(){TXI=null;const ta=document.getElementById('txIn');if(ta){ta.hidden=true;if(document.activeElement===ta)ta.blur()}if(D)drawOpt()}
+function txRefocus(){if(!TXI)return;const ta=txEl();setTimeout(()=>{if(TXI&&!ta.hidden){try{ta.focus({preventScroll:true})}catch(e){ta.focus()}}},0)}
+function txCommit(){const X=TXI;if(!X)return;const l=X.l;txEnd();const T2=TEXTEDIT;if(!T2||T2.l!==l)return;
+  if(!String(l.t.text||'').trim()){TEXTEDIT=null;restSt(T2.b);touchAll();if(PANEL==='text'&&!popEl.hidden)openPanel('layers');else drawPanel();drawOpt();return}
+  if(X.isNew){TEXTEDIT=null;const nm=String(l.t.text).split('\n')[0].trim().slice(0,32);if(nm)l.name=nm;pushH({k:'st',b:T2.b,a:snapSt()},'Type layer');touch(l,false)}else commitText();
+  if(PANEL==='text'&&!popEl.hidden)openPanel('layers');drawOpt()}
+function txCancel(){const X=TXI;if(!X)return;txEnd();if(TEXTEDIT&&TEXTEDIT.l===X.l){const b=TEXTEDIT.b;TEXTEDIT=null;restSt(b);touchAll()}if(PANEL==='text'&&!popEl.hidden)openPanel('layers');drawOpt()}
+function txTap(p,e){
+  if(TXI){if(hitText(TXI.l,p)){txRefocus();return}txCommit();return}
+  const hit=[...D.layers].reverse().find(l=>l.type==='text'&&effVis(l)&&hitText(l,p));
+  if(hit){if(XFORM)xfCommit();D.cur=hit.id;D.lsel=new Set();txBegin(hit,false);drawPanel();return}
+  if(!ensureRoom(1))return limitHint();if(XFORM)xfCommit();
+  const b=snapSt(),n=D.layers.filter(l=>l.type==='text').length+1,l=newLayer('Text '+n,{type:'text',t:{text:'',font:TOOL.font||'Helvetica Neue',size:Math.round(TOOL.tsize||D.w*.08),color:TOOL.color,track:4,lh:1.1,align:'center',bold:true,it:false,stroke:false,sw:6,sc:'#000000',arc:0,x:p.x,y:p.y,rot:0,scale:1,fx:1,fy:1}});
+  insertAbove(l);renderText(l);TEXTEDIT=null;txBegin(l,true,b);touchAll()}
+cv.addEventListener('pointerdown',e=>{if(D&&TOOL.t==='text'&&e.button!==2)e.preventDefault()},true);
+cv.addEventListener('mousedown',e=>{if(TXI)e.preventDefault()});
+{const _st=setTool;setTool=function(t){if(TXI&&t!=='text')txCommit();return _st(t)}}
+{const _u=undo,_r=redo;undo=function(){if(TXI){txCommit();return}return _u()};redo=function(){if(TXI)txCommit();return _r()}}
+{const _pr=pickRow;pickRow=function(id,e){if(TXI&&TXI.l.id!==id)txCommit();return _pr(id,e)}}
+addEventListener('resize',()=>{if(TXI){TXI.k='';txPos()}});
+
+/* ---------- type option bar: font, size, colour circle, outline ---------- */
+const otxTarget=()=>{if(TXI)return TXI.l;const l=D&&curL();return l&&l.type==='text'?l:null};
+const TXAL={left:'<svg viewBox="0 0 16 16"><path d="M2 3h12M2 6.5h8M2 10h12M2 13.5h8"/></svg>',center:'<svg viewBox="0 0 16 16"><path d="M2 3h12M4 6.5h8M2 10h12M4 13.5h8"/></svg>',right:'<svg viewBox="0 0 16 16"><path d="M2 3h12M6 6.5h8M2 10h12M6 13.5h8"/></svg>'};
+function otxBar(ch){const l=otxTarget(),t=l&&l.t,col=t?t.color:TOOL.color,font=t?t.font:(TOOL.font||'Helvetica Neue'),size=Math.round(t?t.size:(TOOL.tsize||D.w*.08)),qs=[...new Set(['#000000','#ffffff',...(RECENT||[]).map(c=>String(c).toLowerCase())])].slice(0,6);
+  let h=`<button class="ch otxf" data-l="otx:fonts" title="Font" style="font-family:${esc(fontCss(font))}">${esc(font)} ▾</button><label class="otxs" title="Font size">Size<input type="number" min="4" max="${Math.round(D.w)}" value="${size}" data-otx="size"></label>`;
+  h+=`<span class="otxg">${ch(t&&t.bold,'otx:bold','<b>B</b>','','Bold')}${ch(t&&t.it,'otx:it','<i>I</i>','','Italic')}</span><span class="otxg">${['left','center','right'].map(a=>ch(t&&t.align===a,'otx:'+a,TXAL[a],'otxa','Align '+a)).join('')}</span>`;
+  h+=`<label class="otxc" title="Text colour – tap to pick any colour"><input type="color" value="${esc(col)}" data-otx="color"><i style="--c:${esc(col)}"></i></label><span class="otxq">${qs.map(c=>`<button data-l="otx:col:${c}" style="--c:${c}" title="${c}"></button>`).join('')}</span>`;
+  if(t){h+=ch(t.stroke,'otx:stroke','Outline','','Outline around the letters');if(t.stroke)h+=`<label class="otxc sm" title="Outline colour"><input type="color" value="${esc(t.sc||'#000000')}" data-otx="sc"><i style="--c:${esc(t.sc||'#000000')}"></i></label><label class="otxs" title="Outline width">Width<input type="number" min="1" max="200" value="${Math.round(t.sw||6)}" data-otx="sw"></label>`}
+  h+=ch(false,'otx:more','Type options…');
+  if(TXI)h+=ch(false,'otx:cancel','✕','otxx','Cancel edits')+ch(false,'otx:done','✓','otxok','Commit (Esc, Ctrl+Enter or click outside)');
+  else h+=`<span class="otip">${t?'Click the text to type into it · click empty canvas for new type':'Click on the canvas and start typing'}</span>`;
+  return h}
+function otxApply(fn,name){const l=otxTarget();if(!l){fn(null);drawOpt();return}const b=TEXTEDIT&&TEXTEDIT.l===l?null:snapSt();fn(l.t);renderText(l);if(b)pushH({k:'st',b,a:snapSt()},name);touch(l,false);if(TXI)TXI.k='';if(PANEL==='text'&&!popEl.hidden)drawPanel();drawOpt();txRefocus()}
+function otxAct(v){if(v==='done'){txCommit();return}if(v==='cancel'){txCancel();return}
+  if(v==='more'||v==='fonts'){const l=otxTarget();if(l){D.cur=l.id;openPanel('text');if(v==='fonts')openPanel('fonts')}else if(v==='fonts')openPanel('fonts');else hint('Click the canvas to add type first');return}
+  if(v.startsWith('col:')){const c=v.slice(4);TOOL.color=c;refreshSwatch();otxApply(t=>{if(t)t.color=c},'Type colour');return}
+  otxApply(t=>{if(!t)return;if(v==='left'||v==='center'||v==='right')t.align=v;else if(v==='bold')t.bold=!t.bold;else if(v==='it')t.it=!t.it;else if(v==='stroke'){t.stroke=!t.stroke;if(t.stroke&&!(t.sw>0))t.sw=6;if(t.stroke&&(!t.sc||t.sc.toLowerCase()===String(t.color).toLowerCase()))t.sc=lumA(...hexToRgb(t.color))>128?'#000000':'#ffffff'}},'Type settings')}
+optEl.addEventListener('input',e=>{const k=e.target.dataset.otx;if(!k)return;const v=e.target.value,l=otxTarget();
+  if(k==='color'||k==='sc'){const i=e.target.nextElementSibling;if(i)i.style.setProperty('--c',v)}if(k==='color'){TOOL.color=v;refreshSwatch()}
+  if(!l){if(k==='size'&&+v>0)TOOL.tsize=+v;return}
+  if(!(TEXTEDIT&&TEXTEDIT.l===l)&&!OTXB)OTXB={l,b:snapSt()};
+  if(k==='size'||k==='sw'){const n=+v;if(!(n>0))return;l.t[k]=n;if(k==='size')TOOL.tsize=n}else l.t[k]=v;renderText(l);if(TXI){TXI.k='';txPos()}touch(l,false)});
+optEl.addEventListener('change',e=>{const k=e.target.dataset.otx;if(!k)return;if(OTXB){const X=OTXB;OTXB=null;pushH({k:'st',b:X.b,a:snapSt()},k==='color'||k==='sc'?'Type colour':'Type settings')}
+  if(k==='color'&&typeof RECENT!=='undefined'){const c=e.target.value.toLowerCase();RECENT=[c,...RECENT.filter(x=>String(x).toLowerCase()!==c)].slice(0,12)}
+  if(PANEL==='text'&&!popEl.hidden)drawPanel();drawOpt();txRefocus()});
+optEl.addEventListener('keydown',e=>{if(e.target.dataset.otx&&e.key==='Enter'){e.preventDefault();e.target.blur()}});
+
+/* ---------- glyphs live on the left toolbar ---------- */
+const glToolBtn=()=>`<button class="ltool gltool${GLF.open?' on':''}" data-l="glyphs" title="Glyphs – symbols, dingbats and fancy text"><span><b class="glyI">&Omega;</b></span><b>Glyphs</b></button>`;
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -4916,7 +5059,7 @@ function drawOpt(){if(!D)return;const t=TOOL.t,[,name,ic,key,tip]=toolInfo(t),l=
   else if(t==='rotv')h+=`<span class="otip">Drag to rotate the view (${Math.round(V.r*180/Math.PI)}°)</span>`+ch(false,'rotreset','Reset view');
   else if(t==='pen')h+=penOpt(ch);
   else if(t==='shape')h+=[['rect','Rect'],['rrect','Rounded'],['ellipse','Ellipse'],['tri','Triangle'],['star','Star'],['hex','Hexagon'],['line','Line'],['arrow','Arrow']].map(([a,n])=>ch(TOOL.shape.k===a,'shk:'+a,n)).join('')+ch(TOOL.shape.fill,'shfill',TOOL.shape.fill?'Filled':'Outline')+sl('sw','Line width',1,160,TOOL.shape.sw,'px');
-  else if(t==='text')h+=`<span class="otip">Tap the canvas to add type, or tap existing type to edit it</span>`+ch(GLF.open,'glyphs','Ω Glyphs')+(l&&l.type==='text'?ch(false,'panel:text','Edit type'):'');
+  else if(t==='text')h+=otxBar(ch);
   else h+=`<span class="otip">${tip}</span>`;
   optEl.innerHTML=h}
 optEl.addEventListener('input',e=>{const o=e.target.dataset.o;if(!o)return;const v=+e.target.value,out=e.target.nextElementSibling,k=sizeKey();if(out)out.textContent=v+(o==='size'||o==='sw'?'px':o==='tol'?'':'%');
@@ -4967,7 +5110,7 @@ function layersHTML(){const l=curL(),sel=selSet(),grp=l&&l.type==='group';
   <p class="pnote">Tap a thumbnail to paint on the <b>layer</b> or its <b>mask</b>. Drag ⋮⋮ onto a group to put a layer inside it. Ctrl/Shift-click (or ☑ Multi) selects several layers, then Ctrl+G groups them.</p>`}
 function layerMenu(l){const c=(a,t,cls)=>`<button class="lch${cls?' '+cls:''}" data-l="${a}">${t}</button>`,g=l.type==='group';
   return `<div class="lmenu"><input type="text" value="${esc(l.name)}" data-lname="${l.id}" maxlength="40" aria-label="Name"><div class="rw">${g?'':c('style','Blending options & styles…')}${c('lm:clip',l.clip?'Release clipping mask':'Create clipping mask')}${l.mask?c('mask:toggle',l.maskOn?'Disable mask':'Enable mask')+c('mask:invert','Invert mask')+(g?'':c('mask:apply','Apply mask'))+c('mask:delete','Delete mask'):c('mask:reveal','Add mask')+c('mask:sel','Mask from selection')}</div>
-  <div class="rw">${g?c('ungroup','Ungroup')+c('lm:merge','Merge group')+c('lm:dup','Duplicate group')+c('delgroup','Delete group only')+c('lm:del','Delete group & contents','dang'):(l.type==='text'?c('panel:text','Edit type')+c('lm:raster','Rasterize'):'')+c('knock:white','Knock out white')+c('knock:black','Knock out black')+c('rmbg','Remove background')+c('lm:merge','Merge down')+c('fillsheet','Fill…')+c('lm:clear','Clear')+c('lm:fh','Flip H')+c('lm:fv','Flip V')+c('lm:dup','Duplicate')+c('lm:del','Delete','dang')}${g?'':l.sm?c('smedit','Edit smart object contents')+c('smrast','Rasterize smart object'):c('smconv','Convert to smart object')}${c('arr:up','Move up')}${c('arr:down','Move down')}</div></div>`}
+  <div class="rw">${g?c('ungroup','Ungroup')+c('lm:merge','Merge group')+c('lm:dup','Duplicate group')+c('delgroup','Delete group only')+c('lm:del','Delete group & contents','dang'):(l.type==='text'?c('panel:text','Edit type')+c('lm:raster','Rasterize'):'')+(fxOn(l.fx)?c('lm:rasterfx','Rasterize layer style'):'')+c('knock:white','Knock out white')+c('knock:black','Knock out black')+c('rmbg','Remove background')+c('lm:merge','Merge down')+c('fillsheet','Fill…')+c('lm:clear','Clear')+c('lm:fh','Flip H')+c('lm:fv','Flip V')+c('lm:dup','Duplicate')+c('lm:del','Delete','dang')}${g?'':l.sm?c('smedit','Edit smart object contents')+c('smrast','Rasterize smart object'):c('smconv','Convert to smart object')}${c('arr:up','Move up')}${c('arr:down','Move down')}</div></div>`}
 function historyHTML(){const items=[['Open',0],...H.u.map((e,i)=>[e.n,i+1])],red=H.r.slice().reverse().map((e,i)=>[e.n,H.u.length+i+1]);
   return `<div class="hlist">${items.map(([n,i])=>`<button class="${i===H.u.length?'cur':''}" data-l="hist:${i}">${esc(n)}</button>`).join('')}${red.map(([n,i])=>`<button class="fut" data-l="hist:${i}">${esc(n)}</button>`).join('')}</div><p class="pnote">Tap a step to go back to it. Greyed steps can be redone.</p>`}
 const PAL={Fabric:['#111111','#2b2b2d','#3f3f42','#8e8d89','#b9b8b4','#e6e3dc','#f5f2ea','#ffffff','#1d2440','#2748a8','#6f93c7','#1f3b2c','#5c5a3a','#8a8157','#cdb892','#5a3d2b','#5a1624','#b3202a','#d9621e','#e8c547','#e9a3b8','#b9a7d8'],Neon:['#39ff14','#ff2bd6','#00e5ff','#fff200','#ff5f1f','#8a2be2'],Metal:['#c9a44c','#e6c878','#c0c0c0','#8c8c8c','#b87333']};
@@ -5701,9 +5844,9 @@ function gcRegion(l,px,py,withPrints){const full=mk(D.w,D.h);dI(cx2(full),l._c||
   const dil=S=>{const R=Uint8Array.from(S);for(let k=0;k<N;k++)if(S[k]){const i=k%w;if(i>0)R[k-1]=1;if(i<w-1)R[k+1]=1;if(k>=w)R[k-w]=1;if(k<N-w)R[k+w]=1}return R},ero=S=>{const R=Uint8Array.from(S);for(let k=0;k<N;k++)if(!S[k]){const i=k%w;if(i>0)R[k-1]=0;if(i<w-1)R[k+1]=0;if(k>=w)R[k-w]=0;if(k<N-w)R[k+w]=0}return R};
   let S=dil(ero(ero(dil(dil(M)))));if(withPrints){const out=new Uint8Array(N),q2=[],mark=k=>{if(!S[k]&&!out[k]){out[k]=1;q2.push(k)}};for(let i=0;i<w;i++){mark(i);mark(N-w+i)}for(let j=0;j<h;j++){mark(j*w);mark(j*w+w-1)}while(q2.length){const k=q2.pop(),i=k%w;if(i>0)mark(k-1);if(i<w-1)mark(k+1);if(k>=w)mark(k-w);if(k<N-w)mark(k+w)}for(let k=0;k<N;k++)if(!out[k]&&A[k]>20)S[k]=1}
   S=gcBand(S,A,w,h,r0+4);
-  let cnt=0,sum=0,sq=0;for(let k=0;k<N;k++)if(S[k]&&A[k]>20){cnt++;sum+=Y0[k];sq+=Y0[k]*Y0[k]}if(cnt<30)return null;const m=sum/cnt,sd=Math.sqrt(Math.max(0,sq/cnt-m*m));
+  let cnt=0,sum=0,sq=0;for(let k=0;k<N;k++)if(S[k]&&A[k]>20){cnt++;sum+=Y0[k];sq+=Y0[k]*Y0[k]}if(cnt<30)return null;const m=sum/cnt,sd=Math.sqrt(Math.max(0,sq/cnt-m*m)),[md,iq]=gcStats(Y0,S,A,N);
   const sm=mk(w,h),sx2=cx2(sm),sd2=sx2.createImageData(w,h);for(let k=0;k<N;k++){const v=S[k]?255:0;sd2.data[k*4]=sd2.data[k*4+1]=sd2.data[k*4+2]=v;sd2.data[k*4+3]=255}sx2.putImageData(sd2,0,0);
-  const mc=mk(D.w,D.h),mx=cx2(mc);mx.imageSmoothingEnabled=true;mx.imageSmoothingQuality='high';mx.drawImage(sm,0,0,D.w,D.h);relc(full);return {mask:mc,m,sd}}
+  const mc=mk(D.w,D.h),mx=cx2(mc);mx.imageSmoothingEnabled=true;mx.imageSmoothingQuality='high';mx.drawImage(sm,0,0,D.w,D.h);relc(full);return {mask:mc,m,sd,md,iq}}
 function gcDil(S,w,h,r){let M=S;for(let t=0;t<r;t++){const R=Uint8Array.from(M),N=w*h;for(let k=0;k<N;k++)if(M[k]){const i=k%w;if(i>0)R[k-1]=1;if(i<w-1)R[k+1]=1;if(k>=w)R[k-w]=1;if(k<N-w)R[k+w]=1}M=R}return M}
 function gcBand(S,A,w,h,r){const N=w*h,T=new Uint8Array(N);for(let k=0;k<N;k++)T[k]=A[k]<=20?1:0;const bT=gcDil(T,w,h,r),O=Uint8Array.from(S),st=[];for(let k=0;k<N;k++)if(S[k])st.push(k);
   const ok=k=>!O[k]&&!T[k]&&bT[k];while(st.length){const k=st.pop(),i=k%w;for(const q of [i>0?k-1:-1,i<w-1?k+1:-1,k>=w?k-w:-1,k<N-w?k+w:-1])if(q>=0&&ok(q)){O[q]=1;st.push(q)}}const G=gcDil(O,w,h,3);for(let k=0;k<N;k++)if(T[k]&&G[k])O[k]=1;return O}
@@ -5718,18 +5861,34 @@ function gcFixEdges(l){if(!l||!l.mask)return hint('This colour layer has no mask
 function gcAt(p){GCPICK=false;let tl=null;const g=D.garment&&byId(D.garment);if(g&&g.type==='px'){const pc=pieceOf(g),lx=Math.floor(p.x-pc.x),ly=Math.floor(p.y-pc.y);if(pc.c&&lx>=0&&ly>=0&&lx<pc.c.width&&ly<pc.c.height&&cx2(pc.c).getImageData(lx,ly,1,1).data[3]>20)tl=g}
   if(!tl){tl=layerAt(p);if(tl&&tl.type!=='px')tl=null}if(!tl)return hint('Tap right on the garment (on its own image layer)',2800);hint('Finding the garment…',1500);
   setTimeout(()=>{const R=gcRegion(tl,p.x,p.y,false);if(!R)return hint('Could not find a clear garment area there – tap the middle of the fabric',3000);if(!ensureRoom(1))return limitHint();
-    const v=Object.assign(JSON.parse(JSON.stringify(ADEF.gc)),{m:R.m,sd:R.sd,c:TOOL.color&&TOOL.color.toLowerCase()!=='#111111'?TOOL.color:'#1f2a44'});let l;D.cur=tl.id;D.lsel=new Set();
-    stOp(()=>{l=newLayer('Garment colour',{type:'adj',adj:{k:'gc',v},clip:true});l.mask=R.mask;l.maskOn=true;l.tgt='px';insertAbove(l)},'Smart garment colour');adjLayerEdit(l);hint('Pick a colour – the folds, shadows and prints stay. Paint the layer mask to fix any edges',4000)},30)}
+    const v=Object.assign(JSON.parse(JSON.stringify(ADEF.gc)),{m:R.m,sd:R.sd,md:R.md,iq:R.iq,c:TOOL.color&&TOOL.color.toLowerCase()!=='#111111'?TOOL.color:'#1f2a44'});let l;D.cur=tl.id;D.lsel=new Set();
+    stOp(()=>{l=newLayer('Garment colour',{type:'adj',adj:{k:'gc',v},clip:true});l.mask=R.mask;l.maskOn=true;l.tgt='px';insertAbove(l)},'Smart garment colour');gcShade(tl,false);adjLayerEdit(l);hint('Pick a colour – the folds, shadows and prints stay. Paint the layer mask to fix any edges',4000)},30)}
 let GCW=0,GCH=0;
 function gcDist(d,W,H,E){const N=W*H,T=new Float32Array(N),big=E+1;for(let k=0;k<N;k++)T[k]=d[k*4+3]<=20?0:big;
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){const k=y*W+x;let v=T[k];if(!v)continue;if(x>0)v=Math.min(v,T[k-1]+1);if(y>0){v=Math.min(v,T[k-W]+1);if(x>0)v=Math.min(v,T[k-W-1]+1.41);if(x<W-1)v=Math.min(v,T[k-W+1]+1.41)}T[k]=v}
   for(let y=H-1;y>=0;y--)for(let x=W-1;x>=0;x--){const k=y*W+x;let v=T[k];if(!v)continue;if(x<W-1)v=Math.min(v,T[k+1]+1);if(y<H-1){v=Math.min(v,T[k+W]+1);if(x<W-1)v=Math.min(v,T[k+W+1]+1.41);if(x>0)v=Math.min(v,T[k+W-1]+1.41)}T[k]=v}return T}
-function gcPixels(v,d){const [tr,tg,tb]=hexToRgb(v.c),Lt=Math.max(1,lumA(tr,tg,tb)),k=v.con/100*clampN(26/Math.max(v.sd||20,4),.6,3),sat=v.sat/100,m=v.m==null?128:v.m,br=v.br*1.6;
-  const ed=(v.ed==null?70:v.ed)/100,lim=Math.max(5,(v.sd||20)*1.3)*(1.6-ed),W=GCW,Hh=GCH,E=Math.max(3,Math.round(Math.min(W,Hh)*.004)),DT=ed>0&&W*Hh*4===d.length?gcDist(d,W,Hh,E):null;for(let q=0;q<d.length;q+=4){if(!d[q+3])continue;const L=lumA(d[q],d[q+1],d[q+2]);let dv=L-m;if(ed>0){const al=d[q+3]/255;if(al<.985)dv*=Math.pow(al,1+ed*4);if(DT){const e=DT[q>>2];if(e<E)dv*=1-Math.min(1,ed*1.35)*Math.sqrt(1-e/E)}if(dv>lim)dv=lim+(dv-lim)*(1-ed*.95)}const nl=clampN(Lt+br+dv*k,0,255);let r,g,b;if(nl<=Lt){const s=nl/Lt;r=tr*s;g=tg*s;b=tb*s}else{const s=(nl-Lt)/Math.max(1,255-Lt);r=tr+(255-tr)*s;g=tg+(255-tg)*s;b=tb+(255-tb)*s}
+function gcStats(Y,S,A,N){const hs=new Float64Array(256);let n=0;for(let k=0;k<N;k++)if(S[k]&&A[k]>20){hs[Math.max(0,Math.min(255,Y[k]|0))]++;n++}if(!n)return [128,20];
+  let best=0,bi=0;for(let i=0;i<256;i++){let s=0;for(let j=-4;j<=4;j++){const q=i+j;if(q>=0&&q<256)s+=hs[q]*(5-Math.abs(j))}if(s>best){best=s;bi=i}}
+  const W=64,dh=new Float64Array(W+1);let c=0;for(let i=Math.max(0,bi-W);i<=Math.min(255,bi+W);i++){dh[Math.abs(i-bi)]+=hs[i];c+=hs[i]}let acc=0,mad=W;for(let d=0;d<=W;d++){acc+=dh[d];if(acc>=c/2){mad=d;break}}
+  return [bi,Math.max(5,mad*2.2)]}
+function gcPixels(v,d){const [tr,tg,tb]=hexToRgb(v.c),Lt=clampN(lumA(tr,tg,tb),2,253),Lr=255-Lt,md=v.md!=null?v.md:(v.m==null?128:v.m),iq=Math.max(5,v.iq!=null?v.iq:(v.sd||20)*1.1),sat=v.sat/100,br=v.br*1.6,
+    amp=v.con/100*clampN(Math.min(Lt,Lr)*.42+8,14,52);
+  const ed=(v.ed==null?70:v.ed)/100,W=GCW,Hh=GCH,E=Math.max(3,Math.round(Math.min(W,Hh)*.004)),DT=ed>0&&W*Hh*4===d.length?gcDist(d,W,Hh,E):null;
+  for(let q=0;q<d.length;q+=4){if(!d[q+3])continue;const L=lumA(d[q],d[q+1],d[q+2]);let t=(L-md)/iq;
+    if(t>2.5)t=2.5+Math.log1p(t-2.5)*1.5;else if(t<-2.5)t=-2.5-Math.log1p(-t-2.5)*1.2;
+    if(ed>0){const al=d[q+3]/255;if(al<.985)t*=Math.pow(al,1+ed*4);if(DT){const e=DT[q>>2];if(e<E)t*=1-Math.min(1,ed*1.35)*Math.sqrt(1-e/E)}}
+    const dv=t*amp+br,nl=dv<0?Lt*Math.exp(dv/Lt):255-Lr*Math.exp(-dv/Math.max(1,Lr));let r,g,b;
+    if(nl<=Lt){const s=nl/Lt;r=tr*s;g=tg*s;b=tb*s}else{const s=(nl-Lt)/Math.max(1,Lr);r=tr+(255-tr)*s;g=tg+(255-tg)*s;b=tb+(255-tb)*s}
     if(sat!==1){const y=lumA(r,g,b);r=y+(r-y)*sat;g=y+(g-y)*sat;b=y+(b-y)*sat}d[q]=r;d[q+1]=g;d[q+2]=b}}
+function gcShadeCanvas(src,w,h){const c=mk(w,h),x=cx2(c);x.drawImage(src,0,0,w,h);const d=x.getImageData(0,0,w,h),a=d.data,N=w*h,Y=new Float32Array(N),S=new Uint8Array(N),A=new Uint8Array(N);for(let i=0;i<N;i++){const k=i*4;Y[i]=lumA(a[k],a[k+1],a[k+2]);A[i]=a[k+3];S[i]=a[k+3]>200?1:0}const [md,iq]=gcStats(Y,S,A,N);
+  for(let i=0;i<N;i++){const k=i*4,t=(Y[i]-md)/iq,y=255*clampN(.95+.07*(t<-3?-3-Math.log1p(-t-3)*1.4:t),.3,1);a[k]=a[k+1]=a[k+2]=y}x.putImageData(d,0,0);return c}
+function gcShade(base,loud){if(!base||base.type==='group')return false;const i=idxOf(base),L=[];for(let j=i+1;j<D.layers.length&&D.layers[j].clip;j++){const s=D.layers[j];if(s.type==='px'&&s.blend==='multiply'&&/shading/i.test(s.name)&&!s.lock)L.push(s)}if(!L.length){if(loud)hint('No Fabric shading layer on this garment – nothing to balance');return false}
+  const full=mk(D.w,D.h);dI(cx2(full),base._c||base._p);const sh=gcShadeCanvas(full,D.w,D.h);relc(full);const list=[];
+  L.forEach(s=>{const b=wholeBefore(s,false),x=cx2(s.cv);x.save();x.globalCompositeOperation='copy';x.drawImage(sh,0,0);x.restore();list.push(wholeEntry(s,false,b));touch(s,false)});relc(sh);
+  pushH(list.length>1?{k:'multi',list}:list[0],'Balance fabric shading');if(loud)hint('Fabric shading balanced – colours stay rich, folds still show',2600);return true}
 function gcHTML(v,sl){if(v.ed==null)v.ed=70;return `<p class="pnote">Keeps the folds, shadows and prints. Tap a swatch or pick any colour.</p><div class="gcsw">${GC_SW.map(([n,h])=>`<button class="${h===v.c?'on':''}" data-l="gcc:${h}" title="${n}" style="--c:${h}"></button>`).join('')}<label class="gccus" title="Any colour"><input type="color" value="${v.c}" data-gcc>＋</label></div>
   ${sl('con','Fold shading',30,250)}${sl('sat','Colour strength',0,150)}${sl('br','Brightness',-60,60)}${sl('ed','Edge cleanup',0,100)}
-  <div class="sec rw"><button class="lch" data-l="gcfix">Fix edges</button><button class="lch" data-l="gcpick">Recolour another part</button><button class="lch" data-l="gcways">Send colourways to lookbook…</button></div>`}
+  <div class="sec rw"><button class="lch" data-l="gcfix">Fix edges</button><button class="lch" data-l="gcshade" title="Stops the Multiply shading layer from muddying the new colour">Balance shading</button><button class="lch" data-l="gcpick">Recolour another part</button><button class="lch" data-l="gcways">Send colourways to lookbook…</button></div>`}
 function gcWaysSheet(){const A=ADJ;if(!A||A.type!=='gc')return;const cur=A.v.c;sheetIn.innerHTML=`<h3>Colourways to lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Pick the colours. They’re added as one garment with colour swatches in your current lookbook – viewers tap a swatch to switch.</p>
   <div class="gcpick">${[['Current',cur],...GC_SW.filter(s=>s[1]!==cur)].map(([n,h],i)=>`<label><input type="checkbox" data-gcw="${h}" data-gcn="${esc(n==='Current'?'Original':n)}"${i<4?' checked':''}><i style="background:${h}"></i>${esc(n)}</label>`).join('')}</div>
   <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="gcwaysgo">Add to lookbook</button></div>`;sheetEl.hidden=false}
@@ -5766,7 +5925,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'grid':VIEW.grid=!VIEW.grid;req();break;
     case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
     case'pixels':VIEW.pixels=!VIEW.pixels;try{localStorage.setItem('mp_pix',VIEW.pixels?'1':'0')}catch(e){}req();hint(VIEW.pixels?'Sharp pixels when zoomed in (for pixel-level work)':'Smooth, high-quality zoom');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
-    case'units':unitSheet();break;case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
+    case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
     case'autowarp':{if(l&&D.garment===l.id)return hint('Select your art layer (not the garment) first',2800);openStyle('wp');break}case'vintage':openStyle('vt');break;case'newpat':closeMenu();newPatternDoc();break;case'patsheet':if(D&&D.pat)patSheet();else hint('Open or make a pattern tile first (File › New pattern tile)',3000);break;case'pmode':D.pat.mode=v;D.changed=true;schedSave();req();patSheet();break;case'poffset':if(D&&D.pat){sheetEl.hidden=true;patOffset()}else hint('Offset is for pattern tiles (File › New pattern tile)',3000);break;case'pshow':D.pat.show=!D.pat.show;fit();req();patSheet();break;case'psave':sheetEl.hidden=true;patSave();break;case'patfill':closeMenu();patFillSheet();break;case'pfill':patFill(v);break;case'ptm':if(l&&l.pt){const b0=snapSt();l.pt.mode=v;renderPat(l);pushH({k:'st',b:b0,a:snapSt()},'Pattern repeat');touchAll();drawPanel()}break;case'ptraster':if(l&&l.pt){setProp(l,'pt',null,'Rasterize pattern');openPanel('layers')}break;case'patedit':if(l&&l.pt)openPanel('pattern');break;
     case'fabric':{if(D.garment&&byId(D.garment)&&(!l||!l.fx||!l.fx.fb||!l.fx.fb.on)){D.cur=D.garment;D.lsel=new Set();drawPanel()}openStyle('fb');break}case'embroid':openStyle('em');break;case'puff':openStyle('pf');break;case'dbl':openStyle('st2');break;case'guides':VIEW.guides=VIEW.guides===false;req();hint(VIEW.guides?'Print guides on':'Print guides hidden');break;case'tag':tagDoc(+v);break;case'setunit':setUnit(v);if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;case'newsize':closeMenu();newSizeSheet();break;case'nspre':nsPreset(+v);break;case'nsfit':nsFit();break;case'nsbg':NS.bg=v;nsDraw();break;case'nsrot':nsRot();break;case'nsppi':NS.ppi=+v;nsDraw();break;case'nscreate':nsCreate();break;case'setq':setQ(v);break;case'csanc':CS.anc=+v;csDraw();break;case'isppi':isSetPpi(+v);break;
     case'br':{const t=TOOL.t;if(t==='erase')TOOL.ebrush=v;else if(t==='smudge')TOOL.sbrush=v;else if(t==='clone')TOOL.cbrush=v;else if(t==='dodge')TOOL.dbrush=v;else{TOOL.brush=v;if(t!=='brush')setTool('brush')}openPanel('layers');drawOpt();break}
@@ -5790,7 +5949,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'knock':if(l)knockLayer(l,v);break;case'rmbg':if(l)removeBgLayer(l,18);break;
     case'style':closeMenu();openStyle();break;case'sty':styAct(v);break;
     case'adj':closeMenu();if(ADJ)adjEnd(false);if(adjStart(v))openPanel('adjust');break;
-    case'adjx':if(v==='apply'){adjEnd(true);openPanel('layers')}else if(v==='cancel'){adjEnd(false);openPanel('layers')}else if(v==='reset'){ADJ.v=Object.assign(JSON.parse(JSON.stringify(ADEF[ADJ.type])),ADJ.type==='gc'?{m:ADJ.v.m,sd:ADJ.v.sd,c:ADJ.v.c}:{});if(ADJ.type==='wrap')ADJ.v.map=(D.layers.find(x=>x.id===D.garment)||{}).id||'';adjRender();drawPanel()}else if(v==='mono'){ADJ.v.mono=ADJ.v.mono?0:1;adjRender();drawPanel()}break;
+    case'adjx':if(v==='apply'){adjEnd(true);openPanel('layers')}else if(v==='cancel'){adjEnd(false);openPanel('layers')}else if(v==='reset'){ADJ.v=Object.assign(JSON.parse(JSON.stringify(ADEF[ADJ.type])),ADJ.type==='gc'?{m:ADJ.v.m,sd:ADJ.v.sd,md:ADJ.v.md,iq:ADJ.v.iq,c:ADJ.v.c}:{});if(ADJ.type==='wrap')ADJ.v.map=(D.layers.find(x=>x.id===D.garment)||{}).id||'';adjRender();drawPanel()}else if(v==='mono'){ADJ.v.mono=ADJ.v.mono?0:1;adjRender();drawPanel()}break;
     case'tx':textAct(v);break;case'fcat':FCAT=v;drawPanel();break;
     case'font':(async()=>{const ok=await ensureFont(v);if(!ok){drawPanel();return}TOOL.font=v;if(TEXTEDIT){TEXTEDIT.l.t.font=v;try{await document.fonts.load(`40px "${v}"`)}catch(e){}renderText(TEXTEDIT.l)}drawPanel()})();break;
     case'fontimport':$('#labFont').click();break;
@@ -5808,7 +5967,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'hist':histJump(+v);break;
     case'group':groupLayers();break;case'ungroup':ungroup(l&&l.type==='group'?l:parentOf(l));break;case'newgroup':newEmptyGroup();break;case'delgroup':if(l&&l.type==='group')ungroup(l);OPENMENU=null;break;
     case'stamp':stampVisible();break;case'fillsheet':fillSheet();break;case'dofill':doFill();break;case'strokesheet':strokeSheet();break;case'dostroke':doStroke();break;case'keys':keysSheet();break;
-    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'selsubj':selectSubject(v||'new');break;case'cafill':caFill();break;case'liquify':liqStart();break;case'liq':liqAct(v);break;case'pth':pthAct(v);break;case'sepsheet':sepOpen();break;case'sep':sepAct(v);break;case'acclib':closeMenu();accToggle();break;case'acc':accAct(v);break;case'wpo':wpSet('vert',v==='v');drawOpt();break;case'glyphs':closeMenu();glToggle();break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
+    case'arr':if(l)moveItem(l,v);break;case'lpick':selAdjacent(v);break;case'smconv':smConvert();break;case'smedit':{const l=curL();if(l&&l.sm)smEdit(l);else hint('Pick a smart object layer');break}case'smrast':smRast();break;case'smreturn':smReturn();break;case'sfx':sfAct(v);break;case'selsubj':selectSubject(v||'new');break;case'cafill':caFill();break;case'liquify':liqStart();break;case'liq':liqAct(v);break;case'pth':pthAct(v);break;case'sepsheet':sepOpen();break;case'sep':sepAct(v);break;case'acclib':closeMenu();accToggle();break;case'acc':accAct(v);break;case'wpo':wpSet('vert',v==='v');drawOpt();break;case'glyphs':closeMenu();glToggle();break;case'otx':otxAct(v);break;case'stk':stkAct(v);break;case'palign':palign(v);break;case'multi':MULTI=!MULTI;hint(MULTI?'Multi-select on: tap layers to add or remove them':'Multi-select off');drawPanel();break;
     case'collapse':{const g=byId(v);if(g){g.collapsed=!g.collapsed;D.changed=true;schedSave();drawPanel()}break}
     case'desat':applyNow('bw');break;case'invertnow':applyNow('invert');break;
     case'noedges':VIEW.noedges=!VIEW.noedges;req();hint(VIEW.noedges?'Selection edges hidden (Ctrl+H)':'Selection edges shown');break;
@@ -5824,7 +5983,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
 function layerMenuAct(a,l){if(!l)return;
   switch(a){case'clip':setProp(l,'clip',!l.clip,l.clip?'Release clipping mask':'Create clipping mask');break;case'alock':if(l.type==='group')return;setProp(l,'alock',!l.alock,'Lock transparency');break;case'lock':setProp(l,'lock',!l.lock,l.lock?'Unlock layer':'Lock layer');break;
     case'dup':dupLayer(l);break;case'merge':mergeDown(l);break;case'clear':clearLayer(l);break;case'fh':flipLayer(l,'h');break;case'fv':flipLayer(l,'v');break;
-    case'up':moveItem(l,'up');break;case'down':moveItem(l,'down');break;case'del':delLayer(l);OPENMENU=null;break;case'raster':rasterize(l);break}}
+    case'up':moveItem(l,'up');break;case'down':moveItem(l,'down');break;case'del':delLayer(l);OPENMENU=null;break;case'raster':rasterize(l);break;case'rasterfx':rasterStyle(l);break}}
 function textAct(a){const T2=TEXTEDIT;if(!T2)return;const t=T2.l.t;
   const pr=textPathAct(a,t,T2.l);if(pr===true)return;if(pr===false){renderText(T2.l);dirtyComp=true;req();drawPanel();return}
   if(['left','center','right'].includes(a))t.align=a;else if(a==='bold')t.bold=!t.bold;else if(a==='it')t.it=!t.it;else if(a==='color')t.color=TOOL.color;else if(a==='stroke')t.stroke=!t.stroke;else if(a==='sc')t.sc=TOOL.color;
@@ -5896,7 +6055,7 @@ function toolDown(p,e){const t=TOOL.t;if(chnDown(p)){ACT='chn';return}
   if(t==='fill'){if(TOOL.fm==='recolour')recolour(p.x,p.y);else floodFill(p.x,p.y);return}
   if(t==='wand'){wandAt(p.x,p.y,selModeOf(e));return}
   if(t==='gradient'){if(gradStart(p))ACT='grad';return}
-  if(t==='text'){const hit=[...D.layers].reverse().find(l=>l.type==='text'&&effVis(l)&&hitText(l,p));if(hit){D.cur=hit.id;D.lsel=new Set();openPanel('text');drawOpt()}else newText(p.x,p.y);return}
+  if(t==='text'){txTap(p,e);return}
   if(t==='shape'){SHAPE={k:TOOL.shape.k,a:[p.x,p.y],b:[p.x,p.y],fill:TOOL.shape.fill,sw:TOOL.shape.sw,c:TOOL.color,pv:true,sq:e.shiftKey};ACT='shape';return}
   if(t==='select'){const m=TOOL.sel;SELDRAW={m,mode:selModeOf(e),pts:[[p.x,p.y]],preview(){return this.m==='lasso'?selPath({type:'lasso',pts:this.pts}):selPath({type:this.m,pts:[this.pts[0],this.pts[this.pts.length-1]]})}};ACT='sel';return}
   if(t==='crop'){CROP={a:[clampN(p.x,0,D.w),clampN(p.y,0,D.h)],b:[clampN(p.x,0,D.w),clampN(p.y,0,D.h)]};ACT='crop';return}
@@ -5911,7 +6070,7 @@ function toolMove(p,e,ev){if(ACT==='chn'){chnMove(p);return}if(ACT==='liq'){liqM
   else if(ACT==='rotv'){const r=cv.getBoundingClientRect(),E=ev||e,a=Math.atan2(E.clientY-r.top-V.y,E.clientX-r.left-V.x);let nr=ROTV.r0+a-ROTV.a0;if(e.shiftKey)nr=Math.round(nr/(Math.PI/12))*(Math.PI/12);V.r=nr;req();drawOpt()}
   else if(ACT==='xf')xfMove(p,e)}
 function toolUp(p,e){const a=ACT;ACT=null;if(a==='chn'){chnUp();return}if(a==='liq'){liqUp();return}if(a==='pen'){penUp();return}if(a==='tpath'){tpathEnd();return}if(a==='stroke')strokeEnd();else if(a==='grad')gradEnd();else if(a==='shape')shapeCommit();
-  else if(a==='sel'){const s=SELDRAW;SELDRAW=null;const ok=s.m==='lasso'?s.pts.length>3:s.pts.length>1&&Math.hypot(s.pts[1][0]-s.pts[0][0],s.pts[1][1]-s.pts[0][1])>4;if(ok){const sh=s.m==='lasso'?{type:'lasso',pts:s.pts}:{type:s.m,pts:[s.pts[0],s.pts[1]]},path=selPath(sh);selCombine(pathMask(path),s.mode,s.mode==='new'?path:null)}else if(s.mode==='new'){if(D.sel)D.lastSel=D.sel;D.sel=null;req();drawOpt()}}
+  else if(a==='sel'){const s=SELDRAW;SELDRAW=null;const ok=s.m==='lasso'?s.pts.length>3:s.pts.length>1&&Math.hypot(s.pts[1][0]-s.pts[0][0],s.pts[1][1]-s.pts[0][1])>4;if(ok){const sh=s.m==='lasso'?{type:'lasso',pts:s.pts}:{type:s.m,pts:[s.pts[0],s.pts[1]]},path=selPath(sh);selCombine(pathMask(path),s.mode,s.mode==='new'?path:null)}else if(s.mode==='new'){if(D.sel)selAction('deselect')}}
   else if(a==='crop'){if(Math.abs(CROP.b[0]-CROP.a[0])<6||Math.abs(CROP.b[1]-CROP.a[1])<6)CROP=null;drawOpt();req()}
   else if(a==='xf'){XD=null;req();xfFields()}else if(a==='pick')setTool(PREVT||'brush')}
 function hitText(l,p){const t=l.t,bb=l.bb||[-50,-20,50,20],[sx,sy]=tS(t),dx=p.x-t.x,dy=p.y-t.y,c=Math.cos(-t.rot),s=Math.sin(-t.rot),lx=(dx*c-dy*s)/sx,ly=(dx*s+dy*c)/sy;return lx>=Math.min(bb[0],bb[2])&&lx<=Math.max(bb[0],bb[2])&&ly>=Math.min(bb[1],bb[3])&&ly<=Math.max(bb[1],bb[3])}
