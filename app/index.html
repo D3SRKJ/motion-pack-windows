@@ -3995,13 +3995,14 @@ function layerOut(l,below){
   if(!hasM&&!bi&&!fx&&!fo)return s;
   const key=[l.v,l.mv,hasM?1:0,JSON.stringify(l.bi),JSON.stringify(l.fx),l.fillOp,wpKey(l)].join('|');
   if(!live&&keep&&!biUnder(l.bi)&&l.fxk===key&&l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h)return l.fxc;
+  const DCL=DRECT&&!fxOn(l.fx)&&(live||!keep||biUnder(l.bi))?dmgClipOn([T('lb'),T('lout')]):null;
   const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!live){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt)}
   if(hasM){bx.globalCompositeOperation='destination-in';bx.drawImage(maskAlpha(l,STROKE&&STROKE.l===l&&STROKE.mask?liveMask(l):null),0,0)}bx.restore();
   const FXPRE=bi&&fx?(()=>{const c=T('lbpre'),q=cx2(c);q.save();q.globalAlpha=1;q.globalCompositeOperation='copy';q.drawImage(b,0,0);q.restore();return c})():null;if(bi)applyBI(b,l.bi,below);
   if(!keep&&l.fxc){relc(l.fxc);l.fxc=null}let out;if(live||!keep||biUnder(l.bi))out=T('lout');else{if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h)l.fxc=mk(D.w,D.h);out=l.fxc}
   const o=cx2(out);o.save();o.globalAlpha=1;o.globalCompositeOperation='source-over';o.clearRect(0,0,D.w,D.h);
   if(fx){const F=l.fx;if(FXPRE){const off={on:false};fxBelow(o,fxShape(b,'fxs'),Object.assign({},F,{st:off,st2:off}));FXPUNCH=true;fxBelow(o,fxShape(FXPRE,'fxs2'),{st:F.st,st2:F.st2});FXPUNCH=false}else{FXPUNCH=l.fillOp<1;fxBelow(o,fxShape(b,'fxs'),F);FXPUNCH=false}}o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;if(fx)fxAbove(o,fxShape(b,'fxa'),l.fx);o.restore();
-  l.fxk=(!live&&keep&&!biUnder(l.bi))?key:'';return out}
+  if(DCL)DCL.forEach(c=>{try{cx2(c).restore()}catch(e){}});l.fxk=(!live&&keep&&!biUnder(l.bi))?key:'';return out}
 function src(l){
   if(xfHas(l))return xfPreviewFor(l);
   if(STROKE&&STROKE.l===l&&!STROKE.mask&&STROKE.kind!=='smudge'){const lv=T('live'),x=cx2(lv);x.save();x.globalAlpha=1;x.globalCompositeOperation='copy';x.drawImage(l.cv,0,0);x.restore();applyStroke(x,T('stroke'),STROKE,l);return lv}
@@ -4014,7 +4015,7 @@ function applyStroke(x,sc,S2,l){let s=sc;
   else if((S2.kind==='dodge'||S2.kind==='burn')&&!S2.mask){const t=cx2(T('stmp2'));t.save();t.globalAlpha=1;t.globalCompositeOperation='copy';t.drawImage(s,0,0);t.globalCompositeOperation='destination-in';t.drawImage(x.canvas,0,0);t.restore();s=T('stmp2');x.globalCompositeOperation='soft-light'}
   else x.globalCompositeOperation=(l&&l.alock&&!S2.mask)?'source-atop':'source-over';
   x.drawImage(s,0,0);x.restore()}
-let CLIPL=null;function composite(target,noBg){const DR=target===TMP.comp?scRect(target):null;if(DR){CLIPL=scClipOn(DR);SCDIRTY=true;DRECT=DR}const x=cx2(target);x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';x.clearRect(0,0,target.width,target.height);if(D.bgOn&&!noBg){x.fillStyle=D.bg;x.fillRect(0,0,D.w,D.h)}(target===TMP.comp?compTop(x,target,kids(null)):compList(x,target,kids(null),0));SCDIRTY=false;DRECT=null;if(CLIPL){scClipOff(CLIPL);CLIPL=null}x.globalAlpha=1;x.globalCompositeOperation='source-over';lastComp=performance.now()}
+let CLIPL=null;function composite(target,noBg){const DR=target===TMP.comp?(DMGON?dmgRect(target,noBg):scRect(target)):null;if(DR==='same'){lastComp=performance.now();return}if(DR){CLIPL=scClipOn(DR);SCDIRTY=true;DRECT=DR}const x=cx2(target);x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';x.clearRect(0,0,target.width,target.height);if(D.bgOn&&!noBg){x.fillStyle=D.bg;x.fillRect(0,0,D.w,D.h)}(target===TMP.comp?compTop(x,target,kids(null)):compList(x,target,kids(null),0));SCDIRTY=false;DRECT=null;if(CLIPL){scClipOff(CLIPL);CLIPL=null}x.globalAlpha=1;x.globalCompositeOperation='source-over';lastComp=performance.now()}
 /* ---------- view ---------- */
 const V={s:1,r:0,x:0,y:0,fx:1};let rq=0,dpr=1;
 function req(){if(!rq)rq=requestAnimationFrame(draw)}
@@ -4107,7 +4108,7 @@ function stampAt(x,y,sz,a){const S2=STROKE,b=S2.b,c=cx2(T('stroke')),r=Math.max(
     if(b.jit){c.save();c.translate(px,py);c.rotate(Math.random()*6.283);c.drawImage(S2.tint,-r,-r,r*2,r*2);c.restore();return}
     c.drawImage(S2.tint,px-r,py-r,r*2,r*2)};
   one(x,y,false);if(TOOL.sym)one(D.w-x,y,true);grow(S2.bb,x,y,r+4);const wo=D.pat?wrapOffs(x,y,r):null;if(wo)wo.forEach(([a,b2])=>{one(x+a,y+b2,false);grow(S2.bb,x+a,y+b2,r+4)})}
-function grow(bb,x,y,p){bb[0]=Math.min(bb[0],x-p);bb[1]=Math.min(bb[1],y-p);bb[2]=Math.max(bb[2],x+p);bb[3]=Math.max(bb[3],y+p);if(TOOL.sym){bb[0]=Math.min(bb[0],D.w-x-p);bb[2]=Math.max(bb[2],D.w-x+p)}}
+function grow(bb,x,y,p){dmgGrowFrame(bb,x,y,p);bb[0]=Math.min(bb[0],x-p);bb[1]=Math.min(bb[1],y-p);bb[2]=Math.max(bb[2],x+p);bb[3]=Math.max(bb[3],y+p);if(TOOL.sym){bb[0]=Math.min(bb[0],D.w-x-p);bb[2]=Math.max(bb[2],D.w-x+p)}}
 function smudgeAt(x,y,px,py,sz,a){const S2=STROKE,tc=S2.mask?S2.l.mask:S2.l.cv,r=Math.max(2,sz/2),w=Math.ceil(r*2);if(!S2.patch||S2.patch.width!==w)S2.patch=mk(w,w);const p=S2.patch,g=p.getContext('2d');
   const one=(x,y,px,py)=>{g.globalCompositeOperation='copy';g.globalAlpha=1;g.drawImage(tc,px-r,py-r,w,w,0,0,w,w);g.globalCompositeOperation='destination-in';g.drawImage(tipOf('soft'),0,0,w,w);const lc=cx2(tc);lc.save();lc.globalAlpha=clampN(a,0,1);if(S2.l.alock&&!S2.mask)lc.globalCompositeOperation='source-atop';lc.drawImage(p,x-r,y-r);lc.restore()};
   one(x,y,px,py);if(TOOL.sym)one(D.w-x,y,D.w-px,py);grow(S2.bb,x,y,r+4);if(S2.mask)S2.l.mv++;else S2.l.v++}
@@ -4131,16 +4132,16 @@ function walk(ax,ay,apr,bx,by,bpr){const S2=STROKE,b=S2.b,d=Math.hypot(bx-ax,by-
   if(S2.kind==='smudge'){const step=Math.max(1,S2.size*.1);let t=S2.carry;while(t<=d){const k=t/d,x=ax+(bx-ax)*k,y=ay+(by-ay)*k,pv=S2.prev||{x:ax,y:ay};smudgeAt(x,y,pv.x,pv.y,dynSize(apr+(bpr-apr)*k,S2.dist+t),S2.op*(.4+.6*(apr+(bpr-apr)*k)));S2.prev={x,y};t+=step}S2.carry=t-d;S2.dist+=d;return}
   const step=Math.max(.5,S2.size*(S2.kind==='clone'?.08:b.sp)*(b.tip==='soft'?.5:1));let t=S2.carry;
   while(t<=d){const k=t/d,pr=apr+(bpr-apr)*k;stampAt(ax+(bx-ax)*k,ay+(by-ay)*k,dynSize(pr,S2.dist+t),flowOf(pr));t+=step}S2.carry=t-d;S2.dist+=d}
-function drawStitch(){const S2=STROKE,c=cx2(T('stroke'));c.clearRect(0,0,D.w,D.h);const pts=S2.snap?[S2.pts[0],S2.pts[S2.pts.length-1]]:S2.pts;
+function drawStitch(){const S2=STROKE,c=cx2(T('stroke'));c.clearRect(0,0,D.w,D.h);S2.fall=true;const pts=S2.snap?[S2.pts[0],S2.pts[S2.pts.length-1]]:S2.pts;
   const dr=mir=>{c.beginPath();pts.forEach((q,i)=>{const x=mir?D.w-q.x:q.x;i?c.lineTo(x,q.y):c.moveTo(x,q.y)});c.stroke()};
   c.save();c.strokeStyle=S2.color;c.lineWidth=Math.max(1,S2.size*.28);c.lineCap='round';c.setLineDash([S2.size*1.1,S2.size*.9]);dr(false);if(TOOL.sym)dr(true);c.restore();pts.forEach(q=>grow(S2.bb,q.x,q.y,S2.size+4))}
 function strokeMove(p){const S2=STROKE;if(!S2)return;const k=1-TOOL.stream*.88;
-  if(S2.snap){S2.pts[S2.pts.length-1]=p;if(S2.b.tip==='stitch'&&S2.kind==='paint')drawStitch();else{cx2(T('stroke')).clearRect(0,0,D.w,D.h);S2.carry=0;S2.dist=0;const a=S2.pts[0];walk(a.x,a.y,1,p.x,p.y,1)}dirtyComp=true;req();return}
+  if(S2.snap){S2.pts[S2.pts.length-1]=p;if(S2.b.tip==='stitch'&&S2.kind==='paint')drawStitch();else{cx2(T('stroke')).clearRect(0,0,D.w,D.h);S2.fall=true;S2.carry=0;S2.dist=0;const a=S2.pts[0];walk(a.x,a.y,1,p.x,p.y,1)}dirtyComp=true;req();return}
   S2.sm.x+=(p.x-S2.sm.x)*k;S2.sm.y+=(p.y-S2.sm.y)*k;const pr=p.pr;S2.tl=p.tl||0;if(p.az!=null)S2.az=p.az;S2.pts.push({x:S2.sm.x,y:S2.sm.y,pr});
   if(S2.b.tip==='stitch'&&S2.kind==='paint')drawStitch();else walk(S2.last.x,S2.last.y,S2.last.pr,S2.sm.x,S2.sm.y,pr);
   S2.last={x:S2.sm.x,y:S2.sm.y,pr};if(S2.kind!=='smudge'){clearTimeout(S2.qt);S2.qt=setTimeout(quickLine,600)}dirtyComp=true;req()}
 function quickLine(){const S2=STROKE;if(!S2||S2.snap||S2.dist<40/V.s)return;S2.snap=true;const a=S2.pts[0],b=S2.pts[S2.pts.length-1];S2.pts=[a,b];
-  if(S2.b.tip==='stitch'&&S2.kind==='paint')drawStitch();else{cx2(T('stroke')).clearRect(0,0,D.w,D.h);S2.carry=0;S2.dist=0;walk(a.x,a.y,1,b.x,b.y,1)}hint('Straight line');dirtyComp=true;req()}
+  if(S2.b.tip==='stitch'&&S2.kind==='paint')drawStitch();else{cx2(T('stroke')).clearRect(0,0,D.w,D.h);S2.fall=true;S2.carry=0;S2.dist=0;walk(a.x,a.y,1,b.x,b.y,1)}hint('Straight line');dirtyComp=true;req()}
 const SNAMES={paint:'Brush stroke',erase:'Erase',smudge:'Smudge',clone:'Clone stamp',dodge:'Dodge',burn:'Burn'};
 function strokeEnd(){const S2=STROKE;if(!S2)return;clearTimeout(S2.qt);STROKE=null;const l=S2.l,bb=S2.bb;
   const x=Math.max(0,Math.floor(bb[0])),y=Math.max(0,Math.floor(bb[1])),w=Math.min(D.w,Math.ceil(bb[2]))-x,h=Math.min(D.h,Math.ceil(bb[3]))-y;if(bb[2]<bb[0]||w<1||h<1){dirtyComp=true;req();return}
@@ -4349,7 +4350,7 @@ function mergeDown(l){if(l&&l.type==='adj')return hint('Adjustment layers can’
   const sb=snapSt();D.layers.splice(i,1);D.cur=lo.id;list.push({k:'st',b:sb,a:snapSt()});pushH({k:'multi',list},'Merge down');touchAll();hint('Merged down')}
 function flattenAll(visibleOnly){const c=mk(D.w,D.h);composite(c,true);dirtyComp=true;stOp(()=>{const n=newLayer(visibleOnly?'Merged':'Flattened');cx2(n.cv).drawImage(c,0,0);if(visibleOnly){const keep=D.layers.filter(l=>!l.vis);D.layers=[...keep,n]}else D.layers=[n];D.cur=n.id;D.garment=null},visibleOnly?'Merge visible':'Flatten')}
 function moveLayer(l,to){const i=idxOf(l);to=clampN(to,0,D.layers.length-1);if(to===i)return;stOp(()=>{D.layers.splice(i,1);D.layers.splice(to,0,l);if(D.layers[0].clip)D.layers[0].clip=false},'Move layer')}
-function setProp(l,k,v,name){stOp(()=>{l[k]=v;if(k==='clip'&&idxOf(l)===0)l.clip=false},name||'Layer '+k)}
+function setProp(l,k,v,name){(DMGON?stOpP:stOp)(()=>{l[k]=v;if(k==='clip'&&idxOf(l)===0)l.clip=false},name||'Layer '+k)}
 function maskOp(l,op){if(!l)return;
   if(op==='reveal'||op==='hide'||op==='sel'){if(op==='sel'&&!D.sel)return hint('Make a selection first');const m=newMask(l,op);stOp(()=>{l.mask=m;l.maskOn=true;l.tgt='mask';l.mv++},'Add layer mask');hint('Mask added: paint black to hide, white to show',2600);return}
   if(!l.mask)return;
@@ -4527,7 +4528,7 @@ const MENUS={
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
   Select:[['selsubj','Select subject'],['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
   Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
-  View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
+  View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['fastdraw','Fast redraw (only what changed)'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
   <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn accb${ACCOPEN?' on':''}" data-l="acclib" title="Accessories library">${icon('acc')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
   <span class="fgbg"><button class="fg" data-l="panel:colour" style="--c:${TOOL.color}" title="Foreground colour"></button><button class="bg" data-l="panel:colour2" style="--c:${TOOL.color2}" title="Background colour"></button><button class="sw" data-l="swapcol" title="Swap colours (X) · D = default">${icon('swap')}</button></span>`;
@@ -6253,6 +6254,77 @@ let THFT=0;function thFitSoon(){clearTimeout(THFT);THFT=setTimeout(thFit,60)}
 addEventListener('resize',thFitSoon);try{document.fonts.addEventListener('loadingdone',thFitSoon)}catch(e){}
 thDecorate();thApply();
 
+/* ================= Fast redraw: only recombine the area that changed =================
+   After every full picture we remember each layer's state. On the next redraw we compare:
+   if only some layers changed in a known area (moved, opacity, blend, visibility, styles,
+   brush strokes), just that rectangle is recombined – everything else stays as it was. */
+let DMGON=(()=>{try{return localStorage.getItem('mp_fastdraw')!=='0'}catch(e){return true}})();
+let DMG=null;
+const DMGN=()=>D.w*D.h;
+function dmgProps(l){return [l.vis?1:0,l.op,l.blend,l.fillOp,l.maskOn?1:0,l.mask?1:0,l.sm?l.sm.rev:'',l.fx?JSON.stringify(l.fx):'',l.bi?JSON.stringify(l.bi):'',l.adj?JSON.stringify(l.adj.v):'',l.gid||'',l.type].join('|')}
+/* how far a layer's styles reach past its pixels (null = can't tell, redraw everything) */
+function dmgMargin(l){const f=l.fx;if(!f)return 4;let m=4;for(const k in f){const e=f[k];if(!e||!e.on)continue;const b=k.split('_')[0];
+    if(b==='ds')m=Math.max(m,(+e.dist||0)+(+e.size||0)*2+6);else if(b==='og')m=Math.max(m,(+e.size||0)*2+(+e.spread||0)+6);else if(b==='st'||b==='st2')m=Math.max(m,(+e.size||0)+6);
+    else if(b==='pf')m=Math.max(m,(+e.size||0)+(+e.soft||0)+6);else if(b==='is'||b==='co'||b==='go'||b==='fb')continue;else return null}return m}
+/* where a layer's own pixels are */
+function dmgPix(l){if(l._p&&!l._c){const p=l._p;return p.c?[p.x,p.y,p.x+p.c.width,p.y+p.c.height]:[0,0,0,0]}
+  const c=l._c;if(!c)return [0,0,0,0];if(c.width!==D.w||c.height!==D.h)return null;if(l._dbv===l.v&&l._dbc===c&&l._db)return l._db;
+  const W=D.w,H=D.h;let u;try{u=new Uint32Array(cx2(c).getImageData(0,0,W,H).data.buffer)}catch(e){return null}let x0=W,y0=H,x1=-1,y1=-1;
+  for(let y=0;y<H;y++){const r=y*W;let i=0;while(i<W&&!u[r+i])i++;if(i===W)continue;if(y<y0)y0=y;y1=y;if(i<x0)x0=i;let j=W-1;while(j>x1&&!u[r+j])j--;if(j>x1)x1=j}
+  const bb=x1<0?[0,0,0,0]:[x0,y0,x1+1,y1+1];l._db=bb;l._dbv=l.v;l._dbc=c;return bb}
+function dmgU(a,b){if(!a)return b;if(!b)return a;if(a[2]<=a[0]||a[3]<=a[1])return b;if(b[2]<=b[0]||b[3]<=b[1])return a;return [Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(a[2],b[2]),Math.max(a[3],b[3])]}
+function dmgGrow(b,m){return b&&b[2]>b[0]&&b[3]>b[1]?[b[0]-m,b[1]-m,b[2]+m,b[3]+m]:b}
+function dmgXf(){try{const H3=xfHandles(XFORM);const P=H3.pts||[];if(!P.length)return null;let b=null;P.forEach(p=>{b=dmgU(b,[Math.floor(p[0]),Math.floor(p[1]),Math.ceil(p[0])+1,Math.ceil(p[1])+1])});return b}catch(e){return null}}
+/* the area a layer (or group) covers on screen right now, styles included */
+function dmgOut(l,depth,stat){if((depth||0)>12)return null;if(l.type==='adj')return null;
+  if(l.type==='group'){let b=[0,0,0,0];for(const k of kids(l.id)){const q=dmgOut(k,(depth||0)+1,stat);if(!q)return null;b=dmgU(b,q)}const m=dmgMargin(l);return m==null?null:dmgGrow(b,m)}
+  const m=dmgMargin(l);if(m==null)return null;
+  if(!stat&&XFORM&&xfHas(l))return dmgGrow(dmgXf(),m+2);
+  let b=dmgPix(l);if(!b)return null;if(!stat&&STROKE&&STROKE.l===l&&STROKE.bb){const s=STROKE.bb;b=dmgU(b,[Math.floor(s[0]),Math.floor(s[1]),Math.ceil(s[2]),Math.ceil(s[3])])}
+  return dmgGrow(b,m)}
+function dmgState(){const E=new Map();for(const l of D.layers){const live=XFORM&&xfHas(l)?'X':STROKE&&STROKE.l===l?'S':'';E.set(l.id,{p:dmgProps(l),f:l.fx?JSON.stringify(l.fx):'',v:l.v,mv:l.mv,live,l})}return E}
+function dmgDoc(){return [D.w,D.h,D.bgOn?D.bg:'-',D.pat?'P':'',D.layers.map(l=>l.id+(l.clip?'^':'')).join(',')].join('#')}
+/* area the live preview of a layer covers this frame */
+function dmgLive(e,all){const l=e.l,m=dmgMargin(l);if(m==null)return null;
+  if(e.live==='X')return dmgGrow(dmgXf(),m+2);
+  if(e.live==='S'){const S2=STROKE;if(!S2||!S2.bb)return null;const s=(all||S2.fall||!S2.fb)?S2.bb:S2.fb;if(!all){S2.fb=null;S2.fall=false}
+    if(s[2]<s[0]||s[3]<s[1])return [0,0,0,0];return dmgGrow([Math.floor(s[0]),Math.floor(s[1]),Math.ceil(s[2]),Math.ceil(s[3])],m+2)}return null}
+/* brush marks added since the last redraw */
+function dmgGrowFrame(bb,x,y,p){const S2=STROKE;if(!S2||bb!==S2.bb)return;const f=S2.fb||(S2.fb=[1e9,1e9,-1e9,-1e9]);f[0]=Math.min(f[0],x-p);f[1]=Math.min(f[1],y-p);f[2]=Math.max(f[2],x+p);f[3]=Math.max(f[3],y+p);if(TOOL.sym){f[0]=Math.min(f[0],D.w-x-p);f[2]=Math.max(f[2],D.w-x+p)}}
+/* decide the rectangle to recombine (or null for the whole picture) */
+let DMGWHY=0;function dmgNo(k){DMGWHY=k;return null}
+function dmgRect(target,noBg){const doc=dmgDoc()+(noBg?'#nb':''),E=dmgState(),prev=DMG;
+  DMG={t:target,doc,E,d:D,xb:new Map(),xc:new Map()};DMGWHY=0;
+  for(const [id,e] of E){if(e.live){const c=dmgLive(e,true),b=dmgLive(e);if(b)DMG.xb.set(id,b);if(c)DMG.xc.set(id,c)}}
+  if(!DMGON||SCOFF)return dmgNo(1);if(!prev)return dmgNo(21);if(prev.t!==target)return dmgNo(22);if(prev.d!==D)return dmgNo(23);if(prev.doc!==doc)return dmgNo(24);if(D.pat||ADJ||LIQ||ACT==='chn'||ACT==='tpath')return dmgNo(25);
+  if(D.layers.some(l=>l.type==='adj'&&l.vis))return dmgNo(2);
+  let r=null,any=false;
+  for(const [id,e] of E){const o=prev.E.get(id);if(!o)return dmgNo(3);const same=o.p===e.p&&o.f===e.f&&o.v===e.v&&o.mv===e.mv;
+    if(same&&!e.live&&!o.live)continue;any=true;
+    if(o.p!==e.p||o.f!==e.f){/* settings changed (opacity, blend, visibility, styles…) */
+      if(e.live||o.live)return dmgNo(4);if(o.v!==e.v||o.mv!==e.mv)return dmgNo(5);
+      const b=dmgOut(e.l),ob=dmgOutOld(e.l,o);if(!b||!ob)return dmgNo(6);r=dmgU(r,dmgU(b,ob));continue}
+    if(e.live){const now=DMG.xb.get(id);if(!now)return dmgNo(7);if(o.v!==e.v||o.mv!==e.mv)return dmgNo(8);
+      if(o.live){if(o.live!==e.live)return dmgNo(9);if(e.live==='S'){r=dmgU(r,now)}else{const was=prev.xb.get(id);if(!was)return dmgNo(10);r=dmgU(r,dmgU(now,was))}}
+      else{r=dmgU(r,now);if(e.live==='X'){const st=dmgOut(e.l,0,true);if(!st)return dmgNo(11);r=dmgU(r,st)}}
+      continue}
+    if(o.live){/* just finished (or cancelled) a stroke / transform */
+      const was=prev.xc.get(id);if(!was)return dmgNo(12);r=dmgU(r,was);
+      if(o.live==='X'){const st=dmgOut(e.l);if(!st)return dmgNo(13);r=dmgU(r,st)}continue}
+    return dmgNo(14)/* pixels changed somewhere unknown */}
+  if(!any&&!STROKE&&!XFORM)return 'same';if(!any)return dmgNo(15);if(!r||r[2]<=r[0]||r[3]<=r[1])return [0,0,1,1];
+  const x0=Math.max(0,r[0]),y0=Math.max(0,r[1]),x1=Math.min(D.w,r[2]),y1=Math.min(D.h,r[3]);if(x1<=x0||y1<=y0)return [0,0,1,1];
+  if((x1-x0)*(y1-y0)>DMGN()*.7)return dmgNo(16);DMG.r=[x0,y0,x1-x0,y1-y0];return DMG.r}
+/* the layer's area before this change: same pixels, old styles */
+function dmgOutOld(l,o){if(l.type==='group')return dmgOut(l);const fx0=l.fx;let f=null;try{f=o.f?JSON.parse(o.f):null}catch(e){return null}l.fx=f;try{const b=dmgPix(l),m=dmgMargin(l);return b&&m!=null?dmgGrow(b,m):null}finally{l.fx=fx0}}
+function dmgSet(on){DMGON=!!on;DMG=null;try{localStorage.setItem('mp_fastdraw',on?'1':'0')}catch(e){}if(typeof dirtyComp!=='undefined'){dirtyComp=true;req()}}
+/* while only part of the picture is recombined, pixel-by-pixel layer steps are limited to it too */
+function dmgClipOn(list){const r=DRECT;if(!r)return null;list.forEach(c=>{const q=cx2(c);q.save();q.setTransform(1,0,0,1,0,0);q.beginPath();q.rect(r[0],r[1],r[2],r[3]);q.clip()});return list}
+
+/* settings-only changes (opacity, blend, visibility, clipping…) don't touch any pixels, so nothing else needs re-saving or re-rendering */
+function touchProps(){if(!D)return;dirtyComp=true;D.changed=true;schedSave();req();refreshPanels();updSide()}
+function stOpP(fn,name){const b=snapSt();fn();pushH({k:'st',b,a:snapSt()},name);touchProps()}
+
 function docTab(){smBanner();const e=document.getElementById('labTabs');if(!e||!D)return;const l=curL();e.innerHTML=`<span class="ldt">${esc(D.name||'Untitled')} @ ${Math.round(V.s*100)}% (${l?esc(l.name):'–'}, RGB/8)${D.changed?' *':''}<i data-l="home" title="Close">&times;</i></span>`}
 function stat(){if(!D||!statEl)return;docTab();const l=curL();statEl.innerHTML=`<b>${esc(toolInfo(TOOL.t)[1])}</b> · Layer: ${l?esc(l.name):'–'}${l&&onMask(l)?' <em>(editing mask)</em>':''} · ${Math.round(V.s*100)}% · ${D.w}×${D.h} px · ${dimStr(D.w,D.h)}${D.sel?' · selection active':''}`}
 
@@ -7144,6 +7216,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();
     case'sym':TOOL.sym=!TOOL.sym;drawOpt();req();hint(TOOL.sym?'Symmetry on: strokes mirror across the centre':'Symmetry off');break;
     case'grid':VIEW.grid=!VIEW.grid;req();break;
     case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
+    case'fastdraw':dmgSet(!DMGON);hint(DMGON?'Fast redraw on – only the changed area is redrawn':'Fast redraw off – the whole picture is redrawn every time',2600);break;
     case'pixels':VIEW.pixels=!VIEW.pixels;try{localStorage.setItem('mp_pix',VIEW.pixels?'1':'0')}catch(e){}req();hint(VIEW.pixels?'Sharp pixels when zoomed in (for pixel-level work)':'Smooth, high-quality zoom');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
     case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcspots':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcFillSpots(L);break}case'gcwhole':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcWhole(L);break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
     case'autowarp':{if(l&&D.garment===l.id)return hint('Select your art layer (not the garment) first',2800);openStyle('wp');break}case'vintage':openStyle('vt');break;case'newpat':closeMenu();newPatternDoc();break;case'patsheet':if(D&&D.pat)patSheet();else hint('Open or make a pattern tile first (File › New pattern tile)',3000);break;case'pmode':D.pat.mode=v;D.changed=true;schedSave();req();patSheet();break;case'poffset':if(D&&D.pat){sheetEl.hidden=true;patOffset()}else hint('Offset is for pattern tiles (File › New pattern tile)',3000);break;case'pshow':D.pat.show=!D.pat.show;fit();req();patSheet();break;case'psave':sheetEl.hidden=true;patSave();break;case'patfill':closeMenu();patFillSheet();break;case'pfill':patFill(v);break;case'ptm':if(l&&l.pt){const b0=snapSt();l.pt.mode=v;renderPat(l);pushH({k:'st',b:b0,a:snapSt()},'Pattern repeat');touchAll();drawPanel()}break;case'ptraster':if(l&&l.pt){setProp(l,'pt',null,'Rasterize pattern');openPanel('layers')}break;case'patedit':if(l&&l.pt)openPanel('pattern');break;
@@ -7229,7 +7302,7 @@ popEl.addEventListener('input',e=>{const t=e.target,d=t.dataset;
   else if(d.lop||d.lfill){const l=D.layers.find(x=>x.id===(d.lop||d.lfill));if(!OPSNAP)OPSNAP=snapSt();if(d.lop)l.op=t.value/100;else{l.fillOp=t.value/100;l.fxk=''}const o=t.nextElementSibling;if(o)o.textContent=t.value+'%';dirtyComp=true;req()}});
 popEl.addEventListener('change',e=>{const t=e.target,d=t.dataset;
   if(d.pt&&PTSNAP){pushH({k:'st',b:PTSNAP,a:snapSt()},'Pattern');PTSNAP=null;touchAll()}
-  else if((d.lop||d.lfill)&&OPSNAP){pushH({k:'st',b:OPSNAP,a:snapSt()},d.lop?'Layer opacity':'Fill opacity');OPSNAP=null;touchAll()}
+  else if((d.lop||d.lfill)&&OPSNAP){pushH({k:'st',b:OPSNAP,a:snapSt()},d.lop?'Layer opacity':'Fill opacity');OPSNAP=null;(DMGON?touchProps:touchAll)()}
   else if(d.lblend){const l=D.layers.find(x=>x.id===d.lblend);setProp(l,'blend',t.value,'Blend mode')}
   else if(d.lname){const l=D.layers.find(x=>x.id===d.lname);const v=t.value.trim()||l.name;if(v!==l.name)setProp(l,'name',v,'Rename layer')}
   else if(t.hasAttribute('data-adjmap')){ADJ.v.map=t.value;adjRender()}
