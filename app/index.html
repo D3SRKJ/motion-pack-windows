@@ -1702,6 +1702,17 @@ html.ingar #lab .lhint{top:auto!important;bottom:calc(78px + env(safe-area-inset
 #home .hm-duo .hm-sw i{width:clamp(30px,3.6vw,58px)}
 #home .hm-duo .hm-card{overflow:hidden}
 @media (max-width:760px){#home .hm-duo .hm-sw i{width:clamp(34px,11vw,58px)}}
+/* PC (mouse): toolbars wrap instead of running off screen */
+@media (pointer:fine){
+ html.ingar #lab .lopt{width:max-content;height:auto!important;min-height:44px;flex-wrap:wrap;row-gap:6px;padding:6px 16px!important;overflow:visible!important;white-space:normal;max-width:min(calc(100vw - 24px),1100px);border-radius:24px}
+ html.ingar #lab .lopt>*{flex:none}
+ #gsDock{flex-wrap:wrap;justify-content:center;row-gap:2px;overflow:visible;border-radius:26px;max-width:calc(100vw - 24px);width:max-content}
+}
+@media (pointer:fine){
+ html.ingar.gs-pop #lab .lopt{left:calc((100vw - 356px) / 2)!important;max-width:calc(100vw - 380px)}
+}
+html.ingar #labPop{bottom:calc(var(--gsdk,62px) + 26px + env(safe-area-inset-bottom,0px))!important}
+html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset-bottom,0px))!important}
 </style>
 </head>
 <body class="edit empty">
@@ -2580,6 +2591,9 @@ const CAT={/* spec category → type */'Hoodie':'hoodie','Zip hoodie':'zip','Hal
 function val(t,fit,k,size,unit){const ty=T[t];if(!ty)return '';const f=ty[4][fit]||Object.values(ty[4])[0];const v=f[k];if(!v)return '';const Sz=Z[ty[2]];const i=Sz.indexOf(size),b=Sz.indexOf(BASE[ty[2]]);if(i<0)return '';let x=v[0]+v[1]*(i-b);
   if(ty[5]==='mm')return (Math.round(x*10)/10).toString();if(unit==='cm'){x=Math.round(x*2.54*2)/2;return String(x)}x=Math.round(x*4)/4;return String(x)}
 return {P,Z,T,CAT,BASE,val};})();
+
+/* mouse wheel scrolls sideways-scrolling toolbars (they already swipe on touch screens) */
+addEventListener('wheel',e=>{if(e.ctrlKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const t=e.target.closest&&e.target.closest('.lopt,#gsDock,#dock,.ptabs,.src-tabs,.lmenus');if(!t||t.scrollWidth<=t.clientWidth+2)return;const before=t.scrollLeft;t.scrollLeft+=e.deltaY*(e.deltaMode?30:1);if(t.scrollLeft!==before){e.preventDefault();e.stopPropagation()}},{passive:false,capture:true});
 
 function extAct(act,a,it,sec){
   if(act==='specs'){specOpen(it);return true}
@@ -6465,7 +6479,7 @@ function gsEls(){if(document.getElementById('gsDock'))return;const ed=document.g
    <button data-l="gsmenu:bg" title="Studio backdrop">Backdrop</button><button class="gs-i" data-l="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8630;&#xFE0E;</button><button class="gs-i" data-l="redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">&#8631;&#xFE0E;</button><button data-l="gsmenu:out" title="Save, export, send to a lookbook">Export</button>`;
   const mn=document.createElement('div');mn.id='gsMenu';mn.hidden=true;ed.appendChild(top);ed.appendChild(dk);ed.appendChild(mn)}
 function gsSync(){const ed=document.getElementById('labEd');if(!ed)return;const bg=D&&GMODE?D.bg:'#000';ed.style.setProperty('--gsbg',bg);ed.classList.toggle('gs-light',!!(GMODE&&gsLight(bg)));H2.classList.toggle('gs-erase',GMODE&&TOOL.t==='erase');
-  const dk=document.getElementById('gsDock');if(!dk||!GMODE||!D)return;dk.querySelectorAll('[data-gt]').forEach(b=>b.classList.toggle('on',TOOL.t===b.dataset.gt));const lp=dk.querySelector('[data-gp]');if(lp)lp.classList.toggle('on',!popEl.hidden);
+  const dk=document.getElementById('gsDock');H2.classList.toggle('gs-pop',!!(GMODE&&!popEl.hidden&&desk()));if(dk)ed.style.setProperty('--gsdk',dk.offsetHeight+'px');if(!dk||!GMODE||!D)return;dk.querySelectorAll('[data-gt]').forEach(b=>b.classList.toggle('on',TOOL.t===b.dataset.gt));const lp=dk.querySelector('[data-gp]');if(lp)lp.classList.toggle('on',!popEl.hidden);
   const nm=document.querySelector('#gsTop .gs-nm');if(nm)nm.textContent=D.name||'Untitled';const l=curL();const cb=dk.querySelector('[data-l="lm:clip"]');if(cb)cb.classList.toggle('on',!!(l&&l.clip))}
 /* new garment: pick a mockup slot, upload, or use a lookbook garment */
 async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<button data-l="sheetclose">&times;</button></h3>
@@ -6497,6 +6511,8 @@ function gsAct(k,v,l,a,b,e){if(!GMODE&&!/^gs/.test(k))return false;if(b&&b.close
 /* first look when a garment opens: open studio, pan tool, no side panel */
 function gsEditorInit(){TOOL.t='hand';popEl.hidden=true;updBar();requestAnimationFrame(()=>{fit();dirtyComp=true;req()})}
 addEventListener('pointerdown',e=>{const mn=document.getElementById('gsMenu');if(mn&&!mn.hidden&&!e.target.closest('#gsMenu,#gsDock'))gsMenuClose()},true);
+
+addEventListener('resize',()=>{if(GMODE)gsSync()});
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
