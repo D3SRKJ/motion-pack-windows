@@ -1725,6 +1725,104 @@ html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset
 #gsWaysV .gw-b{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:14px 18px}
 #labSheet .gcpick .gs-own{display:flex;align-items:center;gap:8px}#labSheet .gcpick .gs-own input{width:34px;height:26px;padding:0;border:0;background:none}
 #gsMenu .gs-sub{margin:6px 8px 2px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#7a7a7a}
+#mkP{position:fixed;inset:0;z-index:27;overflow:auto;background:var(--thBg,#050505);color:#e8e8e8;animation:fadein .45s var(--ease)}
+#mkP[hidden]{display:none}#mkP>.mp-amb{position:fixed}
+#mkP .mk-in0{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:calc(24px + env(safe-area-inset-top,0px)) 20px calc(40px + env(safe-area-inset-bottom,0px))}
+#mkP .mk-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#mkP .mk-sub{margin:4px auto 18px;max-width:640px;text-align:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9a9a9a;line-height:1.6}
+#mkP .mk-top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+#mkP .mk-add{height:46px;padding:0 24px;border-radius:999px;background:var(--fr);color:#111;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}#mkP .mk-add b{font-size:16px;margin-right:4px}
+#mkP .mk-imp{height:46px;padding:0 20px;border-radius:999px;border:1px dashed rgba(255,255,255,.3);color:#ddd;font-size:12px;letter-spacing:.08em}
+#mkP .mk-cats{display:flex;flex-direction:column;gap:6px;margin:0 0 18px}
+#mkP .mk-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center}
+#mkP .mk-g{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#7c7c7c;margin-right:4px;min-width:84px;text-align:right}
+#mkP .mk-row button{height:34px;padding:0 13px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:12px;color:#ddd;background:rgba(0,0,0,.3);white-space:nowrap}
+#mkP .mk-row button.on{background:var(--fr);color:#111;border-color:transparent;font-weight:600}#mkP .mk-row em{font-style:normal;opacity:.55;margin-left:3px}
+#mkP .mk-row .mk-nc{border-style:dashed;color:#aaa}
+#mkP .mk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:14px}
+#mkP .mk-c{display:flex;flex-direction:column;border-radius:16px;border:1.2px solid transparent;background:linear-gradient(180deg,rgba(24,24,26,.92),rgba(10,10,11,.95)) padding-box,linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.05) 40%,rgba(255,255,255,.18)) border-box;overflow:hidden}
+#mkP .mk-im{position:relative;aspect-ratio:4/5;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.1),transparent 70%);cursor:pointer}
+#mkP .mk-im img{max-width:86%;max-height:86%;object-fit:contain;filter:drop-shadow(0 14px 24px rgba(0,0,0,.55));transition:transform .5s var(--ease)}
+#mkP .mk-im.bk img{transform:scaleX(1)}
+#mkP .mk-fb{position:absolute;left:10px;bottom:10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfcfcf;background:rgba(0,0,0,.5);padding:4px 9px;border-radius:999px}#mkP .mk-fb.nb{opacity:.6}
+#mkP .mk-t{display:flex;flex-direction:column;gap:2px;padding:10px 14px 4px}#mkP .mk-t b{font-weight:600;font-size:14px;color:#fff}#mkP .mk-t span{font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase}
+#mkP .mk-a{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px 14px}#mkP .mk-a button{height:30px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:11px;color:#e2e2e2}#mkP .mk-a button:hover{background:rgba(255,255,255,.08)}#mkP .mk-a .mk-more{margin-left:auto}
+#mkP .mk-empty{text-align:center;color:#9a9a9a;font-size:14px;margin:40px 0}
+#mkP .mk-sheet{position:fixed;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.55);padding:14px}#mkP .mk-sheet[hidden]{display:none}
+#mkP .mk-sh{width:min(480px,100%);max-height:calc(100dvh - 28px);overflow:auto;padding:18px;border-radius:18px;border:1.5px solid transparent;background:linear-gradient(180deg,#141416,#0a0a0b) padding-box,var(--fr,linear-gradient(135deg,#8c8c8c,#f7f7f7,#6f6f6f,#e8e8e8)) border-box;box-shadow:0 30px 90px rgba(0,0,0,.75)}
+#mkP .mk-shh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}#mkP .mk-shh b{font-family:var(--fs);font-weight:400;font-size:22px}#mkP .mk-shh button{font-size:24px;color:#aaa}
+#mkP .mk-l{display:flex;flex-direction:column;gap:6px;margin:0 0 12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9a9a9a}
+#mkP .mk-l input,#mkP .mk-l select{height:42px;padding:0 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#000;color:#fff;font:14px "Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:none;letter-spacing:0}
+#mkP .mk-sides{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#mkP .mk-side{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;aspect-ratio:4/5;border-radius:14px;border:1px dashed rgba(255,255,255,.28);color:#bbb;font-size:12px;overflow:hidden;padding:8px}
+#mkP .mk-side i{font-style:normal;font-size:30px;color:#888}#mkP .mk-side img{max-width:100%;max-height:78%;object-fit:contain}
+#mkP .mk-note{font-size:11.5px;color:#8a8a8a;margin:10px 0}
+#mkP .mk-sb{display:flex;gap:8px;justify-content:flex-end}
+#mkP .mk-list{display:flex;flex-direction:column;gap:6px}#mkP .mk-list button{text-align:left;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);font-size:13px;color:#e6e6e6}#mkP .mk-list .dang{color:#ffb3a8}
+@media (max-width:640px){#mkP .mk-sub{font-size:10.5px;margin-bottom:12px}#mkP .mk-row{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px;-webkit-mask:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 24px),transparent)}#mkP .mk-row::-webkit-scrollbar{display:none}#mkP .mk-g{min-width:0;flex:none;text-align:left}#mkP .mk-row button{flex:none;height:32px}#mkP .mk-grid{grid-template-columns:1fr 1fr;gap:10px}#mkP .mk-a button{height:28px;padding:0 9px;font-size:10.5px}#mkP .mk-t{padding:8px 10px 2px}#mkP .mk-a{padding:6px 8px 10px}}
+/* lookbook chooser */
+#lbCh{position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:rgba(0,0,0,.6);padding:14px}#lbCh[hidden]{display:none}
+#lbCh .lc-in{width:min(560px,100%);max-height:calc(100dvh - 28px);overflow:auto;padding:18px;border-radius:18px;border:1.5px solid transparent;background:linear-gradient(180deg,#141416,#0a0a0b) padding-box,var(--fr,linear-gradient(135deg,#8c8c8c,#f7f7f7,#6f6f6f,#e8e8e8)) border-box;box-shadow:0 30px 90px rgba(0,0,0,.75);color:#e8e8e8}
+#lbCh .lc-h{display:flex;justify-content:space-between;align-items:center}#lbCh .lc-h b{font-family:var(--fs);font-weight:400;font-size:22px}#lbCh .lc-h button{font-size:24px;color:#aaa}
+#lbCh .lc-n{margin:6px 0 14px;font-size:12.5px;color:#9a9a9a;line-height:1.5}
+#lbCh .lc-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+#lbCh .lc-g button{position:relative;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;color:#ddd;font-size:12px}
+#lbCh .lc-g i{display:grid;place-items:center;aspect-ratio:3/4;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#0c0c0c center/cover no-repeat;font-style:normal}
+#lbCh .lc-new i{font-size:30px;color:#aaa;border-style:dashed}
+#lbCh .lc-g em{position:absolute;top:6px;left:6px;font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;background:var(--fr);color:#111;padding:3px 7px;border-radius:999px}
+/* ---- free, floating home ---- */
+#home .hm-free{gap:clamp(18px,3.4vh,40px);align-items:center;max-width:1240px}
+#home .hm-free .hm-top{width:100%}
+#home .hm-fclock{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;animation:hmrise 1.2s var(--ease) .2s both}
+#home .hm-fclock b#hmTime{font-size:clamp(34px,4.4vw,56px)}
+#home .hm-fclock>span{white-space:nowrap}
+#home .hm-fclock .hm-cnt b{display:inline;background:none;-webkit-text-fill-color:currentColor;color:#e6e6e6;font-size:16px;font-weight:300;margin-right:6px}
+#home .hm-fclock .hm-cnt{border-top:0;margin-top:2px;padding-top:0;justify-content:center}
+#home .hm-cats{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:clamp(18px,4vw,56px) clamp(8px,2.6vw,44px);width:100%;padding:clamp(6px,2vh,24px) 0 clamp(10px,3vh,34px)}
+#home .hm-cat{flex:0 0 auto}
+#home .hm-cat:nth-child(2),#home .hm-cat:nth-child(4){margin-top:clamp(18px,6vh,64px)}
+#home .hm-cat:nth-child(3){margin-top:clamp(-6px,-1vh,0px)}
+#home .hm-cat .hm-shd{left:22%;right:22%;bottom:auto;top:calc(var(--sy) + 18px)}
+#home .hm-em{--sy:clamp(92px,10.5vw,146px);display:flex;flex-direction:column;align-items:center;gap:10px;min-width:calc(var(--sy) + 24px);max-width:calc(var(--sy) + 150px);padding:0;background:none;border:0;color:inherit;text-align:center;cursor:var(--cp);-webkit-tap-highlight-color:transparent}
+#home .hm-sym{position:relative;display:grid;place-items:center;width:var(--sy);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 36%,rgba(var(--thL,255,255,255),.14),rgba(0,0,0,0) 62%),radial-gradient(circle at 50% 50%,rgba(20,20,22,.55),rgba(0,0,0,0) 72%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 26px 50px rgba(0,0,0,.55);transition:transform .55s cubic-bezier(.2,.9,.25,1.2),box-shadow .5s}
+#home .hm-sym>.mpfr{border-radius:50%;padding:1.2px;animation:mpfr 9s linear infinite;opacity:.85}
+#home .hm-sym svg{width:62%;height:auto;overflow:visible;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
+#home .hm-sym .hm-draw path,#home .hm-sym .hm-draw circle{fill:none;stroke:url(#hmChrome);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:hmdraw 2.6s var(--ease) forwards;animation-delay:calc(.7s + var(--i,0) * .12s + var(--d,0s))}
+#home .hm-sym .hm-draw .st{stroke-dasharray:4 5;stroke-dashoffset:0;stroke-width:1.6;opacity:0;animation:hmfade 1.4s ease forwards;animation-delay:2.2s}
+#home .hm-bk .hm-frames{width:46%;aspect-ratio:4/5}
+#home .hm-bk .hm-frames i{border-radius:4px}
+#home .hm-nm{display:block;font-size:calc(clamp(22px,2.6vw,34px) * var(--fsK,1));line-height:1.1;padding:.04em .12em .12em;white-space:nowrap;font-family:var(--fs);text-transform:var(--fsT,none);letter-spacing:var(--fsLS,.01em);font-weight:var(--fsW,400)}
+#home .hm-em small{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#8d8f94;margin-top:-4px;white-space:nowrap}
+#home .hm-cat:hover .hm-sym,#home .hm-em:focus-visible .hm-sym{transform:translateY(-10px) scale(1.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 40px 70px rgba(0,0,0,.7),0 0 60px rgba(var(--thL,200,220,255),.22)}
+#home .hm-cat:hover .hm-sym>.mpfr{opacity:1;animation-duration:2.4s}
+#home .hm-cat:hover .hm-draw path{filter:drop-shadow(0 0 6px rgba(var(--thL,200,220,255),.5))}
+#home .hm-em:active .hm-sym{transform:scale(.96);transition-duration:.12s}
+#home .hm-em:focus-visible{outline:none}
+/* quick actions: symbol + name, no boxes */
+#home .hm-dock{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 8px;max-width:980px;animation:hmin 1.5s var(--ease) .6s both}
+#home .hm-dock button{width:auto;padding:7px 14px 7px 7px;gap:10px;border-radius:999px;background:none;border:0;font-size:11.5px}
+#home .hm-dock button:hover{background:rgba(255,255,255,.05);transform:translateY(-3px)}
+#home .hm-dock button em{display:none}
+#home .hm-dock button i:not(.mpfr){width:30px;height:30px;font-size:13px}
+#home .hm-dock button .mpfr{opacity:0;border-radius:999px}
+#home .hm-dock button:hover .mpfr,#home .hm-dock button:focus-visible .mpfr{opacity:.9}
+#home .hm-dock button:nth-child(odd){animation:hmbob 7s ease-in-out infinite;animation-delay:calc(var(--q,0) * -1s)}
+#home .hm-dock button:nth-child(even){animation:hmbob 8.5s ease-in-out infinite;animation-delay:-3s}
+#home .hm-dock button:hover{animation-play-state:paused}
+.th-still #home .hm-dock button,.th-still #home .hm-sym>.mpfr{animation:none!important}
+@media (max-width:640px){
+  #home .hm-em{--sy:clamp(78px,24vw,104px);min-width:calc(var(--sy) + 16px);gap:8px}
+  #home .hm-cats{gap:14px 10px}
+  #home .hm-cat:nth-child(2),#home .hm-cat:nth-child(4){margin-top:0}
+  #home .hm-cat:nth-child(n+4){margin-top:-4px}
+  #home .hm-nm{font-size:calc(19px * var(--fsK,1))}
+  #home .hm-em small{font-size:8px;letter-spacing:.18em}
+  #home .hm-dock button{font-size:10.5px;padding:6px 10px 6px 6px}
+}
+@media (prefers-reduced-motion:reduce){#home .hm-dock button{animation:none}}
+@media (max-width:700px),(max-height:500px) and (pointer:coarse){#hint,#toast{bottom:auto;white-space:normal}}
 </style>
 </head>
 <body class="edit empty">
@@ -1784,29 +1882,17 @@ html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset
 <div id="home" hidden aria-label="Home">
   <div class="hm-bg"></div><div class="hm-floor"></div><canvas class="hm-dust" id="hmDust"></canvas>
   <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="hmChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#8d8d8d"/><stop offset=".6" stop-color="#eaeaea"/><stop offset="1" stop-color="#7a7a7a"/></linearGradient></defs></svg>
-  <div class="hm-in">
+  <div class="hm-in hm-free">
     <header class="hm-top"><div class="hm-logo" id="hmBrand"></div><span class="hm-sub">Garment design &amp; lookbook studio</span></header>
-    <div class="hm-grid">
-      <div class="hm-px" style="--dz:1.1;--i:0;--ph:0s"><div class="hm-fl"><button class="hm-card big" data-home="lab">
-        <div class="hm-art"><svg class="hm-draw" viewBox="0 0 1000 1000" aria-hidden="true">
-          <path d="M330 250 C318 170 350 72 500 64 C650 72 682 170 670 250 L760 262 C812 280 846 320 866 396 L950 900 L866 926 L782 548 L770 880 L774 940 C600 952 400 952 226 940 L230 880 L218 548 L134 926 L50 900 L134 396 C154 320 188 280 240 262 Z"/>
-          <path style="--d:.5s" d="M392 250 C380 180 420 120 500 116 C580 120 620 180 608 250 C580 300 420 300 392 250 Z"/>
-          <path style="--d:.9s" d="M350 640 L650 640 C680 710 700 770 712 830 L288 830 C300 770 320 710 350 640 Z"/>
-          <path style="--d:1.1s" d="M455 290 C452 360 458 420 450 480 M545 290 C548 360 542 420 550 480"/>
-          <path class="st" d="M240 262 C234 350 226 450 218 548 M760 262 C766 350 774 450 782 548 M232 905 C400 917 600 917 768 905"/>
-        </svg></div>
-        <div class="hm-t"><span class="hm-k">01</span><h2 class="chrome">Design Lab</h2><p>Mockups, layers, accessories, brushes and type. Design the piece from blank to final.</p><span class="hm-go">&rarr;</span></div>
-      </button></div><i class="hm-shd"></i></div>
-      <div class="hm-mid">
-        <div class="hm-px" style="--dz:2;--i:1;--ph:-2.6s"><div class="hm-fl"><div class="hm-card sm hm-clock"><span class="hm-k">Today</span><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div></div><i class="hm-shd"></i></div>
-        <div class="hm-px" style="--dz:1.6;--i:2;--ph:-4.4s"><div class="hm-fl"><div class="hm-card sm hm-quick"><span class="hm-k">Quick start</span><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="gs"><i>&#9673;&#xFE0E;</i>Garment Studio<em>&rarr;</em></button><button data-hq="src"><i>&#9707;&#xFE0E;</i>Sourcing &amp; materials<em>&rarr;</em></button><button data-hq="theme"><i>&#9680;&#xFE0E;</i>Theme &amp; backdrop<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="sync" id="hmSync"><i>&#8645;&#xFE0E;</i>Sync devices<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></div></div><i class="hm-shd"></i></div>
-      </div>
-      <div class="hm-px" style="--dz:1.1;--i:3;--ph:-1.4s"><div class="hm-fl"><button class="hm-card big" data-home="books">
-        <div class="hm-art"><div class="hm-frames"><i></i><i></i><i id="hmCover"></i></div></div>
-        <div class="hm-t"><span class="hm-k">02</span><h2 class="chrome">Lookbooks</h2><p>Present, zoom, light and sell. Your collections with motion.</p><span class="hm-go">&rarr;</span></div>
-      </button></div><i class="hm-shd"></i></div>
-    </div>
-    <div class="hm-duo"><div class="hm-px hm-srcw hm-gsw" style="--dz:1;--i:4;--ph:-2.4s"><div class="hm-fl"><button class="hm-card wide gs" data-home="gs"><div class="hm-art"><div class="hm-gsa"><i class="gs-spot"></i><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="gsCh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8c8c8c"/><stop offset=".45" stop-color="#f4f4f4"/><stop offset=".7" stop-color="#7a7a7a"/><stop offset="1" stop-color="#e2e2e2"/></linearGradient></defs><path d="M42 14c4 6 10 9 18 9s14-3 18-9l24 10 12 28-16 7-6-12v62H28V47l-6 12-16-7 12-28z" fill="#161618" stroke="url(#gsCh)" stroke-width="2.2" stroke-linejoin="round"/><path d="M48 44h24v20H48z" fill="none" stroke="url(#gsCh)" stroke-width="1.4" stroke-dasharray="3 3"/></svg><span class="gs-dots"><i style="background:#0c0c0d"></i><i style="background:#ebe2cf"></i><i style="background:#f6f5f1"></i><i style="background:#8e8f91"></i></span></div></div><div class="hm-t"><span class="hm-k">03</span><h2 class="chrome">Garment Studio</h2><p>Just garments and designs. Clip, recolour and bring a piece to life, fast.</p><span class="hm-go">&rarr;</span></div></button></div><i class="hm-shd"></i></div><div class="hm-px hm-srcw" style="--dz:1;--i:4;--ph:-3.2s"><div class="hm-fl"><button class="hm-card wide" data-home="src"><div class="hm-art"><div class="hm-sw"><i style="--r:-8deg;--y:6px;--b:repeating-linear-gradient(135deg,#2c3e63 0 3px,#22314f 3px 6px)"></i><i style="--r:-2deg;--y:-4px;--b:radial-gradient(circle at 30% 30%,#d9d2c3,#a89c86)"></i><i style="--r:4deg;--y:2px;--b:repeating-linear-gradient(90deg,#5a1c22 0 2px,#6d242b 2px 5px)"></i><i style="--r:9deg;--y:8px;--b:linear-gradient(160deg,#2b2b2e,#111)"></i></div></div><div class="hm-t"><span class="hm-k">04</span><h2 class="chrome">Sourcing</h2><p>Fabrics, weights, washes, vendors worldwide and what your budget can make.</p><span class="hm-go">&rarr;</span></div></button></div><i class="hm-shd"></i></div></div>
+    <div class="hm-clock hm-fclock"><b id="hmTime">--:--</b><span id="hmDate"></span><div class="hm-cnt"><span><b id="hmCd">0</b>designs</span><span><b id="hmCb">0</b>lookbooks</span></div></div>
+    <nav class="hm-cats" aria-label="Sections">
+      <div class="hm-px hm-cat" style="--dz:1.4;--i:0;--ph:0s"><div class="hm-fl"><button class="hm-em" data-home="lab"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 16 L82 58 L60 104 L38 58 Z"/><path style="--d:.4s" d="M60 16 L60 74"/><circle style="--d:.7s" cx="60" cy="80" r="6"/><path style="--d:.9s" d="M30 104 H90"/></svg></span><b class="hm-nm chrome">Design Lab</b><small>Design from blank to final</small></button></div><i class="hm-shd"></i></div>
+      <div class="hm-px hm-cat" style="--dz:1.9;--i:1;--ph:-2.2s"><div class="hm-fl"><button class="hm-em" data-home="books"><span class="hm-sym hm-bk"><span class="hm-frames"><i></i><i></i><i id="hmCover"></i></span></span><b class="hm-nm chrome">Lookbooks</b><small>Present in motion</small></button></div><i class="hm-shd"></i></div>
+      <div class="hm-px hm-cat" style="--dz:1.2;--i:2;--ph:-4.1s"><div class="hm-fl"><button class="hm-em" data-home="gs"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 14 c6 0 9 4 9 8 c0 5 -9 6 -9 12"/><path style="--d:.3s" d="M60 34 L20 52 L100 52 Z"/><path style="--d:.6s" d="M42 58 c4 5 10 7 18 7 s14 -2 18 -7 l14 6 l6 14 l-9 4 l-4 -7 v35 H35 V77 l-4 7 l-9 -4 l6 -14 z"/></svg></span><b class="hm-nm chrome">Garment Studio</b><small>Garments &amp; designs, fast</small></button></div><i class="hm-shd"></i></div>
+      <div class="hm-px hm-cat" style="--dz:1.7;--i:3;--ph:-1.3s"><div class="hm-fl"><button class="hm-em" data-home="mk"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path class="st" d="M52 26 c3 4 7 6 12 6 s9 -2 12 -6 l16 7 l8 19 l-11 5 l-4 -8 v52 H47"/><path style="--d:.3s" d="M28 32 c3 4 7 6 12 6 s9 -2 12 -6 l16 7 l8 19 l-11 5 l-4 -8 v52 H31 v-52 l-4 8 l-11 -5 l8 -19 z"/><path style="--d:.8s" d="M40 52 v14"/></svg></span><b class="hm-nm chrome">Mockups</b><small>Front &amp; back, by garment</small></button></div><i class="hm-shd"></i></div>
+      <div class="hm-px hm-cat" style="--dz:1.3;--i:4;--ph:-3.3s"><div class="hm-fl"><button class="hm-em" data-home="src"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M38 24 H82 M38 96 H82"/><path style="--d:.3s" d="M44 24 V96 M76 24 V96"/><path style="--d:.6s" d="M44 34 C60 40 60 44 76 38 M44 46 C60 52 60 56 76 50 M44 58 C60 64 60 68 76 62 M44 70 C60 76 60 80 76 74 M44 82 C60 88 60 90 76 86"/><path class="st" d="M76 56 C94 58 100 72 92 86"/></svg></span><b class="hm-nm chrome">Sourcing</b><small>Fabrics, vendors, sizes</small></button></div><i class="hm-shd"></i></div>
+    </nav>
+    <nav class="hm-quick hm-dock" aria-label="Quick actions"><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="theme"><i>&#9680;&#xFE0E;</i>Theme &amp; backdrop<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="sync" id="hmSync"><i>&#8645;&#xFE0E;</i>Sync devices<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></nav>
     <section class="hm-rec" id="hmRec" hidden><h3>Jump back in</h3><div class="hm-row" id="hmRow"></div></section>
   </div>
 </div>
@@ -4730,7 +4816,7 @@ Object.assign(IC,{acc:'M12 3l2.2 5.3L20 10.5l-5.8 2.2L12 18l-2.2-5.3L4 10.5l5.8-
 
 /* ---------- top bar + menus ---------- */
 const MENUS={
-  File:[['new','New design…','Ctrl+N'],['timelapse','Timelapse replay (video)…'],['printpdf','Print PDF with cut lines…'],['newpat','New pattern tile…'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a lookbook (stays linked)'],['sepsheet','Colour separations (screen print)…'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
+  File:[['new','New design…','Ctrl+N'],['timelapse','Timelapse replay (video)…'],['printpdf','Print PDF with cut lines…'],['newpat','New pattern tile…'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a new or existing lookbook…'],['sepsheet','Colour separations (screen print)…'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
   Edit:[['undo','Undo','Ctrl+Z'],['redo','Redo','Ctrl+Shift+Z'],['undo','Step backward','Ctrl+Alt+Z'],['panel:history','History panel'],['-'],['cafill','Content-aware fill (select the spot first)'],['-'],['xf:free','Free transform','Ctrl+T'],['xf:distort','Distort (perspective)'],['xf:warp','Warp'],['xf:fh','Flip horizontal'],['xf:fv','Flip vertical'],['-'],['fillsheet','Fill…','Shift+F5'],['strokesheet','Stroke selection…'],['sa:clear','Clear','Del'],['-'],['pensheet','Apple Pencil & pressure…'],['keys','Keyboard shortcuts…','?']],
   Image:[['gcpick','✦ Smart garment colour'],['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
@@ -6063,6 +6149,7 @@ async function syBin(cfg,sha,files){const real=(files&&files.get(SYDIR+'b/'+sha)
 async function syLocal(dev){const out=new Map();const dl=(await IDB.get('dlib'))||[];for(const d of dl)out.set('des/'+d.id,{kind:'des',id:d.id,name:d.name,u:String(d.updated||0)});
   for(const e of await libGet()){if(!e||!e.id)continue;const rk=e.id==='default'?'lb/d_'+dev:'lb/'+e.id;const d=await IDB.get('lb:'+e.id);if(!d)continue;out.set(rk,{kind:'lb',id:e.id,name:e.name||d.title||'Lookbook',u:String(d.savedAt||0)})}
   const col=await IDB.get('collections');if(col)out.set('misc/collections',{kind:'misc',id:'collections',name:'Collection planner',u:syHash(JSON.stringify(col))});
+  const mkl=await IDB.get('mockups');if(mkl)out.set('misc/mockups',{kind:'misc',id:'mockups',name:'Mockups library',u:syHash(JSON.stringify([mkl.cats,(mkl.items||[]).map(x=>[x.id,x.name,x.cat,x.updated,x.f?x.f.size:0,x.b?x.b.size:0])]))});
   const sl=await IDB.get('mslots');if(sl)out.set('misc/mslots',{kind:'misc',id:'mslots',name:'Mockup slots',u:syHash(JSON.stringify(sl.map(x=>[x.id,x.name,x.thumb?x.thumb.length:0,x.blob?x.blob.size:0])))});
   const my=await IDB.get('myassets');if(my&&my.length)out.set('misc/myassets',{kind:'misc',id:'myassets',name:'My Assets',u:syHash(JSON.stringify(my.map(x=>[x.id,x.name,x.folder])))});
   return out}
@@ -6428,7 +6515,7 @@ async function thFont(id,force){const f=THFONTS[id];if(!f||!f[1])return;if(THFL[
 function thDecorate(){const amb=()=>{const d=document.createElement('div');d.className='mp-amb';d.innerHTML='<i class="b1"></i><i class="b2"></i><i class="sw"></i><i class="gr"></i>';return d};
   [document.getElementById('home'),document.getElementById('library'),document.getElementById('labGal')].forEach(e=>{if(e&&!e.querySelector(':scope>.mp-amb'))e.insertBefore(amb(),e.firstChild)});
   const fr=e=>{if(e&&!e.querySelector(':scope>.mpfr')){const i=document.createElement('i');i.className='mpfr';i.setAttribute('aria-hidden','true');e.appendChild(i)}};
-  document.querySelectorAll('#home .hm-card,.hm-quick button,.sheet').forEach(fr)}
+  document.querySelectorAll('#home .hm-card,#home .hm-sym,.hm-quick button,.sheet').forEach(fr)}
 function thSweep(){if(TH.mo!=='full'||matchMedia('(prefers-reduced-motion:reduce)').matches)return;let s=document.getElementById('mpSweep');if(!s){s=document.createElement('div');s.id='mpSweep';s.innerHTML='<i></i>';document.body.appendChild(s)}s.classList.remove('go');void s.offsetWidth;s.classList.add('go')}
 const thObs=new MutationObserver(ms=>{for(const m of ms){const e=m.target;if(e.hidden||m.oldValue===null)continue;
   if(e.id==='home'||e.id==='library'||e.id==='labGal'||e.id==='lab'){thSweep();thFitSoon();e.classList.remove('mp-enter');void e.offsetWidth;e.classList.add('mp-enter');setTimeout(()=>e.classList.remove('mp-enter'),1400)}
@@ -6497,7 +6584,7 @@ function gsSync(){const ed=document.getElementById('labEd');if(!ed)return;const 
 async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<button data-l="sheetclose">&times;</button></h3>
   <p class="pnote">Start from a garment mockup – a PNG with a transparent background works best. The garment stays the biggest thing in the studio; your designs clip inside it and pick up its folds.</p>
   <div class="rw gs-start"><button class="lch pri" data-l="gsup">Upload a garment image</button><button class="lch" data-l="gslb">From a lookbook garment</button></div>
-  <h5>Your mockups <span class="h5n">Tap a mockup to start, or an empty slot to add one</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}</div>`;sheetEl.hidden=false}
+  ${await gsMkSection()}<h5>Your mockups <span class="h5n">Tap a mockup to start, or an empty slot to add one</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}</div>`;sheetEl.hidden=false}
 /* designs go between the garment and its fabric shading, so they pick up the folds */
 function gsDesignSlot(){const L=D.layers,si=L.findIndex(l=>l.name==='Fabric shading'&&l.clip);const c=curL();if(si>0&&(!c||c.id===L[si].id||c.id===D.garment||c.type==='adj'||c.type==='group'))D.cur=L[si-1].id;else if(si<0&&c&&c.id===D.garment&&L[idxOf(c)+1])D.cur=L[idxOf(c)+1].id}
 const GSREAL=[['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
@@ -6506,7 +6593,7 @@ function gsMenu(k,btn){const mn=document.getElementById('gsMenu');if(!mn)return;
   if(k==='real')h=`<h6>Bring it to life <span>on “${esc(l?l.name:'')}”</span></h6>`+GSREAL.map(([a,n])=>`<button data-l="${a}">${n}</button>`).join('');
   else if(k==='blend')h=`<h6>Blend <span>“${esc(l?l.name:'')}”</span></h6>`+GSBL.map(([a,n])=>`<button class="${l&&l.blend===a?'on':''}" data-l="gsbl:${a}">${n}</button>`).join('');
   else if(k==='bg')h=`<h6>Studio backdrop</h6><div class="gs-bgs">${Object.keys(GSBG).map(c=>`<button class="${D.bg===GSBG[c]?'on':''}" data-l="gsbg:${c}"><i style="background:${GSBG[c]}"></i>${GSBGN[c]}</button>`).join('')}</div>`;
-  else if(k==='out')h=`<h6>${esc(D.name||'Garment')}</h6><button data-l="save">Save</button><button data-l="exp:png">Export PNG (with backdrop)</button><button data-l="exp:clear">Export PNG (transparent)</button><button data-l="exp:jpg">Export JPG</button><p class="gs-sub">Ready-made sizes</p>${Object.entries(GSX).map(([k,v])=>`<button data-l="gsexp:${k}">${v[3]} <span style="opacity:.5">${v[0]}×${v[1]}</span></button>`).join('')}<button data-l="sendlb">Send to a lookbook</button><button data-l="rename">Rename</button><button data-l="gsfull">Open in the full Design Lab</button>`;
+  else if(k==='out')h=`<h6>${esc(D.name||'Garment')}</h6><button data-l="save">Save</button><button data-l="exp:png">Export PNG (with backdrop)</button><button data-l="exp:clear">Export PNG (transparent)</button><button data-l="exp:jpg">Export JPG</button><p class="gs-sub">Ready-made sizes</p>${Object.entries(GSX).map(([k,v])=>`<button data-l="gsexp:${k}">${v[3]} <span style="opacity:.5">${v[0]}×${v[1]}</span></button>`).join('')}<button data-l="sendlb">Send to a new or existing lookbook</button><button data-l="rename">Rename</button><button data-l="gsfull">Open in the full Design Lab</button>`;
   mn.innerHTML=h;mn.dataset.k=k;mn.hidden=false;const r=btn.getBoundingClientRect(),w=mn.offsetWidth;mn.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2))+'px';mn.style.bottom=(innerHeight-r.top+10)+'px'}
 function gsMenuClose(){const mn=document.getElementById('gsMenu');if(mn)mn.hidden=true}
 function gsAct(k,v,l,a,b,e){if(!GMODE&&!/^gs/.test(k))return false;if(b&&b.closest&&b.closest('#gsMenu'))gsMenuClose();else if(k!=='gsmenu')gsMenuClose();
@@ -6573,13 +6660,14 @@ async function gsWaysGo(){const l=gsGcLayer();if(!l)return;const picks=[...sheet
   imgs.forEach((m,i)=>{const px=pad+i*(cw+gap);x.save();x.shadowColor=lt?'rgba(0,0,0,.22)':'rgba(0,0,0,.55)';x.shadowBlur=ch*.03;x.shadowOffsetY=ch*.02;x.drawImage(m.c,px,pad);x.restore();
     x.fillStyle=lt?'#1b1b1b':'#ececec';x.textAlign='center';x.font=`500 ${Math.round(lab*.32)}px "Helvetica Neue",Helvetica,Arial,sans-serif`;x.fillText(String(m.n).toUpperCase(),px+cw/2,pad+ch+lab*.52);x.fillStyle=lt?'#777':'#9a9a9a';x.font=`400 ${Math.round(lab*.22)}px "Helvetica Neue",Helvetica,Arial,sans-serif`;x.fillText(m.h,px+cw/2,pad+ch+lab*.86)});
   GSWAYS={picks:imgs.map(m=>[m.n,m.h]),c};gsWaysShow()}
-function gsWaysShow(){let v=document.getElementById('gsWaysV');if(!v){v=document.createElement('div');v.id='gsWaysV';v.innerHTML=`<div class="gw-in"><div class="gw-h"><b>Colourways</b><button data-l="gswaysx" aria-label="Close">&times;</button></div><div class="gw-img"><img alt="Colourway lineup"></div><div class="gw-b"><button class="lch" data-l="gswaysx">Close</button><button class="lch" data-l="gswayssave">Save image</button><button class="lch pri" data-l="gswayslb">Send to lookbook</button></div></div>`;document.getElementById('labEd').appendChild(v)}
+function gsWaysShow(){let v=document.getElementById('gsWaysV');if(!v){v=document.createElement('div');v.id='gsWaysV';v.innerHTML=`<div class="gw-in"><div class="gw-h"><b>Colourways</b><button data-l="gswaysx" aria-label="Close">&times;</button></div><div class="gw-img"><img alt="Colourway lineup"></div><div class="gw-b"><button class="lch" data-l="gswaysx">Close</button><button class="lch" data-l="gswayssave">Save image</button><button class="lch pri" data-l="gswayslb">Send to a lookbook…</button></div></div>`;document.getElementById('labEd').appendChild(v)}
   v.querySelector('img').src=GSWAYS.c.toDataURL('image/jpeg',.9);v.hidden=false}
-async function gsWaysToLookbook(){const l=gsGcLayer();if(!l||!GSWAYS)return;document.getElementById('gsWaysV').hidden=true;hint('Sending colourways…',6000);const keep=JSON.parse(JSON.stringify(l.adj.v)),ways=[];let first=null;
+async function gsWaysToLookbook(){const l=gsGcLayer();if(!l||!GSWAYS)return;const tgt=await lbChoose({title:'Send '+GSWAYS.picks.length+' colourways to…',note:'Start a new lookbook with them, or add them to one you already have.'});if(!tgt)return;document.getElementById('gsWaysV').hidden=true;hint('Sending colourways…',6000);const keep=JSON.parse(JSON.stringify(l.adj.v)),ways=[];let first=null;
   for(const [n,h] of GSWAYS.picks){l.adj.v.c=h;l.v++;const r=await shrink(await toBlobP(flatten(true)),GMAX);if(!first)first=r;ways.push({id:uid(),name:n,hex:h,src:r.src,a:null})}
   l.adj.v=keep;l.v++;dirtyComp=true;req();await saveDoc(true);
-  try{S.items.push({id:uid(),src:first.src,ar:first.ar,fields:{name:D.name,color:GSWAYS.picks.map(p=>p[0]).join(', ')},points:[],open:false,ways,cw:0});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast(ways.length+' colourways added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the colourways')}}
+  try{await lbGoTarget(tgt);S.items.push({id:uid(),src:first.src,ar:first.ar,fields:{name:D.name,color:GSWAYS.picks.map(p=>p[0]).join(', ')},points:[],open:false,ways,cw:0});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast(ways.length+' colourways added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the colourways')}}
 function gsAct2(k,v,l,b){
+  if(k==='gsmk'){mkStart(v);return true}
   if(k==='gsside'){if(!D)return true;const want=v==='back'?'back':'front',now=D.side==='back'?'back':'front';if(want===now)return true;if(D.pair){gsSwitch(D.pair);return true}if(want==='back'){gsBackSheet();return true}return true}
   if(k==='gsbackup'){importMode='gsback';$('#labFile').click();return true}
   if(k==='gsbslot'){const s=(SLOTS||[]).find(z=>z.id===v);if(s&&s.blob)bmpOf(s.blob).then(img=>gsMakeBack(img.naturalWidth?img:Object.assign(img,{naturalWidth:img.width,naturalHeight:img.height})));return true}
@@ -6612,6 +6700,84 @@ let MEMWARN=0;
 setInterval(()=>{if(!D||edEl.hidden||!TOUCH)return;let u=memUse()/MEMB;if(u<.72)return;
   if(!busy()){try{scFree()}catch(e){}try{trimTmp()}catch(e){}try{MIP.l.forEach(c=>relc(c));MIP.l=[];MIP.n=-1}catch(e){}try{parkAll()}catch(e){}if(GHC){GHC.width=GHC.height=1}u=memUse()/MEMB}
   if(u>.88&&performance.now()-MEMWARN>90000){MEMWARN=performance.now();hint('This design is close to this device’s memory limit, so it may slow down. Merge or delete layers you’re done with, or export and start a fresh file.',6000)}},2500);
+
+/* ================= Lookbook chooser: new lookbook or an existing one ================= */
+function lbChoose(o){o=o||{};return new Promise(async res=>{let e=document.getElementById('lbCh');if(!e){e=document.createElement('div');e.id='lbCh';e.setAttribute('role','dialog');document.body.appendChild(e)}
+  const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));const cur=S.lid||'default';
+  e.innerHTML=`<div class="lc-in"><div class="lc-h"><b>${esc(o.title||'Add to a lookbook')}</b><button data-lc="x" aria-label="Cancel">&times;</button></div><p class="lc-n">${esc(o.note||'Start a new lookbook, or add it to one you already have.')}</p>
+   <div class="lc-g"><button class="lc-new" data-lc="__new"><i>+</i><span>New lookbook</span></button>${l.map(b=>`<button data-lc="${esc(b.id)}"><i style="background-image:url(${b.cover||''})"></i><span>${esc(b.name||'Untitled')}</span>${b.id===cur?'<em>current</em>':''}</button>`).join('')}${l.length?'':'<button data-lc="__cur"><i></i><span>Current lookbook</span></button>'}</div></div>`;
+  e.hidden=false;const done=v=>{e.hidden=true;e.onclick=null;removeEventListener('keydown',kd,true);res(v)};const kd=ev=>{if(ev.key==='Escape'){ev.stopImmediatePropagation();done(null)}};addEventListener('keydown',kd,true);
+  e.onclick=ev=>{if(ev.target===e)return done(null);const b=ev.target.closest('[data-lc]');if(!b)return;done(b.dataset.lc==='x'?null:b.dataset.lc)}})}
+async function lbGoTarget(t){if(t==='__new')await newBook();else if(t&&t!=='__cur'&&t!==(S.lid||'default'))await openBook(t)}
+
+/* ================= Mockups library: blank mockups, front + back, sorted by garment ================= */
+const MKCATS=[['Tops',[['tee','T-shirts','T-shirt'],['ls','Long sleeves','Long sleeve tee'],['hoodie','Hoodies','Hoodie'],['zip','Zip hoodies','Zip hoodie'],['crew','Crewnecks','Crewneck sweatshirt'],['tank','Tank tops','Tank top'],['shirt','Shirts & button-ups','Button-up shirt'],['jersey','Jerseys','Jersey (sports)']]],
+ ['Outerwear',[['jacket','Jackets','Bomber jacket'],['puffer','Puffers','Puffer jacket'],['vest','Vests','Vest / gilet']]],
+ ['Bottoms',[['sweat','Sweatpants & joggers','Sweatpants'],['jeans','Jeans','Jeans'],['pants','Cargo & work pants','Cargo pants'],['shorts','Shorts','Shorts']]],
+ ['Accessories',[['cap','Caps','6-panel cap'],['beanie','Beanies','Beanie'],['bag','Bags','Tote bag'],['socks','Socks','Socks'],['other','Other','']]]];
+const MKC={};MKCATS.forEach(([g,L])=>L.forEach(([k,n,sc])=>MKC[k]={k,n,g,sc}));
+let MK=null,MKS={cat:'all',flip:{}};
+async function mkLoad(){if(!MK)MK=(await IDB.get('mockups'))||{cats:[],items:[]};MK.cats=MK.cats||[];MK.items=MK.items||[];MK.cats.forEach(c=>MKC[c.k]=Object.assign({g:'Yours',sc:''},c));return MK}
+async function mkSave(){await IDB.set('mockups',MK)}
+function mkCat(k){return MKC[k]||{k,n:k,g:'Yours',sc:''}}
+async function mkThumb(blob){const im=await bmpOf(blob),w0=im.width||im.naturalWidth,h0=im.height||im.naturalHeight,k=Math.min(1,420/Math.max(w0,h0)),c=mk(Math.max(1,Math.round(w0*k)),Math.max(1,Math.round(h0*k)));cx2(c).drawImage(im,0,0,c.width,c.height);if(im.close)im.close();let u=c.toDataURL('image/webp',.85);if(u.indexOf('data:image/webp')!==0)u=c.toDataURL('image/png');relc(c);return u}
+async function mkImg(blob){const im=await bmpOf(blob);return im.naturalWidth?im:Object.assign(im,{naturalWidth:im.width,naturalHeight:im.height})}
+function mkPickFile(){return new Promise(res=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>res(i.files&&i.files[0]||null);i.click()})}
+function mkEl(){let e=document.getElementById('mkP');if(e)return e;e=document.createElement('div');e.id='mkP';e.setAttribute('role','dialog');e.setAttribute('aria-label','Mockups');e.hidden=true;
+  e.innerHTML=`<div class="mp-amb"><i class="b1"></i><i class="b2"></i><i class="sw"></i><i class="gr"></i></div><div class="mk-in0"><div class="lib-h mk-hd"><button class="lg-back" data-mk="close">&larr; Home</button><h2 class="chrome">Mockups</h2><span style="width:60px"></span></div>
+   <p class="mk-sub">Your blank mockups, front and back, sorted by garment. Send any of them straight to the Garment Studio, the Design Lab or a lookbook.</p><div class="mk-body"></div></div><div class="mk-sheet" hidden></div>`;document.body.appendChild(e);
+  e.addEventListener('click',ev=>{const b=ev.target.closest('[data-mk]');if(!b)return;const [a,v]=b.dataset.mk.split(/\|(.*)/s);mkAct(a,v,b)});return e}
+async function mkOpen(){MK=null;await mkLoad();const e=mkEl();e.hidden=false;mkDraw()}
+function mkClose(){const e=document.getElementById('mkP');if(e)e.hidden=true}
+function mkDraw(){const e=document.getElementById('mkP');if(!e||e.hidden)return;const it=MK.items,cat=MKS.cat,cnt=k=>it.filter(x=>x.cat===k).length;
+  const groups=MKCATS.map(([g,L])=>[g,L.map(x=>x[0])]);const mine=MK.cats.map(c=>c.k);if(mine.length)groups.push(['Yours',mine]);
+  const shown=cat==='all'?it:it.filter(x=>x.cat===cat);
+  const slots=(SLOTS||[]).filter(s=>s.blob).length;
+  e.querySelector('.mk-body').innerHTML=`<div class="mk-top"><button class="mk-add" data-mk="add"><b>+</b> Add a mockup</button>${slots&&!MK.slotsIn?`<button class="mk-imp" data-mk="slots">Bring in your ${slots} Design Lab mockup${slots>1?'s':''}</button>`:''}</div>
+   <div class="mk-cats"><div class="mk-row"><button class="${cat==='all'?'on':''}" data-mk="cat|all">All <em>${it.length}</em></button></div>${groups.map(([g,ks])=>`<div class="mk-row"><span class="mk-g">${esc(g)}</span>${ks.map(k=>`<button class="${cat===k?'on':''}" data-mk="cat|${k}">${esc(mkCat(k).n)}${cnt(k)?` <em>${cnt(k)}</em>`:''}</button>`).join('')}${g==='Accessories'?'<button class="mk-nc" data-mk="newcat">+ New category</button>':''}</div>`).join('')}</div>
+   ${shown.length?`<div class="mk-grid">${shown.map(x=>{const bk=MKS.flip[x.id]&&x.bt;return `<article class="mk-c"><div class="mk-im${bk?' bk':''}" data-mk="flip|${x.id}" title="${x.bt?'Tap to see the other side':''}"><img src="${bk?x.bt:x.ft}" alt="">${x.bt?`<span class="mk-fb">${bk?'Back':'Front'} · tap to flip</span>`:'<span class="mk-fb nb">Front only</span>'}</div>
+     <div class="mk-t"><b>${esc(x.name)}</b><span>${esc(mkCat(x.cat).n)}</span></div>
+     <div class="mk-a"><button data-mk="gs|${x.id}">Garment Studio</button><button data-mk="lab|${x.id}">Design Lab</button><button data-mk="lb|${x.id}">Lookbook</button><button class="mk-more" data-mk="more|${x.id}" aria-label="More">&middot;&middot;&middot;</button></div></article>`}).join('')}</div>`
+   :`<p class="mk-empty">${it.length?'Nothing in this category yet.':'No mockups saved yet.'} Tap <b>+ Add a mockup</b> to save one – front and back.</p>`}`;if(typeof thFitSoon==='function')thFitSoon()}
+function mkSheet(h){const s=document.querySelector('#mkP .mk-sheet');s.innerHTML=`<div class="mk-sh">${h}</div>`;s.hidden=false;return s}
+function mkSheetClose(){const s=document.querySelector('#mkP .mk-sheet');if(s)s.hidden=true}
+let MKNEW=null;
+function mkAddSheet(edit){const x=edit||MKNEW||{};MKNEW=x;const opts=MKCATS.map(([g,L])=>`<optgroup label="${esc(g)}">${L.map(([k,n])=>`<option value="${k}"${(x.cat||MKS.cat)===k?' selected':''}>${esc(n)}</option>`).join('')}</optgroup>`).join('')+(MK.cats.length?`<optgroup label="Yours">${MK.cats.map(c=>`<option value="${c.k}"${x.cat===c.k?' selected':''}>${esc(c.n)}</option>`).join('')}</optgroup>`:'');
+  mkSheet(`<div class="mk-shh"><b>${edit&&edit.id?'Edit mockup':'Add a mockup'}</b><button data-mk="shx" aria-label="Close">&times;</button></div>
+   <label class="mk-l">Name<input id="mkName" value="${esc(x.name||'')}" placeholder="e.g. Heavyweight boxy tee" autocomplete="off"></label>
+   <label class="mk-l">Category<select id="mkCatSel">${opts}</select></label>
+   <div class="mk-sides"><button class="mk-side" data-mk="pick|f">${x.ft?`<img src="${x.ft}" alt="">`:'<i>+</i>'}<span>Front${x.ft?' · change':''}</span></button><button class="mk-side" data-mk="pick|b">${x.bt?`<img src="${x.bt}" alt="">`:'<i>+</i>'}<span>Back${x.bt?' · change':' (optional)'}</span></button></div>
+   <p class="mk-note">PNG with a transparent background works best.</p><div class="mk-sb"><button class="pill" data-mk="shx">Cancel</button><button class="pill big" data-mk="savenew">Save mockup</button></div>`)}
+async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
+  if(a==='close'){mkClose();return}
+  if(a==='cat'){MKS.cat=v;mkDraw();return}
+  if(a==='flip'){if(x&&x.bt){MKS.flip[v]=!MKS.flip[v];mkDraw()}return}
+  if(a==='add'){MKNEW={cat:MKS.cat!=='all'?MKS.cat:'tee'};mkAddSheet();return}
+  if(a==='shx'){MKNEW=null;mkSheetClose();return}
+  if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;if(!MKNEW.name)MKNEW.name=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='savenew'){const n=($('#mkName').value||'').trim(),c=$('#mkCatSel').value;if(!MKNEW.f&&!MKNEW.id){toast('Add the front image first');return}
+    if(MKNEW.id){const y=MK.items.find(z=>z.id===MKNEW.id);if(y){y.name=n||y.name;y.cat=c;if(MKNEW.f){y.f=MKNEW.f;y.ft=MKNEW.ft}if(MKNEW.b){y.b=MKNEW.b;y.bt=MKNEW.bt}y.updated=Date.now()}}
+    else MK.items.unshift({id:lid(),name:n||'Mockup',cat:c,f:MKNEW.f,ft:MKNEW.ft,b:MKNEW.b||null,bt:MKNEW.bt||null,updated:Date.now()});
+    MKNEW=null;await mkSave();mkSheetClose();MKS.cat=c;mkDraw();toast('Mockup saved',1600);return}
+  if(a==='newcat'){const n=((await mpAsk('Name the new category',''))||'').trim();if(!n)return;const k='u'+lid();MK.cats.push({k,n,g:'Yours'});MKC[k]={k,n,g:'Yours',sc:''};await mkSave();MKS.cat=k;mkDraw();return}
+  if(a==='slots'){await getSlots();const got=new Map();for(const s of SLOTS.filter(z=>z.blob)){const base=s.name.replace(/\s+(front|back)$/i,'').trim(),side=/\sback$/i.test(s.name)?'b':'f';const low=base.toLowerCase(),cat=/zip/.test(low)?'zip':/hood/.test(low)?'hoodie':/crew/.test(low)?'crew':/long/.test(low)?'ls':/tank/.test(low)?'tank':/short/.test(low)?'shorts':/jog|sweatp/.test(low)?'sweat':/cap|hat/.test(low)?'cap':/tote|bag/.test(low)?'bag':/t-?shirt|tee/.test(low)?'tee':'other';
+      let y=got.get(low);if(!y){y={id:lid(),name:base,cat,f:null,ft:null,b:null,bt:null,updated:Date.now()};got.set(low,y)}const t=s.thumb||await mkThumb(s.blob);if(side==='b'){y.b=s.blob;y.bt=t}else{y.f=s.blob;y.ft=t}}
+    for(const y of got.values()){if(!y.f&&y.b){y.f=y.b;y.ft=y.bt;y.b=null;y.bt=null}MK.items.push(y)}MK.slotsIn=true;await mkSave();mkDraw();toast(got.size+' mockup'+(got.size>1?'s':'')+' added',2000);return}
+  if(!x)return;
+  if(a==='more'){mkSheet(`<div class="mk-shh"><b>${esc(x.name)}</b><button data-mk="shx" aria-label="Close">&times;</button></div><div class="mk-list">
+    <button data-mk="edit|${x.id}">${x.b?'Change front / back, rename, move':'Add the back · rename · move'}</button>${x.b?`<button data-mk="rmback|${x.id}">Remove the back</button>`:''}<button data-mk="dl|${x.id}">Save the image${x.b?'s':''} to this device</button><button class="dang" data-mk="del|${x.id}">Delete mockup</button></div>`);return}
+  if(a==='edit'){MKNEW={id:x.id,name:x.name,cat:x.cat,ft:x.ft,bt:x.bt};mkAddSheet(MKNEW);return}
+  if(a==='rmback'){x.b=null;x.bt=null;MKS.flip[x.id]=false;await mkSave();mkSheetClose();mkDraw();return}
+  if(a==='dl'){mkSheetClose();const nm=(x.name||'mockup').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'mockup',ext=bl=>/jpe?g/.test(bl.type)?'.jpg':'.png';await saveBlob(nm+'-front'+ext(x.f),x.f);if(x.b)await saveBlob(nm+'-back'+ext(x.b),x.b);return}
+  if(a==='del'){if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap again to delete';return}MK.items=MK.items.filter(z=>z!==x);await mkSave();mkSheetClose();mkDraw();return}
+  if(a==='gs'){mkClose();hideHome();gsOpen();await mkStart(x.id);return}
+  if(a==='lab'){mkClose();hideHome();openLab();const img=await mkImg(x.f);await docFromMockup(img,x.name);if(x.b)setTimeout(()=>hint('This mockup has a back too – open it in the Garment Studio to design both sides',3600),1800);return}
+  if(a==='lb'){const t=await lbChoose({title:'Add “'+x.name+'” to…',note:'It’s added as a garment'+(x.b?' with its back – tap to flip':'')+'.'});if(!t)return;mkClose();hideHome();hint('Adding…',2000);
+    try{await lbGoTarget(t);const f=await shrink(x.f,GMAX),bk=x.b?await shrink(x.b,GMAX):null,sc=mkCat(x.cat).sc;const it={id:uid(),src:f.src,ar:f.ar,fields:{name:x.name},points:[],open:false};if(bk)it.back=bk.src;if(sc)it.spec={cat:sc};S.items.push(it);S.mode='edit';libEl.hidden=true;render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+x.name+'" added to your lookbook',2400)}catch(e){console.error(e);toast('Could not add the mockup')}return}}
+addEventListener('keydown',e=>{const g=document.getElementById('mkP');if(!g||g.hidden)return;if(e.key==='Escape'){e.stopImmediatePropagation();const s=g.querySelector('.mk-sheet');if(s&&!s.hidden)mkSheetClose();else mkClose()}},true);
+/* Garment Studio "New garment": pick from the Mockups library (front + back come together) */
+async function gsMkSection(){await mkLoad();if(!MK.items.length)return '';return `<h5>From your Mockups library <span class="h5n">Front and back come in together</span></h5><div class="tpl slots">${MK.items.slice(0,24).map(x=>`<div class="slot full"><button data-l="gsmk:${x.id}" title="Start on this mockup"><i style="background-image:url(${x.ft})"></i></button><span>${esc(x.name)}${x.b?' · F+B':''}</span></div>`).join('')}</div>`}
+async function mkStart(id){await mkLoad();const x=MK.items.find(z=>z.id===id);if(!x)return;sheetEl.hidden=true;const img=await mkImg(x.f);await docFromMockup(img,x.name);if(GMODE&&x.b){const bi=await mkImg(x.b);await gsMakeBack(bi);if(D&&D.pair)await gsSwitch(D.pair)}}
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
@@ -6900,7 +7066,7 @@ async function drawGallery(){const m=((await IDB.get('dlib'))||[]).filter(d=>GMO
 const SLOTNAMES=['T-shirt front','T-shirt back','Hoodie front','Hoodie back','Crewneck','Long sleeve','Zip hoodie','Tank top','Shorts','Joggers','Cap','Tote bag'];
 let SLOTS=null;async function getSlots(){if(!SLOTS)SLOTS=(await IDB.get('mslots'))||SLOTNAMES.map(n=>({id:lid(),name:n,blob:null,thumb:null}));return SLOTS}
 const saveSlots=()=>IDB.set('mslots',SLOTS);
-async function templateSheet(){await getSlots();sheetIn.innerHTML=`<h3>New design<button data-l="sheetclose">&times;</button></h3>${qRow()}
+async function templateSheet(){await getSlots();sheetIn.innerHTML=`<h3>New design<button data-l="sheetclose">&times;</button></h3>${qRow()}${await gsMkSection()}
   <h5>Your mockups <span class="h5n">Tap an empty slot to add your own mockup image (PNG with a transparent background works best)</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start a design on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}<div class="slot"><button data-l="slotadd"><i class="addslot"><em>＋</em><small>New slot</small></i></button><span>Add a slot</span></div></div>
   <h5>Blank canvas <span class="h5n">Real print and screen sizes – tap one to adjust the width, height, units (px, in, cm, mm) and resolution before creating</span></h5><div class="psets">${PRESETS.map((p,i)=>`<button class="pset" data-l="nspre:${i}"><i style="aspect-ratio:${p[1]}/${p[2]}"></i><b>${esc(p[0])}</b><small>${p[1]} × ${p[2]} ${p[3]}</small></button>`).join('')}<button class="pset" data-l="newsize"><i class="cust">＋</i><b>Custom size</b><small>px · in · cm · mm · pt</small></button></div>
   <h5>Pattern <span class="h5n">Draw one tile that repeats seamlessly, then use it as an all-over print on any garment</span></h5><div class="psets"><button class="pset" data-l="newpat"><i class="cust" style="width:44px">▦</i><b>New pattern tile</b><small>Seamless repeat</small></button></div>
@@ -6933,7 +7099,7 @@ async function placeImg(im,name,asNew){if(asNew||!D){blankDoc(clampN(im.naturalW
 function flatten(noBg){const c=mk(D.w,D.h);composite(c,noBg);dirtyComp=true;return c}
 async function exportDoc(kind){const c=flatten(kind==='clear');let blob;if(kind==='jpg'){const j=mk(D.w,D.h),x=j.getContext('2d');x.fillStyle=D.bgOn?D.bg:'#ffffff';x.fillRect(0,0,D.w,D.h);x.drawImage(c,0,0);blob=await toBlobP(j,'image/jpeg',.94)}else blob=await toBlobP(c);blob=await withDpi(blob,kind==='jpg'?'jpg':'png',D.ppi||300);
   const nm=(D.name||'design').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'design';if(await saveBlob(nm+(kind==='jpg'?'.jpg':'.png'),blob))hint('Exported')}
-async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));sheetIn.innerHTML=`<h3>Send to a lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Your design is added as a new garment with a transparent background, so scenes and lighting sit behind it.</p><h5>Lookbooks</h5><div class="tpl">
+async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));sheetIn.innerHTML=`<h3>Send to a new or existing lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Your design is added as a new garment with a transparent background, so scenes and lighting sit behind it.</p><h5>Lookbooks</h5><div class="tpl">
   <button data-l="sendto:__new"><i>+ New</i><span>New lookbook</span></button>${l.map(b=>`<button data-l="sendto:${esc(b.id)}"><i style="background:#0c0c0c ${b.cover?`url(${b.cover}) center/contain no-repeat`:''}"></i><span>${esc(b.name||'Untitled')}${b.id===(S.lid||'default')?' · current':''}</span></button>`).join('')}${l.length?'':`<button data-l="sendto:__cur"><i>Current</i><span>Current lookbook</span></button>`}</div>`;sheetEl.hidden=false}
 async function sendToLookbook(target){if(GMODE&&D&&D.pair)return gsSendPair(target);hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
   try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false,des:D.id});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
@@ -7542,11 +7708,11 @@ function gcHTML(v,sl){if(v.ed==null)v.ed=70;return `<p class="pnote">Keeps the f
   <div class="sec rw"><button class="lch" data-l="gcspots" title="Fills small bits the colour missed – creases, seams, shadows. Prints and logos stay">Fill missed spots</button><button class="lch" data-l="gcwhole" title="Colour every part of the garment, prints included">Whole garment</button><button class="lch" data-l="gcfix">Fix edges</button><button class="lch" data-l="gcshade" title="Stops the Multiply shading layer from muddying the new colour">Balance shading</button><button class="lch" data-l="gcpick">Recolour another part</button><button class="lch" data-l="gcways">Send colourways to lookbook…</button></div>`}
 function gcWaysSheet(){const A=ADJ;if(!A||A.type!=='gc')return;const cur=A.v.c;sheetIn.innerHTML=`<h3>Colourways to lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Pick the colours. They’re added as one garment with colour swatches in your current lookbook – viewers tap a swatch to switch.</p>
   <div class="gcpick">${[['Current',cur],...GC_SW.filter(s=>s[1]!==cur)].map(([n,h],i)=>`<label><input type="checkbox" data-gcw="${h}" data-gcn="${esc(n==='Current'?'Original':n)}"${i<4?' checked':''}><i style="background:${h}"></i>${esc(n)}</label>`).join('')}</div>
-  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="gcwaysgo">Add to lookbook</button></div>`;sheetEl.hidden=false}
-async function gcWaysGo(){const A=ADJ;if(!A||A.type!=='gc')return;const picks=[...sheetIn.querySelectorAll('[data-gcw]:checked')].map(i=>[i.dataset.gcn,i.dataset.gcw]);if(!picks.length)return hint('Pick at least one colour');sheetEl.hidden=true;hint('Rendering colourways…',6000);
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="gcwaysgo">Send to a lookbook…</button></div>`;sheetEl.hidden=false}
+async function gcWaysGo(){const A=ADJ;if(!A||A.type!=='gc')return;const picks=[...sheetIn.querySelectorAll('[data-gcw]:checked')].map(i=>[i.dataset.gcn,i.dataset.gcw]);if(!picks.length)return hint('Pick at least one colour');const tgt=await lbChoose({title:'Send '+picks.length+' colourway'+(picks.length>1?'s':'')+' to…',note:'Start a new lookbook with them, or add them to one you already have.'});if(!tgt)return;sheetEl.hidden=true;hint('Rendering colourways…',6000);
   const keep=A.v.c,ways=[];let first=null;for(const [n,h] of picks){A.v.c=h;A.l.adj.v=A.v;A.l.v++;const c=flatten(true),blob=await toBlobP(c),r=await shrink(blob,GMAX);if(!first)first=r;ways.push({id:uid(),name:n,hex:h,src:r.src,a:null})}
   A.v.c=keep;A.l.adj.v=A.v;A.l.v++;dirtyComp=true;req();adjEnd(true);await saveDoc(true);
-  try{S.items.push({id:uid(),src:first.src,ar:first.ar,fields:{name:D.name,color:picks.map(p=>p[0]).join(', ')},points:[],open:false,ways,cw:0});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast(ways.length+' colourways added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the colourways')}}
+  try{await lbGoTarget(tgt);S.items.push({id:uid(),src:first.src,ar:first.ar,fields:{name:D.name,color:picks.map(p=>p[0]).join(', ')},points:[],open:false,ways,cw:0});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast(ways.length+' colourways added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the colourways')}}
 let PTSNAP=null,PTRAF=0;
 
 /* ---------- click actions ---------- */
@@ -7800,7 +7966,7 @@ homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.cl
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
 function hideHome(){homeEl.classList.add('out');H2.classList.remove('inhome');setTimeout(()=>{homeEl.hidden=true;homeEl.classList.remove('out')},560);kick()}
-async function pickHome(k){if(k==='src'){srcOpen();return}if(k==='gs'){hideHome();gsOpen();return}if(k==='lab'){hideHome();openLab()}else{hideHome();const l=LOCAL?await libGet():[];if(!S.items.length&&l.some(x=>x.count||x.cover))openLibrary()}}
+async function pickHome(k){if(k==='mk'){mkOpen();return}if(k==='src'){srcOpen();return}if(k==='gs'){hideHome();gsOpen();return}if(k==='lab'){hideHome();openLab()}else{hideHome();const l=LOCAL?await libGet():[];if(!S.items.length&&l.some(x=>x.count||x.cover))openLibrary()}}
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
 
