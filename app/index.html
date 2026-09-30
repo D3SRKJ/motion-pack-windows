@@ -1839,6 +1839,79 @@ html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset
 }
 @media (prefers-reduced-motion:reduce){#home .hm-dock button{animation:none}}
 @media (max-width:700px),(max-height:500px) and (pointer:coarse){#hint,#toast{bottom:auto;white-space:normal}}
+#brP{position:fixed;inset:0;z-index:28;display:flex;flex-direction:column;background:var(--thBg,#050505);color:#e8e8e8;animation:fadein .4s var(--ease);user-select:none;-webkit-user-select:none}
+#brP[hidden]{display:none}
+#brP .br-top{display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 8px;flex:none}
+#brP .br-top h2{flex:1;text-align:center;margin:0;font-family:var(--fs);font-weight:var(--fsW,400);text-transform:var(--fsT,none);letter-spacing:var(--fsLS,.01em);font-size:calc(clamp(24px,3.2vw,38px) * var(--fsK,1));line-height:1.15;white-space:nowrap}
+#brP .br-tr{display:flex;gap:6px;align-items:center}
+#brP .br-tr button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.18);color:#ddd;font-size:17px}
+#brP .br-tr .br-done{width:auto;padding:0 20px;border:0;background:var(--fr);color:#111;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+#brP .br-main{flex:1;min-height:0;display:flex}
+#brP .br-stage{position:relative;flex:1;min-width:0;overflow:hidden;touch-action:none;cursor:crosshair;background:radial-gradient(ellipse at 50% 35%,rgba(var(--thL,255,255,255),.07),transparent 70%)}
+#brP .br-stage.panning{cursor:grabbing}#brP .br-stage.drag{outline:2px dashed rgba(255,255,255,.4);outline-offset:-12px}
+#brP #brCv{position:absolute;inset:0;display:block}
+#brP .br-empty{position:absolute;inset:0;display:grid;place-items:center;padding:20px}#brP .br-empty[hidden]{display:none}
+#brP .br-drop{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:420px;padding:36px 28px;border-radius:24px;border:1.5px dashed rgba(255,255,255,.22)}
+#brP .br-drop svg{width:96px;height:96px}#brP .br-drop b{font-family:var(--fs);font-weight:400;font-size:24px}#brP .br-drop span{color:#888;font-size:12px}#brP .br-drop small{color:#8a8a8a;font-size:11.5px;line-height:1.5;margin-top:4px}
+#brP .br-busy{position:absolute;left:50%;top:18px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.14);font-size:11px;letter-spacing:.16em;text-transform:uppercase;pointer-events:none;z-index:3}
+#brP .br-busy[hidden]{display:none}#brP .br-busy i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;animation:brspin .8s linear infinite}
+@keyframes brspin{to{transform:rotate(360deg)}}
+#brP .br-tip{position:absolute;left:50%;bottom:92px;transform:translate(-50%,8px);max-width:min(520px,calc(100% - 32px));padding:10px 16px;border-radius:14px;background:rgba(0,0,0,.78);border:1px solid rgba(255,255,255,.14);font-size:12.5px;line-height:1.45;text-align:center;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:3}
+#brP .br-tip.on{opacity:1;transform:translate(-50%,0)}
+#brP .br-tools{position:absolute;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:2}
+#brP .br-tools>*{pointer-events:auto}
+#brP .br-tb{display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(10,10,12,.82);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);max-width:calc(100vw - 20px);overflow-x:auto;scrollbar-width:none}
+#brP .br-tb::-webkit-scrollbar{display:none}
+#brP .br-tb button{display:flex;align-items:center;gap:7px;height:38px;padding:0 13px 0 9px;border-radius:999px;color:#ddd;font-size:11.5px;white-space:nowrap;flex:none}
+#brP .br-tb button i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:rgba(255,255,255,.08)}
+#brP .br-tb button.on{background:var(--fr);color:#111}#brP .br-tb button.on i{background:rgba(0,0,0,.12)}
+#brP .br-bsz,#brP .br-vw{display:flex;align-items:center;gap:8px;padding:5px 8px 5px 14px;border-radius:999px;background:rgba(10,10,12,.82);border:1px solid rgba(255,255,255,.14);font-size:11px;color:#bbb}
+#brP .br-bsz label{display:flex;align-items:center;gap:8px}#brP .br-bsz input{width:150px;accent-color:#ddd}
+#brP .br-bsz button,#brP .br-vw button{height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18);color:#ddd;font-size:11px}
+#brP .br-bsz button.on{background:rgba(255,255,255,.14)}
+#brP .br-vw{position:absolute;right:14px;top:-4px;transform:translateY(-100%);padding:4px}
+#brP .br-side{flex:none;width:320px;overflow:auto;padding:4px 16px calc(20px + env(safe-area-inset-bottom,0px));border-left:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.25)}
+#brP .br-sec{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+#brP .br-sec h4{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 10px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#aaa}
+#brP .br-sec h4 span{font-weight:400;letter-spacing:.06em;text-transform:none;color:#777;font-size:11px}#brP .br-sec h4 b{color:#eee;font-weight:500;letter-spacing:0}
+#brP .br-p{font-size:12.5px;line-height:1.55;color:#bdbdbd;margin:0 0 10px}#brP .br-n{font-size:11.5px;line-height:1.5;color:#8d8d8d;margin:8px 0 0}
+#brP .br-seg{display:flex;gap:6px}#brP .br-seg button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.16);color:#ddd;font-size:12px}
+#brP .br-seg button small{font-size:10px;color:#888}#brP .br-seg button.on{background:var(--fr);color:#111;border-color:transparent}#brP .br-seg button.on small{color:#333}
+#brP .br-seg.sm button{padding:8px 6px;font-size:11.5px}
+#brP input[type=range]{width:100%;accent-color:#ddd}
+#brP .br-sl{display:flex;flex-direction:column;gap:4px;margin:0 0 10px;font-size:11.5px;color:#bbb}#brP .br-sl span{display:flex;justify-content:space-between}#brP .br-sl b{color:#eee;font-weight:500}
+#brP .br-sw{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#brP .br-sw button[style]{position:relative;width:34px;height:34px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px rgba(255,255,255,.35),inset 0 0 0 2px rgba(0,0,0,.25)}
+#brP .br-sw button em{position:absolute;right:-5px;top:-5px;width:16px;height:16px;border-radius:50%;background:#111;border:1px solid rgba(255,255,255,.3);font-style:normal;font-size:11px;line-height:14px;color:#ddd}
+#brP .br-add,#brP .br-btn{height:34px;padding:0 13px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:#ddd;font-size:11.5px}
+#brP .br-btn.on{background:var(--fr);color:#111;border-color:transparent}
+#brP .br-link{color:#aaa;font-size:11.5px;text-decoration:underline;text-underline-offset:3px;padding:6px 4px}
+#brP .br-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+#brP .br-chk{display:flex;align-items:center;gap:10px;margin-top:6px;padding:6px 0;text-align:left;font-size:12px;color:#ccc}
+#brP .br-chk i{flex:none;width:18px;height:18px;border-radius:5px;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center}
+#brP .br-chk.on i{background:var(--fr,#ddd);border-color:transparent}#brP .br-chk.on i::after{content:"✓";font-style:normal;font-size:12px;color:#111}
+#brP .br-bgv{display:flex;gap:8px}#brP .br-bgv>*{position:relative;width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.25);cursor:pointer;overflow:hidden}
+#brP .br-bgv .on{box-shadow:0 0 0 2px #fff}
+#brP .v-checker{background:repeating-conic-gradient(#d9d9dc 0 25%,#b8b8bd 0 50%) 0 0/12px 12px}#brP .v-black{background:#000}#brP .v-white{background:#fff}#brP .v-grey{background:#8e8f91}
+#brP .v-color{background:var(--c)}#brP .v-color input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+#brP .br-foot{display:flex;gap:12px;border-bottom:0}
+#brOut{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:rgba(0,0,0,.55);padding:14px}#brOut[hidden]{display:none}
+#brOut .br-os{width:min(440px,100%);max-height:calc(100dvh - 28px);overflow:auto;padding:18px;border-radius:18px;display:flex;flex-direction:column;gap:8px;border:1.5px solid transparent;background:linear-gradient(180deg,#141416,#0a0a0b) padding-box,var(--fr,linear-gradient(135deg,#8c8c8c,#f7f7f7,#6f6f6f)) border-box;box-shadow:0 30px 90px rgba(0,0,0,.75)}
+#brOut .br-oh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}#brOut .br-oh b{font-family:var(--fs);font-weight:400;font-size:22px}#brOut .br-oh button{font-size:24px;color:#aaa}
+#brOut .br-ob{display:flex;flex-direction:column;gap:3px;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);color:#eee}
+#brOut .br-ob b{font-size:13.5px;font-weight:600}#brOut .br-ob small{font-size:11.5px;color:#999}
+#brOut .br-ob.pri{background:var(--fr);color:#111;border-color:transparent}#brOut .br-ob.pri small{color:#333}
+html.inbr #toast{z-index:60}
+@media (max-width:820px){
+  #brP .br-main{flex-direction:column}
+  #brP .br-side{width:auto;flex:0 0 auto;max-height:38vh;border-left:0;border-top:1px solid rgba(255,255,255,.1);padding-top:0}
+  #brP .br-tb button span{display:none}#brP .br-tb button{padding:0 7px}
+  #brP .br-top .lg-back .br-bk{display:none}
+  #brP .br-top h2{font-size:calc(22px * var(--fsK,1))}
+  #brP .br-tr .br-done{padding:0 14px}
+  #brP .br-vw{top:auto;bottom:calc(100% + 6px);right:10px;transform:none}
+  #brP .br-tip{bottom:120px}
+}
 </style>
 </head>
 <body class="edit empty">
@@ -1906,6 +1979,7 @@ html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset
       <div class="hm-px hm-cat" style="--dz:1.9;--i:1;--ph:-2.2s"><div class="hm-fl"><button class="hm-em" data-home="books"><span class="hm-sym hm-bk"><span class="hm-frames"><i></i><i></i><i id="hmCover"></i></span></span><b class="hm-nm chrome">Lookbooks</b><small>Present in motion</small></button></div><i class="hm-shd"></i></div>
       <div class="hm-px hm-cat" style="--dz:1.2;--i:2;--ph:-4.1s"><div class="hm-fl"><button class="hm-em" data-home="gs"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 14 c6 0 9 4 9 8 c0 5 -9 6 -9 12"/><path style="--d:.3s" d="M60 34 L20 52 L100 52 Z"/><path style="--d:.6s" d="M42 58 c4 5 10 7 18 7 s14 -2 18 -7 l14 6 l6 14 l-9 4 l-4 -7 v35 H35 V77 l-4 7 l-9 -4 l6 -14 z"/></svg></span><b class="hm-nm chrome">Garment Studio</b><small>Garments &amp; designs, fast</small></button></div><i class="hm-shd"></i></div>
       <div class="hm-px hm-cat" style="--dz:1.7;--i:3;--ph:-1.3s"><div class="hm-fl"><button class="hm-em" data-home="mk"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path class="st" d="M52 26 c3 4 7 6 12 6 s9 -2 12 -6 l16 7 l8 19 l-11 5 l-4 -8 v52 H47"/><path style="--d:.3s" d="M28 32 c3 4 7 6 12 6 s9 -2 12 -6 l16 7 l8 19 l-11 5 l-4 -8 v52 H31 v-52 l-4 8 l-11 -5 l8 -19 z"/><path style="--d:.8s" d="M40 52 v14"/></svg></span><b class="hm-nm chrome">Mockups</b><small>Front &amp; back, by garment</small></button></div><i class="hm-shd"></i></div>
+      <div class="hm-px hm-cat" style="--dz:1.6;--i:5;--ph:-2.7s"><div class="hm-fl"><button class="hm-em" data-home="bgr"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path class="st" d="M34 30 H86 V90 H34 Z"/><path style="--d:.3s" d="M46 78 L60 44 L74 78 Z"/><circle style="--d:.6s" cx="74" cy="46" r="6"/><path style="--d:.8s" d="M26 96 L42 80 M34 104 L50 88"/><circle style="--d:1s" cx="22" cy="100" r="5"/><circle style="--d:1.1s" cx="30" cy="108" r="5"/></svg></span><b class="hm-nm chrome">Background Remover</b><small>Clean cut-outs, on device</small></button></div><i class="hm-shd"></i></div>
       <div class="hm-px hm-cat" style="--dz:1.3;--i:4;--ph:-3.3s"><div class="hm-fl"><button class="hm-em" data-home="src"><span class="hm-sym"><svg class="hm-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M38 24 H82 M38 96 H82"/><path style="--d:.3s" d="M44 24 V96 M76 24 V96"/><path style="--d:.6s" d="M44 34 C60 40 60 44 76 38 M44 46 C60 52 60 56 76 50 M44 58 C60 64 60 68 76 62 M44 70 C60 76 60 80 76 74 M44 82 C60 88 60 90 76 86"/><path class="st" d="M76 56 C94 58 100 72 92 86"/></svg></span><b class="hm-nm chrome">Sourcing</b><small>Fabrics, vendors, sizes</small></button></div><i class="hm-shd"></i></div>
     </nav>
     <nav class="hm-quick hm-dock" aria-label="Quick actions"><button data-hq="new"><i>&#65291;</i>New design<em>&rarr;</em></button><button data-hq="last" id="hmLast" hidden><i>&#8634;</i>Continue last<em>&rarr;</em></button><button data-hq="acc"><i>&#10022;</i>Accessories<em>&rarr;</em></button><button data-hq="books"><i>&#9636;</i>Lookbook library<em>&rarr;</em></button><button data-hq="col"><i>&#9638;</i>Collection planner<em>&rarr;</em></button><button data-hq="theme"><i>&#9680;&#xFE0E;</i>Theme &amp; backdrop<em>&rarr;</em></button><button data-hq="help"><i>?</i>Help &amp; shortcuts<em>&rarr;</em></button><button data-hq="sync" id="hmSync"><i>&#8645;&#xFE0E;</i>Sync devices<em>&rarr;</em></button><button data-hq="lic" id="hmLic" hidden><i>&#128273;&#xFE0E;</i>This device &amp; key<em>&rarr;</em></button></nav>
@@ -4837,7 +4911,7 @@ const MENUS={
   Image:[['gcpick','✦ Smart garment colour'],['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
   Select:[['selsubj','Select subject'],['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
-  Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
+  Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['bgrtool','Background Remover (full tool)…'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
   View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['fastdraw','Fast redraw (only what changed)'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
   <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn accb${ACCOPEN?' on':''}" data-l="acclib" title="Accessories library">${icon('acc')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
@@ -6604,7 +6678,7 @@ async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<
   ${await gsMkSection()}<h5>Your mockups <span class="h5n">Tap a mockup to start, or an empty slot to add one</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}</div>`;sheetEl.hidden=false}
 /* designs go between the garment and its fabric shading, so they pick up the folds */
 function gsDesignSlot(){const L=D.layers,si=L.findIndex(l=>l.name==='Fabric shading'&&l.clip);const c=curL();if(si>0&&(!c||c.id===L[si].id||c.id===D.garment||c.type==='adj'||c.type==='group'))D.cur=L[si-1].id;else if(si<0&&c&&c.id===D.garment&&L[idxOf(c)+1])D.cur=L[idxOf(c)+1].id}
-const GSREAL=[['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
+const GSREAL=[['bgrtool','Remove background (full tool)'],['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
 const GSBL=[['source-over','Normal'],['multiply','Multiply – print soaks into fabric'],['screen','Screen – light ink on dark'],['overlay','Overlay'],['soft-light','Soft light'],['darken','Darken'],['lighten','Lighten']];
 function gsMenu(k,btn){const mn=document.getElementById('gsMenu');if(!mn)return;if(!mn.hidden&&mn.dataset.k===k){gsMenuClose();return}const l=curL();let h='';
   if(k==='real')h=`<h6>Bring it to life <span>on “${esc(l?l.name:'')}”</span></h6>`+GSREAL.map(([a,n])=>`<button data-l="${a}">${n}</button>`).join('');
@@ -6853,6 +6927,346 @@ function mkMerge(A,B){A=A||{};B=B||{};const del=Object.assign({},A.del||{});for(
   return {cats,items,del,slotsIn:!!(A.slotsIn||B.slotsIn)}}
 let SYMKD=false;
 async function mkSyncIn(remote){const loc=await IDB.get('mockups');const mg=loc?mkMerge(loc,remote):remote;const sig=o=>JSON.stringify([(o.items||[]).map(x=>[x.id,x.updated]),Object.keys(o.del||{}).length,(o.cats||[]).length]);SYMKD=!!loc&&sig(mg)!==sig(remote||{});await IDB.set('mockups',mg);MK=null;const e=document.getElementById('mkP');if(e&&!e.hidden){await mkLoad();mkDraw()}}
+
+/* Motion Pack – Background Remover engine. Runs in a Web Worker (or the page as a fallback). Everything stays on the device. */
+function BGR_ENGINE(self){
+'use strict';
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+/* ---------- box blur (running sums), separable, Float32 ---------- */
+function boxH(src,dst,w,h,r){const n=2*r+1;for(let y=0;y<h;y++){const o=y*w;let s=0;for(let x=-r;x<=r;x++)s+=src[o+clamp(x,0,w-1)];for(let x=0;x<w;x++){dst[o+x]=s/n;const xa=x+r+1,xs=x-r;s+=src[o+(xa<w?xa:w-1)]-src[o+(xs>0?xs:0)]}}}
+function boxV(src,dst,w,h,r){const n=2*r+1;for(let x=0;x<w;x++){let s=0;for(let y=-r;y<=r;y++)s+=src[clamp(y,0,h-1)*w+x];for(let y=0;y<h;y++){dst[y*w+x]=s/n;const ya=y+r+1,ys=y-r;s+=src[(ya<h?ya:h-1)*w+x]-src[(ys>0?ys:0)*w+x]}}}
+function box(src,w,h,r,tmp,out){tmp=tmp||new Float32Array(w*h);out=out||new Float32Array(w*h);if(r<1){out.set(src);return out}boxH(src,tmp,w,h,r);boxV(tmp,out,w,h,r);return out}
+/* ---------- colour helpers ---------- */
+function kmeans(P,k,it,seed){/* P: array of [r,g,b]; k-means++ */let s=seed||1;const rnd=()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff};const n=P.length;if(!n)return [];k=Math.min(k,n);
+  const C=[P[Math.floor(rnd()*n)].slice()];const D=new Float64Array(n);while(C.length<k){let tot=0;for(let i=0;i<n;i++){let m=1e18;for(const c of C){const d=(P[i][0]-c[0])**2+(P[i][1]-c[1])**2+(P[i][2]-c[2])**2;if(d<m)m=d}D[i]=m;tot+=m}if(tot<=0)break;let t=rnd()*tot,j=0;for(;j<n-1;j++){t-=D[j];if(t<=0)break}C.push(P[j].slice())}
+  const A=new Int32Array(n);for(let r=0;r<(it||8);r++){const S=C.map(()=>[0,0,0,0]);for(let i=0;i<n;i++){let m=1e18,b=0;for(let c=0;c<C.length;c++){const d=(P[i][0]-C[c][0])**2+(P[i][1]-C[c][1])**2+(P[i][2]-C[c][2])**2;if(d<m){m=d;b=c}}A[i]=b;const q=S[b];q[0]+=P[i][0];q[1]+=P[i][1];q[2]+=P[i][2];q[3]++}
+    for(let c=0;c<C.length;c++)if(S[c][3])C[c]=[S[c][0]/S[c][3],S[c][1]/S[c][3],S[c][2]/S[c][3]]}
+  const cnt=C.map(()=>0);for(let i=0;i<n;i++)cnt[A[i]]++;return C.map((c,i)=>({c,n:cnt[i]}))}
+/* background colours from the outer ring of the picture */
+function bgColours(px,w,h){const P=[],ring=Math.max(2,Math.round(Math.min(w,h)*.015)),st=Math.max(1,Math.round((w+h)/1200));
+  for(let y=0;y<h;y+=st)for(let x=0;x<w;x+=st){if(x>=ring&&x<w-ring&&y>=ring&&y<h-ring)continue;const k=(y*w+x)*4;if(px[k+3]<200)continue;P.push([px[k],px[k+1],px[k+2]])}
+  if(P.length<8){let x0=w,y0=h,x1=-1,y1=-1;for(let y=0;y<h;y+=st)for(let x=0;x<w;x+=st)if(px[(y*w+x)*4+3]>200){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+    if(x1>x0&&y1>y0){const rg=Math.max(2,Math.round(Math.min(x1-x0,y1-y0)*.015));for(let y=y0;y<=y1;y+=st)for(let x=x0;x<=x1;x+=st){if(x>=x0+rg&&x<=x1-rg&&y>=y0+rg&&y<=y1-rg)continue;const k=(y*w+x)*4;if(px[k+3]<200)continue;P.push([px[k],px[k+1],px[k+2]])}}}
+  if(P.length<8)return [];const cl=kmeans(P,4,10,7).filter(c=>c.n>=P.length*.08).sort((a,b)=>b.n-a.n);const out=[];for(const c of cl){if(!out.some(o=>Math.hypot(o[0]-c.c[0],o[1]-c.c[1],o[2]-c.c[2])<18))out.push(c.c.map(Math.round))}return out}
+/* ---------- DESIGN mode: plain / gradient / multi-colour backgrounds ---------- */
+function designAlpha(px,w,h,o,seedsBg,forceKeep){const N=w*h,T=o.tol,t0=T*.6,t1=T*2.2,band=Math.max(2,Math.round(Math.max(w,h)/700))+o.edgeW;
+  let B=o.bg&&o.bg.length?o.bg:bgColours(px,w,h);if(!B.length)B=[[255,255,255]];const nb=B.length;
+  const dG=new Float32Array(N),bi=new Uint8Array(N);/* distance to the nearest background colour */
+  for(let i=0,k=0;i<N;i++,k+=4){let m=1e9,b=0;for(let j=0;j<nb;j++){const q=B[j],d=(px[k]-q[0])**2+(px[k+1]-q[1])**2+(px[k+2]-q[2])**2;if(d<m){m=d;b=j}}dG[i]=Math.sqrt(m);bi[i]=b}
+  /* flood from the edges with a local reference colour, so gradients and uneven lighting are followed */
+  const st=new Uint8Array(N)/*0 none 1 bg 2 band 3 fg*/,ref=new Float32Array(N*3),Q=new Int32Array(N);let qh=0,qt=0;const maxDrift=Math.max(t0*1.5,T*1.1),stepMax=Math.max(5,t0*.3);
+  const seed=i=>{if(st[i])return;const k=i*4;if(px[k+3]<16||dG[i]<=t0||(seedsBg&&seedsBg[i])){st[i]=1;ref[i*3]=px[k];ref[i*3+1]=px[k+1];ref[i*3+2]=px[k+2];if(px[k+3]<16){const q=B[bi[i]];ref[i*3]=q[0];ref[i*3+1]=q[1];ref[i*3+2]=q[2]}Q[qt++]=i}};
+  const edge=o.inside?false:true;
+  if(o.inside){for(let i=0;i<N;i++)if(!(forceKeep&&forceKeep[i]))seed(i)}else{for(let x=0;x<w;x++){seed(x);seed((h-1)*w+x)}for(let y=0;y<h;y++){seed(y*w);seed(y*w+w-1)}for(let i=0;i<N;i++)if(px[i*4+3]<16||(seedsBg&&seedsBg[i]))seed(i)}
+  while(qh<qt){const i=Q[qh++],x=i%w,r0=ref[i*3],g0=ref[i*3+1],b0=ref[i*3+2];const nbs=[x>0?i-1:-1,x<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1];
+    const fromClear=px[i*4+3]<16;
+    for(const j of nbs){if(j<0||st[j])continue;if(forceKeep&&forceKeep[j])continue;const k=j*4;if(fromClear&&px[k+3]>=16){if(dG[j]<=t0){st[j]=1;ref[j*3]=px[k];ref[j*3+1]=px[k+1];ref[j*3+2]=px[k+2];Q[qt++]=j}continue}const d=Math.sqrt((px[k]-r0)**2+(px[k+1]-g0)**2+(px[k+2]-b0)**2);
+      if((d<=t0&&dG[j]<=maxDrift)||px[k+3]<16){st[j]=1;const ki=i*4,step=Math.max(Math.abs(px[k]-px[ki]),Math.abs(px[k+1]-px[ki+1]),Math.abs(px[k+2]-px[ki+2]));
+        /* the reference colour only follows slow changes (gradients, lighting), never an edge */
+        if(step<=stepMax&&d<=t0*.6){ref[j*3]=r0*.8+px[k]*.2;ref[j*3+1]=g0*.8+px[k+1]*.2;ref[j*3+2]=b0*.8+px[k+2]*.2}else{ref[j*3]=r0;ref[j*3+1]=g0;ref[j*3+2]=b0}Q[qt++]=j}}}
+  /* background pixels right next to the design are re-measured precisely (low-contrast edges) */
+  {const near=new Uint8Array(N);let f0=[];for(let i=0;i<N;i++)if(st[i]===0)f0.push(i);for(let d=0;d<band;d++){const nf=[];for(const i of f0){const x=i%w;for(const j of [x>0?i-1:-1,x<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1]){if(j<0||near[j]||st[j]!==1)continue;near[j]=1;nf.push(j)}}f0=nf}for(let i=0;i<N;i++)if(near[i]&&px[i*4+3]>=16&&!(seedsBg&&seedsBg[i]))st[i]=2}
+  /* edge band: pixels next to the background that are part mix */
+  const dist=new Uint8Array(N);qh=0;const Q2=Q;let q2=0;for(let i=0;i<N;i++)if(st[i]===1||st[i]===2)Q2[q2++]=i;
+  while(qh<q2){const i=Q2[qh++];if(st[i]===2&&dist[i]>=band)continue;const x=i%w;const nbs=[x>0?i-1:-1,x<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1];
+    for(const j of nbs){if(j<0||st[j])continue;if(forceKeep&&forceKeep[j])continue;const k=j*4;st[j]=2;dist[j]=(st[i]===2?dist[i]:0)+1;ref[j*3]=ref[i*3];ref[j*3+1]=ref[i*3+1];ref[j*3+2]=ref[i*3+2];Q2[q2++]=j}}
+  /* foreground colour estimate for the band: average of nearby solid pixels */
+  const wF=new Float32Array(N);for(let i=0;i<N;i++){if(st[i]===0){wF[i]=1}}
+  const r=band*2+1,cs=[0,1,2].map(c=>{const a=new Float32Array(N);for(let i=0;i<N;i++)a[i]=wF[i]?px[i*4+c]:0;return a});const tmp=new Float32Array(N);
+  const bw=box(wF,w,h,r,tmp);const Fc=cs.map(a=>box(a,w,h,r,tmp));
+  const A=new Float32Array(N),nz=new Float32Array(N).fill(1e9);for(let i=0;i<N;i++)if(bw[i]>1e-3){const R0=ref[i*3],R1=ref[i*3+1],R2=ref[i*3+2];nz[i]=.25*Math.sqrt((Fc[0][i]/bw[i]-R0)**2+(Fc[1][i]/bw[i]-R1)**2+(Fc[2][i]/bw[i]-R2)**2)}
+  for(let i=0;i<N;i++){const s=st[i];if(s===0){A[i]=1;continue}if(s===1){A[i]=0;continue}
+    const k=i*4,R=[ref[i*3],ref[i*3+1],ref[i*3+2]],Cc=[px[k],px[k+1],px[k+2]];let a;
+    const dd=Math.sqrt((Cc[0]-R[0])**2+(Cc[1]-R[1])**2+(Cc[2]-R[2])**2);
+    if(bw[i]>1e-3){const F=[Fc[0][i]/bw[i],Fc[1][i]/bw[i],Fc[2][i]/bw[i]],fb=[F[0]-R[0],F[1]-R[1],F[2]-R[2]],L=fb[0]**2+fb[1]**2+fb[2]**2;
+      if(L>900)a=((Cc[0]-R[0])*fb[0]+(Cc[1]-R[1])*fb[1]+(Cc[2]-R[2])*fb[2])/L;else a=dd/t1}
+    else{/* nothing solid nearby (soft shadow / glow): keep what differs from the background */let am=0;for(let c=0;c<3;c++){const bb=R[c],cc=Cc[c];const v=cc>bb?(cc-bb)/(255-bb+1e-3):(bb-cc)/(bb+1e-3);if(v>am)am=v}a=o.shadow?am:(dd<=t1?0:am)}
+    if(dd<=Math.min(t0*.8,nz[i]))a=0;A[i]=clamp(a,0,1)*(px[k+3]/255)}
+  const holes=[];{const minA=Math.max(30,N*.00015),seen=new Uint8Array(N),Qh=new Int32Array(N);for(let s0=0;s0<N;s0++){if(seen[s0]||st[s0]!==0||dG[s0]>t0)continue;let hh=0,ht=0;Qh[ht++]=s0;seen[s0]=1;let x0=w,y0=h,x1=0,y1=0,sx=0,sy=0;
+    while(hh<ht){const i=Qh[hh++],x=i%w,y=(i/w)|0;sx+=x;sy+=y;if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;for(const j of [x>0?i-1:-1,x<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1]){if(j<0||seen[j]||st[j]!==0||dG[j]>t0)continue;seen[j]=1;Qh[ht++]=j}}
+    if(ht>=minA){const cx=sx/ht,cy=sy/ht;let bi2=s0,bd=1e18;for(let q=0;q<ht;q+=Math.max(1,ht>>12)){const i=Qh[q],d=(i%w-cx)**2+(((i/w)|0)-cy)**2;if(d<bd){bd=d;bi2=i}}holes.push({x:(bi2%w+.5)/w,y:(((bi2/w)|0)+.5)/h,n:ht,box:[x0/w,y0/h,(x1+1)/w,(y1+1)/h]})}}}
+  return {A,st,B,holes}}
+/* ---------- PHOTO mode: GrabCut (Gaussian colour models + graph cut) ---------- */
+function GMM(K){this.K=K;this.w=new Float64Array(K);this.m=new Float64Array(K*3);this.ic=new Float64Array(K*9);this.dt=new Float64Array(K);this.s=null}
+GMM.prototype.comp=function(k,r,g,b){if(this.w[k]<=0)return 0;const m=this.m,o=k*3,dr=r-m[o],dg=g-m[o+1],db=b-m[o+2],c=this.ic,p=k*9;
+  const mult=dr*(dr*c[p]+dg*c[p+3]+db*c[p+6])+dg*(dr*c[p+1]+dg*c[p+4]+db*c[p+7])+db*(dr*c[p+2]+dg*c[p+5]+db*c[p+8]);return 1/Math.sqrt(this.dt[k])*Math.exp(-.5*mult)};
+GMM.prototype.p=function(r,g,b){let s=0;for(let k=0;k<this.K;k++)s+=this.w[k]*this.comp(k,r,g,b);return s};
+GMM.prototype.best=function(r,g,b){let m=-1,bk=0;for(let k=0;k<this.K;k++){const v=this.comp(k,r,g,b);if(v>m){m=v;bk=k}}return bk};
+GMM.prototype.learn=function(px,idx,lab){const K=this.K,S=new Float64Array(K*13);let tot=0;for(let t=0;t<idx.length;t++){const i=idx[t],k=lab[t],q=k*13,o=i*4,r=px[o],g=px[o+1],b=px[o+2];S[q]+=r;S[q+1]+=g;S[q+2]+=b;S[q+3]+=r*r;S[q+4]+=r*g;S[q+5]+=r*b;S[q+6]+=g*g;S[q+7]+=g*b;S[q+8]+=b*b;S[q+12]++;tot++}
+  for(let k=0;k<K;k++){const q=k*13,n=S[q+12];if(!n){this.w[k]=0;continue}this.w[k]=n/tot;const mr=S[q]/n,mg=S[q+1]/n,mb=S[q+2]/n;this.m[k*3]=mr;this.m[k*3+1]=mg;this.m[k*3+2]=mb;
+    const c=[S[q+3]/n-mr*mr,S[q+4]/n-mr*mg,S[q+5]/n-mr*mb,0,S[q+6]/n-mg*mg,S[q+7]/n-mg*mb,0,0,S[q+8]/n-mb*mb];c[3]=c[1];c[6]=c[2];c[7]=c[5];const ev=.01*255;c[0]+=ev;c[4]+=ev;c[8]+=ev;
+    const det=c[0]*(c[4]*c[8]-c[5]*c[7])-c[1]*(c[3]*c[8]-c[5]*c[6])+c[2]*(c[3]*c[7]-c[4]*c[6]);this.dt[k]=det;const p=k*9,ic=this.ic;
+    ic[p]=(c[4]*c[8]-c[5]*c[7])/det;ic[p+1]=-(c[1]*c[8]-c[2]*c[7])/det;ic[p+2]=(c[1]*c[5]-c[2]*c[4])/det;ic[p+3]=-(c[3]*c[8]-c[5]*c[6])/det;ic[p+4]=(c[0]*c[8]-c[2]*c[6])/det;ic[p+5]=-(c[0]*c[5]-c[2]*c[3])/det;ic[p+6]=(c[3]*c[7]-c[4]*c[6])/det;ic[p+7]=-(c[0]*c[7]-c[1]*c[6])/det;ic[p+8]=(c[0]*c[4]-c[1]*c[3])/det}};
+/* Boykov–Kolmogorov max-flow (port of the classic GCGraph) */
+function Graph(nv,ne){this.n=0;this.first=new Int32Array(nv);this.parent=new Int32Array(nv+1);this.next=new Int32Array(nv+1);this.ts=new Int32Array(nv+1);this.dist=new Int32Array(nv+1);this.wt=new Float64Array(nv+1);this.t=new Uint8Array(nv+1);
+  this.dst=new Int32Array(ne*2+2);this.enext=new Int32Array(ne*2+2);this.ew=new Float64Array(ne*2+2);this.ec=2;this.flow=0}
+Graph.prototype.addVtx=function(){return this.n++};
+Graph.prototype.addEdges=function(i,j,w,rw){let e=this.ec;this.dst[e]=j;this.enext[e]=this.first[i];this.ew[e]=w;this.first[i]=e;e++;this.dst[e]=i;this.enext[e]=this.first[j];this.ew[e]=rw;this.first[j]=e;this.ec+=2};
+Graph.prototype.addTerm=function(i,sw,tw){const dw=this.wt[i];if(dw>0)sw+=dw;else tw-=dw;this.flow+=sw<tw?sw:tw;this.wt[i]=sw-tw};
+Graph.prototype.maxFlow=function(){const TERM=-1,ORPH=-2,N=this.n,NIL=N,P=this.parent,NX=this.next,TS=this.ts,DI=this.dist,W=this.wt,T=this.t,DS=this.dst,EN=this.enext,EW=this.ew,F=this.first,orph=[];let first=NIL,last=NIL,cts=0;NX[NIL]=NIL;
+  for(let i=0;i<N;i++){TS[i]=0;NX[i]=-1;if(W[i]!==0){NX[last]=i;last=i;DI[i]=1;P[i]=TERM;T[i]=W[i]<0?1:0}else P[i]=0}
+  first=NX[NIL];NX[last]=NIL;NX[NIL]=-1;
+  for(;;){let e0=-1,v;
+    while(first!==NIL){v=first;if(P[v]){const vt=T[v];for(let ei=F[v];ei!==0;ei=EN[ei]){if(EW[ei^vt]===0)continue;const u=DS[ei];if(!P[u]){T[u]=vt;P[u]=ei^1;TS[u]=TS[v];DI[u]=DI[v]+1;if(NX[u]===-1){NX[u]=NIL;NX[last]=u;last=u}continue}
+        if(T[u]!==vt){e0=ei^vt;break}if(DI[u]>DI[v]+1&&TS[u]<=TS[v]){P[u]=ei^1;TS[u]=TS[v];DI[u]=DI[v]+1}}if(e0>0)break}first=NX[first];NX[v]=-1}
+    if(e0<=0)break;
+    let mw=EW[e0];for(let k=1;k>=0;k--){let u=DS[e0^k],ei;for(;;u=DS[ei]){ei=P[u];if(ei<0)break;const x=EW[ei^k];if(x<mw)mw=x}const x=Math.abs(W[u]);if(x<mw)mw=x}
+    EW[e0]-=mw;EW[e0^1]+=mw;this.flow+=mw;
+    for(let k=1;k>=0;k--){let u=DS[e0^k],ei;for(;;u=DS[ei]){ei=P[u];if(ei<0)break;EW[ei^(k^1)]+=mw;if((EW[ei^k]-=mw)===0){orph.push(u);P[u]=ORPH}}W[u]+=mw*(1-k*2);if(W[u]===0){orph.push(u);P[u]=ORPH}}
+    cts++;
+    while(orph.length){const v2=orph.pop();let md=0x7fffffff;e0=0;const vt=T[v2];
+      for(let ei=F[v2];ei!==0;ei=EN[ei]){if(EW[ei^(vt^1)]===0)continue;let u=DS[ei];if(T[u]!==vt||P[u]===0)continue;let d=0;
+        for(;;){if(TS[u]===cts){d+=DI[u];break}const ej=P[u];d++;if(ej<0){if(ej===ORPH)d=0x7fffffff-1;else{TS[u]=cts;DI[u]=1}break}u=DS[ej]}
+        if(++d<0x7fffffff){if(d<md){md=d;e0=ei}for(u=DS[ei];TS[u]!==cts;u=DS[P[u]]){TS[u]=cts;DI[u]=--d}}}
+      if((P[v2]=e0)>0){TS[v2]=cts;DI[v2]=md;continue}
+      TS[v2]=0;for(let ei=F[v2];ei!==0;ei=EN[ei]){const u=DS[ei],ej=P[u];if(T[u]!==vt||!ej)continue;if(EW[ei^(vt^1)]&&NX[u]===-1){NX[u]=NIL;NX[last]=u;last=u}if(ej>0&&DS[ej]===v2){orph.push(u);P[u]=ORPH}}}}
+  return this.flow};
+function grabcut(px,w,h,tri,iters,skip){/* tri: 0 bg sure,1 fg sure,2 probably bg,3 probably fg */const N=w*h,K=5,g=50,lam=9*g;
+  let beta=0,cnt=0;const dif=(i,j)=>{const a=i*4,b=j*4;return (px[a]-px[b])**2+(px[a+1]-px[b+1])**2+(px[a+2]-px[b+2])**2};
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;if(x>0){beta+=dif(i,i-1);cnt++}if(y>0){beta+=dif(i,i-w);cnt++;if(x>0){beta+=dif(i,i-w-1);cnt++}if(x<w-1){beta+=dif(i,i-w+1);cnt++}}}beta=beta<=1e-9?0:1/(2*beta/cnt);
+  const L=new Float32Array(N),UL=new Float32Array(N),U=new Float32Array(N),UR=new Float32Array(N),s2=g/Math.SQRT2;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;L[i]=x>0?g*Math.exp(-beta*dif(i,i-1)):0;UL[i]=x>0&&y>0?s2*Math.exp(-beta*dif(i,i-w-1)):0;U[i]=y>0?g*Math.exp(-beta*dif(i,i-w)):0;UR[i]=x<w-1&&y>0?s2*Math.exp(-beta*dif(i,i-w+1)):0}
+  const fg=new GMM(K),bg=new GMM(K);
+  const init=()=>{for(const [G,sel] of [[bg,v=>v===0||v===2],[fg,v=>v===1||v===3]]){const idx=[];for(let i=0;i<N;i++)if(sel(tri[i])&&!(skip&&skip[i]))idx.push(i);const step=Math.max(1,Math.floor(idx.length/6000)),P=[],pi=[];for(let t=0;t<idx.length;t+=step){const o=idx[t]*4;P.push([px[o],px[o+1],px[o+2]]);pi.push(idx[t])}
+      if(!P.length){G.w.fill(0);G.w[0]=1;G.m.set([128,128,128]);G.dt[0]=1e6;G.ic.fill(0);G.ic[0]=G.ic[4]=G.ic[8]=1e-6;continue}const cl=kmeans(P,K,10,G===fg?3:5);const lab=new Int32Array(idx.length);for(let t=0;t<idx.length;t++){const o=idx[t]*4;let m=1e18,b=0;for(let c=0;c<cl.length;c++){const q=cl[c].c,d=(px[o]-q[0])**2+(px[o+1]-q[1])**2+(px[o+2]-q[2])**2;if(d<m){m=d;b=c}}lab[t]=b}G.learn(px,idx,lab)}};
+  init();
+  for(let it=0;it<iters;it++){if(it>0){for(const [G,sel] of [[bg,v=>v===0||v===2],[fg,v=>v===1||v===3]]){const idx=[];for(let i=0;i<N;i++)if(sel(tri[i])&&!(skip&&skip[i]))idx.push(i);const lab=new Int32Array(idx.length);for(let t=0;t<idx.length;t++){const o=idx[t]*4;lab[t]=G.best(px[o],px[o+1],px[o+2])}G.learn(px,idx,lab)}}
+    const G=new Graph(N,N*4);for(let i=0;i<N;i++)G.addVtx();
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,o=i*4,v=tri[i];let fs,ts;
+      if(v===2||v===3){fs=-Math.log(bg.p(px[o],px[o+1],px[o+2])+1e-300);ts=-Math.log(fg.p(px[o],px[o+1],px[o+2])+1e-300)}else if(v===0){fs=0;ts=lam}else{fs=lam;ts=0}
+      G.addTerm(i,fs,ts);if(x>0)G.addEdges(i,i-1,L[i],L[i]);if(x>0&&y>0)G.addEdges(i,i-w-1,UL[i],UL[i]);if(y>0)G.addEdges(i,i-w,U[i],U[i]);if(x<w-1&&y>0)G.addEdges(i,i-w+1,UR[i],UR[i])}
+    G.maxFlow();for(let i=0;i<N;i++){if(tri[i]===2||tri[i]===3)tri[i]=G.t[i]===0?3:2}}
+  const out=new Float32Array(N);for(let i=0;i<N;i++)out[i]=(tri[i]===1||tri[i]===3)?1:0;return out}
+/* ---------- guided filter (grey guide) ---------- */
+function guided(I,p,w,h,r,eps){const N=w*h,tmp=new Float32Array(N),mI=box(I,w,h,r,tmp),mP=box(p,w,h,r,tmp),II=new Float32Array(N),IP=new Float32Array(N);for(let i=0;i<N;i++){II[i]=I[i]*I[i];IP[i]=I[i]*p[i]}
+  const cII=box(II,w,h,r,tmp),cIP=box(IP,w,h,r,tmp),a=II,b=IP;for(let i=0;i<N;i++){const v=cII[i]-mI[i]*mI[i],c=cIP[i]-mI[i]*mP[i];a[i]=c/(v+eps);b[i]=mP[i]-a[i]*mI[i]}const ma=box(a,w,h,r,tmp),mb=box(b,w,h,r,tmp),q=new Float32Array(N);for(let i=0;i<N;i++)q[i]=ma[i]*I[i]+mb[i];return q}
+/* ---------- colour clean-up at soft edges: approximate fast foreground estimation (blur fusion) ---------- */
+function fgColours(px,A,w,h){const N=w*h,L=Math.max(w,h),r1=Math.max(6,Math.round(L*.045)),r2=Math.max(2,Math.round(L*.004));const I=[0,1,2].map(c=>{const a=new Float32Array(N);for(let i=0;i<N;i++)a[i]=px[i*4+c]/255;return a});
+  let F=I.map(a=>a.slice()),B=I.map(a=>a.slice());const tmp=new Float32Array(N),t1=new Float32Array(N),t2=new Float32Array(N),inv=new Float32Array(N);for(let i=0;i<N;i++)inv[i]=1-A[i];
+  for(const r of [r1,r2]){const bA=box(A,w,h,r,tmp),bI=box(inv,w,h,r,tmp);const nf=[],nbk=[];
+    for(let c=0;c<3;c++){for(let i=0;i<N;i++){t1[i]=F[c][i]*A[i];t2[i]=B[c][i]*inv[i]}const bf=box(t1,w,h,r,tmp),bb=box(t2,w,h,r,tmp);const f=new Float32Array(N),b=new Float32Array(N);
+      for(let i=0;i<N;i++){const FA=bf[i]/(bA[i]+1e-5),B1=bb[i]/(bI[i]+1e-5),a=A[i],res=I[c][i]-a*FA-(1-a)*B1;f[i]=clamp(FA+a*res,0,1);b[i]=clamp(B1+(1-a)*res,0,1)}nf.push(f);nbk.push(b)}F=nf;B=nbk}
+  return F}
+/* ---------- helpers for user edits ---------- */
+function wand(px,w,h,x,y,tol){const N=w*h,m=new Uint8Array(N),i0=y*w+x,k0=i0*4,r=px[k0],g=px[k0+1],b=px[k0+2],T=tol*1.6,Q=new Int32Array(N);let qh=0,qt=0;m[i0]=1;Q[qt++]=i0;
+  while(qh<qt){const i=Q[qh++],xx=i%w;const nbs=[xx>0?i-1:-1,xx<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1];for(const j of nbs){if(j<0||m[j])continue;const k=j*4;if(Math.sqrt((px[k]-r)**2+(px[k+1]-g)**2+(px[k+2]-b)**2)<=T){m[j]=1;Q[qt++]=j}}}return m}
+function paint(M,w,h,pts,rad,soft){/* M Float32 0..1 (max-combine) */const L=Math.max(w,h),R=Math.max(1,rad*L);const dab=(cx,cy)=>{const x0=Math.max(0,Math.floor(cx-R)),x1=Math.min(w-1,Math.ceil(cx+R)),y0=Math.max(0,Math.floor(cy-R)),y1=Math.min(h-1,Math.ceil(cy+R));
+    for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const d=Math.hypot(x-cx,y-cy)/R;if(d>1)continue;const v=soft?Math.min(1,(1-d)*2.2):1;const i=y*w+x;if(v>M[i])M[i]=v}};
+  for(let t=0;t<pts.length;t++){const [x,y]=[pts[t][0]*w,pts[t][1]*h];if(t===0){dab(x,y);continue}const [px0,py0]=[pts[t-1][0]*w,pts[t-1][1]*h],d=Math.hypot(x-px0,y-py0),n=Math.max(1,Math.ceil(d/(R*.35)));for(let s=1;s<=n;s++)dab(px0+(x-px0)*s/n,py0+(y-py0)*s/n)}}
+function morph(A,w,h,r,grow){/* separable max / min filter */if(r<1)return A;const N=w*h,t=new Float32Array(N),o=new Float32Array(N),f=grow?Math.max:Math.min;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){let v=A[y*w+x];for(let d=1;d<=r;d++){if(x-d>=0)v=f(v,A[y*w+x-d]);if(x+d<w)v=f(v,A[y*w+x+d])}t[y*w+x]=v}
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){let v=t[y*w+x];for(let d=1;d<=r;d++){if(y-d>=0)v=f(v,t[(y-d)*w+x]);if(y+d<h)v=f(v,t[(y+d)*w+x])}o[y*w+x]=v}return o}
+/* ---------- the full pipeline ---------- */
+function run(img,o,ops){const {w,h,px}=img,N=w*h,L=Math.max(w,h);
+  /* user edits → masks */
+  const keep=new Float32Array(N),erase=new Float32Array(N),seedBg=new Uint8Array(N),seedFg=new Uint8Array(N);
+  for(const op of ops||[]){if(op.t==='brush'){const M=op.m==='keep'?keep:erase,T2=new Float32Array(N);paint(T2,w,h,op.pts,op.r,op.soft);for(let i=0;i<N;i++){if(T2[i]>0){if(op.m==='keep'){if(T2[i]>M[i])M[i]=T2[i];erase[i]*=1-T2[i];if(T2[i]>.5)seedFg[i]=1}else{if(T2[i]>M[i])M[i]=T2[i];keep[i]*=1-T2[i];if(T2[i]>.5)seedBg[i]=1}}}}
+    else if(op.t==='wand'){const m=wand(px,w,h,Math.min(w-1,Math.floor(op.x*w)),Math.min(h-1,Math.floor(op.y*h)),op.tol);for(let i=0;i<N;i++)if(m[i]){if(op.m==='keep'){seedFg[i]=1;erase[i]=0}else{seedBg[i]=1;keep[i]=0}}}}
+  let A;
+  if(o.mode==='photo'){/* graph cut at working size, then edge-accurate upscaling */const S=Math.min(1,(o.gcSize||560)/L),sw=Math.max(8,Math.round(w*S)),sh=Math.max(8,Math.round(h*S)),sp=new Uint8ClampedArray(sw*sh*4),tri=new Uint8Array(sw*sh),skip=new Uint8Array(sw*sh);
+    for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){const X0=Math.floor(x/S),Y0=Math.floor(y/S),X1=Math.min(w,Math.floor((x+1)/S)),Y1=Math.min(h,Math.floor((y+1)/S));let r=0,g=0,b=0,n=0,sf=0,sb=0;for(let yy=Y0;yy<Math.max(Y0+1,Y1);yy++)for(let xx=X0;xx<Math.max(X0+1,X1);xx++){const i=yy*w+xx,k=i*4;r+=px[k];g+=px[k+1];b+=px[k+2];n++;sf+=seedFg[i];sb+=seedBg[i]}
+      const o2=(y*sw+x)*4;sp[o2]=r/n;sp[o2+1]=g/n;sp[o2+2]=b/n;sp[o2+3]=255;let aa=0;for(let yy=Y0;yy<Math.max(Y0+1,Y1);yy++)for(let xx=X0;xx<Math.max(X0+1,X1);xx++)aa+=px[(yy*w+xx)*4+3];const border=Math.max(1,Math.round(Math.min(sw,sh)*.012));let v=(x<border||y<border||x>=sw-border||y>=sh-border)?0:3;if(o.rect){const X=(x+.5)/sw,Y=(y+.5)/sh;if(X<o.rect[0]||X>o.rect[2]||Y<o.rect[1]||Y>o.rect[3])v=0}if(sb>n*.3)v=0;if(sf>n*.3)v=1;if(aa<n*128){v=0;skip[y*sw+x]=1}tri[y*sw+x]=v}
+    /* a clearly plain background colour helps the first guess */
+    const Bc=bgColours(px,w,h);if(Bc.length){for(let i=0;i<sw*sh;i++){if(tri[i]!==3)continue;const k=i*4;let m=1e9;for(const q of Bc){const d=Math.hypot(sp[k]-q[0],sp[k+1]-q[1],sp[k+2]-q[2]);if(d<m)m=d}if(m<o.tol*.5)tri[i]=2}}
+    const small=grabcut(sp,sw,sh,tri,o.iters||4,skip);
+    /* upscale + guided filter against the full picture */
+    const up=new Float32Array(N);for(let y=0;y<h;y++){const fy=Math.min(sh-1,Math.max(0,(y+.5)*S-.5)),y0=Math.floor(fy),y1=Math.min(sh-1,y0+1),ty=fy-y0;for(let x=0;x<w;x++){const fx=Math.min(sw-1,Math.max(0,(x+.5)*S-.5)),x0=Math.floor(fx),x1=Math.min(sw-1,x0+1),tx=fx-x0;
+      up[y*w+x]=(small[y0*sw+x0]*(1-tx)+small[y0*sw+x1]*tx)*(1-ty)+(small[y1*sw+x0]*(1-tx)+small[y1*sw+x1]*tx)*ty}}
+    const I=new Float32Array(N);for(let i=0;i<N;i++){const k=i*4;I[i]=(px[k]*.299+px[k+1]*.587+px[k+2]*.114)/255}
+    const gr=Math.max(2,Math.round(L/(o.gcSize||560)*2.2)),q=guided(I,up,w,h,gr,1e-4);const q2=guided(I,q,w,h,Math.max(1,gr>>1),4e-5);A=new Float32Array(N);for(let i=0;i<N;i++){const v=(q2[i]-.5)*1.35+.5;A[i]=clamp(v,0,1)}}
+  let holes=[];if(o.mode!=='photo'){const r=designAlpha(px,w,h,o,seedBg,seedFg);A=r.A;holes=r.holes.sort((a,b)=>b.n-a.n).slice(0,40)}
+  /* edge shift / smooth */
+  const sh2=Math.round((o.shift||0)*Math.max(1,L/1200));if(sh2)A=morph(A,w,h,Math.abs(sh2),sh2>0);
+  if(o.smooth){const r=Math.max(1,Math.round(o.smooth*L/1400));A=box(box(A,w,h,r),w,h,r);if(o.mode!=='photo')for(let i=0;i<N;i++)A[i]=clamp((A[i]-.5)*1.25+.5,0,1)}
+  /* user brush strokes win */
+  for(let i=0;i<N;i++){if(keep[i]>0)A[i]=Math.max(A[i],keep[i]);if(erase[i]>0)A[i]=A[i]*(1-erase[i])}
+  /* colour clean-up at soft edges */
+  const out=new Uint8ClampedArray(N*4);let F=null;if(o.decon!==false){let soft=0;for(let i=0;i<N;i++)if(A[i]>.004&&A[i]<.996){soft++;if(soft>0)break}
+    if(soft){if(N<=2.2e6)F=fgColours(px,A,w,h);else{const k=Math.sqrt(2.2e6/N),sw=Math.max(1,Math.round(w*k)),sh=Math.max(1,Math.round(h*k)),sp=new Uint8ClampedArray(sw*sh*4),sa=new Float32Array(sw*sh);
+      for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){const X=Math.min(w-1,Math.floor((x+.5)/k)),Y=Math.min(h-1,Math.floor((y+.5)/k)),i=Y*w+X,j=y*sw+x;sp[j*4]=px[i*4];sp[j*4+1]=px[i*4+1];sp[j*4+2]=px[i*4+2];sp[j*4+3]=255;sa[j]=A[i]}
+      const Fs=fgColours(sp,sa,sw,sh);F=[0,1,2].map(()=>null);F=Fs.map(ch=>({get:(x,y)=>ch[Math.min(sh-1,Math.floor(y*k))*sw+Math.min(sw-1,Math.floor(x*k))]}));F.big=true}}}
+  for(let i=0;i<N;i++){const k=i*4,a=A[i];let al=Math.round(a*255*(px[k+3]/255));if(al<3)al=0;out[k+3]=al;if(F&&a<.996&&keep[i]<.5){if(F.big){const x=i%w,y=(i/w)|0;out[k]=F[0].get(x,y)*255;out[k+1]=F[1].get(x,y)*255;out[k+2]=F[2].get(x,y)*255}else{out[k]=F[0][i]*255;out[k+1]=F[1][i]*255;out[k+2]=F[2][i]*255}}else{out[k]=px[k];out[k+1]=px[k+1];out[k+2]=px[k+2]}}
+  return {out,w,h,holes}}
+const api={run,bgColours,grabcut,designAlpha,guided,fgColours,Graph,wand};
+if(self&&self.postMessage&&typeof self.addEventListener==='function'){const store={};self.addEventListener('message',e=>{const d=e.data;try{if(d.cmd==='load'){store[d.key]={w:d.w,h:d.h,px:new Uint8ClampedArray(d.buf)};self.postMessage({id:d.id,ok:1});return}
+  if(d.cmd==='bg'){const im=store[d.key];self.postMessage({id:d.id,bg:bgColours(im.px,im.w,im.h)});return}
+  if(d.cmd==='run'){const im=store[d.key];const t=Date.now();const r=run(im,d.o,d.ops);self.postMessage({id:d.id,w:r.w,h:r.h,buf:r.out.buffer,holes:r.holes,ms:Date.now()-t},[r.out.buffer]);return}}catch(err){self.postMessage({id:d.id,err:String(err&&err.message||err)})}})}
+return api}
+
+
+/* ================= Background Remover – its own space ================= */
+const BRM={src:null,name:'',w:0,h:0,pw:0,ph:0,o:null,ops:[],hist:[],fut:[],res:null,resSeq:-1,full:null,fullSeq:-1,seq:0,holes:[],view:{z:1,x:0,y:0},tool:'pan',bs:.025,soft:true,bgv:'checker',bgc:'#ff3b6b',trim:true,from:null,auto:[],busy:false,showHoles:true,cmp:false,live:null,boxing:null};
+const BR_FINE=matchMedia('(pointer:fine)').matches,BR_FCAP=BR_FINE?3200:2400,BR_PCAP=BR_FINE?1100:880;
+function brDefaults(mode){return {mode:mode||'design',tol:30,edgeW:0,shadow:false,inside:false,bg:null,rect:null,gcSize:560,iters:4,shift:0,smooth:0,decon:true}}
+/* ---- worker ---- */
+let BRW=null,BRWID=0;const BRWQ=new Map();let BRL=null,BRLS={};
+function brWorker(){if(BRW!==null)return BRW;try{const src='('+BGR_ENGINE.toString()+')(self)';BRW=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})));BRW.onmessage=e=>{const r=BRWQ.get(e.data.id);if(r){BRWQ.delete(e.data.id);r(e.data)}};BRW.onerror=e=>{console.warn('bgr worker',e&&e.message);BRW=false;for(const [,r] of BRWQ)r({err:'worker'});BRWQ.clear()}}catch(e){BRW=false}return BRW}
+function brLocal(m){if(!BRL)BRL=BGR_ENGINE(null);try{if(m.cmd==='load'){BRLS[m.key]={w:m.w,h:m.h,px:new Uint8ClampedArray(m.buf)};return {ok:1}}const im=BRLS[m.key];if(m.cmd==='bg')return {bg:BRL.bgColours(im.px,im.w,im.h)};if(m.cmd==='run'){const t=Date.now(),r=BRL.run(im,m.o,m.ops);return {w:r.w,h:r.h,buf:r.out.buffer,holes:r.holes,ms:Date.now()-t}}}catch(e){return {err:String(e&&e.message||e)}}}
+async function brCall(m,tr){const w=brWorker();if(!w){await new Promise(r=>setTimeout(r,16));return brLocal(m)}const keep=m.cmd==='load'?m.buf.slice(0):null;const r=await new Promise(res=>{const id=++BRWID;m.id=id;BRWQ.set(id,res);try{w.postMessage(m,tr||[])}catch(e){BRWQ.delete(id);res({err:'worker'})}});if(r&&r.err==='worker'){if(keep)m.buf=keep;return brLocal(m)}return r}
+/* ---- page ---- */
+function brEl(){let e=document.getElementById('brP');if(e)return e;e=document.createElement('div');e.id='brP';e.hidden=true;e.setAttribute('role','dialog');e.setAttribute('aria-label','Background Remover');
+  e.innerHTML=`<div class="br-top"><button class="lg-back" data-br="close">&larr; <span class="br-bk">Home</span></button><h2 class="chrome">Background Remover</h2><div class="br-tr"><button data-br="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8630;</button><button data-br="redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">&#8631;</button><button class="br-done" data-br="done">Save</button></div></div>
+  <div class="br-main"><div class="br-stage" id="brStage"><canvas id="brCv"></canvas><div class="br-empty" id="brEmpty"><div class="br-drop"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M30 86 L62 32 L90 86 Z" fill="none" stroke="url(#hmChrome)" stroke-width="3" stroke-linejoin="round" stroke-dasharray="6 6"/><circle cx="84" cy="36" r="10" fill="none" stroke="url(#hmChrome)" stroke-width="3"/><path d="M22 98 H98" stroke="url(#hmChrome)" stroke-width="3" stroke-linecap="round"/></svg><b>Drop a design or photo</b><span>or</span><button class="pill big" data-br="pick">Choose an image</button><small>You can also paste an image (Ctrl/Cmd + V). Everything stays on this device.</small></div></div>
+    <div class="br-busy" id="brBusy" hidden><i></i><span>Working…</span></div><div class="br-tip" id="brTip"></div>
+    <div class="br-tools" id="brTools"></div></div>
+  <aside class="br-side" id="brSide"></aside></div><input type="file" id="brFile" accept="image/*" hidden>`;
+  document.body.appendChild(e);
+  e.addEventListener('click',ev=>{const b=ev.target.closest('[data-br]');if(!b)return;const [a,v]=b.dataset.br.split(/\|(.*)/s);brAct(a,v,b)});
+  e.addEventListener('input',ev=>{const t=ev.target;if(!t.dataset||!t.dataset.bro)return;const k=t.dataset.bro;let v=t.type==='range'?+t.value:t.value;if(k==='bs'){BRM.bs=v/1000;brDraw();return}const lab=e.querySelector(`[data-brv="${k}"]`);if(lab)lab.textContent=k==='shift'&&v>0?'+'+v:v;brSet(k,v,true)});
+  e.addEventListener('change',ev=>{const t=ev.target;if(t.id==='brFile'&&t.files&&t.files[0]){brLoadFile(t.files[0]);t.value=''}if(t.dataset&&t.dataset.brc)brSetBgv('color',t.value)});
+  const st=e.querySelector('#brStage');st.addEventListener('dragover',ev=>{ev.preventDefault();st.classList.add('drag')});st.addEventListener('dragleave',()=>st.classList.remove('drag'));
+  st.addEventListener('drop',ev=>{ev.preventDefault();st.classList.remove('drag');const f=[...(ev.dataTransfer.files||[])].find(x=>/^image\//.test(x.type));if(f)brLoadFile(f)});
+  brPointer(st);new ResizeObserver(()=>{if(!e.hidden)brFitCanvas()}).observe(st);return e}
+function brOpen(opts){const e=brEl();e.hidden=false;H2.classList.add('inbr');e.querySelector('.br-bk').textContent=opts&&opts.from?(GMODE?'Garment Studio':'Design Lab'):'Home';if(!BRM.src||(opts&&opts.fresh)){BRM.src=null;BRM.from=null;brReset()}brSide();brTools();requestAnimationFrame(brFitCanvas)}
+function brClose(){const e=document.getElementById('brP');if(e)e.hidden=true;H2.classList.remove('inbr');BRM.from=null}
+function brReset(){BRM.o=brDefaults();BRM.ops=[];BRM.hist=[];BRM.fut=[];BRM.res=null;BRM.full=null;BRM.holes=[];BRM.seq++;const em=document.getElementById('brEmpty');if(em)em.hidden=!!BRM.src}
+/* ---- loading ---- */
+async function brLoadFile(f){try{brBusy('Opening…');const im=await bmpOf(f);await brLoad(im,(f.name||'image').replace(/\.[^.]+$/,''));if(im.close)im.close()}catch(e){console.error(e);brBusy(false);toast('Could not open that image')}}
+async function brLoad(im,name,from){const w0=im.naturalWidth||im.width,h0=im.naturalHeight||im.height,cap=from?Math.max(BR_FCAP,from.cap||0):BR_FCAP,k=Math.min(1,cap/Math.max(w0,h0)),w=Math.max(1,Math.round(w0*k)),h=Math.max(1,Math.round(h0*k));
+  const c=mk(w,h),x=cx2(c);x.imageSmoothingQuality='high';x.drawImage(im,0,0,w,h);BRM.src=c;BRM.name=name||'image';BRM.w=w;BRM.h=h;BRM.from=from||null;
+  const pk=Math.min(1,BR_PCAP/Math.max(w,h)),pw=Math.max(1,Math.round(w*pk)),ph=Math.max(1,Math.round(h*pk)),p=mk(pw,ph),px=cx2(p);px.imageSmoothingQuality='high';px.drawImage(c,0,0,pw,ph);BRM.pw=pw;BRM.ph=ph;BRM.prev=p;
+  brReset();brBusy('Reading the picture…');
+  await brCall({cmd:'load',key:'f',w,h,buf:x.getImageData(0,0,w,h).data.buffer});await brCall({cmd:'load',key:'p',w:pw,h:ph,buf:px.getImageData(0,0,pw,ph).data.buffer});
+  const r=await brCall({cmd:'bg',key:'p'});BRM.auto=(r&&r.bg)||[];
+  /* design (plain background) or photo (busy background)? */
+  BRM.o=brDefaults(brGuessMode(px.getImageData(0,0,pw,ph).data,pw,ph,BRM.auto));BRM.tool=BRM.o.mode==='design'?'werase':'box';
+  const em=document.getElementById('brEmpty');if(em)em.hidden=true;brFit();brSide();brTools();await brRun();
+  brTip(BRM.o.mode==='design'?'Plain background found – it’s removed. Tap leftover spots with “Tap to remove”.':'Busy background – drag a box around your subject, then tap anything left over to remove it.',5200)}
+function brGuessMode(d,w,h,B){if(!B.length)return 'photo';let n=0,ok=0;const ring=Math.max(2,Math.round(Math.min(w,h)*.02));for(let y=0;y<h;y+=2)for(let x=0;x<w;x+=2){if(x>=ring&&x<w-ring&&y>=ring&&y<h-ring)continue;const k=(y*w+x)*4;if(d[k+3]<200){ok++;n++;continue}n++;for(const q of B){if(Math.hypot(d[k]-q[0],d[k+1]-q[1],d[k+2]-q[2])<28){ok++;break}}}return n&&ok/n>.72?'design':'photo'}
+/* ---- running ---- */
+let BRT=0;
+function brSet(k,v,soft){if(!BRM.src)return;if(!soft)brSnap();else if(!BRM._sn){brSnap();BRM._sn=1;clearTimeout(BRM._snt)}clearTimeout(BRM._snt);BRM._snt=setTimeout(()=>BRM._sn=0,700);BRM.o[k]=v;BRM.fut=[];clearTimeout(BRT);BRT=setTimeout(brRun,soft?110:10)}
+function brSnap(){BRM.hist.push(JSON.stringify({o:BRM.o,ops:BRM.ops}));if(BRM.hist.length>80)BRM.hist.shift()}
+function brChange(fn){if(!BRM.src)return;brSnap();fn();BRM.fut=[];brSide();brRun()}
+async function brRun(){if(!BRM.src)return;const seq=++BRM.seq;if(BRM.busy){BRM.again=true;return}BRM.busy=true;BRM.again=false;const t=setTimeout(()=>brBusy('Working…'),260);
+  try{const r=await brCall({cmd:'run',key:'p',o:BRM.o,ops:BRM.ops});if(r.err)throw new Error(r.err);const c=BRM.res&&BRM.res.width===r.w&&BRM.res.height===r.h?BRM.res:mk(r.w,r.h);cx2(c).putImageData(new ImageData(new Uint8ClampedArray(r.buf),r.w,r.h),0,0);BRM.res=c;BRM.resSeq=seq;BRM.holes=r.holes||[];brDraw();brHolesUI()}
+  catch(e){console.error(e);toast('Background Remover hit a problem – try a smaller image')}
+  finally{clearTimeout(t);BRM.busy=false;brBusy(false);if(BRM.again)brRun();else if(BR_FINE&&(BRM.w>BRM.pw)){clearTimeout(BRM._ft);BRM._ft=setTimeout(()=>brFull(true),1400)}}}
+async function brFull(bg){if(!BRM.src)return null;const seq=BRM.seq;if(BRM.full&&BRM.fullSeq===seq)return BRM.full;if(BRM.w===BRM.pw&&BRM.res&&BRM.resSeq===seq)return BRM.res;if(bg&&BRM.busy)return null;if(!bg)brBusy('Finishing at full quality…');
+  try{const r=await brCall({cmd:'run',key:'f',o:BRM.o,ops:BRM.ops});if(r.err)throw new Error(r.err);if(bg&&seq!==BRM.seq)return null;const c=mk(r.w,r.h);cx2(c).putImageData(new ImageData(new Uint8ClampedArray(r.buf),r.w,r.h),0,0);BRM.full=c;BRM.fullSeq=seq;if(seq===BRM.seq)brDraw();return c}
+  catch(e){console.error(e);if(!bg)toast('Could not finish at full size – saving the preview size instead');return bg?null:BRM.res}finally{if(!bg)brBusy(false)}}
+function brBusy(m){const b=document.getElementById('brBusy');if(!b)return;if(m===false){b.hidden=true;return}b.querySelector('span').textContent=m;b.hidden=false}
+function brTip(m,ms){const t=document.getElementById('brTip');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),ms||2600)}
+/* ---- view ---- */
+function brFitCanvas(){const st=document.getElementById('brStage'),cv=document.getElementById('brCv');if(!st||!cv)return;const r=st.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(r.width*d));cv.height=Math.max(1,Math.round(r.height*d));cv.style.width=r.width+'px';cv.style.height=r.height+'px';if(!BRM._fitted&&BRM.src){brFit();BRM._fitted=1}brDraw()}
+function brFit(){const st=document.getElementById('brStage');if(!st||!BRM.src)return;const r=st.getBoundingClientRect(),padB=BR_FINE?90:120,z=Math.min((r.width-40)/BRM.w,(r.height-padB-30)/BRM.h);BRM.view={z,x:(r.width-BRM.w*z)/2,y:Math.max(16,(r.height-padB-BRM.h*z)/2)};brDraw()}
+let BRCK=null;function brChecker(x){if(BRCK)return x.createPattern(BRCK,'repeat');BRCK=mk(24,24);const c=cx2(BRCK);c.fillStyle='#d9d9dc';c.fillRect(0,0,24,24);c.fillStyle='#b8b8bd';c.fillRect(0,0,12,12);c.fillRect(12,12,12,12);return x.createPattern(BRCK,'repeat')}
+function brDraw(){const cv=document.getElementById('brCv');if(!cv)return;const x=cx2(cv),d=cv.width/(cv.getBoundingClientRect().width||1);x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,cv.width,cv.height);if(!BRM.src)return;
+  const {z,x:vx,y:vy}=BRM.view;x.setTransform(d,0,0,d,0,0);const W=BRM.w*z,H=BRM.h*z;
+  x.save();x.shadowColor='rgba(0,0,0,.55)';x.shadowBlur=40;x.shadowOffsetY=18;x.fillStyle=BRM.bgv==='black'?'#000':BRM.bgv==='white'?'#fff':BRM.bgv==='grey'?'#8e8f91':BRM.bgv==='color'?BRM.bgc:'#ccc';x.fillRect(vx,vy,W,H);x.restore();
+  if(BRM.bgv==='checker'){x.save();x.fillStyle=brChecker(x);x.translate(vx,vy);x.fillRect(0,0,W,H);x.restore()}
+  x.imageSmoothingEnabled=z<3;x.imageSmoothingQuality='high';
+  const img=BRM.cmp?(z*BRM.pw/BRM.w<1.2?BRM.prev:BRM.src):(BRM.full&&BRM.fullSeq===BRM.seq&&z>BRM.pw/BRM.w*1.05?BRM.full:(BRM.res||BRM.prev));x.drawImage(img,vx,vy,W,H);
+  if(BRM.cmp){x.fillStyle='rgba(0,0,0,.6)';x.fillRect(vx+10,vy+10,78,24);x.fillStyle='#fff';x.font='600 11px -apple-system,Helvetica,Arial';x.fillText('ORIGINAL',vx+22,vy+26)}
+  /* overlays */
+  const holesVis=BRM.o.mode==='design'&&BRM.holes.length&&(BRM.tool==='werase'||BRM.showHoles)&&!BRM.cmp;
+  if(holesVis){x.save();x.setLineDash([5,4]);x.lineWidth=1.5;x.strokeStyle='#ff3b6b';for(const hl of BRM.holes){const [a,b,c,dd]=hl.box;x.strokeRect(vx+a*W-3,vy+b*H-3,(c-a)*W+6,(dd-b)*H+6)}x.restore()}
+  const R=BRM.boxing||BRM.o.rect;if(R&&BRM.o.mode==='photo'&&!BRM.cmp){x.save();x.setLineDash([8,6]);x.lineWidth=2;x.strokeStyle='#5ee0ff';x.strokeRect(vx+R[0]*W,vy+R[1]*H,(R[2]-R[0])*W,(R[3]-R[1])*H);x.restore()}
+  if(BRM.live&&BRM.live.pts.length){x.save();x.globalAlpha=.45;x.strokeStyle=BRM.live.m==='keep'?'#39d98a':'#ff3b6b';x.lineCap='round';x.lineJoin='round';x.lineWidth=BRM.bs*Math.max(BRM.w,BRM.h)*z*2;x.beginPath();BRM.live.pts.forEach((p,i)=>{const X=vx+p[0]*W,Y=vy+p[1]*H;i?x.lineTo(X,Y):x.moveTo(X,Y)});if(BRM.live.pts.length===1)x.lineTo(vx+BRM.live.pts[0][0]*W+.1,vy+BRM.live.pts[0][1]*H);x.stroke();x.restore()}
+  if(BRM.cur&&(BRM.tool==='keep'||BRM.tool==='erase')){x.save();x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(BRM.cur[0],BRM.cur[1],BRM.bs*Math.max(BRM.w,BRM.h)*z,0,Math.PI*2);x.stroke();x.strokeStyle='rgba(0,0,0,.6)';x.lineWidth=.8;x.stroke();x.restore()}}
+function brNorm(e){const st=document.getElementById('brStage').getBoundingClientRect(),X=e.clientX-st.left,Y=e.clientY-st.top,{z,x,y}=BRM.view;return [(X-x)/z/BRM.w,(Y-y)/z/BRM.h,X,Y]}
+function brZoomAt(X,Y,k){const v=BRM.view,nz=clampN(v.z*k,.05,40),ix=(X-v.x)/v.z,iy=(Y-v.y)/v.z;v.z=nz;v.x=X-ix*nz;v.y=Y-iy*nz;brDraw()}
+function brPointer(st){const P=new Map();let mode=null,start=null,pinch=null,space=false;
+  addEventListener('keydown',e=>{const g=document.getElementById('brP');if(!g||g.hidden)return;if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+    if(e.key===' '){space=true;e.preventDefault()}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.stopImmediatePropagation();brAct(e.shiftKey?'redo':'undo')}else if(e.key==='\\'){BRM.cmp=true;brDraw()}else if(e.key==='Escape'){e.stopImmediatePropagation();brAct('close')}
+    else if(!e.ctrlKey&&!e.metaKey){const m={b:'keep',e:'erase',w:'werase',h:'pan',k:'wkeep',i:'pick'}[e.key.toLowerCase()];if(m)brAct('tool',m);if(e.key==='['){BRM.bs=Math.max(.003,BRM.bs/1.25);brTools();brDraw()}if(e.key===']'){BRM.bs=Math.min(.2,BRM.bs*1.25);brTools();brDraw()}if(e.key==='0'){brFit()}}
+    e.stopPropagation()},true);
+  addEventListener('keyup',e=>{if(e.key===' ')space=false;if(e.key==='\\'){BRM.cmp=false;brDraw()}},true);
+  addEventListener('paste',e=>{const g=document.getElementById('brP');if(!g||g.hidden)return;const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(x=>/^image\//.test(x.type));if(it){e.preventDefault();brLoadFile(it.getAsFile())}});
+  st.addEventListener('wheel',e=>{if(!BRM.src)return;e.preventDefault();const r=st.getBoundingClientRect();brZoomAt(e.clientX-r.left,e.clientY-r.top,Math.exp(-e.deltaY*(e.ctrlKey?.012:.0022)))},{passive:false});
+  st.addEventListener('pointerdown',e=>{if(!BRM.src||e.target.closest('.br-tools'))return;st.setPointerCapture(e.pointerId);P.set(e.pointerId,[e.clientX,e.clientY]);
+    if(P.size===2){if(mode==='draw'&&BRM.live){BRM.live=null}mode='pinch';const [a,b]=[...P.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),c:[(a[0]+b[0])/2,(a[1]+b[1])/2]};return}
+    const n=brNorm(e);start={x:e.clientX,y:e.clientY,n,vx:BRM.view.x,vy:BRM.view.y,t:performance.now()};const t=BRM.tool;
+    if(space||e.button===1||e.button===2||t==='pan'){mode='pan';st.classList.add('panning');return}
+    if(t==='keep'||t==='erase'){mode='draw';BRM.live={m:t,pts:[[n[0],n[1]]]};brDraw();return}
+    if(t==='box'){mode='box';BRM.boxing=[n[0],n[1],n[0],n[1]];return}mode='tap'});
+  st.addEventListener('pointermove',e=>{const r=st.getBoundingClientRect();BRM.cur=[e.clientX-r.left,e.clientY-r.top];if(!P.has(e.pointerId)){if(BRM.tool==='keep'||BRM.tool==='erase')brDraw();return}P.set(e.pointerId,[e.clientX,e.clientY]);
+    if(mode==='pinch'&&P.size>=2){const [a,b]=[...P.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]),c=[(a[0]+b[0])/2,(a[1]+b[1])/2];BRM.view.x+=c[0]-pinch.c[0];BRM.view.y+=c[1]-pinch.c[1];brZoomAt(c[0]-r.left,c[1]-r.top,d/pinch.d);pinch={d,c};return}
+    if(mode==='pan'){BRM.view.x=start.vx+e.clientX-start.x;BRM.view.y=start.vy+e.clientY-start.y;brDraw();return}
+    if(mode==='draw'){const n=brNorm(e);const l=BRM.live.pts[BRM.live.pts.length-1];if(Math.hypot((n[0]-l[0])*BRM.w,(n[1]-l[1])*BRM.h)>BRM.bs*Math.max(BRM.w,BRM.h)*.25)BRM.live.pts.push([n[0],n[1]]);brDraw();return}
+    if(mode==='box'){const n=brNorm(e);BRM.boxing=[Math.min(start.n[0],n[0]),Math.min(start.n[1],n[1]),Math.max(start.n[0],n[0]),Math.max(start.n[1],n[1])].map(v=>clampN(v,0,1));brDraw();return}
+    if(mode==='tap'&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>8){mode='pan';st.classList.add('panning')}});
+  const end=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);st.classList.remove('panning');if(mode==='pinch'){if(P.size===0)mode=null;return}
+    if(mode==='draw'&&BRM.live){const L=BRM.live;BRM.live=null;brChange(()=>BRM.ops.push({t:'brush',m:L.m,pts:L.pts.map(p=>[+p[0].toFixed(5),+p[1].toFixed(5)]),r:BRM.bs,soft:BRM.soft}))}
+    else if(mode==='box'&&BRM.boxing){const R=BRM.boxing;BRM.boxing=null;if((R[2]-R[0])*BRM.w>12&&(R[3]-R[1])*BRM.h>12)brChange(()=>{BRM.o.mode='photo';BRM.o.rect=R.map(v=>+v.toFixed(4))});else brDraw()}
+    else if(mode==='tap'){const n=start.n;if(n[0]>=0&&n[0]<=1&&n[1]>=0&&n[1]<=1)brTap(n)}mode=null};
+  st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end);st.addEventListener('pointerleave',()=>{BRM.cur=null;brDraw()});st.addEventListener('contextmenu',e=>e.preventDefault())}
+function brTap(n){const t=BRM.tool;if(t==='werase'||t==='wkeep')brChange(()=>BRM.ops.push({t:'wand',m:t==='wkeep'?'keep':'erase',x:+n[0].toFixed(5),y:+n[1].toFixed(5),tol:BRM.o.tol}));
+  else if(t==='pick'){const px=cx2(BRM.prev).getImageData(Math.min(BRM.pw-1,Math.floor(n[0]*BRM.pw)),Math.min(BRM.ph-1,Math.floor(n[1]*BRM.ph)),1,1).data;brChange(()=>{const L=(BRM.o.bg||BRM.auto.slice(0)).slice(0);L.push([px[0],px[1],px[2]]);BRM.o.bg=L;BRM.o.mode='design'});brAct('tool','werase');brTip('Colour added – it’s removed wherever it touches the background',2600)}}
+/* ---- panel ---- */
+const BR_TOOLS=[['pan','Move','&#9995;&#xFE0E;','H'],['werase','Tap to remove','&#10022;','W'],['wkeep','Tap to keep','&#10038;','K'],['erase','Erase brush','&#9003;','E'],['keep','Restore brush','&#9998;&#xFE0E;','B'],['box','Box subject','&#9634;',''],['pick','Pick bg colour','&#9673;&#xFE0E;','I']];
+function brTools(){const t=document.getElementById('brTools');if(!t)return;if(!BRM.src){t.innerHTML='';return}t.innerHTML=`<div class="br-tb">${BR_TOOLS.filter(x=>x[0]!=='box'||BRM.o.mode==='photo').map(([k,n,i,s])=>`<button class="${BRM.tool===k?'on':''}" data-br="tool|${k}" title="${n}${s?' ('+s+')':''}"><i>${i}</i><span>${n}</span></button>`).join('')}</div>
+  ${BRM.tool==='keep'||BRM.tool==='erase'?`<div class="br-bsz"><label>Size<input type="range" min="3" max="160" value="${Math.round(BRM.bs*1000)}" data-bro="bs"></label><button class="${BRM.soft?'on':''}" data-br="soft">Soft edge</button></div>`:''}
+  <div class="br-vw"><button data-br="fit" title="Fit (0)">Fit</button><button data-br="cmp" class="br-cmp" title="Hold to see the original (\\)">Hold: before</button></div>`;
+  const c=t.querySelector('.br-cmp');if(c){const on=e=>{e.preventDefault();BRM.cmp=true;brDraw()},off=()=>{BRM.cmp=false;brDraw()};c.addEventListener('pointerdown',on);c.addEventListener('pointerup',off);c.addEventListener('pointerleave',off);c.addEventListener('pointercancel',off)}}
+function brSide(){const s=document.getElementById('brSide');if(!s)return;if(!BRM.src){s.innerHTML=`<div class="br-sec"><h4>How it works</h4><p class="br-p"><b>Designs, logos and graphics</b> on a plain, gradient or multi-colour background are cut out exactly – soft edges are kept and the old background colour is cleaned out of them, so there’s no white halo.</p><p class="br-p"><b>Photos</b> with a busy background: drag a box around your subject, then tap leftovers to remove them.</p><p class="br-p">Fix anything by hand with the brushes. Nothing is uploaded – it all runs on this device.</p></div>`;return}
+  const o=BRM.o,bgs=o.bg||BRM.auto,sw=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+  s.innerHTML=`<div class="br-sec"><h4>Picture type</h4><div class="br-seg"><button class="${o.mode==='design'?'on':''}" data-br="mode|design"><b>Design</b><small>plain background</small></button><button class="${o.mode==='photo'?'on':''}" data-br="mode|photo"><b>Photo</b><small>busy background</small></button></div></div>
+  ${o.mode==='design'?`<div class="br-sec"><h4>Background colours <span>${o.bg?'yours':'found automatically'}</span></h4><div class="br-sw">${bgs.map((c,i)=>`<button style="--c:${sw(c)}" data-br="bgdel|${i}" title="Stop removing this colour"><i></i><em>&times;</em></button>`).join('')}<button class="br-add" data-br="tool|pick" title="Tap the picture to add a colour">+ Pick</button>${o.bg?`<button class="br-link" data-br="bgauto">Auto</button>`:''}</div></div>
+   <div class="br-sec"><h4>Strength <b data-brv="tol">${o.tol}</b></h4><input type="range" min="4" max="90" value="${o.tol}" data-bro="tol"><p class="br-n">Raise it if some background is left. Lower it if part of your design fades.</p></div>
+   <div class="br-sec" id="brHolesSec"></div>
+   <div class="br-sec"><h4>Soft shadows</h4><div class="br-seg sm"><button class="${!o.shadow?'on':''}" data-br="shadow|0">Remove</button><button class="${o.shadow?'on':''}" data-br="shadow|1">Keep see-through</button></div></div>`
+  :`<div class="br-sec"><h4>Subject</h4><p class="br-n">${o.rect?'Box set. Drag a new one any time with “Box subject”.':'Drag a box around your subject with “Box subject” for the best result.'}</p><div class="br-row"><button class="br-btn ${BRM.tool==='box'?'on':''}" data-br="tool|box">&#9634; Box subject</button>${o.rect?`<button class="br-link" data-br="norect">Clear box</button>`:''}</div></div>
+   <div class="br-sec"><h4>Detail</h4><div class="br-seg sm">${[['420','Fast'],['560','Balanced'],['760','Best']].map(([v,n])=>`<button class="${String(o.gcSize)===v?'on':''}" data-br="gc|${v}">${n}</button>`).join('')}</div><p class="br-n">Tap leftovers with “Tap to remove”, or paint over parts with the Restore brush – it re-thinks the whole cut each time.</p></div>
+   <div class="br-sec"><h4>Colour match <b data-brv="tol">${o.tol}</b></h4><input type="range" min="4" max="90" value="${o.tol}" data-bro="tol"><p class="br-n">How similar a colour must be for “Tap to remove / keep” to spread.</p></div>`}
+  <div class="br-sec"><h4>Edges</h4><label class="br-sl"><span>Shrink / grow <b data-brv="shift">${o.shift>0?'+'+o.shift:o.shift}</b></span><input type="range" min="-4" max="4" value="${o.shift}" data-bro="shift"></label><label class="br-sl"><span>Smooth <b data-brv="smooth">${o.smooth}</b></span><input type="range" min="0" max="4" value="${o.smooth}" data-bro="smooth"></label>${o.mode==='design'?`<label class="br-sl"><span>Halo clean-up <b data-brv="edgeW">${o.edgeW}</b></span><input type="range" min="0" max="6" value="${o.edgeW}" data-bro="edgeW"></label>`:''}
+   <button class="br-chk ${o.decon?'on':''}" data-br="decon"><i></i>Clean the old background colour out of soft edges</button></div>
+  <div class="br-sec"><h4>Preview on</h4><div class="br-bgv">${[['checker','Checker'],['black','Black'],['white','White'],['grey','Grey']].map(([k,n])=>`<button class="${BRM.bgv===k?'on':''} v-${k}" data-br="bgv|${k}" title="${n}"></button>`).join('')}<label class="${BRM.bgv==='color'?'on':''} v-color" title="Your colour" style="--c:${BRM.bgc}"><input type="color" value="${BRM.bgc}" data-brc="1"></label></div></div>
+  <div class="br-sec br-foot"><button class="br-link" data-br="new">Open another image</button><button class="br-link" data-br="restart">Start over</button></div>`;brHolesUI()}
+function brHolesUI(){const s=document.getElementById('brHolesSec');if(!s)return;const n=BRM.holes.length;if(BRM.o.mode!=='design'||!n){s.innerHTML=`<h4>Enclosed gaps</h4><p class="br-n">None found. Gaps inside letters or shapes (like the middle of an O) show up here.</p>`;return}
+  s.innerHTML=`<h4>Enclosed gaps <span>${n} match the background</span></h4><p class="br-n">Outlined in pink. These can be holes (the middle of an O) or white parts of your design – tap the ones to remove with “Tap to remove”, or remove them all.</p><div class="br-row"><button class="br-btn" data-br="tool|werase">&#10022; Choose which</button><button class="br-btn" data-br="holesall">Remove all ${n}</button><button class="br-link" data-br="holeshow">${BRM.showHoles?'Hide outlines':'Show outlines'}</button></div>`}
+function brSetBgv(k,c){BRM.bgv=k;if(c)BRM.bgc=c;brSide();brDraw()}
+/* ---- actions ---- */
+async function brAct(a,v,b){
+  if(a==='close'){if(BRM.from&&BRM.from.l&&!confirm('Leave without applying to the layer?'))return;brClose();return}
+  if(a==='pick'||a==='new'){document.getElementById('brFile').click();return}
+  if(!BRM.src)return;
+  switch(a){
+    case'tool':BRM.tool=v;brTools();brDraw();if(v==='box')brTip('Drag a box around your subject',2200);if(v==='werase')brTip('Tap any leftover background – it’s removed along with anything touching it that matches',2800);if(v==='wkeep')brTip('Tap a part that was removed by mistake to bring it back',2600);if(v==='pick')brTip('Tap the background colour you want removed',2400);brSide();break;
+    case'mode':if(BRM.o.mode!==v)brChange(()=>{BRM.o.mode=v;if(v==='photo'&&BRM.tool==='pick')BRM.tool='pan'});brTools();break;
+    case'bgdel':brChange(()=>{const L=(BRM.o.bg||BRM.auto).slice(0);L.splice(+v,1);BRM.o.bg=L});break;
+    case'bgauto':brChange(()=>{BRM.o.bg=null});break;
+    case'shadow':brChange(()=>{BRM.o.shadow=v==='1'});break;
+    case'gc':brChange(()=>{BRM.o.gcSize=+v});break;
+    case'norect':brChange(()=>{BRM.o.rect=null});break;
+    case'decon':brChange(()=>{BRM.o.decon=!BRM.o.decon});break;
+    case'holesall':brChange(()=>{for(const hl of BRM.holes)BRM.ops.push({t:'wand',m:'erase',x:+hl.x.toFixed(5),y:+hl.y.toFixed(5),tol:BRM.o.tol})});break;
+    case'holeshow':BRM.showHoles=!BRM.showHoles;brHolesUI();brDraw();break;
+    case'bgv':brSetBgv(v);break;
+    case'soft':BRM.soft=!BRM.soft;brTools();break;
+    case'fit':brFit();break;
+    case'undo':if(!BRM.hist.length)return brTip('Nothing to undo');BRM.fut.push(JSON.stringify({o:BRM.o,ops:BRM.ops}));{const s=JSON.parse(BRM.hist.pop());BRM.o=s.o;BRM.ops=s.ops}brSide();brTools();brRun();break;
+    case'redo':if(!BRM.fut.length)return brTip('Nothing to redo');BRM.hist.push(JSON.stringify({o:BRM.o,ops:BRM.ops}));{const s=JSON.parse(BRM.fut.pop());BRM.o=s.o;BRM.ops=s.ops}brSide();brTools();brRun();break;
+    case'restart':brChange(()=>{const m=BRM.o.mode;BRM.o=brDefaults(m);BRM.ops=[]});break;
+    case'done':brDoneSheet();break;
+    case'out':brOut(v,b);break}}
+function brDoneSheet(){let s=document.getElementById('brOut');if(!s){s=document.createElement('div');s.id='brOut';document.getElementById('brP').appendChild(s);s.addEventListener('click',e=>{if(e.target===s)s.hidden=true})}const L=BRM.from&&BRM.from.l;
+  s.innerHTML=`<div class="br-os"><div class="br-oh"><b>${L?'Apply the cut-out':'Save your cut-out'}</b><button data-br="out|x" aria-label="Close">&times;</button></div>
+   ${L?`<button class="br-ob pri" data-br="out|layer"><b>Apply to “${esc(L.name)}”</b><small>Replaces the layer’s pixels – undo any time in the ${GMODE?'studio':'Design Lab'}</small></button>`:''}
+   <button class="br-ob ${L?'':'pri'}" data-br="out|png"><b>Save PNG to this device</b><small>Transparent background${BRM.trim?', trimmed to the design':''}</small></button>
+   ${L?'':`<button class="br-ob" data-br="out|lab"><b>New design in the Design Lab</b><small>Opens it as a layer ready to edit</small></button>${D?`<button class="br-ob" data-br="out|labadd"><b>Add to “${esc(D.name)}”</b><small>Placed as a new layer in the design you had open</small></button>`:''}
+   <button class="br-ob" data-br="out|assets"><b>Save to My Assets</b><small>Reuse it in any design from the Accessories library</small></button><button class="br-ob" data-br="out|mockup"><b>Save to Mockups</b><small>For garment photos – sorted into a category</small></button>`}
+   <button class="br-chk ${BRM.trim?'on':''}" data-br="out|trim"><i></i>Trim empty space around it</button></div>`;s.hidden=false}
+async function brResult(trim){const c=await brFull(false);if(!c)return null;if(!trim)return c;const d=cx2(c).getImageData(0,0,c.width,c.height).data;let x0=c.width,y0=c.height,x1=-1,y1=-1;for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++)if(d[(y*c.width+x)*4+3]>6){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<0)return c;const p=2,X=Math.max(0,x0-p),Y=Math.max(0,y0-p),W=Math.min(c.width,x1+p+1)-X,H=Math.min(c.height,y1+p+1)-Y;const o=mk(W,H);cx2(o).drawImage(c,X,Y,W,H,0,0,W,H);return o}
+async function brOut(v,b){const s=document.getElementById('brOut');if(v==='x'){s.hidden=true;return}if(v==='trim'){BRM.trim=!BRM.trim;brDoneSheet();return}
+  const fname=(BRM.name||'cutout').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'cutout';
+  try{
+  if(v==='png'){const c=await brResult(BRM.trim);await saveBlob(fname+'-cutout.png',await toBlobP(c));s.hidden=true;return}
+  if(v==='layer'){const F=BRM.from,l=F.l;if(!D||D.id!==F.doc||!D.layers.includes(l)){toast('That layer isn’t open any more');return}const c=await brFull(false);const b0=wholeBefore(l,false),x=cx2(l.cv);
+    const [ox,oy,ow,oh]=F.off||[0,0,D.w,D.h];
+    if(c.width===ow&&c.height===oh){x.clearRect(ox,oy,ow,oh);x.drawImage(c,ox,oy)}else{/* picture was bigger than the working size: keep the original pixels, apply the cut as a smooth mask */const m=mk(D.w,D.h),mx=cx2(m);mx.fillStyle='#000';mx.imageSmoothingQuality='high';mx.drawImage(c,ox,oy,ow,oh);x.save();x.globalCompositeOperation='destination-in';x.drawImage(m,0,0);x.restore();relc(m)}
+    pushH(wholeEntry(l,false,b0),'Background Remover');touch(l,false);s.hidden=true;BRM.from=null;brClose();hint('Background removed – Undo brings it back',2600);return}
+  if(v==='lab'||v==='labadd'){const c=await brResult(true),im=await blobImg(await toBlobP(c));s.hidden=true;brClose();hideHome();openLab();await placeImg(Object.assign(im,{naturalWidth:im.naturalWidth||c.width,naturalHeight:im.naturalHeight||c.height}),BRM.name+' cut-out',v==='lab');return}
+  if(v==='assets'){const c=await brResult(true),blob=await toBlobP(c);await accLoad();const id=lid(),t=accCv(120,120),k2=Math.min(120/c.width,120/c.height);cx2(t).drawImage(c,(120-c.width*k2)/2,(120-c.height*k2)/2,c.width*k2,c.height*k2);await IDB.set('mya:'+id,{id,blob});const cc=accCv(c.width,c.height);cx2(cc).drawImage(c,0,0);MYIMG.set(id,cc);MYA.unshift({id,name:(BRM.name||'Cut-out').slice(0,40),folder:MYF[0]||'Unsorted',w:c.width,h:c.height,thumb:t.toDataURL('image/png'),added:Date.now()});await IDB.set('myassets',MYA);s.hidden=true;toast('Saved to My Assets',2000);return}
+  if(v==='mockup'){const c=await brResult(true),blob=await toBlobP(c);await mkLoad();const it={id:lid(),name:BRM.name||'Mockup',cat:'other',f:blob,ft:await mkThumb(blob),b:null,bt:null,updated:Date.now()};MK.items.unshift(it);await mkSave();s.hidden=true;brClose();await mkOpen();MKS.cat='all';mkDraw();MKNEW={id:it.id,name:it.name,cat:it.cat,ft:it.ft,bt:null};mkRmInit(MKNEW);MKNEW.rm=false;mkAddSheet(MKNEW);toast('Saved to Mockups – pick its category',2600);return}
+  }catch(e){console.error(e);toast('Could not save the cut-out')}}
+/* open from a Design Lab / Garment Studio layer */
+async function brFromLayer(){const l=curL();if(!l||l.type!=='px')return hint(l&&l.type==='text'?'Rasterize the type first':'Pick an image layer first');if(!needPx(l,'Background Remover'))return;if(l.lock)return hint('This layer is locked');
+  const full=mk(D.w,D.h);dI(cx2(full),l._c||l._p);
+  /* only the part of the layer that has something on it */const d=cx2(full).getImageData(0,0,D.w,D.h).data;let x0=D.w,y0=D.h,x1=-1,y1=-1;for(let y=0;y<D.h;y+=2)for(let x=0;x<D.w;x+=2)if(d[(y*D.w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<0){relc(full);return hint('This layer is empty')}const pd=6;x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(D.w-1,x1+pd);y1=Math.min(D.h-1,y1+pd);const cw=x1-x0+1,ch=y1-y0+1,crop=mk(cw,ch);cx2(crop).drawImage(full,x0,y0,cw,ch,0,0,cw,ch);relc(full);
+  brOpen({from:true});await brLoad(crop,l.name,{l,doc:D.id,off:[x0,y0,cw,ch],cap:Math.max(cw,ch)<=(BR_FINE?4096:2400)?Math.max(cw,ch):BR_FCAP});relc(crop)}
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
@@ -7818,7 +8232,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();if(gsAct(k,v,l,a,b
     case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
     case'fastdraw':dmgSet(!DMGON);hint(DMGON?'Fast redraw on – only the changed area is redrawn':'Fast redraw off – the whole picture is redrawn every time',2600);break;
     case'pixels':VIEW.pixels=!VIEW.pixels;try{localStorage.setItem('mp_pix',VIEW.pixels?'1':'0')}catch(e){}req();hint(VIEW.pixels?'Sharp pixels when zoomed in (for pixel-level work)':'Smooth, high-quality zoom');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
-    case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcspots':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcFillSpots(L);break}case'gcwhole':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcWhole(L);break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
+    case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcspots':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcFillSpots(L);break}case'gcwhole':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcWhole(L);break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'bgrtool':closeMenu();brFromLayer();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
     case'autowarp':{if(l&&D.garment===l.id)return hint('Select your art layer (not the garment) first',2800);openStyle('wp');break}case'vintage':openStyle('vt');break;case'newpat':closeMenu();newPatternDoc();break;case'patsheet':if(D&&D.pat)patSheet();else hint('Open or make a pattern tile first (File › New pattern tile)',3000);break;case'pmode':D.pat.mode=v;D.changed=true;schedSave();req();patSheet();break;case'poffset':if(D&&D.pat){sheetEl.hidden=true;patOffset()}else hint('Offset is for pattern tiles (File › New pattern tile)',3000);break;case'pshow':D.pat.show=!D.pat.show;fit();req();patSheet();break;case'psave':sheetEl.hidden=true;patSave();break;case'patfill':closeMenu();patFillSheet();break;case'pfill':patFill(v);break;case'ptm':if(l&&l.pt){const b0=snapSt();l.pt.mode=v;renderPat(l);pushH({k:'st',b:b0,a:snapSt()},'Pattern repeat');touchAll();drawPanel()}break;case'ptraster':if(l&&l.pt){setProp(l,'pt',null,'Rasterize pattern');openPanel('layers')}break;case'patedit':if(l&&l.pt)openPanel('pattern');break;
     case'fabric':{if(D.garment&&byId(D.garment)&&(!l||!l.fx||!l.fx.fb||!l.fx.fb.on)){D.cur=D.garment;D.lsel=new Set();drawPanel()}openStyle('fb');break}case'embroid':openStyle('em');break;case'puff':openStyle('pf');break;case'dbl':openStyle('st2');break;case'guides':VIEW.guides=VIEW.guides===false;req();hint(VIEW.guides?'Print guides on':'Print guides hidden');break;case'tag':tagDoc(+v);break;case'setunit':setUnit(v);if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;case'newsize':closeMenu();newSizeSheet();break;case'nspre':nsPreset(+v);break;case'nsfit':nsFit();break;case'nsbg':NS.bg=v;nsDraw();break;case'nsrot':nsRot();break;case'nsppi':NS.ppi=+v;nsDraw();break;case'nscreate':nsCreate();break;case'setq':setQ(v);break;case'csanc':CS.anc=+v;csDraw();break;case'isppi':isSetPpi(+v);break;
     case'br':{const t=TOOL.t;if(t==='erase')TOOL.ebrush=v;else if(t==='smudge')TOOL.sbrush=v;else if(t==='clone')TOOL.cbrush=v;else if(t==='dodge')TOOL.dbrush=v;else{TOOL.brush=v;if(t!=='brush')setTool('brush')}openPanel('layers');drawOpt();break}
@@ -8041,7 +8455,7 @@ homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--px',((e.cl
 $('#hmBrand').addEventListener('pointerenter',()=>mplGlint($('#hmBrand')));
 
 function hideHome(){homeEl.classList.add('out');H2.classList.remove('inhome');setTimeout(()=>{homeEl.hidden=true;homeEl.classList.remove('out')},560);kick()}
-async function pickHome(k){if(k==='mk'){mkOpen();return}if(k==='src'){srcOpen();return}if(k==='gs'){hideHome();gsOpen();return}if(k==='lab'){hideHome();openLab()}else{hideHome();const l=LOCAL?await libGet():[];if(!S.items.length&&l.some(x=>x.count||x.cover))openLibrary()}}
+async function pickHome(k){if(k==='bgr'){brOpen();return}if(k==='mk'){mkOpen();return}if(k==='src'){srcOpen();return}if(k==='gs'){hideHome();gsOpen();return}if(k==='lab'){hideHome();openLab()}else{hideHome();const l=LOCAL?await libGet():[];if(!S.items.length&&l.some(x=>x.count||x.cover))openLibrary()}}
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
 
