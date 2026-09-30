@@ -1713,6 +1713,18 @@ html.ingar #lab .lhint{top:auto!important;bottom:calc(78px + env(safe-area-inset
 }
 html.ingar #labPop{bottom:calc(var(--gsdk,62px) + 26px + env(safe-area-inset-bottom,0px))!important}
 html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset-bottom,0px))!important}
+#gsTop .gs-side{display:inline-flex;padding:3px;border-radius:999px;background:rgba(14,14,14,.55);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+#gsTop .gs-side button{height:26px;padding:0 14px;border-radius:999px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#cfcfcf}
+#gsTop .gs-side button.on{color:#000;background:var(--fr,linear-gradient(135deg,#8c8c8c,#f7f7f7,#6f6f6f,#e8e8e8))}
+#gsTop .gs-side button.add{color:#9a9a9a}
+#gsWaysV{position:absolute;inset:0;z-index:40;display:grid;place-items:center;background:rgba(0,0,0,.6);padding:14px}
+#gsWaysV[hidden]{display:none}
+#gsWaysV .gw-in{width:min(1200px,100%);max-height:100%;display:flex;flex-direction:column;border-radius:18px;background:#111113;border:1px solid rgba(255,255,255,.16);box-shadow:0 30px 90px rgba(0,0,0,.7);overflow:hidden}
+#gsWaysV .gw-h{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;color:#eee;font-size:11px;letter-spacing:.28em;text-transform:uppercase}#gsWaysV .gw-h button{font-size:24px;color:#aaa}
+#gsWaysV .gw-img{flex:1;min-height:0;overflow:auto;padding:0 14px}#gsWaysV img{display:block;width:100%;height:auto;border-radius:12px}
+#gsWaysV .gw-b{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:14px 18px}
+#labSheet .gcpick .gs-own{display:flex;align-items:center;gap:8px}#labSheet .gcpick .gs-own input{width:34px;height:26px;padding:0;border:0;background:none}
+#gsMenu .gs-sub{margin:6px 8px 2px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#7a7a7a}
 </style>
 </head>
 <body class="edit empty">
@@ -4221,12 +4233,12 @@ function toDoc(sx,sy){const dx=sx-V.x,dy=sy-V.y,c=Math.cos(-V.r),s=Math.sin(-V.r
 function toScr(x,y){const px=(x-D.w/2)*V.fx*V.s,py=(y-D.h/2)*V.s,c=Math.cos(V.r),s=Math.sin(V.r);return [V.x+px*c-py*s,V.y+px*s+py*c]}
 let checker=null;
 function draw(){rq=0;if(!D||edEl.hidden)return;dpr=Math.min(TOUCH?2:3,devicePixelRatio||1);labEl.classList.toggle('mpst',!!STROKE);const W=cv.clientWidth,H=cv.clientHeight;if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
-  if(dirtyComp){composite(T('comp'));dirtyComp=false;compN++}
+  if(dirtyComp&&!ghostFrame()){const _t=performance.now();composite(T('comp'));LCMS=performance.now()-_t;dirtyComp=false;compN++}else if(GH&&!ghostWant())ghostFrame();
   const x=vx;x.setTransform(1,0,0,1,0,0);x.fillStyle=GMODE?D.bg:THPASTE;x.fillRect(0,0,cv.width,cv.height);
   x.setTransform(dpr,0,0,dpr,0,0);x.translate(V.x,V.y);x.rotate(V.r);x.scale(V.s*V.fx,V.s);x.translate(-D.w/2,-D.h/2);
   if(!GMODE){x.save();x.shadowColor='rgba(0,0,0,.6)';x.shadowBlur=40;x.shadowOffsetY=12;x.fillStyle='#000';x.fillRect(0,0,D.w,D.h);x.restore()}
   if(!D.bgOn){if(!checker){const c=mk(16,16),g=c.getContext('2d');g.fillStyle='#e6e6e6';g.fillRect(0,0,16,16);g.fillStyle='#c9c9c9';g.fillRect(0,0,8,8);g.fillRect(8,8,8,8);checker=x.createPattern(c,'repeat')}x.save();x.scale(1/V.s,1/V.s);x.fillStyle=checker;x.fillRect(0,0,D.w*V.s,D.h*V.s);x.restore()}
-  {const eff=V.s*dpr;x.imageSmoothingEnabled=!(VIEW.pixels&&eff>=3);x.imageSmoothingQuality='high';x.drawImage(eff<.5?mipFor(eff):T('comp'),0,0,D.w,D.h);if(D.pat)patNeighbors(x,eff<.5?mipFor(eff):T('comp'));x.imageSmoothingEnabled=true;if(VIEW.pixels&&eff>=10)pixGrid(x)}
+  {const eff=V.s*dpr;x.imageSmoothingEnabled=!(VIEW.pixels&&eff>=3);x.imageSmoothingQuality='high';x.drawImage(GH?GH.base:(eff<.5?mipFor(eff):T('comp')),0,0,D.w,D.h);if(GH)ghostPaint(x);if(D.pat)patNeighbors(x,eff<.5?mipFor(eff):T('comp'));x.imageSmoothingEnabled=true;if(VIEW.pixels&&eff>=10)pixGrid(x)}
   overlays(x);if(VIEW.rulers&&!GMODE)rulers(x)}
 const hair=()=>1/V.s;
 let antsT=0;function antsTick(){if(antsT)return;antsT=setTimeout(()=>{antsT=0;if(D&&D.sel&&!edEl.hidden)req()},110)}
@@ -6471,16 +6483,16 @@ function gsDims(ar){const L=TOUCH?2200:2800;return ar>=1?[L,Math.round(L/ar)]:[M
 function gsSetMode(on){GMODE=!!on;H2.classList.toggle('ingar',GMODE);const h=document.querySelector('#labGal .lg-h h2');if(h)h.textContent=GMODE?'Garment Studio':'Design Lab';gsEls();gsSync()}
 function gsOpen(){gsSetMode(true);H2.classList.add('inlab');labEl.hidden=false;galEl.hidden=false;edEl.hidden=true;drawGallery()}
 function gsEls(){if(document.getElementById('gsDock'))return;const ed=document.getElementById('labEd');if(!ed)return;
-  const top=document.createElement('div');top.id='gsTop';top.innerHTML=`<button class="gs-back" data-l="gallery" title="Back to your garments">&lsaquo; Garments</button><span class="gs-k">Garment Studio</span><b class="gs-nm" data-l="rename" title="Rename"></b>`;
+  const top=document.createElement('div');top.id='gsTop';top.innerHTML=`<button class="gs-back" data-l="gallery" title="Back to your garments">&lsaquo; Garments</button><span class="gs-k">Garment Studio</span><b class="gs-nm" data-l="rename" title="Rename"></b><span class="gs-side"><button data-l="gsside:front">Front</button><button data-l="gsside:back">Back</button></span>`;
   const dk=document.createElement('nav');dk.id='gsDock';dk.innerHTML=`<button class="gs-home" data-l="home" title="Home" aria-label="Home">&#8962;&#xFE0E;</button>
    <button data-l="gsdesign" title="Add a design, logo or artwork">+ Design</button><button data-l="acclib" title="Patches, chains, hardware…">Accessories</button><span class="sep"></span>
    <button data-l="tool:move" data-gt="move" title="Move, scale and rotate (V)">Move</button><button data-l="tool:hand" data-gt="hand" title="Move around the studio (H or Space)">Pan</button><button data-l="tool:erase" data-gt="erase" title="Erase parts of a design (E)">Erase</button>
-   <button data-l="gcpick" title="Smart colour: tap the garment to recolour it">Colour</button><button data-l="gsmenu:real" title="Make the print look real">Realism</button><button data-l="gsmenu:blend" title="How the design mixes with the fabric">Blend</button><button data-l="lm:clip" title="Keep the design inside the garment">Clip</button><button data-l="panel:layers" data-gp="1" title="Layers">Layers</button><span class="sep"></span>
+   <button data-l="gcpick" title="Smart colour: tap the garment to recolour it">Colour</button><button data-l="gsways" title="See this garment in every colour, side by side">Colourways</button><button data-l="gsmenu:real" title="Make the print look real">Realism</button><button data-l="gsmenu:blend" title="How the design mixes with the fabric">Blend</button><button data-l="lm:clip" title="Keep the design inside the garment">Clip</button><button data-l="panel:layers" data-gp="1" title="Layers">Layers</button><span class="sep"></span>
    <button data-l="gsmenu:bg" title="Studio backdrop">Backdrop</button><button class="gs-i" data-l="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8630;&#xFE0E;</button><button class="gs-i" data-l="redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">&#8631;&#xFE0E;</button><button data-l="gsmenu:out" title="Save, export, send to a lookbook">Export</button>`;
   const mn=document.createElement('div');mn.id='gsMenu';mn.hidden=true;ed.appendChild(top);ed.appendChild(dk);ed.appendChild(mn)}
 function gsSync(){const ed=document.getElementById('labEd');if(!ed)return;const bg=D&&GMODE?D.bg:'#000';ed.style.setProperty('--gsbg',bg);ed.classList.toggle('gs-light',!!(GMODE&&gsLight(bg)));H2.classList.toggle('gs-erase',GMODE&&TOOL.t==='erase');
   const dk=document.getElementById('gsDock');H2.classList.toggle('gs-pop',!!(GMODE&&!popEl.hidden&&desk()));if(dk)ed.style.setProperty('--gsdk',dk.offsetHeight+'px');if(!dk||!GMODE||!D)return;dk.querySelectorAll('[data-gt]').forEach(b=>b.classList.toggle('on',TOOL.t===b.dataset.gt));const lp=dk.querySelector('[data-gp]');if(lp)lp.classList.toggle('on',!popEl.hidden);
-  const nm=document.querySelector('#gsTop .gs-nm');if(nm)nm.textContent=D.name||'Untitled';const l=curL();const cb=dk.querySelector('[data-l="lm:clip"]');if(cb)cb.classList.toggle('on',!!(l&&l.clip))}
+  const nm=document.querySelector('#gsTop .gs-nm');if(nm)nm.textContent=(D.name||'Untitled').replace(/ \(back\)$/,'');const sd=document.querySelectorAll('#gsTop .gs-side button');if(sd.length){const bk=D.side==='back';sd[0].classList.toggle('on',!bk);sd[1].classList.toggle('on',bk);sd[1].classList.toggle('add',!D.pair&&!bk);sd[1].textContent=D.pair||bk?'Back':'+ Back'}const l=curL();const cb=dk.querySelector('[data-l="lm:clip"]');if(cb)cb.classList.toggle('on',!!(l&&l.clip))}
 /* new garment: pick a mockup slot, upload, or use a lookbook garment */
 async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<button data-l="sheetclose">&times;</button></h3>
   <p class="pnote">Start from a garment mockup – a PNG with a transparent background works best. The garment stays the biggest thing in the studio; your designs clip inside it and pick up its folds.</p>
@@ -6494,10 +6506,11 @@ function gsMenu(k,btn){const mn=document.getElementById('gsMenu');if(!mn)return;
   if(k==='real')h=`<h6>Bring it to life <span>on “${esc(l?l.name:'')}”</span></h6>`+GSREAL.map(([a,n])=>`<button data-l="${a}">${n}</button>`).join('');
   else if(k==='blend')h=`<h6>Blend <span>“${esc(l?l.name:'')}”</span></h6>`+GSBL.map(([a,n])=>`<button class="${l&&l.blend===a?'on':''}" data-l="gsbl:${a}">${n}</button>`).join('');
   else if(k==='bg')h=`<h6>Studio backdrop</h6><div class="gs-bgs">${Object.keys(GSBG).map(c=>`<button class="${D.bg===GSBG[c]?'on':''}" data-l="gsbg:${c}"><i style="background:${GSBG[c]}"></i>${GSBGN[c]}</button>`).join('')}</div>`;
-  else if(k==='out')h=`<h6>${esc(D.name||'Garment')}</h6><button data-l="save">Save</button><button data-l="exp:png">Export PNG (with backdrop)</button><button data-l="exp:clear">Export PNG (transparent)</button><button data-l="exp:jpg">Export JPG</button><button data-l="sendlb">Send to a lookbook</button><button data-l="rename">Rename</button><button data-l="gsfull">Open in the full Design Lab</button>`;
+  else if(k==='out')h=`<h6>${esc(D.name||'Garment')}</h6><button data-l="save">Save</button><button data-l="exp:png">Export PNG (with backdrop)</button><button data-l="exp:clear">Export PNG (transparent)</button><button data-l="exp:jpg">Export JPG</button><p class="gs-sub">Ready-made sizes</p>${Object.entries(GSX).map(([k,v])=>`<button data-l="gsexp:${k}">${v[3]} <span style="opacity:.5">${v[0]}×${v[1]}</span></button>`).join('')}<button data-l="sendlb">Send to a lookbook</button><button data-l="rename">Rename</button><button data-l="gsfull">Open in the full Design Lab</button>`;
   mn.innerHTML=h;mn.dataset.k=k;mn.hidden=false;const r=btn.getBoundingClientRect(),w=mn.offsetWidth;mn.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2))+'px';mn.style.bottom=(innerHeight-r.top+10)+'px'}
 function gsMenuClose(){const mn=document.getElementById('gsMenu');if(mn)mn.hidden=true}
 function gsAct(k,v,l,a,b,e){if(!GMODE&&!/^gs/.test(k))return false;if(b&&b.closest&&b.closest('#gsMenu'))gsMenuClose();else if(k!=='gsmenu')gsMenuClose();
+  if(gsAct2(k,v,l,b))return true;
   if(k==='new'&&GMODE){gsNewSheet();return true}
   if(k==='gsup'){importMode='gs';$('#labFile').click();return true}
   if(k==='gslb'){importMode='gs';lbPickSheet();return true}
@@ -6513,6 +6526,92 @@ function gsEditorInit(){TOOL.t='hand';popEl.hidden=true;updBar();requestAnimatio
 addEventListener('pointerdown',e=>{const mn=document.getElementById('gsMenu');if(mn&&!mn.hidden&&!e.target.closest('#gsMenu,#gsDock'))gsMenuClose()},true);
 
 addEventListener('resize',()=>{if(GMODE)gsSync()});
+
+/* ================= Garment Studio+: front/back, colourway lineup, ready-made exports ================= */
+/* ---- front & back: two linked garments, one switch ---- */
+async function gsSwitch(id){if(!id||!D)return;if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();try{await gsLinkBack()}catch(e){}await saveDoc(true);const bg=D.bg;await openDoc(id);if(D&&bg&&D.bg!==bg){D.bg=bg;D.changed=true;schedSave()}gsSync();req()}
+async function gsBackSheet(){await getSlots();const backs=SLOTS.filter(s=>s.blob);sheetIn.innerHTML=`<h3>Add the back view<button data-l="sheetclose">&times;</button></h3>
+  <p class="pnote">Add a back mockup of the same garment. It gets its own designs and stays linked – flip between Front and Back at the top, and both sides go to your lookbook together.</p>
+  <div class="rw gs-start"><button class="lch pri" data-l="gsbackup">Upload the back image</button></div>
+  ${backs.length?`<h5>Or use one of your mockups</h5><div class="tpl slots">${backs.map(s=>`<div class="slot full"><button data-l="gsbslot:${s.id}" title="Use as the back"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span></div>`).join('')}</div>`:''}`;sheetEl.hidden=false}
+async function gsMakeBack(img){if(!D||D.pair)return;const fr={id:D.id,name:D.name,bg:D.bg};sheetEl.hidden=true;if(XFORM)xfCommit();await saveDoc(true);
+  await docFromMockup(img,fr.name+' (back)');D.side='back';D.pair=fr.id;D.bg=fr.bg;D.changed=true;await saveDoc(true);const bid=D.id;
+  const r=await IDB.get('des:'+fr.id);if(r){r.pair=bid;await IDB.set('des:'+fr.id,r)}const m=(await IDB.get('dlib'))||[];m.forEach(x=>{if(x.id===fr.id)x.pair=bid;if(x.id===bid){x.side='back';x.pair=fr.id}});await IDB.set('dlib',m);
+  gsSync();hint('Back view added – tap Front to flip back',3000)}
+/* keep the lookbook's back image in step with the back design */
+async function gsLinkBack(){if(!D||D.side!=='back'||!D.pair)return;const fid=D.pair;const others=[];for(const b of await libGet()){if(b.id===curId())continue;const r=await IDB.get('lb:'+b.id);if(r&&(r.items||[]).some(it=>it.des===fid))others.push([b.id,r])}const hit=S.items.filter(it=>it.des===fid);if(!hit.length&&!others.length)return;
+  if(XFORM)xfCommit();const c=flatten(true),r=await shrink(await toBlobP(c),GMAX);hit.forEach(it=>{it.back=r.src});if(hit.length){changed();try{render()}catch(_){}}for(const [bid,rec] of others){rec.items.forEach(it=>{if(it.des===fid)it.back=r.src});await IDB.set('lb:'+bid,rec)}}
+async function gsSendPair(target){hint('Sending front and back…',4000);if(XFORM)xfCommit();const first={id:D.id,side:D.side||'front',blob:await toBlobP(flatten(true)),name:D.name};await saveDoc(true);
+  const pid=D.pair;await openDoc(pid);if(XFORM)xfCommit();const second={id:D.id,side:D.side||'front',blob:await toBlobP(flatten(true)),name:D.name};
+  const fr=first.side==='back'?second:first,bk=first.side==='back'?first:second;if(D.id!==fr.id){await saveDoc(true);await openDoc(fr.id)}
+  try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const a=await shrink(fr.blob,GMAX),b=await shrink(bk.blob,GMAX);
+    S.items.push({id:uid(),src:a.src,ar:a.ar,back:b.src,fields:{name:fr.name},points:[],open:false,des:fr.id});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
+    requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+fr.name+'" added with its back – tap the garment to flip',3000)}catch(e){console.error(e);toast('Could not send the garment')}}
+/* ---- ready-made sizes: Instagram, story, product photo ---- */
+const GSX={post:[1080,1350,'instagram-post','Instagram post 4:5'],square:[1080,1080,'instagram-square','Instagram square'],story:[1080,1920,'story','Story / Reel'],product:[2000,2000,'product-white','Product photo (white)'],productbg:[2000,2000,'product','Product photo (backdrop)']};
+function gsBox(c){const s=Math.max(1,Math.ceil(Math.max(c.width,c.height)/700)),w=Math.ceil(c.width/s),h=Math.ceil(c.height/s),t=mk(w,h),x=cx2(t);x.drawImage(c,0,0,w,h);const d=x.getImageData(0,0,w,h).data;let x0=w,y0=h,x1=-1,y1=-1;for(let y=0;y<h;y++)for(let i=0;i<w;i++){if(d[(y*w+i)*4+3]>8){if(i<x0)x0=i;if(i>x1)x1=i;if(y<y0)y0=y;if(y>y1)y1=y}}relc(t);if(x1<0)return [0,0,c.width,c.height];return [Math.max(0,(x0-1)*s),Math.max(0,(y0-1)*s),Math.min(c.width,(x1+2)*s),Math.min(c.height,(y1+2)*s)]}
+async function gsExport(k){const P=GSX[k];if(!P||!D)return;if(XFORM)xfCommit();hint('Exporting '+P[3]+'…',2000);const [W,H,slug]=P,white=k==='product',g=flatten(true),b=gsBox(g),gw=b[2]-b[0],gh=b[3]-b[1];
+  const c=mk(W,H),x=cx2(c),bg=white?'#ffffff':D.bg;x.fillStyle=bg;x.fillRect(0,0,W,H);
+  if(!white){const lt=gsLight(bg),r1=x.createRadialGradient(W/2,H*.4,0,W/2,H*.4,Math.max(W,H)*.62);r1.addColorStop(0,lt?'rgba(255,255,255,.45)':'rgba(255,255,255,.09)');r1.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=r1;x.fillRect(0,0,W,H);
+    const r2=x.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.78);r2.addColorStop(0,'rgba(0,0,0,0)');r2.addColorStop(1,lt?'rgba(0,0,0,.13)':'rgba(0,0,0,.38)');x.fillStyle=r2;x.fillRect(0,0,W,H)}
+  const fw=W*(k==='story'?.86:white||k==='productbg'?.84:.8),fh=H*(k==='story'?.58:white||k==='productbg'?.84:.78),s=Math.min(fw/gw,fh/gh),dw=gw*s,dh=gh*s,dx=(W-dw)/2,dy=k==='story'?H*.44-dh/2:(H-dh)/2;
+  x.save();x.shadowColor=white?'rgba(0,0,0,.14)':gsLight(bg)?'rgba(0,0,0,.22)':'rgba(0,0,0,.55)';x.shadowBlur=Math.round(W*.03);x.shadowOffsetY=Math.round(W*.018);x.imageSmoothingQuality='high';x.drawImage(g,b[0],b[1],gw,gh,dx,dy,dw,dh);x.restore();
+  const blob=await toBlobP(c,'image/jpeg',.93),nm=((D.name||'garment').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'garment')+'-'+slug+'.jpg';if(await saveBlob(nm,blob))hint(P[3]+' saved',2200)}
+/* ---- colourways: the garment in every colour, side by side ---- */
+function gsGcLayer(){return D&&D.layers.find(l=>l.type==='adj'&&l.adj&&l.adj.k==='gc')}
+function gsWaysSheet(){const l=gsGcLayer();if(!l){gcStart();hint('First tap the garment to recolour it – then Colourways shows it in every colour',3800);return}if(ADJ)adjEnd(true);const cur=l.adj.v.c;
+  sheetIn.innerHTML=`<h3>Colourways<button data-l="sheetclose">&times;</button></h3><p class="pnote">Pick the colours to see this garment side by side. Save the lineup as an image or send the colourways to your lookbook.</p>
+  <div class="gcpick">${[['Current',cur],...GC_SW.filter(s=>s[1]!==cur)].map(([n,h],i)=>`<label><input type="checkbox" data-gsw="${h}" data-gsn="${esc(n==='Current'?'Original':n)}"${i<4?' checked':''}><i style="background:${h}"></i>${esc(n)}</label>`).join('')}<label class="gs-own"><input type="color" data-gsown value="#7a5cff"> Add your own</label></div>
+  <div class="rw" style="justify-content:flex-end;margin-top:14px"><button class="lch" data-l="sheetclose">Cancel</button><button class="lch pri" data-l="gswaysgo">Show lineup</button></div>`;sheetEl.hidden=false}
+let GSWAYS=null;
+async function gsWaysGo(){const l=gsGcLayer();if(!l)return;const picks=[...sheetIn.querySelectorAll('[data-gsw]:checked')].map(i=>[i.dataset.gsn,i.dataset.gsw]);const own=sheetIn.querySelector('[data-gsown]');if(own&&own.dataset.used)picks.push(['Custom',own.value]);if(!picks.length)return hint('Pick at least one colour');
+  sheetEl.hidden=true;hint('Rendering colourways…',6000);if(XFORM)xfCommit();const keep=JSON.parse(JSON.stringify(l.adj.v)),imgs=[];let box=null;
+  for(const [n,h] of picks.slice(0,8)){l.adj.v.c=h;l.v++;const g=flatten(true);if(!box)box=gsBox(g);const cw=Math.round((box[2]-box[0])*Math.min(1,900/(box[3]-box[1]))),ch=Math.round((box[3]-box[1])*Math.min(1,900/(box[3]-box[1]))),t=mk(cw,ch);cx2(t).drawImage(g,box[0],box[1],box[2]-box[0],box[3]-box[1],0,0,cw,ch);imgs.push({n,h,c:t})}
+  l.adj.v=keep;l.v++;dirtyComp=true;req();
+  const cw=imgs[0].c.width,ch=imgs[0].c.height,gap=Math.round(cw*.12),pad=Math.round(ch*.12),lab=Math.round(ch*.14),W=imgs.length*cw+(imgs.length-1)*gap+pad*2,H=ch+pad*2+lab,c=mk(W,H),x=cx2(c),bg=D.bg,lt=gsLight(bg);
+  x.fillStyle=bg;x.fillRect(0,0,W,H);const r2=x.createRadialGradient(W/2,H/2,Math.min(W,H)*.3,W/2,H/2,Math.max(W,H)*.7);r2.addColorStop(0,'rgba(0,0,0,0)');r2.addColorStop(1,lt?'rgba(0,0,0,.1)':'rgba(0,0,0,.35)');x.fillStyle=r2;x.fillRect(0,0,W,H);
+  imgs.forEach((m,i)=>{const px=pad+i*(cw+gap);x.save();x.shadowColor=lt?'rgba(0,0,0,.22)':'rgba(0,0,0,.55)';x.shadowBlur=ch*.03;x.shadowOffsetY=ch*.02;x.drawImage(m.c,px,pad);x.restore();
+    x.fillStyle=lt?'#1b1b1b':'#ececec';x.textAlign='center';x.font=`500 ${Math.round(lab*.32)}px "Helvetica Neue",Helvetica,Arial,sans-serif`;x.fillText(String(m.n).toUpperCase(),px+cw/2,pad+ch+lab*.52);x.fillStyle=lt?'#777':'#9a9a9a';x.font=`400 ${Math.round(lab*.22)}px "Helvetica Neue",Helvetica,Arial,sans-serif`;x.fillText(m.h,px+cw/2,pad+ch+lab*.86)});
+  GSWAYS={picks:imgs.map(m=>[m.n,m.h]),c};gsWaysShow()}
+function gsWaysShow(){let v=document.getElementById('gsWaysV');if(!v){v=document.createElement('div');v.id='gsWaysV';v.innerHTML=`<div class="gw-in"><div class="gw-h"><b>Colourways</b><button data-l="gswaysx" aria-label="Close">&times;</button></div><div class="gw-img"><img alt="Colourway lineup"></div><div class="gw-b"><button class="lch" data-l="gswaysx">Close</button><button class="lch" data-l="gswayssave">Save image</button><button class="lch pri" data-l="gswayslb">Send to lookbook</button></div></div>`;document.getElementById('labEd').appendChild(v)}
+  v.querySelector('img').src=GSWAYS.c.toDataURL('image/jpeg',.9);v.hidden=false}
+async function gsWaysToLookbook(){const l=gsGcLayer();if(!l||!GSWAYS)return;document.getElementById('gsWaysV').hidden=true;hint('Sending colourways…',6000);const keep=JSON.parse(JSON.stringify(l.adj.v)),ways=[];let first=null;
+  for(const [n,h] of GSWAYS.picks){l.adj.v.c=h;l.v++;const r=await shrink(await toBlobP(flatten(true)),GMAX);if(!first)first=r;ways.push({id:uid(),name:n,hex:h,src:r.src,a:null})}
+  l.adj.v=keep;l.v++;dirtyComp=true;req();await saveDoc(true);
+  try{S.items.push({id:uid(),src:first.src,ar:first.ar,fields:{name:D.name,color:GSWAYS.picks.map(p=>p[0]).join(', ')},points:[],open:false,ways,cw:0});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast(ways.length+' colourways added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the colourways')}}
+function gsAct2(k,v,l,b){
+  if(k==='gsside'){if(!D)return true;const want=v==='back'?'back':'front',now=D.side==='back'?'back':'front';if(want===now)return true;if(D.pair){gsSwitch(D.pair);return true}if(want==='back'){gsBackSheet();return true}return true}
+  if(k==='gsbackup'){importMode='gsback';$('#labFile').click();return true}
+  if(k==='gsbslot'){const s=(SLOTS||[]).find(z=>z.id===v);if(s&&s.blob)bmpOf(s.blob).then(img=>gsMakeBack(img.naturalWidth?img:Object.assign(img,{naturalWidth:img.width,naturalHeight:img.height})));return true}
+  if(k==='gsexp'){gsExport(v);return true}
+  if(k==='gsways'){gsWaysSheet();return true}if(k==='gswaysgo'){gsWaysGo();return true}
+  if(k==='gswaysx'){const w=document.getElementById('gsWaysV');if(w)w.hidden=true;return true}
+  if(k==='gswayssave'){if(GSWAYS)toBlobP(GSWAYS.c,'image/jpeg',.93).then(bl=>saveBlob(((D.name||'garment').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'garment')+'-colourways.jpg',bl)).then(ok=>{if(ok)hint('Lineup saved',2000)});return true}
+  if(k==='gswayslb'){gsWaysToLookbook();return true}
+  return false}
+document.addEventListener('input',e=>{if(e.target&&e.target.dataset&&e.target.dataset.gsown!=null)e.target.dataset.used='1'});
+
+/* ================= Speed stage 2: light preview while dragging big layers ================= */
+/* While you drag a big layer, the rest of the picture stays as one still image and only the
+   moving layer is redrawn at screen size (clipped to the garment). Let go – the full-quality
+   picture is rebuilt once. */
+let GH=null,LCMS=0,GHC=null;
+function ghostWant(){if(!DMGON||!D||!XFORM||!XD||!XFORM.px||!XFORM.px.length||(XFORM.tx&&XFORM.tx.length)||D.pat)return false;if(GH)return true;
+  const b=dmgXf();if(!b)return false;const a=Math.max(0,b[2]-b[0])*Math.max(0,b[3]-b[1]);return a>D.w*D.h*.3||LCMS>45}
+function ghostStart(){const ls=XFORM.px.map(o=>o.l),vis=ls.map(l=>l.vis);const base=mk(D.w,D.h);try{ls.forEach(l=>l.vis=false);composite(base)}finally{ls.forEach((l,i)=>l.vis=vis[i])}GH={base,ls}}
+function ghostEnd(){if(!GH)return;relc(GH.base);GH=null;dirtyComp=true;req()}
+function ghostClipBase(l){if(!l.clip)return null;const sib=D.layers.filter(z=>(z.gid||null)===(l.gid||null));let i=sib.indexOf(l)-1;while(i>=0&&sib[i].clip)i--;const b=sib[i];return b&&b.type!=='group'&&b.type!=='adj'?b:null}
+function ghostPaint(x){if(!GH)return;const W=x.canvas.width,H=x.canvas.height;if(!GHC)GHC=document.createElement('canvas');if(GHC.width!==W||GHC.height!==H){GHC.width=W;GHC.height=H}const g=GHC.getContext('2d'),m=x.getTransform();
+  for(const o of XFORM.px){const l=o.l;if(!l.vis)continue;g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,W,H);g.setTransform(m);xfRender(g,XFORM,o,XFORM.mode==='free'?1:(TOUCH?8:10));
+    const cb=ghostClipBase(l);if(cb){const p=pieceOf(cb);if(p&&p.c){g.globalCompositeOperation='destination-in';g.drawImage(p.c,p.x||0,p.y||0);g.globalCompositeOperation='source-over'}}
+    x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=l.op*(l.fillOp==null?1:l.fillOp);x.globalCompositeOperation=gco(l.blend);x.drawImage(GHC,0,0);x.restore()}}
+/* called from draw(): true = skip the full-quality rebuild this frame */
+function ghostFrame(){if(ghostWant()){if(!GH)ghostStart();return true}if(GH)ghostEnd();return false}
+/* ================= Speed stage 3: memory guard on iPhone / iPad ================= */
+let MEMWARN=0;
+setInterval(()=>{if(!D||edEl.hidden||!TOUCH)return;let u=memUse()/MEMB;if(u<.72)return;
+  if(!busy()){try{scFree()}catch(e){}try{trimTmp()}catch(e){}try{MIP.l.forEach(c=>relc(c));MIP.l=[];MIP.n=-1}catch(e){}try{parkAll()}catch(e){}if(GHC){GHC.width=GHC.height=1}u=memUse()/MEMB}
+  if(u>.88&&performance.now()-MEMWARN>90000){MEMWARN=performance.now();hint('This design is close to this device’s memory limit, so it may slow down. Merge or delete layers you’re done with, or export and start a fresh file.',6000)}},2500);
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
@@ -6780,21 +6879,21 @@ async function saveDoc(force){if(!D||saving||(!D.changed&&!force))return;saving=
       if(l.type==='group'){}else if(l.type==='text'){m.t=l.t;m.bb=l.bb}else{if(!l.blob||l.sv!==l.v){l.sv=l.v;const p=pieceOf(l);l.boff=[p.x,p.y];l.blob=p.c?await toBlobP(p.c):null}if(l.blob){m.blob=l.blob;m.off=l.boff}else m.empty=true}
       if(l.mask){if(!l.mblob||l.msv!==l.mv){l.msv=l.mv;l.mblob=await toBlobP(l.mask)}m.mblob=l.mblob}if(l.pt){m.pt=l.pt;m.ptblob=l.ptBlob||null}if(l.adj)m.adj=l.adj;if(l.sm)m.sm=l.sm;if(l.acc)m.acc=l.acc;if(l.so&&l.type!=='text'){if(!l.so.img._blob)l.so.img._blob=await toBlobP(l.so.img,l.so.fmt||'image/png',.95);const q=l.so.m;m.so={m:[q.a,q.b,q.c,q.d,q.e,q.f],blob:l.so.img._blob,fmt:l.so.fmt}}layers.push(m)}
     if(doc!==D){saving=false;return}const c=T('comp');composite(c);const tc=mk(240,300),tx=tc.getContext('2d'),k=Math.min(240/doc.w,300/doc.h);tx.fillStyle='#0c0c0c';tx.fillRect(0,0,240,300);tx.drawImage(c,(240-doc.w*k)/2,(300-doc.h*k)/2,doc.w*k,doc.h*k);const thumbU=tc.toDataURL('image/jpeg',.82);dirtyComp=true;
-    const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,ppi:doc.ppi||300,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU,pat:doc.pat||null,guides:doc.guides||null,inner:doc.inner||null,kind:doc.kind||null};
+    const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,ppi:doc.ppi||300,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU,pat:doc.pat||null,guides:doc.guides||null,inner:doc.inner||null,kind:doc.kind||null,side:doc.side||null,pair:doc.pair||null};
     if(!await IDB.set('des:'+doc.id,rec))toast('Could not save the design, storage may be full',3000);tlFlush(doc.id).catch(()=>{});
-    if(!doc.inner){const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==doc.id);m.unshift({id:doc.id,name:doc.name,thumb:thumbU,updated:rec.updated,w:doc.w,h:doc.h,kind:doc.kind||undefined});await IDB.set('dlib',m)}}catch(e){console.error(e);doc.changed=true}saving=false}
+    if(!doc.inner){const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==doc.id);m.unshift({id:doc.id,name:doc.name,thumb:thumbU,updated:rec.updated,w:doc.w,h:doc.h,kind:doc.kind||undefined,side:doc.side||undefined,pair:doc.pair||undefined});await IDB.set('dlib',m)}}catch(e){console.error(e);doc.changed=true}saving=false}
 const bmpOf=b=>window.createImageBitmap?createImageBitmap(b):blobImg(b);
 function blobImg(b){return new Promise((res,rej)=>{const i=new Image(),u=URL.createObjectURL(b);i.onload=()=>{res(i);setTimeout(()=>URL.revokeObjectURL(u),1000)};i.onerror=rej;i.src=u})}
 async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('Could not open that design');hint('Opening…');
-  D={id:r.id,name:r.name,w:r.w,h:r.h,ppi:r.ppi||300,pat:r.pat||null,guides:r.guides||null,inner:r.inner||null,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,kind:r.kind||null,created:r.created,changed:false,sel:null};freeTmp();
+  D={id:r.id,name:r.name,w:r.w,h:r.h,ppi:r.ppi||300,pat:r.pat||null,guides:r.guides||null,inner:r.inner||null,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,kind:r.kind||null,side:r.side||null,pair:r.pair||null,created:r.created,changed:false,sel:null};freeTmp();
   for(const m of r.layers){const l=m.type==='group'?Object.assign(newGroup(m.name),{id:m.id,vis:m.vis,op:m.op,blend:m.blend||'pass',lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',gid:m.gid||null,collapsed:!!m.collapsed}):newLayer(m.name,{gid:m.gid||null,id:m.id,type:m.type,vis:m.vis,op:m.op,fillOp:m.fillOp==null?1:m.fillOp,blend:m.blend,clip:m.clip,alock:m.alock,lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',bi:m.bi||null,fx:m.fx||null});
     if(m.type==='group'){}else if(m.type==='text'){l.t=m.t;l.bb=m.bb}else if(m.blob){try{const bm=await bmpOf(m.blob),w=bm.width||bm.naturalWidth,h=bm.height||bm.naturalHeight,n=mk(w,h);cx2(n).drawImage(bm,0,0);if(bm.close)bm.close();const o=m.off||[0,0];if(!m.off&&w===D.w&&h===D.h){if(l._p&&l._p.c)relc(l._p.c);l._p=null;l._c=n;park(l,true)}else setPiece(l,n,o[0],o[1]);l.blob=m.blob;l.boff=m.off||[0,0];l.sv=l.v}catch(e){}}
     if(m.adj)l.adj=m.adj;if(m.sm)l.sm=m.sm;if(m.acc)l.acc=m.acc;if(m.pt&&m.ptblob){l.pt=m.pt;l.ptBlob=m.ptblob;try{l.ptImg=await bmpOf(m.ptblob)}catch(e){l.pt=null}}if(m.so&&m.so.blob){try{const im=await bmpOf(m.so.blob);im._blob=m.so.blob;setSo(l,im,m.so.m,m.so.fmt)}catch(e){}}if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';D.layers.push(l)}
   relinearize();D.lsel=new Set();if(!D.layers.find(l=>l.id===D.cur))D.cur=D.layers[D.layers.length-1].id;
   for(const l of D.layers)if(l.type==='text'){if(!fontReady(l.t.font))await ensureFont(l.t.font);try{await document.fonts.load(`40px ${fontCss(l.t.font)}`)}catch(e){}renderText(l);park(l,true)}
   openEditor()}
-async function leaveEditor(){if(SMS.length&&D&&D.id===SMS[SMS.length-1].inner)return smReturn();if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();closeMenu();try{await linkSync(true)}catch(e){console.error(e)}await saveDoc(true);if(D&&D.pat){try{await patSave(true)}catch(e){}}edEl.hidden=true;galEl.hidden=false;const _gs=!!(D&&D.kind==='garment');D=null;freeTmp();gsSetMode(_gs);drawGallery();if(EDRET){EDRET=false;labEl.hidden=true;H2.classList.remove('inlab');gsSetMode(false);kick()}}
-async function drawGallery(){const m=((await IDB.get('dlib'))||[]).filter(d=>GMODE?d.kind==='garment':d.kind!=='garment');$('#labGrid').innerHTML=`<div class="dg" style="--i:0"><button class="dg-o dg-new" data-l="new"><b>+</b></button><span class="dg-n">${GMODE?'New garment':'New design'}</span><span class="dg-m">${GMODE?'Your mockup, then add designs':'Your mockup or a blank canvas'}</span></div>`+
+async function leaveEditor(){if(SMS.length&&D&&D.id===SMS[SMS.length-1].inner)return smReturn();if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();closeMenu();try{await linkSync(true)}catch(e){console.error(e)}try{await gsLinkBack()}catch(e){}await saveDoc(true);if(D&&D.pat){try{await patSave(true)}catch(e){}}edEl.hidden=true;galEl.hidden=false;const _gs=!!(D&&D.kind==='garment');D=null;freeTmp();gsSetMode(_gs);drawGallery();if(EDRET){EDRET=false;labEl.hidden=true;H2.classList.remove('inlab');gsSetMode(false);kick()}}
+async function drawGallery(){const m=((await IDB.get('dlib'))||[]).filter(d=>GMODE?(d.kind==='garment'&&d.side!=='back'):d.kind!=='garment');$('#labGrid').innerHTML=`<div class="dg" style="--i:0"><button class="dg-o dg-new" data-l="new"><b>+</b></button><span class="dg-n">${GMODE?'New garment':'New design'}</span><span class="dg-m">${GMODE?'Your mockup, then add designs':'Your mockup or a blank canvas'}</span></div>`+
   m.map((d,i)=>`<div class="dg" style="--i:${i+1}"><button class="dg-o" data-l="dopen:${d.id}" style="background-image:url(${d.thumb||''})"></button><span class="dg-n chrome">${esc(d.name)}</span><span class="dg-m">${new Date(d.updated).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span><div class="dg-a"><button data-l="dren:${d.id}">Rename</button><button data-l="ddup:${d.id}">Duplicate</button><button data-l="ddel:${d.id}">Delete</button></div></div>`).join('')}
 
 /* ---------- mockup slots ---------- */
@@ -6827,7 +6926,7 @@ async function startSlot(id){const s=SLOTS.find(z=>z.id===id);if(!s)return;if(!s
 let importMode='layer';
 function lbPickSheet(){sheetIn.innerHTML=`<h3>Choose a garment<button data-l="sheetclose">&times;</button></h3><div class="tpl" style="margin-top:14px">${S.items.map(it=>`<button data-l="lbitem:${it.id}"><i style="background:#0c0c0c url(${it.src}) center/contain no-repeat"></i><span>${esc((it.fields||{}).name||'Untitled')}</span></button>`).join('')||'<p class="pnote">This lookbook has no garments yet.</p>'}</div>`;sheetEl.hidden=false}
 $('#labFile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const im=await fileIm(f),nm=f.name.replace(/\.[^.]+$/,'');im._fmt=/jpe?g/i.test(f.type)?'image/jpeg':'image/png';
-  if(importMode==='gs'){sheetEl.hidden=true;await docFromMockup(im,nm)}else if(importMode==='slot')mockSetup(im,(SLOTS.find(z=>z.id===SLOTPICK)||{}).name||nm);else await placeImg(im,nm,importMode==='new')}catch(err){toast('Could not open that image')}});
+  if(importMode==='gsback'){await gsMakeBack(im)}else if(importMode==='gs'){sheetEl.hidden=true;await docFromMockup(im,nm)}else if(importMode==='slot')mockSetup(im,(SLOTS.find(z=>z.id===SLOTPICK)||{}).name||nm);else await placeImg(im,nm,importMode==='new')}catch(err){toast('Could not open that image')}});
 const loadIm=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
 async function placeImg(im,name,asNew){if(asNew||!D){blankDoc(clampN(im.naturalWidth/im.naturalHeight,.3,3),name||'Photo design');const l=newLayer('Photo');{const o=capImg(im,D.w*D.h);setSo(l,o,[D.w/o.width,0,0,D.h/o.height,0,0],im._fmt);drawSo(cx2(l.cv),l.so)}const d=newLayer('Design');D.layers=[l,d];D.cur=d.id;openEditor();schedSave();return}
   if(!ensureRoom(2))return limitHint();stOp(()=>{const l=newLayer(name||'Placed image'),k=Math.min(D.w*.8/im.naturalWidth,D.h*.8/im.naturalHeight,1),w=im.naturalWidth*k,h=im.naturalHeight*k,o=capImg(im,Math.min(SOMAX,D.w*D.h)),q=w/o.width;setSo(l,o,[q,0,0,h/o.height,(D.w-w)/2,(D.h-h)/2],im._fmt);drawSo(cx2(l.cv),l.so);insertAbove(l)},'Place image');setTool('move');hint('Drag to place it, then tap ✓ Done')}
@@ -6836,7 +6935,7 @@ async function exportDoc(kind){const c=flatten(kind==='clear');let blob;if(kind=
   const nm=(D.name||'design').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'design';if(await saveBlob(nm+(kind==='jpg'?'.jpg':'.png'),blob))hint('Exported')}
 async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.updated||0)-(a.updated||0));sheetIn.innerHTML=`<h3>Send to a lookbook<button data-l="sheetclose">&times;</button></h3><p class="pnote">Your design is added as a new garment with a transparent background, so scenes and lighting sit behind it.</p><h5>Lookbooks</h5><div class="tpl">
   <button data-l="sendto:__new"><i>+ New</i><span>New lookbook</span></button>${l.map(b=>`<button data-l="sendto:${esc(b.id)}"><i style="background:#0c0c0c ${b.cover?`url(${b.cover}) center/contain no-repeat`:''}"></i><span>${esc(b.name||'Untitled')}${b.id===(S.lid||'default')?' · current':''}</span></button>`).join('')}${l.length?'':`<button data-l="sendto:__cur"><i>Current</i><span>Current lookbook</span></button>`}</div>`;sheetEl.hidden=false}
-async function sendToLookbook(target){hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
+async function sendToLookbook(target){if(GMODE&&D&&D.pair)return gsSendPair(target);hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
   try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false,des:D.id});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
     requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+name+'" added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the design')}}
 $('#labFont').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const buf=await f.arrayBuffer(),n=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+(regular|normal)$/i,'').trim()||'My font';await addFontBuf(n,buf,'Yours',false);FCAT='Yours';TOOL.font=n;if(TEXTEDIT){TEXTEDIT.l.t.font=n;renderText(TEXTEDIT.l)}drawPanel();hint('Font added: '+n)}catch(err){toast('That font file could not be read')}});
@@ -7466,8 +7565,8 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();if(gsAct(k,v,l,a,b
     case'mssave':msSave(false);break;case'mssavego':msSave(true);break;
     case'dopen':openDoc(v);break;
     case'dren':IDB.get('dlib').then(m=>{m=m||[];const en=m.find(x=>x.id===v);askName('Rename design',en&&en.name,async nv=>{if(!nv)return;const r=await IDB.get('des:'+v);if(r){r.name=nv;await IDB.set('des:'+v,r)}en.name=nv;await IDB.set('dlib',m);drawGallery()})});break;
-    case'ddup':(async()=>{const r=await IDB.get('des:'+v);if(r){const id=lid();r.id=id;r.name=r.name+' copy';r.updated=Date.now();await IDB.set('des:'+id,r);const m=(await IDB.get('dlib'))||[];const en=m.find(x=>x.id===v);m.unshift(Object.assign({},en,{id,name:r.name,updated:Date.now()}));await IDB.set('dlib',m);drawGallery()}})();break;
-    case'ddel':if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap to delete';setTimeout(()=>{b.classList.remove('arm');b.textContent='Delete'},3000);return}(async()=>{const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==v);await IDB.set('dlib',m);await IDB.set('des:'+v,null);drawGallery()})();break;
+    case'ddup':(async()=>{const r=await IDB.get('des:'+v);if(r){const id=lid();r.id=id;r.name=r.name+' copy';r.updated=Date.now();let bid=null,bk=null;if(r.pair){bk=await IDB.get('des:'+r.pair);if(bk){bid=lid();bk.id=bid;bk.name=r.name+' (back)';bk.pair=id;bk.updated=Date.now();await IDB.set('des:'+bid,bk)}}r.pair=bid;await IDB.set('des:'+id,r);const m=(await IDB.get('dlib'))||[];const en=m.find(x=>x.id===v);if(bk){const eb=m.find(x=>x.id===bk.pair)||{};m.unshift(Object.assign({},m.find(x=>x.side==='back'&&x.pair===v)||{},{id:bid,name:bk.name,side:'back',pair:id,kind:'garment',updated:Date.now()}))}m.unshift(Object.assign({},en,{id,name:r.name,updated:Date.now(),pair:bid||undefined}));await IDB.set('dlib',m);drawGallery()}})();break;
+    case'ddel':if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap to delete';setTimeout(()=>{b.classList.remove('arm');b.textContent='Delete'},3000);return}(async()=>{const rr=await IDB.get('des:'+v),pv=rr&&rr.pair;const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==v&&(!pv||x.id!==pv));await IDB.set('dlib',m);await IDB.set('des:'+v,null);if(pv)await IDB.set('des:'+pv,null);drawGallery()})();break;
     case'menu':openMenu(v,b);return;case'adjmenu':openMenu('__adj',barEl.querySelector('[data-l="menu:Image"]'));return;
     case'tool':setTool(v);break;
     case'panel':if(v==='fonts'&&PANEL==='text'){PANEL='fonts';drawPanel()}else if(v==='text'&&PANEL==='fonts'){PANEL='text';drawPanel()}else if(v==='brushes'&&PANEL==='brushes'&&!popEl.hidden)openPanel('layers');else openPanel(v);break;
