@@ -1782,6 +1782,10 @@ html.ingar #lab .lhint{bottom:calc(var(--gsdk,62px) + 30px + env(safe-area-inset
 #mkP .mk-tol input{flex:1;accent-color:#ddd}#mkP .mk-tol em{font-style:normal;min-width:22px;text-align:right;color:#ddd}
 #mkP .mk-rm .mk-note{padding:0 10px;margin:6px 0 4px}
 #mkP .mk-sb .pill[disabled]{opacity:.6}
+#mkP .mk-chk{display:flex;flex-direction:column;gap:2px;padding:6px 6px 0}
+#mkP .mk-chk button{display:flex;align-items:center;gap:10px;padding:6px 4px;text-align:left;font-size:12px;color:#d8d8d8}
+#mkP .mk-chk i{flex:none;width:18px;height:18px;border-radius:5px;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center}
+#mkP .mk-chk .on i{background:var(--fr,#ddd);border-color:transparent}#mkP .mk-chk .on i::after{content:"✓";font-style:normal;font-size:12px;color:#111}
 /* ---- free, floating home ---- */
 #home .hm-free{gap:clamp(18px,3.4vh,40px);align-items:center;max-width:1240px}
 #home .hm-free .hm-top{width:100%}
@@ -6177,6 +6181,7 @@ async function syUnpack(o,localId){const k=o.kind;
   if(k==='lb'){await IDB.set('lb:'+localId,o.d||{items:[]});const l=(await libGet()).filter(x=>x.id!==localId),meta=Object.assign({},o.meta||{name:(o.d&&o.d.title)||'Lookbook'},{id:localId});l.push(meta);l.sort((a,b)=>(b.updated||0)-(a.updated||0));await IDB.set('lib',l);
     if(localId===curId()){await switchTo(localId,o.d||{items:[]});const l2=await libGet(),e=l2.find(x=>x.id===localId);if(e){e.updated=meta.updated;await IDB.set('lib',l2)}}return String(meta.updated||0)}
   if(o.id==='myassets'){for(const f of o.files||[])await IDB.set('mya:'+f.id,f);await IDB.set('myassets',o.list||[]);if(o.folders)await IDB.set('myafold',o.folders)}
+  else if(o.id==='mockups')await mkSyncIn(o.d);
   else await IDB.set(o.id,o.d);return null}
 async function syCopyLocal(L){if(L.kind==='des'){const rec=await IDB.get('des:'+L.id);if(!rec)return;const nid=Math.random().toString(36).slice(2,10),r2=Object.assign({},rec,{id:nid,name:rec.name+' (this device)',updated:Date.now()});await IDB.set('des:'+nid,r2);const dl=(await IDB.get('dlib'))||[];const e=dl.find(x=>x.id===L.id)||{};dl.unshift(Object.assign({},e,{id:nid,name:r2.name,updated:r2.updated}));await IDB.set('dlib',dl)}
   else if(L.kind==='lb'){if(L.id===curId())await flush();const d=await IDB.get('lb:'+L.id);if(!d)return;const nid=uid(),d2=Object.assign({},d,{title:(d.title||'Lookbook')+' (this device)'});await IDB.set('lb:'+nid,d2);const l=await libGet(),e=l.find(x=>x.id===L.id)||{};l.unshift(Object.assign({},e,{id:nid,name:d2.title,updated:Date.now()}));await IDB.set('lib',l)}}
@@ -6199,7 +6204,7 @@ async function syOnce(cfg,opts){const R=`/repos/${cfg.owner}/${cfg.repo}`,T=cfg.
     const kind=k.split('/')[0],id=lid2(k);if(kind==='des'&&id===openDes)continue;
     const lc=!!L&&(!Sx||Sx.u!==L.u),rc=!!Rs&&(!Sx||Sx.sha!==Rs),rdel=!Rs&&ix&&ix.del;
     const down=async(copyFirst)=>{const b=await syFetch('GET',`${R}/git/blobs/${Rs}`,null,T,true);if(!b.ok)throw new Error('Could not download “'+((ix&&ix.name)||k)+'”');if(copyFirst&&L){await syCopyLocal(L);again=true}const u=await syUnpack(await syDec(JSON.parse(b.t),h=>syBin(cfg,h,files)),id);changedLocal=true;nU[1]++;
-      const L2=(await syLocal(dev)).get(k);last[k]={u:L2?L2.u:(u||''),sha:Rs}};
+      const L2=(await syLocal(dev)).get(k);last[k]={u:L2?(SYMKD&&k==='misc/mockups'?'merged':L2.u):(u||''),sha:Rs};if(SYMKD&&k==='misc/mockups'){SYMKD=false;again=true}};
     if(L&&!Rs&&!rdel){ups.push(k)}
     else if(L&&rdel){if(lc)ups.push(k);else{if(await syDelLocal(L)){delete last[k];changedLocal=true;nU[2]++}}}
     else if(!L&&Rs){if(Sx&&!rc){dels.push(k)}else await down(false)}
@@ -6760,29 +6765,65 @@ function mkAddSheet(edit){const x=edit||MKNEW||{};MKNEW=x;const opts=MKCATS.map(
    <label class="mk-l">Category<select id="mkCatSel">${opts}</select></label>
    <div class="mk-sides"><button class="mk-side" data-mk="pick|f">${x.ft?`<img src="${x.ft}" alt="">`:'<i>+</i>'}<span>Front${x.ft?' · change':''}</span></button><button class="mk-side" data-mk="pick|b">${x.bt?`<img src="${x.bt}" alt="">`:'<i>+</i>'}<span>Back${x.bt?' · change':' (optional)'}</span></button></div>
    <div class="mk-rm${x.rm?' on':''}"><button class="mk-rmb" data-mk="rmbg"><i></i><span><b>Remove background</b><small>${x.rm?'Tap to turn off':'Takes away a plain background behind the garment'}</small></span></button>
-   ${x.rm?`<label class="mk-tol">Strength <input type="range" id="mkTol" min="4" max="60" value="${x.tol||14}"><em id="mkTolV">${x.tol||14}</em></label><p class="mk-note">If part of the garment disappears, lower the strength. If some background is left, raise it.</p>`:''}</div>
+   ${x.rm?`<label class="mk-tol">Strength <input type="range" id="mkTol" min="4" max="80" value="${x.tol}"><em id="mkTolV">${x.tol}</em></label>
+   <label class="mk-tol">Clean edges <input type="range" id="mkEdge" min="0" max="6" value="${x.edge}"><em id="mkEdgeV">${x.edge}</em></label>
+   <div class="mk-chk"><button class="${x.holes?'on':''}" data-mk="rmopt|holes"><i></i>Clear gaps inside (between arms, legs, straps)</button>${x.hasOrig?`<button class="${x.orig?'on':''}" data-mk="rmopt|orig"><i></i>Start again from the original upload</button>`:''}</div>
+   <p class="mk-note">Missed some background? Raise Strength or Clean edges – you can run it again as many times as you like. If part of the garment disappears, lower them.</p>`:''}</div>
    <p class="mk-note">${x.rm?'':'PNG with a transparent background works best – or turn on Remove background.'}</p><div class="mk-sb"><button class="pill" data-mk="shx">Cancel</button><button class="pill big" data-mk="savenew">${edit&&edit.id?'Save changes':'Save mockup'}</button></div>`);
-  const t=document.getElementById('mkTol');if(t)t.oninput=e=>{x.tol=+e.target.value;document.getElementById('mkTolV').textContent=x.tol;clearTimeout(MKRT);MKRT=setTimeout(mkRmPrev,140)};if(x.rm)mkRmPrev()}
+  [['mkTol','tol'],['mkEdge','edge']].forEach(([id,k])=>{const t=document.getElementById(id);if(t)t.oninput=e=>{x[k]=+e.target.value;document.getElementById(id+'V').textContent=x[k];clearTimeout(MKRT);MKRT=setTimeout(mkRmPrev,140)}});
+  const nm=document.getElementById('mkName'),cs=document.getElementById('mkCatSel');if(nm){nm.addEventListener('keydown',e=>e.stopPropagation());nm.addEventListener('keyup',e=>{if(e.key==='Enter'){const sb=document.querySelector('#mkP [data-mk=savenew]');if(sb&&!sb.disabled)sb.click()}})}
+  /* editing an existing mockup: the name and category save as soon as you change them, however the sheet is closed */
+  if(x.id){const live=async()=>{const y=MK.items.find(z=>z.id===x.id);if(!y)return;const n=(nm.value||'').trim();if((n&&n!==y.name)||cs.value!==y.cat){if(n)y.name=n;y.cat=cs.value;x.name=y.name;x.cat=y.cat;y.updated=Date.now();await mkSave();mkDraw()}};let lt=0;nm.addEventListener('input',()=>{clearTimeout(lt);lt=setTimeout(live,450)});nm.addEventListener('change',live);cs.addEventListener('change',live)}
+  if(x.rm)mkRmPrev()}
 let MKRT=0,MKRQ=0;
-/* background removal: flood-fills the plain colour around the edges, then trims the empty margin so the garment fills the card */
-async function mkRmCanvas(blob,tol,max){const im=await mkImg(blob),w0=im.naturalWidth||im.width,h0=im.naturalHeight||im.height,k=Math.min(1,max/Math.max(w0,h0)),w=Math.max(1,Math.round(w0*k)),h=Math.max(1,Math.round(h0*k));const c=mk(w,h),x=cx2(c);x.drawImage(im,0,0,w,h);if(im.close)im.close();
-  const d=x.getImageData(0,0,w,h),n=removeBgData(d,w,h,tol);if(!n){relc(c);return null}const a=d.data;let x0=w,y0=h,x1=-1,y1=-1;for(let y=0;y<h;y++)for(let xx=0;xx<w;xx++)if(a[(y*w+xx)*4+3]>10){if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(y<y0)y0=y;if(y>y1)y1=y}
-  if(x1<0){relc(c);return null}x.putImageData(d,0,0);const pad=Math.round(Math.max(x1-x0,y1-y0)*.03),X=Math.max(0,x0-pad),Y=Math.max(0,y0-pad),W=Math.min(w,x1+pad+1)-X,H=Math.min(h,y1+pad+1)-Y;const o=mk(W,H);cx2(o).drawImage(c,X,Y,W,H,0,0,W,H);relc(c);return o}
-function mkSrc(side){const x=MKNEW;if(!x)return null;if(x[side])return x[side];const y=x.id&&MK.items.find(z=>z.id===x.id);return y?y[side]:null}
-async function mkRmPrev(){const q=++MKRQ,x=MKNEW;if(!x||!x.rm)return;for(const sd of ['f','b']){const b=mkSrc(sd),el=document.querySelector(`#mkP .mk-side[data-mk="pick|${sd}"] img`);if(!b||!el)continue;const c=await mkRmCanvas(b,x.tol||14,480);if(q!==MKRQ)return;if(c){el.src=c.toDataURL('image/png');relc(c)}}}
-async function mkRmApply(x,y){const tol=x.tol||14;let miss=0;for(const sd of ['f','b']){const b=x[sd]||(y&&y[sd]);if(!b)continue;const c=await mkRmCanvas(b,tol,2400);if(!c){miss++;continue}const nb=await toBlobP(c);relc(c);x[sd]=nb;x[sd+'t']=await mkThumb(nb)}return miss}
+/* ---- background removal (strong) ----
+   1. finds the background colour (edges of the photo, or the colour remembered from the last run)
+   2. floods in from the edges AND from anything already cleared, so running it again keeps eating leftover background
+   3. optional: clears enclosed gaps (between arms and body, between legs, inside straps)
+   4. cleans the light fringe around the garment, then trims the empty margin */
+const MKDEF={tol:26,edge:1,holes:true};
+function mkRmInit(x){const y=x.id&&MK.items.find(z=>z.id===x.id),last=y&&y.rmset;['tol','edge','holes'].forEach(k=>{if(x[k]==null)x[k]=last&&last[k]!=null?last[k]:MKDEF[k]});x.hasOrig=!!(y&&(y.fo||y.bo));if(x.orig==null)x.orig=false}
+function mkBgOf(d,w,h,hint){const a=d.data,S=[],st=Math.max(1,Math.round(Math.max(w,h)/300));const add=i=>{const k=i*4;if(a[k+3]>220)S.push([a[k],a[k+1],a[k+2]])};
+  for(let x=0;x<w;x+=st){add(x);add((h-1)*w+x);add(w+x);add((h-2)*w+x)}for(let y=0;y<h;y+=st){add(y*w);add(y*w+w-1);add(y*w+1);add(y*w+w-2)}
+  const med=P=>[0,1,2].map(c=>{const v=P.map(p=>p[c]).sort((x,y)=>x-y);return v[v.length>>1]});
+  if(S.length>=24){const m=med(S),near=S.filter(p=>Math.max(Math.abs(p[0]-m[0]),Math.abs(p[1]-m[1]),Math.abs(p[2]-m[2]))<40).length;if(near>=S.length*.45)return m}
+  if(hint)return hint;
+  /* photo already cut: look at the pixels touching the cleared area and take the light, grey-ish ones (leftover background) */
+  const R=[];for(let y=1;y<h-1;y+=st)for(let x=1;x<w-1;x+=st){const i=y*w+x,k=i*4;if(a[k+3]<220)continue;if(a[k-1]<24||a[k+7]<24||a[k-w*4+3]<24||a[k+w*4+3]<24){const r=a[k],g=a[k+1],b=a[k+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b);if(mx>170&&mx-mn<40)R.push([r,g,b])}}
+  return R.length>=12?med(R):[255,255,255]}
+function mkCut(d,w,h,bg,o){const a=d.data,N=w*h,T0=o.tol*2.4,T1=T0*1.8,st=new Uint8Array(N),Q=new Int32Array(N);let qh=0,qt=0,n=0;
+  const dist=k=>Math.max(Math.abs(a[k]-bg[0]),Math.abs(a[k+1]-bg[1]),Math.abs(a[k+2]-bg[2]));
+  const push=i=>{if(!st[i]){st[i]=1;Q[qt++]=i}};
+  for(let x=0;x<w;x++){push(x);push((h-1)*w+x)}for(let y=0;y<h;y++){push(y*w);push(y*w+w-1)}for(let i=0;i<N;i++)if(a[i*4+3]<24)push(i);
+  while(qh<qt){const i=Q[qh++],k=i*4;let go=false;if(a[k+3]<24){a[k+3]=0;go=true}else{const dd=dist(k);if(dd<=T0){a[k+3]=0;n++;go=true}else if(dd<=T1){a[k+3]=Math.round(a[k+3]*(dd-T0)/(T1-T0));st[i]=2}else st[i]=3}
+    if(go){const x=i%w;if(x>0)push(i-1);if(x<w-1)push(i+1);if(i>=w)push(i-w);if(i<N-w)push(i+w)}}
+  if(o.holes){const minA=Math.max(40,N*.0006),comp=new Int32Array(N);for(let s=0;s<N;s++){if(st[s]||dist(s*4)>T0)continue;let ch=0,ct=0;comp[ct++]=s;st[s]=4;
+      while(ch<ct){const i=comp[ch++],x=i%w;const nb=[x>0?i-1:-1,x<w-1?i+1:-1,i>=w?i-w:-1,i<N-w?i+w:-1];for(const j of nb){if(j<0||st[j])continue;if(dist(j*4)<=T0){st[j]=4;comp[ct++]=j}}}
+      if(ct>=minA){for(let q=0;q<ct;q++){a[comp[q]*4+3]=0;n++}}}}
+  for(let p=0;p<o.edge;p++){const hit=[];for(let i=0;i<N;i++){const k=i*4;if(!a[k+3])continue;const x=i%w;if((x>0&&!a[k-1])||(x<w-1&&!a[k+7])||(i>=w&&!a[k-w*4+3])||(i<N-w&&!a[k+w*4+3]))hit.push(i)}
+    for(const i of hit){const k=i*4,dd=dist(k);if(dd<=T1*1.6)a[k+3]=0;else if(p===o.edge-1)a[k+3]=Math.min(a[k+3],Math.round(255*Math.min(1,(dd-T1*1.6)/(T1*.8)+.55)))}}
+  for(let i=3;i<a.length;i+=4)if(a[i]<40)a[i]=0;return n}
+async function mkRmCanvas(blob,o,max){const im=await mkImg(blob),w0=im.naturalWidth||im.width,h0=im.naturalHeight||im.height,k=Math.min(1,max/Math.max(w0,h0)),w=Math.max(1,Math.round(w0*k)),h=Math.max(1,Math.round(h0*k));const c=mk(w,h),x=cx2(c);x.drawImage(im,0,0,w,h);if(im.close)im.close();
+  const d=x.getImageData(0,0,w,h),bg=mkBgOf(d,w,h,o.bg),eg=o.edge?Math.max(1,Math.round(o.edge*Math.max(w,h)/1400)):0;mkCut(d,w,h,bg,{tol:o.tol,edge:eg,holes:o.holes});const a=d.data;let x0=w,y0=h,x1=-1,y1=-1;for(let y=0;y<h;y++)for(let xx=0;xx<w;xx++)if(a[(y*w+xx)*4+3]>10){if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<0){relc(c);return null}x.putImageData(d,0,0);const pad=Math.round(Math.max(x1-x0,y1-y0)*.03),X=Math.max(0,x0-pad),Y=Math.max(0,y0-pad),W=Math.min(w,x1+pad+1)-X,H=Math.min(h,y1+pad+1)-Y;const out=mk(W,H);cx2(out).drawImage(c,X,Y,W,H,0,0,W,H);relc(c);out.bg=bg;return out}
+function mkSrc(side){const x=MKNEW;if(!x)return null;const y=x.id&&MK.items.find(z=>z.id===x.id);if(x.orig&&y&&y[side+'o']&&!x[side+'new'])return y[side+'o'];if(x[side])return x[side];return y?y[side]:null}
+function mkOpts(sd){const x=MKNEW,y=x.id&&MK.items.find(z=>z.id===x.id);const bg=(x.orig||x[sd+'new'])?null:(y&&y[sd+'bg'])||null;return {tol:x.tol,edge:x.edge,holes:x.holes,bg}}
+async function mkRmPrev(){const q=++MKRQ,x=MKNEW;if(!x||!x.rm)return;for(const sd of ['f','b']){const b=mkSrc(sd),el=document.querySelector(`#mkP .mk-side[data-mk="pick|${sd}"] img`);if(!b||!el)continue;const c=await mkRmCanvas(b,mkOpts(sd),520);if(q!==MKRQ)return;if(c){el.src=c.toDataURL('image/png');relc(c)}else el.style.opacity=.3}}
+async function mkRmApply(x,y){let miss=0;for(const sd of ['f','b']){const b=mkSrc(sd);if(!b)continue;const o=mkOpts(sd),c=await mkRmCanvas(b,o,2400);if(!c){miss++;continue}
+    const orig=(y&&y[sd+'o'])&&!x[sd+'new']?y[sd+'o']:(x[sd]||(y&&y[sd]));const nb=await toBlobP(c);x[sd+'bg']=c.bg;relc(c);x[sd+'o']=orig;x[sd]=nb;x[sd+'t']=await mkThumb(nb)}return miss}
 async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
   if(a==='close'){mkClose();return}
   if(a==='cat'){MKS.cat=v;mkDraw();return}
   if(a==='flip'){if(x&&x.bt){MKS.flip[v]=!MKS.flip[v];mkDraw()}return}
   if(a==='add'){MKNEW={cat:MKS.cat!=='all'?MKS.cat:'tee'};mkAddSheet();return}
   if(a==='shx'){MKNEW=null;mkSheetClose();return}
-  if(a==='rmbg'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;MKNEW.rm=!MKNEW.rm;if(!MKNEW.tol)MKNEW.tol=14;mkAddSheet(MKNEW.id?MKNEW:null);return}
-  if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;if(!MKNEW.name)MKNEW.name=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='rmbg'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;MKNEW.rm=!MKNEW.rm;mkRmInit(MKNEW);mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='rmopt'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;MKNEW[v]=!MKNEW[v];mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;MKNEW.fnew=true;if(!MKNEW.name)MKNEW.name=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t;MKNEW.bnew=true}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
   if(a==='savenew'){const n=($('#mkName').value||'').trim(),c=$('#mkCatSel').value;if(!MKNEW.f&&!MKNEW.id){toast('Add the front image first');return}
     if(MKNEW.rm){const sb=b;sb.textContent='Removing background…';sb.disabled=true;const miss=await mkRmApply(MKNEW,MKNEW.id&&MK.items.find(z=>z.id===MKNEW.id));if(miss)toast('No plain background found on '+(miss>1?'either side':'one side')+' – kept it as it was',2600)}
-    if(MKNEW.id){const y=MK.items.find(z=>z.id===MKNEW.id);if(y){y.name=n||y.name;y.cat=c;if(MKNEW.f){y.f=MKNEW.f;y.ft=MKNEW.ft}if(MKNEW.b){y.b=MKNEW.b;y.bt=MKNEW.bt}y.updated=Date.now()}}
-    else MK.items.unshift({id:lid(),name:n||'Mockup',cat:c,f:MKNEW.f,ft:MKNEW.ft,b:MKNEW.b||null,bt:MKNEW.bt||null,updated:Date.now()});
+    if(MKNEW.id){const y=MK.items.find(z=>z.id===MKNEW.id);if(y){y.name=n||y.name;y.cat=c;for(const sd of ['f','b'])if(MKNEW[sd]){y[sd]=MKNEW[sd];y[sd+'t']=MKNEW[sd+'t'];if(MKNEW.rm){y[sd+'o']=MKNEW[sd+'o']||null;y[sd+'bg']=MKNEW[sd+'bg']||null}else if(MKNEW[sd+'new']){y[sd+'o']=null;y[sd+'bg']=null}}if(MKNEW.rm)y.rmset={tol:MKNEW.tol,edge:MKNEW.edge,holes:MKNEW.holes};y.updated=Date.now()}}
+    else MK.items.unshift({id:lid(),name:n||'Mockup',cat:c,f:MKNEW.f,ft:MKNEW.ft,b:MKNEW.b||null,bt:MKNEW.bt||null,fo:MKNEW.fo||null,bo:MKNEW.bo||null,fbg:MKNEW.fbg||null,bbg:MKNEW.bbg||null,rmset:MKNEW.rm?{tol:MKNEW.tol,edge:MKNEW.edge,holes:MKNEW.holes}:null,updated:Date.now()});
     MKNEW=null;await mkSave();mkSheetClose();MKS.cat=c;mkDraw();toast('Mockup saved',1600);return}
   if(a==='newcat'){const n=((await mpAsk('Name the new category',''))||'').trim();if(!n)return;const k='u'+lid();MK.cats.push({k,n,g:'Yours'});MKC[k]={k,n,g:'Yours',sc:''};await mkSave();MKS.cat=k;mkDraw();return}
   if(a==='slots'){await getSlots();const got=new Map();for(const s of SLOTS.filter(z=>z.blob)){const base=s.name.replace(/\s+(front|back)$/i,'').trim(),side=/\sback$/i.test(s.name)?'b':'f';const low=base.toLowerCase(),cat=/zip/.test(low)?'zip':/hood/.test(low)?'hoodie':/crew/.test(low)?'crew':/long/.test(low)?'ls':/tank/.test(low)?'tank':/short/.test(low)?'shorts':/jog|sweatp/.test(low)?'sweat':/cap|hat/.test(low)?'cap':/tote|bag/.test(low)?'bag':/t-?shirt|tee/.test(low)?'tee':'other';
@@ -6790,12 +6831,13 @@ async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
     for(const y of got.values()){if(!y.f&&y.b){y.f=y.b;y.ft=y.bt;y.b=null;y.bt=null}MK.items.push(y)}MK.slotsIn=true;await mkSave();mkDraw();toast(got.size+' mockup'+(got.size>1?'s':'')+' added',2000);return}
   if(!x)return;
   if(a==='more'){mkSheet(`<div class="mk-shh"><b>${esc(x.name)}</b><button data-mk="shx" aria-label="Close">&times;</button></div><div class="mk-list">
-    <button data-mk="rmbgx|${x.id}">Remove background</button><button data-mk="edit|${x.id}">${x.b?'Change front / back, rename, move':'Add the back · rename · move'}</button>${x.b?`<button data-mk="rmback|${x.id}">Remove the back</button>`:''}<button data-mk="dl|${x.id}">Save the image${x.b?'s':''} to this device</button><button class="dang" data-mk="del|${x.id}">Delete mockup</button></div>`);return}
-  if(a==='rmbgx'){MKNEW={id:x.id,name:x.name,cat:x.cat,ft:x.ft,bt:x.bt,rm:true,tol:14};mkAddSheet(MKNEW);return}
-  if(a==='edit'){MKNEW={id:x.id,name:x.name,cat:x.cat,ft:x.ft,bt:x.bt};mkAddSheet(MKNEW);return}
-  if(a==='rmback'){x.b=null;x.bt=null;MKS.flip[x.id]=false;await mkSave();mkSheetClose();mkDraw();return}
+    <button data-mk="rmbgx|${x.id}">${x.fo?'Remove more background':'Remove background'}</button><button data-mk="ren|${x.id}">Rename</button><button data-mk="edit|${x.id}">${x.b?'Change front / back, rename, move':'Add the back · rename · move'}</button>${x.b?`<button data-mk="rmback|${x.id}">Remove the back</button>`:''}<button data-mk="dl|${x.id}">Save the image${x.b?'s':''} to this device</button><button class="dang" data-mk="del|${x.id}">Delete mockup</button></div>`);return}
+  if(a==='rmbgx'){MKNEW={id:x.id,name:x.name,cat:x.cat,ft:x.ft,bt:x.bt,rm:true};mkRmInit(MKNEW);mkAddSheet(MKNEW);return}
+  if(a==='ren'){mkSheetClose();const n=((await mpAsk('Rename mockup',x.name))||'').trim();if(!n)return;x.name=n;x.updated=Date.now();await mkSave();mkDraw();toast('Renamed',1400);return}
+  if(a==='edit'){MKNEW={id:x.id,name:x.name,cat:x.cat,ft:x.ft,bt:x.bt};mkRmInit(MKNEW);MKNEW.rm=false;mkAddSheet(MKNEW);return}
+  if(a==='rmback'){x.b=null;x.bt=null;x.bo=null;x.bbg=null;x.updated=Date.now();MKS.flip[x.id]=false;await mkSave();mkSheetClose();mkDraw();return}
   if(a==='dl'){mkSheetClose();const nm=(x.name||'mockup').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'mockup',ext=bl=>/jpe?g/.test(bl.type)?'.jpg':'.png';await saveBlob(nm+'-front'+ext(x.f),x.f);if(x.b)await saveBlob(nm+'-back'+ext(x.b),x.b);return}
-  if(a==='del'){if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap again to delete';return}MK.items=MK.items.filter(z=>z!==x);await mkSave();mkSheetClose();mkDraw();return}
+  if(a==='del'){if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap again to delete';return}MK.items=MK.items.filter(z=>z!==x);(MK.del||(MK.del={}))[x.id]=Date.now();await mkSave();mkSheetClose();mkDraw();return}
   if(a==='gs'){mkClose();hideHome();gsOpen();await mkStart(x.id);return}
   if(a==='lab'){mkClose();hideHome();openLab();const img=await mkImg(x.f);await docFromMockup(img,x.name);if(x.b)setTimeout(()=>hint('This mockup has a back too – open it in the Garment Studio to design both sides',3600),1800);return}
   if(a==='lb'){const t=await lbChoose({title:'Add “'+x.name+'” to…',note:'It’s added as a garment'+(x.b?' with its back – tap to flip':'')+'.'});if(!t)return;mkClose();hideHome();hint('Adding…',2000);
@@ -6804,6 +6846,13 @@ addEventListener('keydown',e=>{const g=document.getElementById('mkP');if(!g||g.h
 /* Garment Studio "New garment": pick from the Mockups library (front + back come together) */
 async function gsMkSection(){await mkLoad();if(!MK.items.length)return '';return `<h5>From your Mockups library <span class="h5n">Front and back come in together</span></h5><div class="tpl slots">${MK.items.slice(0,24).map(x=>`<div class="slot full"><button data-l="gsmk:${x.id}" title="Start on this mockup"><i style="background-image:url(${x.ft})"></i></button><span>${esc(x.name)}${x.b?' · F+B':''}</span></div>`).join('')}</div>`}
 async function mkStart(id){await mkLoad();const x=MK.items.find(z=>z.id===id);if(!x)return;sheetEl.hidden=true;const img=await mkImg(x.f);await docFromMockup(img,x.name);if(GMODE&&x.b){const bi=await mkImg(x.b);await gsMakeBack(bi);if(D&&D.pair)await gsSwitch(D.pair)}}
+
+function mkMerge(A,B){A=A||{};B=B||{};const del=Object.assign({},A.del||{});for(const [k,t] of Object.entries(B.del||{}))del[k]=Math.max(del[k]||0,t);const m=new Map();
+  for(const it of [...(A.items||[]),...(B.items||[])]){const o=m.get(it.id);if(!o||(it.updated||0)>(o.updated||0))m.set(it.id,it)}
+  const items=[...m.values()].filter(it=>!(del[it.id]>=(it.updated||0))).sort((a,b)=>(b.updated||0)-(a.updated||0));const cats=[...(A.cats||[])];for(const c of B.cats||[])if(!cats.some(z=>z.k===c.k))cats.push(c);
+  return {cats,items,del,slotsIn:!!(A.slotsIn||B.slotsIn)}}
+let SYMKD=false;
+async function mkSyncIn(remote){const loc=await IDB.get('mockups');const mg=loc?mkMerge(loc,remote):remote;const sig=o=>JSON.stringify([(o.items||[]).map(x=>[x.id,x.updated]),Object.keys(o.del||{}).length,(o.cats||[]).length]);SYMKD=!!loc&&sig(mg)!==sig(remote||{});await IDB.set('mockups',mg);MK=null;const e=document.getElementById('mkP');if(e&&!e.hidden){await mkLoad();mkDraw()}}
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
