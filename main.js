@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell, dialog, globalShortcut } = require('electron');
+const { app, BrowserWindow, Menu, shell, dialog, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
 
 if (!app.requestSingleInstanceLock()) { app.quit(); }
@@ -10,7 +10,7 @@ function create() {
     width: 1440, height: 900, show: false, title: 'Motion Pack',
     backgroundColor: '#000000', autoHideMenuBar: true,
     icon: path.join(__dirname, 'app', 'icon.ico'),
-    webPreferences: { contextIsolation: true, sandbox: true, spellcheck: false }
+    webPreferences: { contextIsolation: true, sandbox: true, spellcheck: false, preload: path.join(__dirname, 'preload.js') }
   });
   win.maximize();
   win.loadFile(path.join(__dirname, 'app', 'index.html'));
@@ -51,6 +51,11 @@ function setupUpdates() {
   autoUpdater.checkForUpdates().catch(() => {});
   setInterval(() => autoUpdater.checkForUpdates().catch(() => {}), 60 * 60 * 1000);
 }
+
+// Capture button: exact picture of what is on screen (includes effects)
+ipcMain.handle('mp-capture', async (e) => {
+  try { const img = await e.sender.capturePage(); return img.isEmpty() ? null : img.toPNG(); } catch (err) { return null; }
+});
 
 app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.show(); win.focus(); } });
 app.whenReady().then(() => { create(); setupUpdates(); });

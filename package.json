@@ -1,7 +1,7 @@
 {
   "name": "motion-pack",
   "productName": "Motion Pack",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Motion Pack garment lookbook",
   "author": "Motion Pack",
   "main": "main.js",
@@ -19,7 +19,7 @@
   "build": {
     "appId": "com.motionpack.app",
     "productName": "Motion Pack",
-    "files": ["main.js", "app/**"],
+    "files": ["main.js", "preload.js", "app/**"],
     "directories": { "output": "dist", "buildResources": "build" },
     "publish": [{ "provider": "github", "owner": "D3SRKJ", "repo": "motion-pack-windows", "releaseType": "release" }],
     "win": { "icon": "build/icon.ico", "target": ["nsis", "portable"] },

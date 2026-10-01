@@ -1912,6 +1912,29 @@ html.inbr #toast{z-index:60}
   #brP .br-vw{top:auto;bottom:calc(100% + 6px);right:10px;transform:none}
   #brP .br-tip{bottom:120px}
 }
+#txP{position:fixed;z-index:48;right:12px;top:calc(64px + env(safe-area-inset-top,0px));width:340px;max-height:calc(100dvh - 150px);display:flex;flex-direction:column;border-radius:18px;border:1.2px solid transparent;background:linear-gradient(180deg,rgba(20,20,22,.96),rgba(10,10,11,.97)) padding-box,var(--fr,linear-gradient(135deg,#8c8c8c,#f7f7f7,#6f6f6f)) border-box;box-shadow:0 30px 80px rgba(0,0,0,.65);color:#e8e8e8;font:13px "Helvetica Neue",Helvetica,Arial,sans-serif;animation:fadein .3s var(--ease)}
+#txP[hidden]{display:none}
+#txP .tx-h{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px 8px}#txP .tx-h b{display:block;font-family:var(--fs);font-weight:400;font-size:21px}#txP .tx-h span{font-size:11px;color:#8d8d8d}#txP .tx-h button{font-size:24px;color:#aaa;line-height:1}
+#txP .tx-sc{overflow:auto;padding:0 14px 6px;flex:1;min-height:0}
+#txP .tx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+#txP .tx-grid button{display:flex;flex-direction:column;gap:4px;align-items:stretch;padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,.1);color:#cfcfcf;font-size:10.5px;text-align:center}
+#txP .tx-grid button.on{border-color:transparent;background:linear-gradient(#1c1c1f,#1c1c1f) padding-box,var(--fr,#ddd) border-box;border:1.5px solid transparent;color:#fff}
+#txP .tx-grid i{display:grid;place-items:center;aspect-ratio:3/2;border-radius:8px;background:#e9e4da center/cover no-repeat;font-style:normal}
+#txP .tx-grid i.tx-none{background:#141416;color:#777;font-size:22px}
+#txP .tx-sec{padding:12px 2px 8px;border-top:1px solid rgba(255,255,255,.08);margin-top:12px}
+#txP h6{margin:0 0 8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9a9a9a;font-weight:600}
+#txP .tx-sl{display:flex;flex-direction:column;gap:3px;margin:0 0 9px;font-size:12px;color:#c4c4c4}#txP .tx-sl span{display:flex;justify-content:space-between}#txP .tx-sl b{font-weight:500;color:#fff}#txP .tx-sl input{width:100%;accent-color:#ddd}
+#txP .tx-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}#txP .tx-row>span{font-size:12px;color:#c4c4c4;min-width:44px}
+#txP .tx-chips,#txP .tx-cols{display:flex;flex-wrap:wrap;gap:6px}
+#txP .tx-chips button,#txP .tx-cols>*{height:30px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.18);color:#ddd;font-size:11.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+#txP .tx-chips .on,#txP .tx-cols .on{background:var(--fr,#ddd);color:#111;border-color:transparent}
+#txP .tx-cols input{position:absolute;inset:0;opacity:0;cursor:pointer}#txP .tx-cols i{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+#txP .tx-chk{display:flex;align-items:center;gap:10px;padding:6px 0;text-align:left;font-size:12px;color:#ccc}#txP .tx-chk i{flex:none;width:18px;height:18px;border-radius:5px;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center}
+#txP .tx-chk.on i{background:var(--fr,#ddd);border-color:transparent}#txP .tx-chk.on i::after{content:"✓";font-style:normal;font-size:12px;color:#111}
+#txP .tx-btn{height:32px;padding:0 13px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:#ddd;font-size:11.5px}#txP .tx-link{color:#999;font-size:11.5px;text-decoration:underline;text-underline-offset:3px}
+#txP .tx-n{font-size:12px;line-height:1.55;color:#9a9a9a;margin:12px 2px}
+#txP .tx-f{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid rgba(255,255,255,.08)}#txP .tx-b{flex:1;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:#ddd;font-size:12px;letter-spacing:.14em;text-transform:uppercase}#txP .tx-b.pri{background:var(--fr,#ddd);color:#111;border-color:transparent;font-weight:600}
+@media (max-width:760px){#txP{left:8px;right:8px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;max-height:44dvh}#txP .tx-grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}#txP .tx-grid::-webkit-scrollbar{display:none}#txP .tx-grid span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#txP .tx-f{padding:8px 12px 10px}#txP .tx-b{height:36px}#txP .tx-h{padding:10px 14px 4px}}
 </style>
 </head>
 <body class="edit empty">
@@ -4380,7 +4403,7 @@ function layerOut(l,below){
   const key=[l.v,l.mv,hasM?1:0,JSON.stringify(l.bi),JSON.stringify(l.fx),l.fillOp,wpKey(l)].join('|');
   if(!live&&keep&&!biUnder(l.bi)&&l.fxk===key&&l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h)return l.fxc;
   const DCL=DRECT&&!fxOn(l.fx)&&(live||!keep||biUnder(l.bi))?dmgClipOn([T('lb'),T('lout')]):null;
-  const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!live){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt)}
+  const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!live){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt);if(l.fx.tx&&l.fx.tx.on)txInto(b,l.fx.tx)}
   if(hasM){bx.globalCompositeOperation='destination-in';bx.drawImage(maskAlpha(l,STROKE&&STROKE.l===l&&STROKE.mask?liveMask(l):null),0,0)}bx.restore();
   const FXPRE=bi&&fx?(()=>{const c=T('lbpre'),q=cx2(c);q.save();q.globalAlpha=1;q.globalCompositeOperation='copy';q.drawImage(b,0,0);q.restore();return c})():null;if(bi)applyBI(b,l.bi,below);
   if(!keep&&l.fxc){relc(l.fxc);l.fxc=null}let out;if(live||!keep||biUnder(l.bi))out=T('lout');else{if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h)l.fxc=mk(D.w,D.h);out=l.fxc}
@@ -4911,7 +4934,7 @@ const MENUS={
   Image:[['gcpick','✦ Smart garment colour'],['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
   Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
   Select:[['selsubj','Select subject'],['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
-  Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['rmbg','Remove background'],['bgrtool','Background Remover (full tool)…'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
+  Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['txstudio','Texture Studio (puff, embroidery, foil, distress…)'],['-'],['rmbg','Remove background'],['bgrtool','Background Remover (full tool)…'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
   View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['fastdraw','Fast redraw (only what changed)'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
 function updBar(){if(!D)return;barEl.innerHTML=`<button class="lbtn" data-l="gallery" title="Back to gallery">${icon('back')}</button><nav class="lmenus">${Object.keys(MENUS).map(m=>`<button class="lmb${DDM===m?' on':''}" data-l="menu:${m}">${m}</button>`).join('')}</nav><span class="lname" data-l="rename" title="Rename">${esc(D.name)}</span><span class="grow"></span>
   <button class="lbtn" data-l="undo" title="Undo (Ctrl+Z)">${icon('undo')}</button><button class="lbtn" data-l="redo" title="Redo (Ctrl+Shift+Z)">${icon('redo')}</button><button class="lbtn accb${ACCOPEN?' on':''}" data-l="acclib" title="Accessories library">${icon('acc')}</button><button class="lbtn" data-l="help" title="Guide">${icon('help')}</button><button class="lbtn${PANEL==='layers'&&!popEl.hidden?' on':''}" data-l="panel:layers" title="Layers">${icon('layers')}</button>
@@ -6665,7 +6688,7 @@ function gsEls(){if(document.getElementById('gsDock'))return;const ed=document.g
   const dk=document.createElement('nav');dk.id='gsDock';dk.innerHTML=`<button class="gs-home" data-l="home" title="Home" aria-label="Home">&#8962;&#xFE0E;</button>
    <button data-l="gsdesign" title="Add a design, logo or artwork">+ Design</button><button data-l="acclib" title="Patches, chains, hardware…">Accessories</button><span class="sep"></span>
    <button data-l="tool:move" data-gt="move" title="Move, scale and rotate (V)">Move</button><button data-l="tool:hand" data-gt="hand" title="Move around the studio (H or Space)">Pan</button><button data-l="tool:erase" data-gt="erase" title="Erase parts of a design (E)">Erase</button>
-   <button data-l="gcpick" title="Smart colour: tap the garment to recolour it">Colour</button><button data-l="gsways" title="See this garment in every colour, side by side">Colourways</button><button data-l="gsmenu:real" title="Make the print look real">Realism</button><button data-l="gsmenu:blend" title="How the design mixes with the fabric">Blend</button><button data-l="lm:clip" title="Keep the design inside the garment">Clip</button><button data-l="panel:layers" data-gp="1" title="Layers">Layers</button><span class="sep"></span>
+   <button data-l="gcpick" title="Smart colour: tap the garment to recolour it">Colour</button><button data-l="gsways" title="See this garment in every colour, side by side">Colourways</button><button data-l="txstudio" title="Puff, embroidery, foil, rhinestones, cracked, distressed…">Texture</button><button data-l="gsmenu:real" title="Make the print look real">Realism</button><button data-l="gsmenu:blend" title="How the design mixes with the fabric">Blend</button><button data-l="lm:clip" title="Keep the design inside the garment">Clip</button><button data-l="panel:layers" data-gp="1" title="Layers">Layers</button><span class="sep"></span>
    <button data-l="gsmenu:bg" title="Studio backdrop">Backdrop</button><button class="gs-i" data-l="undo" title="Undo (Ctrl+Z)" aria-label="Undo">&#8630;&#xFE0E;</button><button class="gs-i" data-l="redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo">&#8631;&#xFE0E;</button><button data-l="gsmenu:out" title="Save, export, send to a lookbook">Export</button>`;
   const mn=document.createElement('div');mn.id='gsMenu';mn.hidden=true;ed.appendChild(top);ed.appendChild(dk);ed.appendChild(mn)}
 function gsSync(){const ed=document.getElementById('labEd');if(!ed)return;const bg=D&&GMODE?D.bg:'#000';ed.style.setProperty('--gsbg',bg);ed.classList.toggle('gs-light',!!(GMODE&&gsLight(bg)));H2.classList.toggle('gs-erase',GMODE&&TOOL.t==='erase');
@@ -6678,7 +6701,7 @@ async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<
   ${await gsMkSection()}<h5>Your mockups <span class="h5n">Tap a mockup to start, or an empty slot to add one</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}</div>`;sheetEl.hidden=false}
 /* designs go between the garment and its fabric shading, so they pick up the folds */
 function gsDesignSlot(){const L=D.layers,si=L.findIndex(l=>l.name==='Fabric shading'&&l.clip);const c=curL();if(si>0&&(!c||c.id===L[si].id||c.id===D.garment||c.type==='adj'||c.type==='group'))D.cur=L[si-1].id;else if(si<0&&c&&c.id===D.garment&&L[idxOf(c)+1])D.cur=L[idxOf(c)+1].id}
-const GSREAL=[['bgrtool','Remove background (full tool)'],['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
+const GSREAL=[['txstudio','Texture Studio – materials & distress'],['bgrtool','Remove background (full tool)'],['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
 const GSBL=[['source-over','Normal'],['multiply','Multiply – print soaks into fabric'],['screen','Screen – light ink on dark'],['overlay','Overlay'],['soft-light','Soft light'],['darken','Darken'],['lighten','Lighten']];
 function gsMenu(k,btn){const mn=document.getElementById('gsMenu');if(!mn)return;if(!mn.hidden&&mn.dataset.k===k){gsMenuClose();return}const l=curL();let h='';
   if(k==='real')h=`<h6>Bring it to life <span>on “${esc(l?l.name:'')}”</span></h6>`+GSREAL.map(([a,n])=>`<button data-l="${a}">${n}</button>`).join('');
@@ -7267,6 +7290,137 @@ async function brFromLayer(){const l=curL();if(!l||l.type!=='px')return hint(l&&
   /* only the part of the layer that has something on it */const d=cx2(full).getImageData(0,0,D.w,D.h).data;let x0=D.w,y0=D.h,x1=-1,y1=-1;for(let y=0;y<D.h;y+=2)for(let x=0;x<D.w;x+=2)if(d[(y*D.w+x)*4+3]>0){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
   if(x1<0){relc(full);return hint('This layer is empty')}const pd=6;x0=Math.max(0,x0-pd);y0=Math.max(0,y0-pd);x1=Math.min(D.w-1,x1+pd);y1=Math.min(D.h-1,y1+pd);const cw=x1-x0+1,ch=y1-y0+1,crop=mk(cw,ch);cx2(crop).drawImage(full,x0,y0,cw,ch,0,0,cw,ch);relc(full);
   brOpen({from:true});await brLoad(crop,l.name,{l,doc:D.id,off:[x0,y0,cw,ch],cap:Math.max(cw,ch)<=(BR_FINE?4096:2400)?Math.max(cw,ch):BR_FCAP});relc(crop)}
+
+/* ================= Texture Studio engine: materials + distress, rendered from the layer's own pixels ================= */
+const TXMAT=[['screen','Screen print'],['plast','Plastisol'],['puff','Puff print'],['emb','Embroidery'],['chen','Chenille'],['crack','Cracked vintage'],['worn','Distressed'],['foil','Metallic foil'],['glit','Glitter'],['gem','Rhinestones'],['leath','Leather'],['suede','Suede'],['refl','Reflective']];
+const TXP={screen:{h:0,ks:0,dk:0},plast:{h:.3,rad:.4,shin:34,ks:.38,dk:.7,shadow:.25},puff:{h:1,rad:1,dome:1,shin:9,ks:.1,dk:1.15,shadow:.9},
+  emb:{h:.4,rad:.35,shin:14,ks:.32,dk:.9,shadow:.55},chen:{h:.85,rad:.9,dome:1,shin:0,ks:0,dk:.9,shadow:.6},crack:{h:0,ks:0,dk:0},worn:{h:0,ks:0,dk:0},
+  foil:{h:.18,rad:.25,shin:70,ks:1,dk:.4,shadow:.15},glit:{h:.22,rad:.3,shin:30,ks:.28,dk:.55,shadow:.2},gem:{shadow:.75},
+  leath:{h:.6,rad:.4,shin:13,ks:.2,dk:1,shadow:.55},suede:{h:.3,rad:.35,shin:0,ks:0,dk:.7,shadow:.35},refl:{h:.05,rad:.2,shin:24,ks:.45,dk:.3}};
+const TXDEF={on:true,m:'puff',dep:60,sc:100,ang:120,col:'',tone:'silver',bord:false,sa:45,dis:0,edge:true,seed:1};
+const TXTONE={silver:[[62,64,70],[188,191,198],[255,255,255]],gold:[[88,58,14],[214,166,60],[255,241,192]],rose:[[96,52,44],[214,148,130],[255,228,218]],black:[[10,10,12],[70,72,78],[210,212,218]]};
+let TXN=null;
+function txTiles(){if(TXN)return TXN;const S=256,G=16,cs=S/G;let s=1234567;const rnd=()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff};
+  const lat=new Float32Array(G*G);for(let i=0;i<G*G;i++)lat[i]=rnd();const vn=new Float32Array(S*S);
+  for(let y=0;y<S;y++)for(let x=0;x<S;x++){const gx=x/cs,gy=y/cs,x0=Math.floor(gx),y0=Math.floor(gy),tx=gx-x0,ty=gy-y0,sx=tx*tx*(3-2*tx),sy=ty*ty*(3-2*ty),X0=x0%G,Y0=y0%G,X1=(x0+1)%G,Y1=(y0+1)%G;
+    vn[y*S+x]=(lat[Y0*G+X0]*(1-sx)+lat[Y0*G+X1]*sx)*(1-sy)+(lat[Y1*G+X0]*(1-sx)+lat[Y1*G+X1]*sx)*sy}
+  const px=new Float32Array(G*G),py=new Float32Array(G*G),ph=new Float32Array(G*G);for(let j=0;j<G;j++)for(let i=0;i<G;i++){const k=j*G+i;px[k]=(i+.1+.8*rnd())*cs;py[k]=(j+.1+.8*rnd())*cs;ph[k]=rnd()}
+  const f1=new Float32Array(S*S),f2=new Float32Array(S*S),cid=new Float32Array(S*S);
+  for(let y=0;y<S;y++)for(let x=0;x<S;x++){const ci=Math.floor(x/cs),cj=Math.floor(y/cs);let d1=1e9,d2=1e9,id=0;
+    for(let dj=-1;dj<=1;dj++)for(let di=-1;di<=1;di++){const ii=ci+di,jj=cj+dj,wi=(ii+G)%G,wj=(jj+G)%G,k=wj*G+wi,qx=px[k]+(ii-wi)*cs,qy=py[k]+(jj-wj)*cs,d=Math.hypot(x-qx,y-qy);if(d<d1){d2=d1;d1=d;id=ph[k]}else if(d<d2)d2=d}
+    f1[y*S+x]=d1/cs;f2[y*S+x]=(d2-d1)/cs;cid[y*S+x]=id}
+  return TXN={vn,f1,f2,cid}}
+function txBlur(src,w,h,r){r=Math.max(1,Math.round(r));const N=w*h,t=new Float32Array(N),o=new Float32Array(N),n=2*r+1;
+  for(let pass=0;pass<2;pass++){const a=pass?o:src;for(let y=0;y<h;y++){const of=y*w;let s=0;for(let x=-r;x<=r;x++)s+=a[of+(x<0?0:x>=w?w-1:x)];for(let x=0;x<w;x++){t[of+x]=s/n;const xa=x+r+1,xs=x-r;s+=a[of+(xa<w?xa:w-1)]-a[of+(xs>0?xs:0)]}}
+    for(let x=0;x<w;x++){let s=0;for(let y=-r;y<=r;y++)s+=t[(y<0?0:y>=h?h-1:y)*w+x];for(let y=0;y<h;y++){o[y*w+x]=s/n;const ya=y+r+1,ys=y-r;s+=t[(ya<h?ya:h-1)*w+x]-t[(ys>0?ys:0)*w+x]}}}return o}
+function txRender(d,W,H,g,u){const P=TXP[g.m];if(!P)return;const T=txTiles(),VN=T.vn,F1=T.f1,F2=T.f2,CID=T.cid,sc=(g.sc||100)/100,dep=(g.dep==null?60:g.dep)/100,sd=(g.seed||1)*131.7;
+  const nz=(x,y)=>{const xi=Math.floor(x),yi=Math.floor(y),fx=x-xi,fy=y-yi,a=xi&255,b=yi&255,c=(a+1)&255,e=(b+1)&255;return (VN[b*256+a]*(1-fx)+VN[b*256+c]*fx)*(1-fy)+(VN[e*256+a]*(1-fx)+VN[e*256+c]*fx)*fy};
+  const ns=(X,Y,s)=>nz(X*16/s+sd,Y*16/s-sd*.5);const fbm=(x,y,s)=>{const q=16/s;return nz(x*q+sd,y*q-sd)*.5+nz(x*q*2.13+71.3,y*q*2.13+sd*.7)*.3+nz(x*q*4.37-29.1,y*q*4.37+13.7)*.2};
+  const cell=(x,y,s)=>{const q=16/s,X=Math.floor(x*q+sd)&255,Y=Math.floor(y*q+sd*.31)&255;return Y*256+X};
+  const hash=(a,b)=>{let h=(a*374761393+b*668265263+(g.seed|0)*1442695041)|0;h=(h^(h>>>13))*1274126177|0;return ((h^(h>>>16))>>>0)/4294967296};
+  /* shape bounds + stroke thickness */
+  let x0=W,y0=H,x1=-1,y1=-1,area=0,per=0;for(let y=0;y<H;y++){const o=y*W;for(let x=0;x<W;x++){const a=d[(o+x)*4+3];if(a>8){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;area+=a/255;if(a>127&&(x===0||y===0||x===W-1||y===H-1||d[(o+x-1)*4+3]<=127||d[(o+x+1)*4+3]<=127||d[(o+x-W)*4+3]<=127||d[(o+x+W)*4+3]<=127))per++}}}
+  if(x1<0)return;const th=Math.max(3,Math.min(700,2*area/Math.max(1,per))),big=Math.max(x1-x0,y1-y0);
+  const pad=Math.ceil(Math.max(th*.6,14*u)+th*.12*dep+6),rx0=Math.max(0,x0-pad),ry0=Math.max(0,y0-pad),rx1=Math.min(W-1,x1+pad),ry1=Math.min(H-1,y1+pad),w=rx1-rx0+1,h=ry1-ry0+1,N=w*h;
+  const A=new Float32Array(N);for(let y=0;y<h;y++)for(let x=0;x<w;x++)A[y*w+x]=d[((y+ry0)*W+x+rx0)*4+3]/255;
+  const col=g.col&&/^#[0-9a-f]{6}$/i.test(g.col)?[parseInt(g.col.slice(1,3),16),parseInt(g.col.slice(3,5),16),parseInt(g.col.slice(5,7),16)]:null;
+  const an=(g.ang==null?120:g.ang)*Math.PI/180,Lx=Math.cos(an)*.62,Ly=-Math.sin(an)*.62,Lz=.784,hl=Math.hypot(Lx,Ly,Lz+1),Hx=Lx/hl,Hy=Ly/hl,Hz=(Lz+1)/hl;
+  const Hb=P.h?txBlur(A,w,h,Math.max(1,th*.5*P.rad*.5)):null,Hd=txBlur(A,w,h,Math.max(2,Math.min(th*.3,30*u))),bw=Math.max(4*u,th*.11),Hs=(g.bord&&(g.m==='emb'||g.m==='leath'||g.m==='suede'))||g.m==='chen'?txBlur(A,w,h,g.m==='chen'?Math.max(1,2*u):bw):null;
+  const tw=Math.max(2.4*u,th/16)*sc,sl=tw*4.2,sa=(g.sa==null?45:g.sa)*Math.PI/180,ca=Math.cos(sa),sn=Math.sin(sa);
+  const emb=(x,y)=>{const t=(x*ca+y*sn)/tw,ti=Math.floor(t),fr=t-ti,s=(-x*sn+y*ca)/sl+hash(ti,7)*3,sg=s-Math.floor(s),gap=Math.min(1,sg/.07,(1-sg)/.07);return Math.sin(Math.PI*fr)*Math.max(0,gap)};
+  /* height field */
+  const hp=new Float32Array(N),hk=th*.32*dep;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,a=A[i];if(a<.004&&!Hb)continue;const X=x+rx0,Y=y+ry0;let v=0;
+    if(Hb){let q=(Hb[i]-.5)*2;q=q<0?0:q>1?1:q;v=(P.dome?Math.sqrt(q):q)*P.h*hk}
+    switch(g.m){case'puff':v+=(fbm(X,Y,7*u*sc)-.5)*u*2.2*dep;break;case'emb':v+=emb(X,Y)*tw*.55*dep;break;case'chen':v+=(fbm(X,Y,1.6*u*sc)-.5)*u*3*dep;break;
+      case'foil':v+=(fbm(X,Y,9*u*sc)-.5)*u*3.4*dep+(ns(X,Y,1.4*u)-.5)*u*.6;break;case'leath':{const c=cell(X,Y,4*u*sc);v+=(.55-F1[c])*u*2.4*dep;break}
+      case'suede':v+=(ns(X,Y,1.1*u)-.5)*u*.5;break}
+    if(Hs&&g.m!=='chen'){const q=Hs[i];if(q>.8&&q<.9)v+=tw*.4*dep}
+    hp[i]=v*a}
+  /* colour + light */
+  const sh=P.shadow||0;const out=new Float32Array(N*4);const amt=Math.max((g.dis||0)/100,g.m==='worn'?.5:0),wS=Math.max(big/9,24*u)*sc,gS=1.7*u*sc;
+  const tone=g.m==='foil'?(TXTONE[g.tone]||null):null;
+  const ramp=(v,S)=>{v=v<0?0:v>1?1:v;const k=v<.5?v*2:(v-.5)*2,a=v<.5?S[0]:S[1],b=v<.5?S[1]:S[2];return [a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k]};
+  const gemSp=Math.max(6*u,th*.42)*sc,gemR=gemSp*.47,rh=gemSp*.866;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,X=x+rx0,Y=y+ry0,k=((Y)*W+X)*4;let a=A[i];
+    let r=col?col[0]:d[k],gg=col?col[1]:d[k+1],b=col?col[2]:d[k+2];
+    if(g.m==='gem'){/* hex grid of stones, only where the shape is */let best=1e9,bx=0,by=0;const j0=Math.round(Y/rh);for(let j=j0-1;j<=j0+1;j++){const off=(j&1)?gemSp/2:0,i0=Math.round((X-off)/gemSp);for(let ii=i0-1;ii<=i0+1;ii++){const cx=ii*gemSp+off,cy=j*rh,dd=(X-cx)**2+(Y-cy)**2;if(dd<best){best=dd;bx=cx;by=cy}}}
+      const cxl=Math.round(bx)-rx0,cyl=Math.round(by)-ry0;const ok=cxl>=0&&cyl>=0&&cxl<w&&cyl<h&&A[cyl*w+cxl]>.5;const dist=Math.sqrt(best)/gemR;
+      if(!ok||dist>1){a=0}else{const ck=((cyl+ry0)*W+cxl+rx0)*4;if(!col){r=d[ck];gg=d[ck+1];b=d[ck+2]}const dx=(X-bx)/gemR,dy=(Y-by)/gemR,th2=Math.atan2(dy,dx),fac=Math.floor((th2+Math.PI)/(Math.PI/4)),hs=hash(Math.round(bx),Math.round(by));
+        let br=dist<.42?1.12:.72+.55*hash(fac,Math.round(hs*1e4));if(dist>.86)br*=.62;const spot=Math.exp(-((dx+.32)**2+(dy+.32)**2)*26)*.9;
+        r=Math.min(255,r*br+255*spot);gg=Math.min(255,gg*br+255*spot);b=Math.min(255,b*br+255*spot);if(dist>.9){const m=(dist-.9)*10;r=r*(1-m)+200*m;gg=gg*(1-m)+202*m;b=b*(1-m)+208*m}
+        if(hs>.86&&dist<.25){const sp=1-dist/.25;r=r+(255-r)*sp;gg=gg+(255-gg)*sp;b=b+(255-b)*sp}a=Math.min(1,(1-dist)*12)}}
+    else if(a>.004){
+      switch(g.m){
+        case'screen':case'worn':{const p=(2.6*u)*sc,wv=Math.sin(X*6.2832/p)*Math.sin(Y*6.2832/p),n=ns(X,Y,1.7*u);const m=1-.07*wv-(n-.5)*.14;r*=m;gg*=m;b*=m;a*=.9+.1*n;break}
+        case'plast':{const m=.97+.06*ns(X,Y,2.5*u);r*=m;gg*=m;b*=m;break}
+        case'puff':{r+=(255-r)*.05;gg+=(255-gg)*.05;b+=(255-b)*.05;const m=.95+.1*fbm(X,Y,3*u*sc);r*=m;gg*=m;b*=m;break}
+        case'emb':{const e=emb(X,Y),j=.92+.16*hash(Math.floor((X*ca+Y*sn)/tw),3),m=(.68+.45*e)*j;r*=m;gg*=m;b*=m;break}
+        case'chen':{const n=fbm(X,Y,1.3*u*sc),m=.72+.5*n;r*=m;gg*=m;b*=m;const q=Hs[i]+(n-.5)*.7;a*=q<.42?0:q>.7?1:(q-.42)/.28;break}
+        case'crack':{const cs=Math.max(7*u,th*.5)*sc,wx=X+(fbm(X,Y,cs*.7)-.5)*cs*.55,wy=Y+(fbm(Y,X,cs*.7)-.5)*cs*.55,c=cell(wx,wy,cs),cw=.022+.04*dep;let k2=F2[c]<cw?F2[c]/cw:1;k2*=k2;if(CID[c]<.045*dep)k2*=.12;a*=k2*(.86+.14*ns(X,Y,1.4*u));r+=(236-r)*.1;gg+=(232-gg)*.1;b+=(226-b)*.1;break}
+        case'glit':{const gl=1.9*u*sc,ix=Math.floor(X/gl),iy=Math.floor(Y/gl),hs=hash(ix,iy),sp=Math.pow(hs,10)*(.55+.45*hash(iy,ix));r*=.8;gg*=.8;b*=.8;
+          if(hash(ix+9,iy)>.92){const hu=hash(iy,ix+3);r+=(hu>.5?60:-20);b+=(hu>.5?-20:60)}r+=(255-r)*sp;gg+=(255-gg)*sp;b+=(255-b)*sp;break}
+        case'leath':{const c=cell(X,Y,4*u*sc),m=.88+.14*(1-F1[c]);r*=m;gg*=m;b*=m;break}
+        case'suede':{const n=ns(X,Y,1.1*u*sc),nap=fbm(X*.35,Y*2.4,26*u*sc),m=.86+.18*n+(nap-.5)*.16;r*=m;gg*=m;b*=m;break}
+        case'refl':{r=r*.1+176*.9;gg=gg*.1+178*.9;b=b*.1+184*.9;const bc=1.3*u,hb=hash(Math.floor(X/bc),Math.floor(Y/bc)),m=.94+.12*hb;r*=m;gg*=m;b*=m;const sp=hb>.94?(hb-.94)*12:0;r+=(255-r)*sp;gg+=(255-gg)*sp;b+=(255-b)*sp;break}}
+      /* stitched border for patches */
+      if(Hs&&g.m!=='chen'){const q=Hs[i];if(q>.8&&q<.9){const dash=((X+Y)/(5*u*sc))%1<.62;if(dash){const lt=(r+gg+b)/3<128;const tc=lt?[236,228,210]:[34,30,26];const e=1-Math.abs(q-.85)/.05;r+=(tc[0]-r)*e;gg+=(tc[1]-gg)*e;b+=(tc[2]-b)*e}}}
+      /* light */
+      if(P.dk||P.ks||g.m==='foil'){const xl=x>0?hp[i-1]:hp[i],xr=x<w-1?hp[i+1]:hp[i],yu=y>0?hp[i-w]:hp[i],yd=y<h-1?hp[i+w]:hp[i];let nx=-(xr-xl)*.5,ny=-(yd-yu)*.5,nz2=1;const ln=Math.hypot(nx,ny,nz2);nx/=ln;ny/=ln;nz2/=ln;
+        const dif=nx*Lx+ny*Ly+nz2*Lz-Lz;let spc=0;if(P.ks){const c2=nx*Hx+ny*Hy+nz2*Hz;spc=c2>0?Math.pow(c2,P.shin||10):0}
+        if(g.m==='foil'){const v=.5+.6*(nx*.7-ny*.7)+(fbm(X,Y,60*u*sc)-.5)*.7+dif*.6;let c3;if(g.tone==='holo'){const hu=(v*1.6+fbm(X,Y,30*u)*.8)%1,q=hu*6,f=q-Math.floor(q),qi=Math.floor(q)%6,p2=[[1,f,0],[1-f,1,0],[0,1,f],[0,1-f,1],[f,0,1],[1,0,1-f]][qi];c3=[150+105*p2[0],150+105*p2[1],150+105*p2[2]].map(z=>z*(.75+.45*v))}
+          else c3=ramp(v,tone||[[r*.25,gg*.25,b*.25],[r,gg,b],[255,255,255]]);r=c3[0];gg=c3[1];b=c3[2]}
+        else{const m=1+P.dk*dif*1.7*dep;r*=m;gg*=m;b*=m}
+        if(spc){const s2=255*P.ks*spc*(.6+.6*dep);r+=s2;gg+=s2;b+=s2}}
+      /* distress: wear builds up at the edges */
+      if(amt>0){const ef=g.edge!==false?Math.max(0,Math.min(1,1-(Hd[i]-.5)*2.2)):.55,thr=amt*.78*(.22+.78*ef),v=.5+(fbm(X,Y,wS)-.5)*1.55+(ns(X,Y,gS)-.5)*.62;
+        let k2=v<thr-.05?0:v>thr+.03?1:(v-thr+.05)/.08;const sx=(X*.8+Y*.6)*16/(90*u*sc),sy=(-X*.6+Y*.8)*16/(1.8*u*sc),scr=nz(sx+sd,sy);if(scr>.955-.03*amt&&nz(X*16/(40*u)+sd*3,Y*16/(40*u))>.62)k2*=.12;a*=k2;
+        if(k2<1){const f=(1-k2)*.4;r+=(225-r)*f;gg+=(222-gg)*f;b+=(218-b)*f}}}
+    else a=0;
+    out[i*4]=r<0?0:r>255?255:r;out[i*4+1]=gg<0?0:gg>255?255:gg;out[i*4+2]=b<0?0:b>255?255:b;out[i*4+3]=a}
+  /* soft contact shadow for raised materials */
+  let S2=null,ox=0,oy=0;if(sh>0&&dep>0){const al=new Float32Array(N);for(let i=0;i<N;i++)al[i]=out[i*4+3];const off=Math.max(1,th*.07*dep*(P.h||.5)+(g.m==='gem'?gemSp*.06:0));S2=txBlur(al,w,h,Math.max(1,off*1.3));ox=Math.round(-Math.cos(an)*off);oy=Math.round(Math.sin(an)*off)}
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x,k=((y+ry0)*W+x+rx0)*4;let a=out[i*4+3],r=out[i*4],gg=out[i*4+1],b=out[i*4+2];
+    if(S2){const sx=x-ox,sy=y-oy;const s=(sx>=0&&sy>=0&&sx<w&&sy<h?S2[sy*w+sx]:0)*.55*sh*Math.min(1,dep*1.4);if(s>.003){const na=a+s*(1-a);if(na>0){r=r*a/na;gg=gg*a/na;b=b*a/na}a=na}}
+    d[k]=r;d[k+1]=gg;d[k+2]=b;d[k+3]=Math.round(a*255)}}
+
+
+/* ================= Texture Studio panel ================= */
+function txInto(b,g){const W=b.width,H=b.height,x=cx2(b),im=x.getImageData(0,0,W,H);txRender(im.data,W,H,g,Math.max(W,H)/2400*1.6);x.putImageData(im,0,0)}
+let TX=null,TXPV=null,TXT=0;
+function txPreviews(){if(TXPV)return TXPV;TXPV={};const w=150,h=96;for(const [m] of TXMAT){const c=mk(w,h),x=cx2(c);x.fillStyle='#1d2238';x.font='900 118px "Helvetica Neue",Arial,sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('Aa',w/2+8,h/2+10);
+    const im=x.getImageData(0,0,w,h);try{txRender(im.data,w,h,Object.assign({},TXDEF,{m,tone:'silver',dep:75,dis:m==='worn'?55:0}),.95)}catch(e){}const o=mk(w,h),ox=cx2(o);ox.fillStyle='#e9e4da';ox.fillRect(0,0,w,h);const t=mk(w,h);cx2(t).putImageData(im,0,0);ox.drawImage(t,0,0);TXPV[m]=o.toDataURL('image/jpeg',.85);relc(c);relc(t);relc(o)}return TXPV}
+function txPEl(){let e=document.getElementById('txP');if(e)return e;e=document.createElement('div');e.id='txP';e.hidden=true;e.setAttribute('role','dialog');e.setAttribute('aria-label','Texture Studio');document.body.appendChild(e);
+  e.addEventListener('click',ev=>{const b=ev.target.closest('[data-tx]');if(!b)return;const [a,v]=b.dataset.tx.split(/\|(.*)/s);txAct(a,v)});
+  e.addEventListener('input',ev=>{const t=ev.target;if(t.dataset.txr){const k=t.dataset.txr;TX.g[k]=+t.value;const lb=e.querySelector(`[data-txv="${k}"]`);if(lb)lb.textContent=k==='ang'?t.value+'°':t.value;txLive(true)}else if(t.dataset.txc){TX.g.col=t.value;e.querySelectorAll('.tx-cols button').forEach(x=>x.classList.remove('on'));t.parentNode.classList.add('on');txLive(true)}});
+  e.addEventListener('keydown',ev=>{ev.stopPropagation();if(ev.key==='Escape')txAct('cancel');if(ev.key==='Enter'&&ev.target.tagName!=='INPUT')txAct('ok')});e.addEventListener('keyup',ev=>ev.stopPropagation());return e}
+function txOpen(){if(!D)return;const l=curL();if(!l||l.type==='group'||l.type==='adj')return hint('Pick a layer with something on it – text, a logo or a graphic',2800);if(!(l.sm&&l.type!=='group')&&!needPx(l,'Texture Studio'))return;
+  if(typeof STY!=='undefined'&&STY)styAct('cancel');if(XFORM)xfCommit();closeMenu&&closeMenu();if(typeof gsMenuClose==='function')gsMenuClose();
+  const cur=l.fx&&l.fx.tx;TX={l,b:snapSt(),g:Object.assign({},TXDEF,cur||{},{on:!!(cur&&cur.on)})};if(!cur)TX.g.m='';const e=txPEl();e.hidden=false;H2.classList.add('intx');txDraw();
+  if(!TXPV)setTimeout(()=>{txPreviews();txDraw()},30)}
+function txClose(){const e=document.getElementById('txP');if(e)e.hidden=true;H2.classList.remove('intx');TX=null}
+function txLive(slow){if(!TX)return;const l=TX.l,g=TX.g;clearTimeout(TXT);TXT=setTimeout(()=>{if(!TX)return;if(!l.fx)l.fx={};l.fx.tx=g.on&&g.m?JSON.parse(JSON.stringify(g)):null;l.fxk='';dirtyComp=true;req()},slow?(TOUCH?220:120):0)}
+function txAct(a,v){if(!TX)return;const g=TX.g;
+  switch(a){
+    case'm':if(v==='none'){g.on=false;g.m=''}else{const was=g.m;g.on=true;g.m=v;if(v==='worn'&&g.dis<40)g.dis=55;else if(was==='worn'&&g.dis===55)g.dis=0;if(v==='crack'&&!g.dep)g.dep=60}txDraw();txLive();break;
+    case'tone':g.tone=v;txDraw();txLive();break;
+    case'col':g.col=v==='orig'?'':g.col;txDraw();txLive();break;
+    case'tog':g[v]=!g[v];txDraw();txLive();break;
+    case'seed':g.seed=(g.seed||1)+1;txLive();break;
+    case'reset':Object.assign(g,{dep:60,sc:100,ang:120,dis:g.m==='worn'?55:0,col:'',sa:45,bord:false,edge:true});txDraw();txLive();break;
+    case'ok':{clearTimeout(TXT);const l=TX.l;if(!l.fx)l.fx={};l.fx.tx=g.on&&g.m?JSON.parse(JSON.stringify(g)):null;if(!fxOn(l.fx))l.fx=null;l.fxk='';pushH({k:'st',b:TX.b,a:snapSt()},g.on&&g.m?'Texture: '+(TXMAT.find(z=>z[0]===g.m)||[,''])[1]:'Remove texture');D.changed=true;schedSave();touchAll();txClose();break}
+    case'cancel':case'x':clearTimeout(TXT);restSt(TX.b);touchAll();txClose();break}}
+function txDraw(){const e=document.getElementById('txP');if(!e||!TX)return;const g=TX.g,pv=TXPV||{},on=g.on&&g.m;const sl=(k,n,mn,mx,suf)=>`<label class="tx-sl"><span>${n}<b data-txv="${k}">${g[k]}${suf||''}</b></span><input type="range" min="${mn}" max="${mx}" value="${g[k]}" data-txr="${k}"></label>`;
+  const raised=['plast','puff','emb','chen','foil','glit','gem','leath','suede'].includes(g.m);
+  e.innerHTML=`<div class="tx-h"><div><b>Texture Studio</b><span>on “${esc(TX.l.name)}”</span></div><button data-tx="x" aria-label="Close">&times;</button></div>
+  <div class="tx-sc"><div class="tx-grid"><button class="${on?'':'on'}" data-tx="m|none"><i class="tx-none">&#8856;</i><span>None</span></button>${TXMAT.map(([k,n])=>`<button class="${g.m===k&&on?'on':''}" data-tx="m|${k}"><i style="${pv[k]?`background-image:url(${pv[k]})`:''}"></i><span>${n}</span></button>`).join('')}</div>
+  ${on?`<div class="tx-sec"><h6>Look</h6>${sl('dep',raised?'Depth':'Strength',0,100)}${sl('sc',g.m==='gem'?'Stone size':'Texture size',30,300,'%')}${raised?sl('ang','Light from',0,359,'°'):''}${g.m==='emb'?sl('sa','Stitch direction',0,179,'°'):''}
+    ${g.m==='foil'?`<div class="tx-row"><span>Foil</span><div class="tx-chips">${[['silver','Silver'],['gold','Gold'],['rose','Rose gold'],['black','Black chrome'],['holo','Holographic'],['ink','Ink colour']].map(([k,n])=>`<button class="${g.tone===k?'on':''}" data-tx="tone|${k}">${n}</button>`).join('')}</div></div>`:''}
+    ${['emb','leath','suede'].includes(g.m)?`<button class="tx-chk ${g.bord?'on':''}" data-tx="tog|bord"><i></i>Stitched border (patch look)</button>`:''}
+    <div class="tx-row"><span>Colour</span><div class="tx-cols"><button class="${g.col?'':'on'}" data-tx="col|orig">Original</button><label class="${g.col?'on':''}"><input type="color" value="${g.col||'#c8202c'}" data-txc="1"><i style="background:${g.col||'#c8202c'}"></i>Pick</label></div></div></div>
+   <div class="tx-sec"><h6>Distress</h6>${sl('dis','Wear',0,100)}<button class="tx-chk ${g.edge!==false?'on':''}" data-tx="tog|edge"><i></i>Wear the edges most (like real washes)</button><div class="tx-row"><button class="tx-btn" data-tx="seed">&#8635; New wear pattern</button><button class="tx-link" data-tx="reset">Reset sliders</button></div></div>`
+  :`<p class="tx-n">Pick a material above. It’s applied to the whole layer and follows its exact shape – letters, logos or patches. You can change or remove it any time.</p>`}</div>
+  <div class="tx-f"><button class="tx-b" data-tx="cancel">Cancel</button><button class="tx-b pri" data-tx="ok">Apply</button></div>`}
 
 /* ================= Fast redraw: only recombine the area that changed =================
    After every full picture we remember each layer's state. On the next redraw we compare:
@@ -8232,7 +8386,7 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();if(gsAct(k,v,l,a,b
     case'rulers':VIEW.rulers=!VIEW.rulers;try{localStorage.setItem('mp_rul',VIEW.rulers?'1':'0')}catch(e){}req();fit();hint(VIEW.rulers?'Rulers on ('+UN[UNIT][1].toLowerCase()+')'+(TOUCH?'':' · Ctrl+R'):'Rulers off');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
     case'fastdraw':dmgSet(!DMGON);hint(DMGON?'Fast redraw on – only the changed area is redrawn':'Fast redraw off – the whole picture is redrawn every time',2600);break;
     case'pixels':VIEW.pixels=!VIEW.pixels;try{localStorage.setItem('mp_pix',VIEW.pixels?'1':'0')}catch(e){}req();hint(VIEW.pixels?'Sharp pixels when zoomed in (for pixel-level work)':'Smooth, high-quality zoom');if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;
-    case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcspots':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcFillSpots(L);break}case'gcwhole':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcWhole(L);break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'bgrtool':closeMenu();brFromLayer();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
+    case'units':unitSheet();break;case'gcshade':{const L=ADJ&&ADJ.layer?ADJ.l:curL(),b=L&&L.adj&&L.adj.k==='gc'?gcBase(L):null;if(b)gcShade(b,true);else hint('Pick the Garment colour layer first');break}case'gcspots':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcFillSpots(L);break}case'gcwhole':{const L=ADJ&&ADJ.layer?ADJ.l:curL();gcWhole(L);break}case'gcfix':{const L=ADJ&&ADJ.layer?ADJ.l:curL();if(L&&L.adj&&L.adj.k==='gc')gcFixEdges(L);else hint('Pick the Garment colour layer first');break}case'gcpick':closeMenu();sheetEl.hidden=true;if(ADJ)adjEnd(true);gcStart();break;case'gcc':if(ADJ&&ADJ.type==='gc'){ADJ.v.c=v;adjRender();drawPanel()}break;case'gcways':gcWaysSheet();break;case'gcwaysgo':gcWaysGo();break;case'adjlmenu':closeMenu();adjlSheet();break;case'adjl':newAdjLayer(v);break;case'adjedit':{const x=byId(v);if(x)adjLayerEdit(x);break}case'pensheet':closeMenu();penSheet();break;case'pen':penAct(v);break;case'timelapse':closeMenu();tlSheet();break;case'tl':tlAct(v);break;case'printpdf':closeMenu();pdfSheet();break;case'pdf':pdfAct(v);break;case'smartcut':closeMenu();cutOpen();break;case'txstudio':closeMenu();txOpen();break;case'bgrtool':closeMenu();brFromLayer();break;case'cut':cutAct(v);break;case'smartsel':TOOL.wsmart=true;setTool('wand');hint('Tap a part of the garment – sleeve, hood, body, pocket',3000);break;case'wsmart':TOOL.wsmart=!TOOL.wsmart;drawOpt();break;
     case'autowarp':{if(l&&D.garment===l.id)return hint('Select your art layer (not the garment) first',2800);openStyle('wp');break}case'vintage':openStyle('vt');break;case'newpat':closeMenu();newPatternDoc();break;case'patsheet':if(D&&D.pat)patSheet();else hint('Open or make a pattern tile first (File › New pattern tile)',3000);break;case'pmode':D.pat.mode=v;D.changed=true;schedSave();req();patSheet();break;case'poffset':if(D&&D.pat){sheetEl.hidden=true;patOffset()}else hint('Offset is for pattern tiles (File › New pattern tile)',3000);break;case'pshow':D.pat.show=!D.pat.show;fit();req();patSheet();break;case'psave':sheetEl.hidden=true;patSave();break;case'patfill':closeMenu();patFillSheet();break;case'pfill':patFill(v);break;case'ptm':if(l&&l.pt){const b0=snapSt();l.pt.mode=v;renderPat(l);pushH({k:'st',b:b0,a:snapSt()},'Pattern repeat');touchAll();drawPanel()}break;case'ptraster':if(l&&l.pt){setProp(l,'pt',null,'Rasterize pattern');openPanel('layers')}break;case'patedit':if(l&&l.pt)openPanel('pattern');break;
     case'fabric':{if(D.garment&&byId(D.garment)&&(!l||!l.fx||!l.fx.fb||!l.fx.fb.on)){D.cur=D.garment;D.lsel=new Set();drawPanel()}openStyle('fb');break}case'embroid':openStyle('em');break;case'puff':openStyle('pf');break;case'dbl':openStyle('st2');break;case'guides':VIEW.guides=VIEW.guides===false;req();hint(VIEW.guides?'Print guides on':'Print guides hidden');break;case'tag':tagDoc(+v);break;case'setunit':setUnit(v);if(!sheetEl.hidden&&$('#unitSheet'))unitSheet();break;case'newsize':closeMenu();newSizeSheet();break;case'nspre':nsPreset(+v);break;case'nsfit':nsFit();break;case'nsbg':NS.bg=v;nsDraw();break;case'nsrot':nsRot();break;case'nsppi':NS.ppi=+v;nsDraw();break;case'nscreate':nsCreate();break;case'setq':setQ(v);break;case'csanc':CS.anc=+v;csDraw();break;case'isppi':isSetPpi(+v);break;
     case'br':{const t=TOOL.t;if(t==='erase')TOOL.ebrush=v;else if(t==='smudge')TOOL.sbrush=v;else if(t==='clone')TOOL.cbrush=v;else if(t==='dodge')TOOL.dbrush=v;else{TOOL.brush=v;if(t!=='brush')setTool('brush')}openPanel('layers');drawOpt();break}
