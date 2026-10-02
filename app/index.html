@@ -8684,7 +8684,7 @@ const VS=`#version 300 es
 in vec2 a;void main(){gl_Position=vec4(a,0,1);}`;
 const FS=`#version 300 es
 precision highp float;
-uniform vec2 R;uniform float T,YAW,PIT,HOT,SC,GRIP,TAB,SHOWH,SCRON,CHY;uniform vec3 CAM,CP,HP,WR,ELB;uniform mat3 CM,HM;uniform sampler2D TX,SCR,CANT;out vec4 O;
+uniform int ZI;uniform vec2 R;uniform float T,YAW,PIT,HOT,SC,GRIP,TAB,SHOWH,SCRON,CHY;uniform vec3 CAM,CP,HP,WR,ELB;uniform mat3 CM,HM;uniform sampler2D TX,SCR,CANT;out vec4 O;
 #define W ${W.toFixed(1)}
 #define H ${H.toFixed(1)}
 #define B ${B.toFixed(1)}
@@ -8692,7 +8692,7 @@ float gE;
 float h1(float n){return fract(sin(n*127.1+.3)*43758.5453);}
 float hh(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hh(i),hh(i+vec2(1,0)),f.x),mix(hh(i+vec2(0,1)),hh(i+1.),f.x),f.y);}
-float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<4;i++){s+=a*vn(p);p=p*2.03+7.1;a*=.5;}return s;}
+float fbm(vec2 p){float s=0.,a=.5;for(int i=ZI;i<4;i++){s+=a*vn(p);p=p*2.03+7.1;a*=.5;}return s;}
 float sdBox(vec3 p,vec3 b){vec3 q=abs(p)-b;return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.);}
 float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h)-r;}
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
@@ -8728,7 +8728,7 @@ float canD(vec3 p){vec3 q=(p-CP)*CM;float rr=.033-max(0.,q.y-.07)*.42-max(0.,-q.
   return d;}
 vec2 handD(vec3 p){vec3 q=(p-HP)*HM;float g=GRIP,R=.044;
   float d=sdBox(q-vec3(.054,-.004,.003),vec3(.012,.042,.036))-.013;
-  for(int i=0;i<4;i++){float y=.032-float(i)*.021,L=i==3?.8:1.;vec3 a=vec3(.056,y,-.03);
+  for(int i=ZI;i<4;i++){float y=.032-float(i)*.021,L=i==3?.8:1.;vec3 a=vec3(.056,y,-.03);
     vec3 j1=mix(a+vec3(-.006,0,-.04)*L,vec3(R*cos(1.15),y,-R*sin(1.15)),g);
     vec3 j2=mix(a+vec3(-.01,0,-.072)*L,vec3(R*cos(2.05),y,-R*sin(2.05)),g);
     vec3 tp=mix(a+vec3(-.012,-.004,-.097)*L,vec3(R*cos(2.6*L+.2),y,-R*sin(2.6*L+.2)),g);
@@ -8757,9 +8757,9 @@ vec2 setup(vec3 p){
   float ch=min(seat,min(back,head));if(ch<r.x)r=vec2(ch,13.);
   float arm=min(sdBox(vec3(abs(c.x)-.31,c.y-.69,c.z),vec3(.035,.012,.14))-.01,sdBox(vec3(abs(c.x)-.31,c.y-.6,c.z+.02),vec3(.012,.09,.012)));
   float gas=sdBox(c-vec3(0,.28,0),vec3(.026,.2,.026))-.004;float base=1e5;
-  for(int i=0;i<5;i++){float a=float(i)*1.2566;vec2 dd=vec2(cos(a),sin(a));base=min(base,sdCap(c,vec3(0,.09,0),vec3(dd.x*.32,.07,dd.y*.32),.02));}
+  for(int i=ZI;i<5;i++){float a=float(i)*1.2566;vec2 dd=vec2(cos(a),sin(a));base=min(base,sdCap(c,vec3(0,.09,0),vec3(dd.x*.32,.07,dd.y*.32),.02));}
   float cm=min(arm,min(gas,base));if(cm<r.x)r=vec2(cm,4.);
-  float wh=1e5;for(int i=0;i<5;i++){float a=float(i)*1.2566;wh=min(wh,length(c-vec3(cos(a)*.33,.035,sin(a)*.33))-.033);}if(wh<r.x)r=vec2(wh,8.);
+  float wh=1e5;for(int i=ZI;i<5;i++){float a=float(i)*1.2566;wh=min(wh,length(c-vec3(cos(a)*.33,.035,sin(a)*.33))-.033);}if(wh<r.x)r=vec2(wh,8.);
   return r;}
 vec2 room(vec3 p){
   float rx=min(min(4.2-abs(p.x),p.z+5.),6.-p.z),cx=min(min(1.4-abs(p.x),p.z-5.5),40.-p.z);
@@ -8778,13 +8778,19 @@ vec2 room(vec3 p){
   float bc=length(p-CP)-.13;if(bc<r.x){float d=canD(p);if(d<r.x)r=vec2(d,10.);}
   if(SHOWH>.5){float bh=length(p-HP)-.62;if(bh<r.x){vec2 g=handD(p);if(g.x<r.x)r=g;}}
   return r;}
-vec2 map(vec3 p){return SC>.5?hall(p):room(p);}
-vec3 nrm(vec3 p){vec2 e=vec2(.0007,-.0007);return normalize(e.xyy*map(p+e.xyy).x+e.yyx*map(p+e.yyx).x+e.yxy*map(p+e.yxy).x+e.xxx*map(p+e.xxx).x);}
+vec2 map(vec3 p){
+#if V==1
+  return hall(p);
+#else
+  return room(p);
+#endif
+}
+vec3 nrm(vec3 p){vec3 n=vec3(0);for(int i=ZI;i<4;i++){vec3 e=.5773*(2.*vec3(float(((i+3)>>1)&1),float((i>>1)&1),float(i&1))-1.);n+=e*map(p+e*.0007).x;}return normalize(n);}
 vec2 march(vec3 ro,vec3 rd,int N,float tmax,out float glow){float t=.01;glow=0.;
-  for(int i=0;i<N;i++){vec3 p=ro+rd*t;vec2 h=map(p);glow+=min(h.x,.4)*(.9/(1.+gE*gE*900.));
+  for(int i=ZI;i<N;i++){vec3 p=ro+rd*t;vec2 h=map(p);glow+=min(h.x,.4)*(.9/(1.+gE*gE*900.));
     if(abs(h.x)<.00045*t+.0002)return vec2(t,h.y);t+=h.x*.92;if(t>tmax)break;}
   return vec2(t,-1.);}
-float ao(vec3 p,vec3 n){float o=0.,s=1.;for(int i=1;i<5;i++){float h=.05*float(i);o+=(h-map(p+n*h).x)*s;s*=.55;}return clamp(1.-o*2.,0.,1.);}
+float ao(vec3 p,vec3 n){float o=0.,s=1.;for(int i=1+ZI;i<5;i++){float h=.05*float(i);o+=(h-map(p+n*h).x)*s;s*=.55;}return clamp(1.-o*2.,0.,1.);}
 vec3 pl(vec3 p,vec3 n,vec3 rd,vec3 lp,vec3 col,float shin,float spec){vec3 L=lp-p;float d=length(L);L/=d;return col*(max(dot(n,L),0.)+spec*pow(max(dot(n,normalize(L-rd)),0.),shin))/(1.+d*d);}
 vec3 lights(vec3 p,vec3 n,vec3 rd,float shin,float spec){
   vec3 col=vec3(SC>.5?.012:.05);
@@ -8840,27 +8846,32 @@ void main(){
   vec2 uv=(gl_FragCoord.xy-.5*R)/R.y;
   vec3 fw=vec3(-sin(YAW)*cos(PIT),sin(PIT),-cos(YAW)*cos(PIT)),rt=normalize(cross(fw,vec3(0,1,0))),up=cross(rt,fw);
   vec3 rd=normalize(fw*1.15+rt*uv.x+up*uv.y),ro=CAM;
-  float gl0;vec2 h=march(ro,rd,120,70.,gl0);vec3 col=vec3(0);
-  if(h.y>0.){vec3 p=ro+rd*h.x,n=nrm(p);float rf;vec3 tint;col=surf(p,n,rd,h.y,rf,tint);
-    if(rf>.01){vec3 nn=n;if(h.y<1.5)nn=normalize(n+vec3(vn(p.xz*40.)-.5,0.,vn(p.zx*40.+3.)-.5)*.012);
-      vec3 r=reflect(rd,nn);float g1;vec2 hr=march(p+n*.004,r,64,40.,g1);vec3 rc=vec3(0);
-      if(hr.y>0.){vec3 q=p+n*.004+r*hr.x,n2=nrm(q);float rf2;vec3 t2;rc=surf(q,n2,r,hr.y,rf2,t2);if(hr.y>3.5&&hr.y<4.5)rc+=vec3(.05);rc*=exp(-hr.x*.05);}
-      rc+=vec3(1.,.97,.92)*g1*.9;col+=rc*rf*tint;}
-    col*=exp(-h.x*(SC>.5?.045:.03));}
+  vec3 c0=vec3(0),rc=vec3(0),tint0=vec3(1);float rf0=0.,t0=70.,gl0=0.;
+  for(int b=ZI;b<2;b++){float g;vec2 h=march(ro,rd,b==0?120:64,b==0?70.:40.,g);vec3 c=vec3(0);float rf=0.;vec3 tint=vec3(1);
+    if(h.y>0.){vec3 p=ro+rd*h.x,n=nrm(p);c=surf(p,n,rd,h.y,rf,tint);
+      if(b==0){vec3 nn=n;if(h.y<1.5)nn=normalize(n+vec3(vn(p.xz*40.)-.5,0.,vn(p.zx*40.+3.)-.5)*.012);ro=p+n*.004;rd=reflect(rd,nn);}
+      else{if(h.y>3.5&&h.y<4.5)c+=vec3(.05);c*=exp(-h.x*.05);}}
+    if(b==0){c0=c;rf0=h.y>0.?rf:0.;tint0=tint;t0=h.x;gl0=g;if(rf0<=.01)break;}
+    else rc=c+vec3(1.,.97,.92)*g*.9;}
+  vec3 col=(c0+rc*rf0*tint0)*exp(-t0*(SC>.5?.045:.03));
   col+=vec3(1.,.96,.9)*gl0*.55;
   col=aces(col*1.15);col=pow(col,vec3(1./2.2));
   col*=1.-.38*dot(uv*.85,uv*.85);col+=(hh(gl_FragCoord.xy+fract(T)*91.)-.5)*.018;
   O=vec4(col,1);}`;
-function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o}
-const U={};let ok=false,scrTex;
+let ok=false,scrTex,ext=null;const PR={};
 function tex(unit,src,mip){const t=gl.createTexture();gl.activeTexture(gl.TEXTURE0+unit);gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,src);
   if(mip){gl.generateMipmap(gl.TEXTURE_2D);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR)}else gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,unit===2?gl.REPEAT:gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);return t}
-function glInit(){if(ok)return true;cv=document.getElementById('w3c');try{gl=cv.getContext('webgl2',{antialias:false,powerPreference:'high-performance'})}catch(e){gl=null}if(gl){try{const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);gl.useProgram(pr);
-  const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
-  'R T YAW PIT HOT SC GRIP TAB SHOWH SCRON CHY CAM CP HP WR ELB CM HM TX SCR CANT'.split(' ').forEach(k=>U[k]=gl.getUniformLocation(pr,k));
-  tex(0,atlas(),1);drawScreen(0);scrTex=tex(1,scr,0);tex(2,canLabel(),1);gl.uniform1i(U.TX,0);gl.uniform1i(U.SCR,1);gl.uniform1i(U.CANT,2);ok=true;
-}catch(e){console.error(e)}}return ok}
+function mkProg(v){const p=gl.createProgram(),a=gl.createShader(gl.VERTEX_SHADER),b=gl.createShader(gl.FRAGMENT_SHADER);gl.shaderSource(a,VS);gl.shaderSource(b,FS.replace('#define W','#define V '+v+'\n#define W'));
+  gl.compileShader(a);gl.compileShader(b);gl.attachShader(p,a);gl.attachShader(p,b);gl.bindAttribLocation(p,0,'a');gl.linkProgram(p);return {p,b,ready:false,failed:false,U:{},t:performance.now()}}
+// never ask for the result before the graphics card says it is done – asking early freezes the app while it compiles
+function poll(o){if(!o||o.failed)return false;if(o.ready)return true;if(ext&&!gl.getProgramParameter(o.p,ext.COMPLETION_STATUS_KHR))return false;if(!ext&&performance.now()-o.t<400)return false;
+  if(!gl.getProgramParameter(o.p,gl.LINK_STATUS)){console.error('3D home shader:',gl.getShaderInfoLog(o.b)||gl.getProgramInfoLog(o.p));o.failed=true;return false}
+  gl.useProgram(o.p);'R T YAW PIT HOT SC GRIP TAB SHOWH SCRON CHY CAM CP HP WR ELB CM HM TX SCR CANT ZI'.split(' ').forEach(k=>o.U[k]=gl.getUniformLocation(o.p,k));
+  gl.uniform1i(o.U.TX,0);gl.uniform1i(o.U.SCR,1);gl.uniform1i(o.U.CANT,2);gl.uniform1i(o.U.ZI,0);o.ready=true;return true}
+function glInit(){if(ok)return true;cv=document.getElementById('w3c');try{gl=cv.getContext('webgl2',{antialias:false,powerPreference:'high-performance'})}catch(e){gl=null}if(!gl)return false;
+  try{ext=gl.getExtension('KHR_parallel_shader_compile');const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+    tex(0,atlas(),1);drawScreen(0);scrTex=tex(1,scr,0);tex(2,canLabel(),1);PR.hall=mkProg(1);ok=true}catch(e){console.error(e);ok=false}return ok}
 // ---------------- sound (made on the fly, no files) ----------------
 let AC=null;
 function noise(d){const b=AC.createBuffer(1,AC.sampleRate*d,AC.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=b;return s}
@@ -8911,23 +8922,29 @@ const SCRT0=14.0,END=18.1;
 // ---------------- app glue ----------------
 const KEYS=['lab','books','gs','mk','bgr','src'];
 const q=id=>document.getElementById(id),root=()=>q('w3'),veil=()=>q('w3-veil');
-let P={on:true,intro:true,sens:1};try{Object.assign(P,JSON.parse(localStorage.getItem('mpWorld3')||'{}'))}catch(e){}
+let P={on:true,intro:true,sens:1},introAt=0,guardOk=false;try{Object.assign(P,JSON.parse(localStorage.getItem('mpWorld3')||'{}'))}catch(e){}
 const saveP=()=>{try{localStorage.setItem('mpWorld3',JSON.stringify(P))}catch(e){}};
 let mode='off',it=0,ev=0,z=9.5,camX=0,yaw=0,pit=0,vel=[0,0],fly=null,hot=-999,scale=innerWidth<700?.55:.75,acc=0,frames=0,last=0,T0=performance.now(),lock=false,raf=0,played=false,mx=0,my=0,inWin=false,lastAt=null,vis=true,visN=0;
 const sideOf=cz=>(((-cz)%2+2)%2)<.5?-1:1;
 const supported=()=>{try{return !!document.createElement('canvas').getContext('webgl2')}catch(e){return false}};
 let SUP=null;const isSup=()=>SUP==null?(SUP=supported()):SUP;
 function upScr(){if(!ok)return;gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,scrTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,scr)}
-function ui(){const r=root();if(!r)return;const h=document.getElementById('home');h.classList.toggle('w3on',P.on&&isSup());h.classList.toggle('w3intro',mode==='intro');
+const hallReady=()=>!!(PR.hall&&PR.hall.ready);
+function ui(){const r=root();if(!r)return;const h=document.getElementById('home');h.classList.toggle('w3on',P.on&&isSup()&&hallReady());h.classList.toggle('w3intro',mode==='intro');
   q('w3-skip').hidden=mode!=='intro';q('w3-cross').hidden=!lock;
   q('w3-m').innerHTML=`<button data-w3="replay">&#9654;&#xFE0E; Replay intro</button><button data-w3="intro">Intro on start-up: <b>${P.intro?'On':'Off'}</b></button><button data-w3="sens">Mouse speed: <b>${['Slow','Normal','Fast'][P.sens]}</b></button>${matchMedia('(pointer:fine)').matches?'<button data-w3="lock">Game mouse (G) – Esc to exit</button>':''}<button data-w3="classic">Switch to classic home</button>`;
   const lg=q('w3-logo');if(lg&&!lg.firstChild&&typeof mpLogoSVG==='function')lg.innerHTML=mpLogoSVG({lite:1})}
-function startIntro(){mode='intro';it=0;ev=0;played=true;const v=veil();v.style.transition='none';v.style.background='#000';v.style.opacity=1;requestAnimationFrame(()=>{v.style.transition='opacity 1s';v.style.opacity=0});drawScreen(0);upScr();ui()}
+function startIntro(){mode='intro';it=0;ev=0;played=true;introAt=performance.now();if(!PR.room){try{localStorage.setItem('mpW3gi','1')}catch(e){}PR.room=mkProg(0)}const v=veil();v.style.transition='none';v.style.background='#000';v.style.opacity=1;requestAnimationFrame(()=>{v.style.transition='opacity 1s';v.style.opacity=0});drawScreen(0);upScr();ui()}
 function toHall(at){mode='hall';const v=veil();v.style.transition='none';v.style.background='#000';v.style.opacity=1;requestAnimationFrame(()=>requestAnimationFrame(()=>{v.style.transition='opacity .9s';v.style.opacity=0}));
   if(at!=null){z=(at+.5)*B+2.6;camX=0;yaw=0;pit=0}else{z=9.5;camX=0;yaw=0;pit=0}vel=[0,0];fly=null;hot=-999;ui();
   const h=q('w3-hint');h.textContent=matchMedia('(pointer:coarse)').matches?'Left thumb: walk · right thumb: look · tap a frame to step in':'Move the mouse to look · WASD to walk · Shift to run · click a frame to step in';h.style.opacity=1;clearTimeout(toHall.t);toHall.t=setTimeout(()=>h.style.opacity=0,6000)}
-function show(){if(!P.on||!isSup()){const h=document.getElementById('home');h&&h.classList.remove('w3on');return}
-  const r=root();if(!r)return;r.hidden=false;if(!glInit()){P.on=false;r.hidden=true;ui();return}
+function guard(){let g=null,gi=null;try{g=localStorage.getItem('mpW3g');gi=localStorage.getItem('mpW3gi')}catch(e){}
+  if(gi){P.intro=false;saveP();try{localStorage.removeItem('mpW3gi')}catch(e){}}
+  if(g){P.on=false;saveP();try{localStorage.removeItem('mpW3g')}catch(e){}setTimeout(()=>{try{toast('3D home was paused because it froze last time. Turn it back on with “3D gallery home” at the bottom.',7000)}catch(e){}},1500);return false}
+  return true}
+function show(){if(P.on&&!guardOk){guardOk=true;if(!guard()){ui();return}}
+  if(!P.on||!isSup()){const h=document.getElementById('home');h&&h.classList.remove('w3on');return}
+  const r=root();if(!r)return;r.hidden=false;if(!PR.hall){try{localStorage.setItem('mpW3g','1')}catch(e){}}if(!glInit()){P.on=false;r.hidden=true;ui();try{localStorage.removeItem('mpW3g')}catch(e){}return}
   try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
   if(!played&&P.intro)startIntro();else if(mode!=='hall'||fly){toHall(lastAt);lastAt=null}else ui();
   last=performance.now();if(!raf)raf=requestAnimationFrame(loop)}
@@ -8972,6 +8989,10 @@ function bindUI(){const r=root();if(!r||r.dataset.b)return;r.dataset.b=1;
 // ---- loop ----
 function loop(now){raf=0;if(!active()){return}raf=requestAnimationFrame(loop);
   const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=Math.max(last,now);let u;
+  if(!hallReady()){if(poll(PR.hall)){try{localStorage.removeItem('mpW3g')}catch(e){}ui()}else{if(PR.hall&&PR.hall.failed){P.on=false;ui();try{localStorage.removeItem('mpW3g')}catch(e){}}return}}
+  const prog=mode==='intro'?PR.room:PR.hall;
+  if(mode==='intro'&&!poll(PR.room)){if((PR.room&&PR.room.failed)||performance.now()-introAt>15000){try{localStorage.removeItem('mpW3gi')}catch(e){}toHall()}return}
+  if(mode==='intro'&&it===0){try{localStorage.removeItem('mpW3gi')}catch(e){}}
   if(++visN%30===0){const el=document.elementFromPoint(innerWidth/2,innerHeight*.4);vis=!!(el&&(el===cv||root().contains(el)))}
   if(mode==='intro'){it+=dt;while(ev<EVT.length&&it>=EVT[ev][0])snd(EVT[ev++][1]);u=intro(it);
     if(it>SCRT0&&it<17.6){drawScreen((it-SCRT0)/2.4);upScr()}
@@ -8987,7 +9008,7 @@ function loop(now){raf=0;if(!active()){return}raf=requestAnimationFrame(loop);
       const spd=(K.shift?6.5:3.4),m=Math.max(1,Math.hypot(f,r)),tf=f/m*spd,tr=r/m*spd;vel[0]+=(tf-vel[0])*Math.min(1,dt*8);vel[1]+=(tr-vel[1])*Math.min(1,dt*8);
       z+=(-Math.cos(yaw)*vel[0]-Math.sin(yaw)*vel[1])*dt;camX+=(-Math.sin(yaw)*vel[0]+Math.cos(yaw)*vel[1])*dt;camX=Math.max(-(W-.5),Math.min(W-.5,camX));if(z<0)z+=PER;if(z>PER*2)z-=PER}
     const sp=Math.hypot(vel[0],vel[1]);u={cam:[camX,1.68+Math.sin(z*2.2+camX*2.2)*Math.min(.03,sp*.008),z],yaw,pit,hp:[0,-9,0],hm:I3,cp:[0,-9,0],cm:I3,grip:0,tab:0,showh:0,scr:0,chy:0}}
-  if(ok&&u&&vis){const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.round(cv.clientWidth*dpr*scale),h=Math.round(cv.clientHeight*dpr*scale);
+  if(ok&&u&&vis&&prog&&prog.ready){const U=prog.U;gl.useProgram(prog.p);const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.round(cv.clientWidth*dpr*scale),h=Math.round(cv.clientHeight*dpr*scale);
     if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}gl.viewport(0,0,w,h);
     gl.uniform2f(U.R,w,h);gl.uniform1f(U.T,(now-T0)/1000);gl.uniform1f(U.YAW,u.yaw);gl.uniform1f(U.PIT,u.pit);gl.uniform1f(U.HOT,mode==='hall'?hot:-999);gl.uniform1f(U.SC,mode==='intro'?0:1);
     gl.uniform1f(U.GRIP,u.grip);gl.uniform1f(U.TAB,u.tab);gl.uniform1f(U.SHOWH,u.showh);gl.uniform1f(U.SCRON,u.scr);gl.uniform1f(U.CHY,u.chy);
