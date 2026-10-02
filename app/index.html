@@ -7734,7 +7734,7 @@ async function saveDoc(force){if(!D||saving||(!D.changed&&!force))return;saving=
   try{const layers=[];for(const l of doc.layers){const m={id:l.id,name:l.name,type:l.type,vis:l.vis,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,lock:l.lock,maskOn:l.maskOn,tgt:l.tgt,bi:l.bi,fx:l.fx,gid:l.gid||null,collapsed:!!l.collapsed};
       if(l.type==='group'){}else if(l.type==='text'){m.t=l.t;m.bb=l.bb}else{if(!l.blob||l.sv!==l.v){l.sv=l.v;const p=pieceOf(l);l.boff=[p.x,p.y];l.blob=p.c?await toBlobP(p.c):null}if(l.blob){m.blob=l.blob;m.off=l.boff}else m.empty=true}
       if(l.mask){if(!l.mblob||l.msv!==l.mv){l.msv=l.mv;l.mblob=await toBlobP(l.mask)}m.mblob=l.mblob}if(l.pt){m.pt=l.pt;m.ptblob=l.ptBlob||null}if(l.adj)m.adj=l.adj;if(l.sm)m.sm=l.sm;if(l.acc)m.acc=l.acc;if(l.so&&l.type!=='text'){if(!l.so.img._blob)l.so.img._blob=await toBlobP(l.so.img,l.so.fmt||'image/png',.95);const q=l.so.m;m.so={m:[q.a,q.b,q.c,q.d,q.e,q.f],blob:l.so.img._blob,fmt:l.so.fmt}}layers.push(m)}
-    if(doc!==D){saving=false;return}const c=T('comp');composite(c);const tc=mk(240,300),tx=tc.getContext('2d'),k=Math.min(240/doc.w,300/doc.h);tx.fillStyle='#0c0c0c';tx.fillRect(0,0,240,300);tx.drawImage(c,(240-doc.w*k)/2,(300-doc.h*k)/2,doc.w*k,doc.h*k);const thumbU=tc.toDataURL('image/jpeg',.82);dirtyComp=true;
+    if(doc!==D){saving=false;return}const c=T('comp');composite(c);const tc=mk(240,300),tx=tc.getContext('2d'),k=Math.min(240/doc.w,300/doc.h);tx.fillStyle='#0c0c0c';tx.fillRect(0,0,240,300);tx.drawImage(c,(240-doc.w*k)/2,(300-doc.h*k)/2,doc.w*k,doc.h*k);const thumbU=tc.toDataURL('image/jpeg',.82);mpPrevSave(doc.id,c,doc.w,doc.h);dirtyComp=true;
     const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,ppi:doc.ppi||300,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU,pat:doc.pat||null,guides:doc.guides||null,inner:doc.inner||null,kind:doc.kind||null,side:doc.side||null,pair:doc.pair||null};
     if(!await IDB.set('des:'+doc.id,rec))toast('Could not save the design, storage may be full',3000);tlFlush(doc.id).catch(()=>{});
     if(!doc.inner){const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==doc.id);m.unshift({id:doc.id,name:doc.name,thumb:thumbU,updated:rec.updated,w:doc.w,h:doc.h,kind:doc.kind||undefined,side:doc.side||undefined,pair:doc.pair||undefined});await IDB.set('dlib',m)}}catch(e){console.error(e);doc.changed=true}saving=false}
@@ -7747,7 +7747,7 @@ async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('
     if(m.adj)l.adj=m.adj;if(m.sm)l.sm=m.sm;if(m.acc)l.acc=m.acc;if(m.pt&&m.ptblob){l.pt=m.pt;l.ptBlob=m.ptblob;try{l.ptImg=await bmpOf(m.ptblob)}catch(e){l.pt=null}}if(m.so&&m.so.blob){try{const im=await bmpOf(m.so.blob);im._blob=m.so.blob;setSo(l,im,m.so.m,m.so.fmt)}catch(e){}}if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';D.layers.push(l)}
   relinearize();D.lsel=new Set();if(!D.layers.find(l=>l.id===D.cur))D.cur=D.layers[D.layers.length-1].id;
   for(const l of D.layers)if(l.type==='text'){if(!fontReady(l.t.font))await ensureFont(l.t.font);try{await document.fonts.load(`40px ${fontCss(l.t.font)}`)}catch(e){}renderText(l);park(l,true)}
-  openEditor()}
+  openEditor();const pid=D.id;setTimeout(async()=>{try{if(!D||D.id!==pid||await IDB.get('dprev:'+pid))return;const c=T('comp');composite(c);mpPrevSave(pid,c,D.w,D.h);dirtyComp=true}catch(e){}},1500)}
 async function leaveEditor(){if(SMS.length&&D&&D.id===SMS[SMS.length-1].inner)return smReturn();if(XFORM)xfCommit();if(ADJ)adjEnd(false);if(STY)styAct('cancel');commitText();closeMenu();try{await linkSync(true)}catch(e){console.error(e)}try{await gsLinkBack()}catch(e){}await saveDoc(true);if(D&&D.pat){try{await patSave(true)}catch(e){}}edEl.hidden=true;galEl.hidden=false;const _gs=!!(D&&D.kind==='garment');D=null;freeTmp();gsSetMode(_gs);drawGallery();if(EDRET){EDRET=false;labEl.hidden=true;H2.classList.remove('inlab');gsSetMode(false);kick()}}
 async function drawGallery(){const m=((await IDB.get('dlib'))||[]).filter(d=>GMODE?(d.kind==='garment'&&d.side!=='back'):d.kind!=='garment');$('#labGrid').innerHTML=`<div class="dg" style="--i:0"><button class="dg-o dg-new" data-l="new"><b>+</b></button><span class="dg-n">${GMODE?'New garment':'New design'}</span><span class="dg-m">${GMODE?'Your mockup, then add designs':'Your mockup or a blank canvas'}</span></div>`+
   m.map((d,i)=>`<div class="dg" style="--i:${i+1}"><button class="dg-o" data-l="dopen:${d.id}" style="background-image:url(${d.thumb||''})"></button><span class="dg-n chrome">${esc(d.name)}</span><span class="dg-m">${new Date(d.updated).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span><div class="dg-a"><button data-l="dren:${d.id}">Rename</button><button data-l="ddup:${d.id}">Duplicate</button><button data-l="ddel:${d.id}">Delete</button></div></div>`).join('')}
@@ -8846,7 +8846,7 @@ vec3 surf(vec3 p,vec3 n,vec3 rd,float m,out float rf,out vec3 tint){
       tx=pow(texture(DTX,vec2((mod(k,8.)+clamp(u,.004,.996))/8.,(floor(k/8.)+clamp(v,.004,.996))/6.)).rgb,vec3(2.2));}
     else{s=-sign(p.x);float zc=p.z<1.?-1.:3.;k=(p.x<0.?0.:1.)+(zc>1.?2.:0.);u=.5+s*(p.z-zc)/1.36;v=.5-(p.y-1.85)/1.8;
       tx=pow(texture(TX,vec2((k+clamp(u,0.,1.))/6.,clamp(v,0.,1.))).rgb,vec3(2.2));}
-    float hot=(SC>.5&&abs(k-HOT)<.5)?1.5:1.;rf=.03+.25*F;return tx*(.75*hot+a*lights(p,n,rd,40.,.2)*.6);}
+    float hot=(SC>.5&&abs(k-HOT)<.5)?1.25:1.;rf=SC>.5?.012+.06*F:.03+.25*F;return tx*((SC>.5?1.05:.75)*hot+a*lights(p,n,rd,40.,.2)*.35);}
   if(m<8.5){rf=.03+.3*F;return vec3(.04)*a*lights(p,n,rd,30.,.35);}
   if(m<9.5){vec2 uv=vec2(.5+p.x/.894,.5-(p.y-1.2)/.394);vec3 tx=pow(texture(SCR,uv).rgb,vec3(2.2));rf=.05+.5*F;return tx*SCRON*1.6+vec3(.004)*lights(p,n,rd,80.,.5);}
   if(m<10.5){vec3 q=(p-CP)*CM;
@@ -8949,16 +8949,23 @@ const FP=3.6,FY=1.95,DT={tex:null,c:null,sig:'',n:0,items:[]};
 const nCells=()=>Math.max(2,Math.ceil(DT.n/2)),ZSV=6,zEnd=()=>-(nCells()*FP)-2.4;
 const loadImg=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
 async function loadDesigns(){let l=[];try{l=(await IDB.get('dlib'))||[]}catch(e){}l=l.filter(d=>d&&d.id).sort((a,b)=>(b.updated||0)-(a.updated||0)).slice(0,48);
-  const sig=l.map(d=>d.id+':'+(d.updated||0)+':'+(d.name||'')).join('|');if(sig===DT.sig&&DT.n)return;DT.sig=sig;
-  const c=DT.c||(DT.c=document.createElement('canvas'));c.width=2048;c.height=2040;const x=c.getContext('2d');x.fillStyle='#050505';x.fillRect(0,0,2048,2040);x.textAlign='center';
-  const items=l.length?l:[{id:null,name:'Your designs hang here',thumb:null}];
-  for(let i=0;i<items.length;i++){const d=items[i],tx=(i%8)*256,ty=Math.floor(i/8)*340;
-    const g=x.createRadialGradient(tx+128,ty+140,10,tx+128,ty+170,230);g.addColorStop(0,'#1d1d1d');g.addColorStop(1,'#060606');x.fillStyle=g;x.fillRect(tx,ty,256,340);
-    if(d.thumb){try{const im=await loadImg(d.thumb);const k=Math.min(236/im.width,290/im.height);x.drawImage(im,tx+128-im.width*k/2,ty+152-im.height*k/2,im.width*k,im.height*k)}catch(e){}}
-    else{x.fillStyle='#8a8a8a';x.font='500 15px "Helvetica Neue",Arial';x.fillText('Make a design in',tx+128,ty+140);x.fillText('Design Lab and it',tx+128,ty+162);x.fillText('hangs here',tx+128,ty+184)}
-    x.fillStyle=chromeGrad(x,ty+308,ty+330);x.font='500 13px "Helvetica Neue",Arial';try{x.letterSpacing='3px'}catch(e){}x.fillText(String(d.name||'Untitled').toUpperCase().slice(0,24),tx+129,ty+326);try{x.letterSpacing='0px'}catch(e){}}
+  const pv=await Promise.all(l.map(d=>IDB.get('dprev:'+d.id).catch(()=>null)));
+  const sig=l.map((d,i)=>d.id+':'+(d.updated||0)+':'+(d.name||'')+':'+(pv[i]?pv[i].size||1:0)).join('|');if(sig===DT.sig&&DT.n)return;DT.sig=sig;
+  const big=ok&&gl.getParameter(gl.MAX_TEXTURE_SIZE)>=4096&&!matchMedia('(pointer:coarse)').matches,TW=big?512:256,TH=big?680:340,IH=Math.round(TH*.885);
+  const c=DT.c||(DT.c=document.createElement('canvas'));c.width=TW*8;c.height=TH*6;const x=c.getContext('2d');x.fillStyle='#050505';x.fillRect(0,0,c.width,c.height);x.textAlign='center';x.imageSmoothingQuality='high';
+  (DT.items||[]).forEach(d=>{if(d.big)URL.revokeObjectURL(d.big)});
+  const items=l.length?l.map((d,i)=>({...d,big:pv[i]instanceof Blob?URL.createObjectURL(pv[i]):null})):[{id:null,name:'Your designs hang here',thumb:null}];
+  for(let i=0;i<items.length;i++){const d=items[i],tx=(i%8)*TW,ty=Math.floor(i/8)*TH;
+    x.fillStyle='#0c0c0c';x.fillRect(tx,ty,TW,TH);
+    const src=d.big||d.thumb;
+    if(src){try{const im=await loadImg(src);const k=Math.min((TW-8)/im.width,(IH-8)/im.height);x.drawImage(im,tx+TW/2-im.width*k/2,ty+IH/2-im.height*k/2,im.width*k,im.height*k)}catch(e){}}
+    else{x.fillStyle='#8a8a8a';x.font=`500 ${TW*.06}px "Helvetica Neue",Arial`;['Make a design in','Design Lab and it','hangs here'].forEach((t,j)=>x.fillText(t,tx+TW/2,ty+TH*.42+j*TW*.085))}
+    const nm=String(d.name||'Untitled').toUpperCase().slice(0,40);let fs=TW*.052;x.font=`500 ${fs}px "Helvetica Neue",Arial`;try{x.letterSpacing=(TW*.01)+'px'}catch(e){}
+    while(x.measureText(nm).width>TW-TW*.1&&fs>TW*.026){fs-=1;x.font=`500 ${fs}px "Helvetica Neue",Arial`}
+    x.fillStyle=chromeGrad(x,ty+IH,ty+TH);x.fillText(nm,tx+TW/2,ty+IH+(TH-IH)*.62);try{x.letterSpacing='0px'}catch(e){}}
   DT.items=items;DT.n=items.length;
-  if(ok){gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,DT.tex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);gl.generateMipmap(gl.TEXTURE_2D);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR)}}
+  if(ok){gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,DT.tex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);gl.generateMipmap(gl.TEXTURE_2D);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);
+    const an=gl.getExtension('EXT_texture_filter_anisotropic');if(an)gl.texParameterf(gl.TEXTURE_2D,an.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(8,gl.getParameter(an.MAX_TEXTURE_MAX_ANISOTROPY_EXT)))}}
 const cellOf=i=>({cz:-Math.floor(i/2)-1,s:i%2?1:-1});
 const supported=()=>{try{return !!document.createElement('canvas').getContext('webgl2')}catch(e){return false}};
 let SUP=null;const isSup=()=>SUP==null?(SUP=supported()):SUP;
@@ -8996,10 +9003,10 @@ function rayHit(px,py){if(!cv)return null;const r=cv.getBoundingClientRect(),h=r
   const up=[rt[1]*fw[2]-rt[2]*fw[1],rt[2]*fw[0]-rt[0]*fw[2],rt[0]*fw[1]-rt[1]*fw[0]],d=[0,1,2].map(i=>fw[i]*1.15+rt[i]*ux+up[i]*uy);
   let best=null;for(const s of[-1,1]){if(d[0]*s<=0)continue;const t=(s*(W-.08)-camX)/d[0];if(t<=0||t>12)continue;const y=1.68+d[1]*t,zz=z+d[2]*t,cz=Math.floor(zz/FP);if(cz>-1)continue;
     const idx=(-cz-1)*2+(s<0?0:1);if(idx>=DT.n)continue;if(Math.abs(zz-(cz+.5)*FP)<.8&&Math.abs(y-FY)<1.03&&(!best||t<best.t))best={t,cz,s,idx}}return best}
-function enter(b){if(fly)return;viewer(false);fly={t:performance.now(),z0:z,x0:camX,y0:yaw,p0:pit,z1:(b.cz+.5)*FP,x1:b.s*(W-1.95),y1:-b.s*Math.PI/2,p1:Math.atan2(FY-1.68,1.9),idx:b.idx};hot=b.idx;if(document.pointerLockElement)document.exitPointerLock();snd('catch')}
+function enter(b){if(fly)return;viewer(false);fly={t:performance.now(),z0:z,x0:camX,y0:yaw,p0:pit,z1:(b.cz+.5)*FP,x1:b.s*(W-2.65),y1:-b.s*Math.PI/2,p1:Math.atan2(FY-1.68,2.6),idx:b.idx};hot=b.idx;if(document.pointerLockElement)document.exitPointerLock();snd('catch')}
 let VI=-1;
 function viewer(on,i){const v=q('w3-v');if(!v)return;const hm=document.getElementById('home');if(hm)hm.classList.toggle('w3view',!!on);if(!on){v.hidden=true;VI=-1;return}VI=i;const d=DT.items[i]||{};
-  v.innerHTML=`<div class="w3-vc"><button class="w3-vx" data-w3v="back" aria-label="Back">&times;</button><div class="w3-vf">${d.thumb?`<img src="${d.thumb}" alt="">`:'<div class="w3-ve">No designs yet</div>'}</div>
+  v.innerHTML=`<div class="w3-vc"><button class="w3-vx" data-w3v="back" aria-label="Back">&times;</button><div class="w3-vf">${d.big||d.thumb?`<img src="${d.big||d.thumb}" alt="">`:'<div class="w3-ve">No designs yet</div>'}</div>
     <h3 class="chrome">${esc(d.name||'Untitled')}</h3><p>${d.updated?'Updated '+new Date(d.updated).toLocaleDateString():'&nbsp;'}</p>
     <div class="w3-va"><button data-w3v="prev"${i<=0?' disabled':''}>&lsaquo;</button>${d.id?'<button class="pri" data-w3v="open">Open in Design Lab</button>':'<button class="pri" data-w3v="new">Go to Design Lab</button>'}<button data-w3v="back">Back to gallery</button><button data-w3v="next"${i>=DT.n-1?' disabled':''}>&rsaquo;</button></div></div>`;v.hidden=false}
 function bindUI(){const r=root();if(!r||r.dataset.b)return;r.dataset.b=1;
@@ -9067,6 +9074,7 @@ return {show:()=>{if(P.on)bindUIsoon();show()},hide,get state(){return {mode,it,
 function bindUIsoon(){if(glInit())bindUI()}
 })();
 
+function mpPrevSave(id,c,w,h){try{const W=1080,H=1350,pc=document.createElement('canvas');pc.width=W;pc.height=H;const x=pc.getContext('2d'),k=Math.min(W/w,H/h);x.fillStyle='#0c0c0c';x.fillRect(0,0,W,H);x.imageSmoothingQuality='high';x.drawImage(c,(W-w*k)/2,(H-h*k)/2,w*k,h*k);pc.toBlob(b=>{if(b)IDB.set('dprev:'+id,b)},'image/jpeg',.9)}catch(e){}}
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
 
