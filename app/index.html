@@ -1980,6 +1980,16 @@ html.inbr #toast{z-index:60}
 #w3-v .w3-vx{position:absolute;top:-6px;right:-6px;width:38px;height:38px;padding:0;font-size:20px;z-index:2}
 #home.w3view .hm-dock,#home.w3view #w3-mb,#home.w3view #w3-logo{display:none!important}
 @media (max-height:600px){#w3-v .w3-vf img{max-height:44vh;min-height:0}}
+
+.gsmk-q{display:block;width:100%;box-sizing:border-box;margin:2px 0 10px;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:#0d0d0e;color:#eee;font:13px inherit;outline:none}
+.gsmk-q:focus{border-color:rgba(255,255,255,.4)}
+.gsmk-f{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.gsmk-f button{padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:transparent;color:#aaa;font-size:11px;letter-spacing:.06em;cursor:pointer}
+.gsmk-f button b{font-weight:500;color:#666;margin-left:3px}
+.gsmk-f button.on{background:linear-gradient(180deg,#f4f5f7,#b9bec6)!important;color:#111!important;border-color:transparent!important}
+.gsmk-f button.on b{color:#444!important}
+.gsmk-g>.slot[hidden]{display:none!important}
+.gsmk-none{color:#777;font-size:12px;margin:4px 0 14px}
 </style>
 </head>
 <body class="edit empty">
@@ -6988,7 +6998,10 @@ async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
     try{await lbGoTarget(t);const f=await shrink(x.f,GMAX),bk=x.b?await shrink(x.b,GMAX):null,sc=mkCat(x.cat).sc;const it={id:uid(),src:f.src,ar:f.ar,fields:{name:x.name},points:[],open:false};if(bk)it.back=bk.src;if(sc)it.spec={cat:sc};S.items.push(it);S.mode='edit';libEl.hidden=true;render(true);changed();requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+x.name+'" added to your lookbook',2400)}catch(e){console.error(e);toast('Could not add the mockup')}return}}
 addEventListener('keydown',e=>{const g=document.getElementById('mkP');if(!g||g.hidden)return;if(e.key==='Escape'){e.stopImmediatePropagation();const s=g.querySelector('.mk-sheet');if(s&&!s.hidden)mkSheetClose();else mkClose()}},true);
 /* Garment Studio "New garment": pick from the Mockups library (front + back come together) */
-async function gsMkSection(){await mkLoad();if(!MK.items.length)return '';return `<h5>From your Mockups library <span class="h5n">Front and back come in together</span></h5><div class="tpl slots">${MK.items.slice(0,24).map(x=>`<div class="slot full"><button data-l="gsmk:${x.id}" title="Start on this mockup"><i style="background-image:url(${x.ft})"></i></button><span>${esc(x.name)}${x.b?' · F+B':''}</span></div>`).join('')}</div>`}
+async function gsMkSection(){await mkLoad();const it=MK.items.filter(x=>x&&x.ft);if(!it.length)return '';gsMkWire();const ks=[...new Set(it.map(x=>x.cat||'other'))],n=it.length;return `<h5>From your Mockups library <span class="h5n">Front and back come in together · ${n} mockup${n>1?'s':''}</span></h5>`+(n>10?`<input class="gsmk-q" type="search" placeholder="Search your mockups" aria-label="Search your mockups" autocomplete="off">`:'')+(ks.length>1?`<div class="gsmk-f" role="group" aria-label="Filter mockups"><button class="on" data-gsmkc="*">All <b>${n}</b></button>${ks.map(k=>`<button data-gsmkc="${esc(k)}">${esc(mkCat(k).n||k)} <b>${it.filter(x=>(x.cat||'other')===k).length}</b></button>`).join('')}</div>`:'')+`<div class="tpl slots gsmk-g">${it.map(x=>`<div class="slot full" data-gsmk-c="${esc(x.cat||'other')}" data-gsmk-n="${esc(((x.name||'')+' '+(mkCat(x.cat).n||'')).toLowerCase())}"><button data-l="gsmk:${x.id}" title="Start on this mockup"><i style="background-image:url(${x.ft})"></i></button><span>${esc(x.name)}${x.b?' · F+B':''}</span></div>`).join('')}</div><p class="gsmk-none" hidden>No mockups match.</p>`}
+let GSMKW=0;function gsMkWire(){if(GSMKW)return;GSMKW=1;const run=box=>{const q=((box.querySelector('.gsmk-q')||{}).value||'').trim().toLowerCase(),on=box.querySelector('[data-gsmkc].on'),c=on?on.dataset.gsmkc:'*';let k=0;box.querySelectorAll('.gsmk-g>.slot').forEach(e=>{const ok=(c==='*'||e.dataset.gsmkC===c)&&(!q||q.split(/\s+/).every(w=>e.dataset.gsmkN.includes(w)));e.hidden=!ok;if(ok)k++});const z=box.querySelector('.gsmk-none');if(z)z.hidden=k>0};
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-gsmkc]');if(!b)return;e.stopPropagation();const box=b.closest('.gsmk-f').parentElement;box.querySelectorAll('[data-gsmkc]').forEach(z=>z.classList.toggle('on',z===b));run(box)},true);
+  document.addEventListener('input',e=>{const q=e.target.closest&&e.target.closest('.gsmk-q');if(q)run(q.parentElement)},true)}
 async function mkStart(id){await mkLoad();const x=MK.items.find(z=>z.id===id);if(!x)return;sheetEl.hidden=true;const img=await mkImg(x.f);await docFromMockup(img,x.name);if(GMODE&&x.b){const bi=await mkImg(x.b);await gsMakeBack(bi);if(D&&D.pair)await gsSwitch(D.pair)}}
 
 function mkMerge(A,B){A=A||{};B=B||{};const del=Object.assign({},A.del||{});for(const [k,t] of Object.entries(B.del||{}))del[k]=Math.max(del[k]||0,t);const m=new Map();
