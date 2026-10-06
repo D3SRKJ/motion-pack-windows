@@ -2126,6 +2126,11 @@ html.inbr #toast{z-index:60}
 @media (max-width:420px){#plP .pl-sides button{padding:7px 9px;letter-spacing:.1em}#plP .pl-brand{display:none}}
 html.pl-open,html.pl-open body{overflow:hidden}
 #plP .pl-fg{margin:12px 0 6px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#6f7278}
+
+#mkP .mk-both{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;margin:6px 0 10px;padding:13px 12px;border-radius:14px;border:1px dashed rgba(255,255,255,.28);background:rgba(255,255,255,.03);color:inherit;font-size:12.5px;letter-spacing:.06em;cursor:pointer}
+#mkP .mk-both b{font-size:16px;line-height:1}#mkP .mk-both small{font-size:10.5px;letter-spacing:0;opacity:.6}
+#mkP .mk-both:hover{border-color:rgba(255,255,255,.5)}
+#mkP .mk-swap{display:block;margin:0 auto 10px;border:1px solid rgba(255,255,255,.2);background:none;color:inherit;border-radius:999px;padding:7px 14px;font-size:11px;letter-spacing:.1em;cursor:pointer}
 </style>
 </head>
 <body class="edit empty">
@@ -7040,7 +7045,7 @@ function mkDraw(){const e=document.getElementById('mkP');if(!e||e.hidden)return;
   const groups=MKCATS.map(([g,L])=>[g,L.map(x=>x[0])]);const mine=MK.cats.map(c=>c.k);if(mine.length)groups.push(['Yours',mine]);
   const shown=cat==='all'?it:it.filter(x=>x.cat===cat);
   const slots=(SLOTS||[]).filter(s=>s.blob).length;
-  e.querySelector('.mk-body').innerHTML=`<div class="mk-top"><button class="mk-add" data-mk="add"><b>+</b> Add a mockup</button><button class="mk-imp" data-mk="pl|">&#9680; Piece Lab – recolor &amp; build</button>${slots&&!MK.slotsIn?`<button class="mk-imp" data-mk="slots">Bring in your ${slots} Design Lab mockup${slots>1?'s':''}</button>`:''}</div>
+  e.querySelector('.mk-body').innerHTML=`<div class="mk-top"><button class="mk-add" data-mk="add"><b>+</b> Add a mockup</button><button class="mk-imp" data-mk="bulk">&#8645; Add many at once</button><button class="mk-imp" data-mk="pl|">&#9680; Piece Lab – recolor &amp; build</button>${slots&&!MK.slotsIn?`<button class="mk-imp" data-mk="slots">Bring in your ${slots} Design Lab mockup${slots>1?'s':''}</button>`:''}</div>
    <div class="mk-cats"><div class="mk-row"><button class="${cat==='all'?'on':''}" data-mk="cat|all">All <em>${it.length}</em></button></div>${groups.map(([g,ks])=>`<div class="mk-row"><span class="mk-g">${esc(g)}</span>${ks.map(k=>`<button class="${cat===k?'on':''}" data-mk="cat|${k}">${esc(mkCat(k).n)}${cnt(k)?` <em>${cnt(k)}</em>`:''}</button>`).join('')}${g==='Accessories'?'<button class="mk-nc" data-mk="newcat">+ New category</button>':''}</div>`).join('')}</div>
    ${shown.length?`<div class="mk-grid">${shown.map(x=>{const bk=MKS.flip[x.id]&&x.bt;return `<article class="mk-c"><div class="mk-im${bk?' mk-bk':''}" data-mk="flip|${x.id}" title="${x.bt?'Tap to see the other side':''}"><img src="${bk?x.bt:x.ft}" alt="">${x.bt?`<span class="mk-fb">${bk?'Back':'Front'} · tap to flip</span>`:'<span class="mk-fb nb">Front only</span>'}</div>
      <div class="mk-t"><b>${esc(x.name)}</b><span>${esc(mkCat(x.cat).n)}</span></div>
@@ -7053,7 +7058,7 @@ function mkAddSheet(edit){const x=edit||MKNEW||{};MKNEW=x;const opts=MKCATS.map(
   mkSheet(`<div class="mk-shh"><b>${edit&&edit.id?'Edit mockup':'Add a mockup'}</b><button data-mk="shx" aria-label="Close">&times;</button></div>
    <label class="mk-l">Name<input id="mkName" value="${esc(x.name||'')}" placeholder="e.g. Heavyweight boxy tee" autocomplete="off"></label>
    <label class="mk-l">Category<select id="mkCatSel">${opts}</select></label>
-   <div class="mk-sides"><button class="mk-side" data-mk="pick|f">${x.ft?`<img src="${x.ft}" alt="">`:'<i>+</i>'}<span>Front${x.ft?' · change':''}</span></button><button class="mk-side" data-mk="pick|b">${x.bt?`<img src="${x.bt}" alt="">`:'<i>+</i>'}<span>Back${x.bt?' · change':' (optional)'}</span></button></div>
+   <button class="mk-both" data-mk="pickboth"><b>&#8645;</b> Pick front &amp; back together<small>Select both images at once – we sort out which is which</small></button>${x.ft&&x.bt?'<button class="mk-swap" data-mk="swapfb">&#8644; Swap front / back</button>':''}<div class="mk-sides"><button class="mk-side" data-mk="pick|f">${x.ft?`<img src="${x.ft}" alt="">`:'<i>+</i>'}<span>Front${x.ft?' · change':''}</span></button><button class="mk-side" data-mk="pick|b">${x.bt?`<img src="${x.bt}" alt="">`:'<i>+</i>'}<span>Back${x.bt?' · change':' (optional)'}</span></button></div>
    <div class="mk-rm${x.rm?' on':''}"><button class="mk-rmb" data-mk="rmbg"><i></i><span><b>Remove background</b><small>${x.rm?'Tap to turn off':'Takes away a plain background behind the garment'}</small></span></button>
    ${x.rm?`<label class="mk-tol">Strength <input type="range" id="mkTol" min="4" max="80" value="${x.tol}"><em id="mkTolV">${x.tol}</em></label>
    <label class="mk-tol">Clean edges <input type="range" id="mkEdge" min="0" max="6" value="${x.edge}"><em id="mkEdgeV">${x.edge}</em></label>
@@ -7110,6 +7115,11 @@ async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
   if(a==='shx'){MKNEW=null;mkSheetClose();return}
   if(a==='rmbg'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;MKNEW.rm=!MKNEW.rm;mkRmInit(MKNEW);mkAddSheet(MKNEW.id?MKNEW:null);return}
   if(a==='rmopt'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;MKNEW[v]=!MKNEW[v];mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='pickboth'||a==='swapfb'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;
+    if(a==='swapfb'){const y=MKNEW.id&&MK.items.find(z=>z.id===MKNEW.id);if(y){if(!MKNEW.f&&y.f)MKNEW.f=y.f;if(!MKNEW.b&&y.b)MKNEW.b=y.b}for(const k of ['','t','new','o','bg']){const t=MKNEW['f'+k];MKNEW['f'+k]=MKNEW['b'+k];MKNEW['b'+k]=t}MKNEW.fnew=true;MKNEW.bnew=true;if(MKNEW.rm)mkRmInit(MKNEW);mkAddSheet(MKNEW.id?MKNEW:null);return}
+    const fs=await mkPickFiles();if(!fs.length)return;const p=mkPair(fs);try{if(p.f){MKNEW.f=p.f;MKNEW.ft=await mkThumb(p.f);MKNEW.fnew=true;if(!MKNEW.name)MKNEW.name=mkBase(p.f.name)}if(p.b){MKNEW.b=p.b;MKNEW.bt=await mkThumb(p.b);MKNEW.bnew=true}}catch(e){toast('Could not read those images')}
+    mkAddSheet(MKNEW.id?MKNEW:null);if(p.b)toast(fs.length>2?'Used the first two images':'Front & back added – tap Swap if they’re the wrong way round',2600);return}
+  if(a==='bulk'){mkBulkAdd();return}
   if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;MKNEW.fnew=true;if(!MKNEW.name)MKNEW.name=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t;MKNEW.bnew=true}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
   if(a==='savenew'){const n=($('#mkName').value||'').trim(),c=$('#mkCatSel').value;if(!MKNEW.f&&!MKNEW.id){toast('Add the front image first');return}
     if(MKNEW.rm){const sb=b;sb.textContent='Removing background…';sb.disabled=true;const miss=await mkRmApply(MKNEW,MKNEW.id&&MK.items.find(z=>z.id===MKNEW.id));if(miss)toast('No plain background found on '+(miss>1?'either side':'one side')+' – kept it as it was',2600)}
@@ -9772,7 +9782,7 @@ function build(){if(EL)return;EL=document.createElement('div');EL.id='plP';EL.hi
 <main class="pl-stage" id="plStage"><canvas id="plView"></canvas><div class="pl-opts" id="plOpts" hidden></div><div class="pl-tip" id="plTip"></div>
   <div class="pl-zoom pl-hide" id="plZoom"><button data-z="in" aria-label="Zoom in">+</button><button data-z="out" aria-label="Zoom out">&minus;</button><button data-z="fit" aria-label="Fit">&#10530;</button></div>
   <div class="pl-empty" id="plEmpty"><h2>Piece <i>Lab</i></h2><p>Open a mockup, outline its pieces, then recolor them while the folds and shadows stay real. Add chains, buckles and patches on top.</p>
-    <div class="pl-row"><button class="pl-hb pl-ch" id="plUp">Upload a mockup</button></div><div class="pl-egrid" id="plEmptyGrid"></div></div>
+    <div class="pl-row"><button class="pl-hb pl-ch" id="plUp">Upload a mockup</button></div><p class="pl-muted" style="font-size:11px">Tip: select the front and back images together to load both at once.</p><div class="pl-egrid" id="plEmptyGrid"></div></div>
   <div class="pl-busy" id="plBusy" hidden>Working…</div></main>
 <div class="pl-mtabs"><button class="on" data-plmt="pieces">Pieces</button><button data-plmt="color">Color</button><button data-plmt="add">Add</button></div>
 <aside class="pl-panel">
@@ -9800,7 +9810,9 @@ function build(){if(EL)return;EL=document.createElement('div');EL.id='plP';EL.hi
   addEventListener('keydown',onKey,true);addEventListener('keyup',onKeyUp);
   addEventListener('resize',()=>{if(!openFlag)return;resize();if(!moved)fit(false)});if(window.ResizeObserver)new ResizeObserver(()=>{if(!openFlag)return;resize();if(!moved)fit(false)}).observe(q('#plStage'));
   q('#plClose').onclick=close;q('#plUndo').onclick=undo;q('#plRedo').onclick=redo;q('#plSave').onclick=()=>saveToMockups(false);q('#plMore').onclick=moreSheet;
-  q('#plUp').onclick=()=>pickFile(async f=>{try{src={name:f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' '),cat:'other'};await setImage(await toCanvas(f),'f');await keepUpload(f,'f')}catch(e){say(/heic|heif/i.test(f.type+f.name)?'That’s an iPhone HEIC photo – save it as PNG or JPG':'Could not open that image',3200)}});
+  q('#plUp').onclick=()=>pickFile(async fs=>{const pr=mkPair(fs),f=pr.f;try{src={name:mkBase(f.name)||'Mockup',cat:'other'};await setImage(await toCanvas(f),'f');await keepUpload(f,'f');
+    if(pr.b){await setImage(await toCanvas(pr.b),'b');await keepUpload(pr.b,'b');side='f';syncSides();recomp();ui();fit(true);say('Front & back loaded – both saved to your Mockups library',2600)}}
+    catch(e){say(/heic|heif/i.test(f.type+f.name)?'That’s an iPhone HEIC photo – save it as PNG or JPG':'Could not open that image',3200)}},true);
   qa('[data-pltool]').forEach(b=>b.onclick=()=>setTool(b.dataset.pltool));
   qa('[data-plmode]').forEach(b=>b.onclick=()=>{mode=b.dataset.plmode;qa('[data-plmode]').forEach(z=>z.classList.toggle('on',z===b));optsUI();need=true});
   qa('[data-plside]').forEach(b=>b.onclick=()=>sideClick(b.dataset.plside));
@@ -9824,6 +9836,22 @@ return {open,get _(){return{sides,S,cur,setTool,applyPoly,setColor,addPiece,undo
 })();
 function plOpen(o){return PL.open(o)}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-plopen]');if(b){e.preventDefault();e.stopPropagation();try{hideHome()}catch(err){}plOpen()}},true);
+
+/* ---------- v24: upload front + back together, and many mockups at once ---------- */
+const MKFB=/(^|[\s_\-.()\[\]])(front|frente|frt|fr|f)(?=$|[\s_\-.()\[\]\d])/i,MKBK=/(^|[\s_\-.()\[\]])(back|rear|bk|b|reverse|rev)(?=$|[\s_\-.()\[\]\d])/i;
+function mkBase(n){return String(n||'').replace(/\.[a-z0-9]+$/i,'').replace(/(^|[\s_\-.()\[\]])(front|frente|frt|back|rear|reverse|bk|fr|rev|f|b)(?=$|[\s_\-.()\[\]\d])/ig,' ').replace(/[\s_\-.]+/g,' ').trim()}
+function mkPickFiles(){return new Promise(res=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.multiple=true;i.onchange=()=>res(i.files?[...i.files]:[]);i.click()})}
+// decide which of two files is the front and which is the back (by name; otherwise the order picked)
+function mkPair(fs){fs=fs.slice(0,2);if(fs.length<2)return{f:fs[0]||null,b:null};const n=fs.map(f=>f.name.replace(/\.[a-z0-9]+$/i,''));
+  const isB=i=>MKBK.test(n[i])&&!MKFB.test(n[i]),isF=i=>MKFB.test(n[i])&&!MKBK.test(n[i]);
+  if(isB(0)||isF(1))return{f:fs[1],b:fs[0]};return{f:fs[0],b:fs[1]}}
+// group many files into front/back pairs by their shared name
+function mkGroups(fs){const g=new Map();for(const f of fs){const k=mkBase(f.name).toLowerCase()||f.name;if(!g.has(k))g.set(k,[]);g.get(k).push(f)}
+  const out=[];for(const [k,L] of g){if(L.length<=2){const p=mkPair(L);out.push({name:mkBase(L[0].name)||'Mockup',f:p.f,b:p.b})}else L.forEach(f=>out.push({name:mkBase(f.name)||'Mockup',f,b:null}))}return out}
+async function mkBulkAdd(){const fs=await mkPickFiles();if(!fs.length)return;await mkLoad();const groups=mkGroups(fs),cat=MKS.cat&&MKS.cat!=='all'?MKS.cat:'other';let n=0,pairs=0;
+  toast('Adding '+groups.length+' mockup'+(groups.length>1?'s':'')+'…',4000);
+  for(const gr of groups){try{const x={id:lid(),name:gr.name,cat,f:gr.f,ft:await mkThumb(gr.f),b:gr.b||null,bt:gr.b?await mkThumb(gr.b):null,fo:null,bo:null,fbg:null,bbg:null,rmset:null,updated:Date.now()};MK.items.unshift(x);n++;if(gr.b)pairs++}catch(e){console.error(e)}}
+  await mkSave();mkDraw();toast(n?`Added ${n} mockup${n>1?'s':''}${pairs?` · ${pairs} with front + back`:''} – use ··· › Edit to remove a background`:'Could not read those images',3600)}
 
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
