@@ -2130,18 +2130,18 @@ html.pl-open,html.pl-open body{overflow:hidden}
 #mkP .mk-both{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;margin:6px 0 10px;padding:13px 12px;border-radius:14px;border:1px dashed rgba(255,255,255,.28);background:rgba(255,255,255,.03);color:inherit;font-size:12.5px;letter-spacing:.06em;cursor:pointer}
 #mkP .mk-both b{font-size:16px;line-height:1}#mkP .mk-both small{font-size:10.5px;letter-spacing:0;opacity:.6}
 #mkP .mk-both:hover{border-color:rgba(255,255,255,.5)}
-#mkP .mk-bk{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow:auto;margin:10px 0 12px;padding-right:2px}
-#mkP .mk-bkr{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.02)}
-#mkP .mk-bkr.on{border-color:rgba(220,230,245,.8)}
-#mkP .mk-bkt{display:flex;gap:6px;border:0;background:none;padding:0;cursor:pointer;color:inherit;flex:none}
-#mkP .mk-bkt span{display:flex;flex-direction:column;align-items:center;gap:3px;width:64px}
-#mkP .mk-bkt img{width:64px;height:64px;object-fit:contain;border-radius:9px;background:repeating-conic-gradient(#2a2a2d 0 25%,#202023 0 50%) 0 0/12px 12px}
-#mkP .mk-bkt em{font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
-#mkP .mk-bke i{display:grid;place-items:center;width:64px;height:64px;border-radius:9px;border:1px dashed rgba(255,255,255,.25);font-style:normal;opacity:.6}
-#mkP .mk-bkc{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-#mkP .mk-bkc input{width:100%;box-sizing:border-box;background:#0a0a0b;border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:7px 9px;color:inherit;font:inherit;font-size:12px}
-#mkP .mk-bkc div{display:flex;gap:6px}
-#mkP .mk-bkc button{width:32px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:none;color:inherit;cursor:pointer}
+#mkP .mk-blk{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow:auto;margin:10px 0 12px;padding-right:2px}
+#mkP .mk-blkr{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.02)}
+#mkP .mk-blkr.on{border-color:rgba(220,230,245,.8)}
+#mkP .mk-blkt{display:flex;gap:6px;border:0;background:none;padding:0;cursor:pointer;color:inherit;flex:none}
+#mkP .mk-blkt span{display:flex;flex-direction:column;align-items:center;gap:3px;width:64px}
+#mkP .mk-blkt img{width:64px;height:64px;object-fit:contain;border-radius:9px;background:repeating-conic-gradient(#2a2a2d 0 25%,#202023 0 50%) 0 0/12px 12px}
+#mkP .mk-blkt em{font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+#mkP .mk-blke i{display:grid;place-items:center;width:64px;height:64px;border-radius:9px;border:1px dashed rgba(255,255,255,.25);font-style:normal;opacity:.6}
+#mkP .mk-blkc{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+#mkP .mk-blkc input{width:100%;box-sizing:border-box;background:#0a0a0b;border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:7px 9px;color:inherit;font:inherit;font-size:12px}
+#mkP .mk-blkc div{display:flex;gap:6px}
+#mkP .mk-blkc button{width:32px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:none;color:inherit;cursor:pointer}
 #mkP .mk-swap{display:block;margin:0 auto 10px;border:1px solid rgba(255,255,255,.2);background:none;color:inherit;border-radius:999px;padding:7px 14px;font-size:11px;letter-spacing:.1em;cursor:pointer}
 </style>
 </head>
@@ -9896,9 +9896,9 @@ function mkBulkSheet(){const B=MKBULK;if(!B)return;const opts=MKCATS.map(([g,L])
   const n=B.groups.length,pairs=B.groups.filter(g=>g.b).length;
   mkSheet(`<div class="mk-shh"><b>${n} mockup${n>1?'s':''} ready</b><button data-mk="bkx" aria-label="Close">&times;</button></div>
    <p class="mk-note">${pairs} with front + back${n-pairs?` · ${n-pairs} front only`:''}. Check the pairs – <b>⇄</b> swaps front and back, <b>✂</b> splits a pair, and tapping two singles pairs them.</p>
-   <div class="mk-bk">${B.groups.map((g,i)=>`<div class="mk-bkr${B.pick===i?' on':''}">
-     <button class="mk-bkt" data-mk="bkpick|${i}" title="${g.b?'':'Tap, then tap another single to pair them'}"><span><img src="${g.ft}" alt=""><em>Front</em></span>${g.b?`<span><img src="${g.bt}" alt=""><em>Back</em></span>`:`<span class="mk-bke"><i>+</i><em>${B.pick===i?'Now tap its back':'No back'}</em></span>`}</button>
-     <div class="mk-bkc"><input data-bkn="${i}" value="${esc(g.name)}" aria-label="Mockup name"><div>${g.b?`<button data-mk="bkswap|${i}" title="Swap front and back">&#8644;</button><button data-mk="bksplit|${i}" title="Split into two">&#9986;</button>`:''}<button data-mk="bkdel|${i}" title="Leave this one out">&times;</button></div></div></div>`).join('')}</div>
+   <div class="mk-blk">${B.groups.map((g,i)=>`<div class="mk-blkr${B.pick===i?' on':''}">
+     <button class="mk-blkt" data-mk="bkpick|${i}" title="${g.b?'':'Tap, then tap another single to pair them'}"><span><img src="${g.ft}" alt=""><em>Front</em></span>${g.b?`<span><img src="${g.bt}" alt=""><em>Back</em></span>`:`<span class="mk-blke"><i>+</i><em>${B.pick===i?'Now tap its back':'No back'}</em></span>`}</button>
+     <div class="mk-blkc"><input data-bkn="${i}" value="${esc(g.name)}" aria-label="Mockup name"><div>${g.b?`<button data-mk="bkswap|${i}" title="Swap front and back">&#8644;</button><button data-mk="bksplit|${i}" title="Split into two">&#9986;</button>`:''}<button data-mk="bkdel|${i}" title="Leave this one out">&times;</button></div></div></div>`).join('')}</div>
    <label class="mk-l">Category for all<select id="mkBkCat">${opts}</select></label>
    <div class="mk-rm${B.rm?' on':''}"><button class="mk-rmb" data-mk="bkrm"><i></i><span><b>Remove backgrounds</b><small>${B.rm?'On – plain backgrounds are taken away as they save':'Turn on if your images have a plain background'}</small></span></button></div>
    <div class="mk-sb"><button class="pill" data-mk="bkmore">+ Add more images</button><button class="pill big" data-mk="bksave">Save ${n} mockup${n>1?'s':''}</button></div>`);
