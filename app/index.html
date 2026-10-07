@@ -2143,6 +2143,23 @@ html.pl-open,html.pl-open body{overflow:hidden}
 #mkP .mk-blkc div{display:flex;gap:6px}
 #mkP .mk-blkc button{width:32px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:none;color:inherit;cursor:pointer}
 #mkP .mk-swap{display:block;margin:0 auto 10px;border:1px solid rgba(255,255,255,.2);background:none;color:inherit;border-radius:999px;padding:7px 14px;font-size:11px;letter-spacing:.1em;cursor:pointer}
+#lab .lpop.stk .pprop.pgly{flex:1.3 1 0;min-height:270px}
+#lab .pprop.pgly .gl2b{flex:1;min-height:0;overflow:auto;padding:8px 10px}
+.gl2{display:flex;flex-direction:column;gap:7px;color:#d9d9dc;font:12px/1.3 system-ui,-apple-system,Segoe UI,sans-serif}
+.gl2top{display:flex;gap:6px}.gl2top select{flex:1;min-width:0;height:28px;background:#18191b;color:#eee;border:1px solid #0a0a0b;border-radius:6px;padding:0 6px;font-size:11.5px}
+.gl2in{width:100%;box-sizing:border-box;height:28px;background:#18191b;color:#eee;border:1px solid #0a0a0b;border-radius:6px;padding:0 8px;font-size:12px}
+.gl2hint{margin:0;color:#8d8e93;font-size:11px}.gl2hint b{color:#d9d9dc;font-weight:600}
+.gl2use{border:1px solid #4b4c50;border-radius:5px;background:#2a2b2e;color:#e6e6e8;padding:2px 7px;font-size:10.5px;cursor:pointer}
+.gl2note{margin:6px 0;color:#8d8e93;font-size:11.5px}
+.gl2grid h6{display:flex;justify-content:space-between;margin:10px 0 5px;font:600 10px/1 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9d9ea3}
+.gl2grid h6 em{font-style:normal;color:#6c6d72}
+.gl2g{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:3px}
+.gt2{aspect-ratio:1;display:grid;place-items:center;min-width:0;padding:0;border:1px solid #111;border-radius:6px;background:#1d1e20;color:#f1f1f3;font:inherit;font-size:21px;line-height:1;overflow:hidden;cursor:pointer}
+.gt2:hover{border-color:#7aa8ff;background:#2c2e32;transform:scale(1.08)}
+.gl2more{width:100%;margin-top:10px;height:30px;border:1px solid #3a3b3f;border-radius:7px;background:#26272a;color:#e6e6e8;font-size:11.5px;cursor:pointer}
+.gl2fx{display:flex;flex-direction:column;gap:5px}
+.gl2fx .gcv:hover{border-color:#7aa8ff;background:#35373b}.gl2fx .gcv span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.gl2fx .gcv em{font-style:normal;font-size:10px;color:#8d8e93;letter-spacing:.08em;text-transform:uppercase;flex:none}
+#glyLib .glbody{flex:1;min-height:0;overflow:auto;padding:10px}
 </style>
 </head>
 <body class="edit empty">
@@ -5165,7 +5182,7 @@ sideEl.addEventListener('pointerdown',e=>{const vs=e.target.closest('.vsl');if(!
   const mv=ev=>set(ev),up=()=>{vs.classList.remove('act');vs.removeEventListener('pointermove',mv);vs.removeEventListener('pointerup',up);CUR.show=false;req();drawOpt()};vs.addEventListener('pointermove',mv);vs.addEventListener('pointerup',up)});
 
 /* ---------- v7: stacked Colour / Properties / Layers panels (desktop) ---------- */
-const STK={ct:'color',lt:'layers',f:'',fk:''};
+const STK={ct:'color',lt:'layers',f:'',fk:'',pt:'props'};
 const SI=(d,w)=>`<svg viewBox="0 0 24 24" width="${w||16}" height="${w||16}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const SIC={pix:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-5 4 4 3-3 6 6"/>',adj:'<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/>',type:'<path d="M5 6V4h14v2M12 4v16M9 20h6"/>',grp:'<path d="M3 7h6l2 2h10v10H3z"/>',
   link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',mask:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="12" cy="12" r="4.2" fill="currentColor"/>',
@@ -5177,7 +5194,7 @@ const SIC={pix:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9
 const ic=(k,w)=>SI(SIC[k],w);
 function ppTabs(list,cur,k,close){return `<div class="pph">${list.map(([v,n])=>`<button class="${cur===v?'on':''}" data-l="stk:${k}:${v}">${n}</button>`).join('')}<span class="grow"></span>${close?'<button class="ppx" data-l="closepanel" title="Close panels">&times;</button>':''}</div>`}
 function stackHTML(){return `<section class="pp pcol">${ppTabs([['color','Color'],['swatches','Swatches']],STK.ct,'ct',1)}<div class="ppb">${STK.ct==='color'?colMini():swatchHTML()}</div></section>
-  <section class="pp pprop">${ppTabs([['props','Properties']],'props','pt')}<div class="ppb">${propsHTML()}</div></section>
+  <section class="pp pprop${STK.pt==='glyphs'?' pgly':''}">${ppTabs([['props','Properties'],['glyphs','Glyphs']],STK.pt==='glyphs'?'glyphs':'props','pt')}${STK.pt==='glyphs'?'<div class="gl2b">'+gl2HTML()+'</div>':'<div class="ppb">'+propsHTML()+'</div>'}</section>
   <section class="pp plyr">${ppTabs([['layers','Layers'],['history','History']],STK.lt,'lt')}${STK.lt==='layers'?layersPS():'<div class="ppb pscr">'+historyHTML()+'</div>'}</section>`}
 function colMini(){return `<div class="cmini"><div class="cfb"><button class="fgc${COLTGT==='fg'?' on':''}" data-l="coltgt:fg" style="--c:${TOOL.color}" title="Foreground"></button><button class="bgc${COLTGT==='bg'?' on':''}" data-l="coltgt:bg" style="--c:${TOOL.color2}" title="Background"></button><button class="cswp" data-l="swapcol" title="Swap colours (X)">&#8646;</button></div>
   <div class="cmr"><div class="cpick" id="cpSV"><canvas width="300" height="200"></canvas><i></i></div><div class="chue" id="cpH"><canvas width="300" height="22"></canvas><i></i></div>
@@ -5211,7 +5228,7 @@ popEl.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.lq!=
 
 function lmatch(x){const q=STK.f.trim().toLowerCase();if(q&&!String(x.name||'').toLowerCase().includes(q))return false;if(STK.fk){const t=x.type==='group'?'grp':x.type==='text'?'type':x.type==='adj'?'adj':'pix';if(t!==STK.fk)return false}return true}
 function lfilter(){popEl.querySelectorAll('.plyr .lyr[data-ly]').forEach(r=>{const x=D.layers.find(q=>q.id===r.dataset.ly);r.hidden=!!x&&!lmatch(x)})}
-function stkAct(v){const [k,a]=v.split(':');if(k==='ct')STK.ct=a;else if(k==='lt')STK.lt=a;else if(k==='fk')STK.fk=STK.fk===a?'':a;drawPanel()}
+function stkAct(v){const [k,a]=v.split(':');if(k==='ct')STK.ct=a;else if(k==='lt')STK.lt=a;else if(k==='fk')STK.fk=STK.fk===a?'':a;else if(k==='pt')STK.pt=a;drawPanel()}
 function layersPS(){const l=curL(),sel=selSet(),grp=l&&l.type==='group',pc=(n,d,k)=>`<span class="pnum"><input type="number" min="0" max="100" value="${n}" ${d}="${k}"><i>%</i><input type="range" class="pdr" min="0" max="100" value="${n}" ${d}="${k}"></span>`;
   const top=`<div class="lfilt"><span class="lkd">&#9906; Kind</span><input data-lq value="${esc(STK.f)}" placeholder="Filter by name" aria-label="Filter layers">${[['pix','Pixel layers'],['adj','Adjustment layers'],['type','Type layers'],['grp','Groups']].map(([k,t])=>`<button class="${STK.fk===k?'on':''}" data-l="stk:fk:${k}" title="Show only ${t}">${ic(k,15)}</button>`).join('')}</div>`+
     (l?`<div class="lbo"><select data-lblend="${l.id}">${grp?`<option value="pass"${l.blend==='pass'?' selected':''}>Pass Through</option>`:''}${BLENDS.map(([k,n])=>`<option value="${k}"${l.blend===k?' selected':''}>${n}</option>`).join('')}</select><span class="lbl2">Opacity:</span>${pc(Math.round(l.op*100),'data-lop',l.id)}</div>
@@ -9918,6 +9935,105 @@ async function mkBulkAct(a,v){const B=MKBULK;if(!B)return false;const i=+v;
         MK.items.unshift(x);n++}catch(e){console.error(e)}}
     await mkSave();MKBULK=null;mkSheetClose();MKS.cat=B.cat;mkDraw();toast(`Saved ${n} mockup${n>1?'s':''}${miss?` · ${miss} had no plain background to remove`:''}`,3000);return true}
   return false}
+
+/* ---------- v25: Glyphs panel in the right-hand stack, reading every character from your fonts ---------- */
+const GL2={font:null,cat:'font',q:'',show:700,cache:new Map(),busy:new Set(),scroll:0};
+const glGeneric=/^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-[a-z-]+|emoji|math|fangsong)$/i;
+// read the font file's own character map (TTF / OTF / TTC / WOFF); WOFF2 and system fonts fall back to probing
+async function glParse(buf){if(!buf)return null;let u8=buf instanceof Uint8Array?buf:new Uint8Array(buf.buffer?buf.buffer.slice(buf.byteOffset||0,(buf.byteOffset||0)+buf.byteLength):buf);if(u8.length<12)return null;
+  const dv=new DataView(u8.buffer,u8.byteOffset,u8.byteLength),tag=dv.getUint32(0),str=o=>String.fromCharCode(u8[o],u8[o+1],u8[o+2],u8[o+3]);
+  if(tag===0x774F4632)return null;
+  if(tag===0x774F4646){const n=dv.getUint16(12);for(let i=0;i<n;i++){const r=44+i*20;if(str(r)!=='cmap')continue;const o=dv.getUint32(r+4),cl=dv.getUint32(r+8),ol=dv.getUint32(r+12);let d=u8.slice(o,o+cl);
+      if(cl<ol){if(typeof DecompressionStream==='undefined')return null;d=new Uint8Array(await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate'))).arrayBuffer())}return glCmap(d)}return null}
+  let base=0;if(tag===0x74746366)base=dv.getUint32(12);const n=dv.getUint16(base+4);
+  for(let i=0;i<n;i++){const r=base+12+i*16;if(str(r)!=='cmap')continue;const o=dv.getUint32(r+8),len=dv.getUint32(r+12);return glCmap(u8.subarray(o,o+len))}return null}
+function glCmap(t){const dv=new DataView(t.buffer,t.byteOffset,t.byteLength),n=dv.getUint16(2);let best=null,sc=-1;
+  for(let i=0;i<n;i++){const pid=dv.getUint16(4+i*8),eid=dv.getUint16(6+i*8),off=dv.getUint32(8+i*8);if(off+2>t.byteLength)continue;const f=dv.getUint16(off);if(f!==4&&f!==12)continue;
+    const s=(f===12?10:5)+(pid===0||(pid===3&&(eid===1||eid===10))?2:1);if(s>sc){sc=s;best={off,f}}}
+  if(!best)return null;const out=new Set(),o=best.off;
+  if(best.f===4){const seg=dv.getUint16(o+6)/2,E=o+14,S=E+seg*2+2,Dl=S+seg*2,R=Dl+seg*2;
+    for(let s=0;s<seg;s++){const e=dv.getUint16(E+s*2),st=dv.getUint16(S+s*2),d=dv.getInt16(Dl+s*2),ro=dv.getUint16(R+s*2);if(st===0xFFFF)continue;
+      for(let c=st;c<=e;c++){let g;if(!ro)g=(c+d)&0xFFFF;else{const gi=R+s*2+ro+(c-st)*2;g=gi+2<=t.byteLength?dv.getUint16(gi):0;if(g)g=(g+d)&0xFFFF}if(g)out.add(c)}}}
+  else{const ng=dv.getUint32(o+12);for(let i=0;i<ng;i++){const s=dv.getUint32(o+16+i*12),e=dv.getUint32(o+20+i*12),g=dv.getUint32(o+24+i*12);for(let c=s;c<=e&&c-s<70000;c++)if(g+(c-s))out.add(c)}}
+  return [...out]}
+// for fonts we can't read: compare how each character measures against two different fallbacks
+function glProbe(name){const x=document.createElement('canvas').getContext('2d'),css=fontCss(name).split(',').map(s=>s.trim()).filter(s=>s&&!glGeneric.test(s.replace(/"/g,''))).join(',')||`"${name}"`;
+  const R=[[0x20,0x7E],[0xA0,0x24F],[0x1E00,0x1EFF],[0x2000,0x206F],[0x20A0,0x20CF],[0x2100,0x21FF],[0x2200,0x22FF],[0x2300,0x23FF],[0x2460,0x27BF],[0x2900,0x2BFF],[0x3040,0x30FF],[0xFB00,0xFB06]];
+  const W=(f,ch)=>{x.font='40px '+f;return x.measureText(ch).width},out=[];
+  for(const [a,b] of R)for(let cp=a;cp<=b;cp++){const ch=String.fromCodePoint(cp);if(W(css+',monospace',ch)!==W('monospace',ch)||W(css+',serif',ch)!==W('serif',ch))out.push(cp)}
+  return out}
+async function glChars(name){if(GL2.cache.has(name))return GL2.cache.get(name);if(GL2.busy.has(name))return null;GL2.busy.add(name);let cps=null;
+  try{const b=await IDB.get('font:'+name);if(b)cps=await glParse(b)}catch(e){cps=null}
+  if(!cps||!cps.length){try{await document.fonts.load(`40px "${name}"`,'Aa')}catch(e){}cps=glProbe(name)}
+  cps=[...new Set(cps)].filter(c=>c>=0x21&&!(c>=0x7F&&c<0xA0)&&!(c>=0xD800&&c<0xE000)&&c!==0xFEFF&&c!==0xAD&&!(c>=0xFE00&&c<=0xFE0F)).sort((a,b)=>a-b);
+  GL2.cache.set(name,cps);GL2.busy.delete(name);return cps}
+const glSec=c=>c>=0xE000&&c<=0xF8FF||c>=0xF0000?'Alternates, swashes & ornaments':(c>=48&&c<=57)||(c>=65&&c<=90)||(c>=97&&c<=122)?'Letters & numbers':c>=0xFB00&&c<=0xFB4F?'Ligatures':(c>=0xC0&&c<=0x24F)||(c>=0x1E00&&c<=0x1EFF)?'Accented & extended letters':c<0x2C00||(c>=0x2E00&&c<0x3000)?'Punctuation, symbols & dingbats':'More characters';
+const GLSEC=['Alternates, swashes & ornaments','Letters & numbers','Accented & extended letters','Punctuation, symbols & dingbats','Ligatures','More characters'];
+function glPanelFont(){const l=D&&curL();return GL2.font||(l&&l.type==='text'?l.t.font:null)||TOOL.font||'Helvetica Neue'}
+function gl2HTML(){const fnt=glPanelFont(),l=D&&curL(),tl=l&&l.type==='text'?l:null,isMine=FSTORE.some(f=>f.n===fnt);
+  const mine=FSTORE.map(f=>f.n),others=FONTS.map(f=>f.n).filter(n=>!mine.includes(n));
+  const fo=`<option value=""${GL2.font?'':' selected'}>${tl?esc(tl.t.font)+' (selected text)':'Selected text font'}</option>${mine.length?`<optgroup label="Your fonts">${mine.map(n=>`<option value="${esc(n)}"${GL2.font===n?' selected':''}>${esc(n)}</option>`).join('')}</optgroup>`:''}<optgroup label="All fonts">${others.map(n=>`<option value="${esc(n)}"${GL2.font===n?' selected':''}>${esc(n)}</option>`).join('')}</optgroup>`;
+  const cats=[['font','Every glyph in this font'],['recent','Recently used'],...GLC.map((c,i)=>['c'+i,c[0]]),['fx','✦ Fancy text converter']];
+  let body='';const tile=(g,ff)=>`<button class="gt2" data-gl="${esc(g)}" title="U+${g.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')}"${ff?` style="font-family:${esc(ff)}"`:''}>${esc(g)}</button>`;
+  const q=GL2.q.trim(),qu=q.toUpperCase().replace(/^U\+/,''),match=g=>!q||g===q||g.codePointAt(0).toString(16).toUpperCase().padStart(4,'0').startsWith(qu);
+  if(GL2.cat==='fx'){const txt=GLF.txt||'Vintage Club';body=`<input class="gl2in" data-gl2txt value="${esc(GLF.txt)}" placeholder="Type text to convert" spellcheck="false"><div class="gl2fx">${GLS.map(([k,n])=>{const v=glConv(txt,k);return `<button class="gcv" data-gl="${esc(v)}"><span>${esc(v)}</span><em>${n}</em></button>`}).join('')}</div>`}
+  else if(GL2.cat==='font'){const cps=GL2.cache.get(fnt);
+    if(!cps){glChars(fnt).then(()=>{if(STK.pt==='glyphs')drawPanel();glDraw()});body=`<p class="gl2note">Reading every character in <b>${esc(fnt)}</b>…</p>`}
+    else{const ff=fontCss(fnt),groups={};let shown=0,total=0;for(const c of cps){const g=String.fromCodePoint(c);if(!match(g))continue;total++;const k=glSec(c);(groups[k]||(groups[k]=[])).push(g)}
+      if(!total)body=`<p class="gl2note">${q?'No glyphs match.':'No characters found in this font.'}</p>`;
+      else body=`<div class="gl2grid" style="font-family:${esc(ff)}">${GLSEC.filter(k=>groups[k]).map(k=>{const L=groups[k];const room=Math.max(0,GL2.show-shown);const part=L.slice(0,room);shown+=part.length;return part.length?`<h6>${k} <em>${L.length}</em></h6><div class="gl2g">${part.map(g=>tile(g)).join('')}</div>`:''}).join('')}${total>shown?`<button class="gl2more" data-l="gl2more">Show all ${total} glyphs</button>`:''}</div>`}}
+  else{const src=GL2.cat==='recent'?GLREC.join(''):(GLC[+GL2.cat.slice(1)]||GLC[0])[1];const list=[...new Set([...src])].filter(g=>g.trim()&&!/[︎️]/.test(g)&&match(g));
+    body=list.length?`<div class="gl2grid" style="font-family:${esc(fontCss(fnt))}"><div class="gl2g">${list.map(g=>tile(g)).join('')}</div></div>`:`<p class="gl2note">${GL2.cat==='recent'?'Glyphs you use will show here.':'No glyphs match.'}</p>`}
+  const diff=tl&&GL2.font&&GL2.font!==tl.t.font;
+  return `<div class="gl2"><div class="gl2top"><select data-gl2font title="Font to show glyphs from">${fo}</select><select data-gl2cat>${cats.map(([v,n])=>`<option value="${v}"${GL2.cat===v?' selected':''}>${n}</option>`).join('')}</select></div>
+    ${GL2.cat==='fx'?'':`<input class="gl2in" data-gl2q placeholder="Find: paste a character or type a U+ code" value="${esc(GL2.q)}" spellcheck="false">`}
+    <p class="gl2hint">${tl?`Tap a glyph to add it to <b>${esc(tl.name)}</b>${TXI?' at the cursor':''}`:'Tap a glyph to start a new text layer'}${isMine?' · your uploaded font':''}${diff?` · <button class="gl2use" data-l="gl2use">Use ${esc(GL2.font)} for this text</button>`:''}</p>${body}</div>`}
+// insert a glyph: into the live text box at the cursor, into the selected text layer, or as new text
+glIns=function(ch){if(!D||!ch)return;GLREC=[ch,...GLREC.filter(x=>x!==ch)].slice(0,40);try{localStorage.setItem('mp_glrec',JSON.stringify(GLREC))}catch(e){}
+  const fnt=glPanelFont();let l=TXI?TXI.l:curL();
+  if(!TXI){if(l&&l.type==='text'){if(XFORM)xfCommit();if(TOOL.t!=='text')setTool('text');txBegin(l,false)}
+    else{if(TOOL.t!=='text')setTool('text');TOOL.font=fnt;txTap({x:D.w/2,y:D.h/2},null);if(TXI)TXI.l.t.font=fnt}}
+  const ta=document.getElementById('txIn');if(!TXI||!ta)return;const s=ta.selectionStart==null?ta.value.length:ta.selectionStart,e=ta.selectionEnd==null?s:ta.selectionEnd;
+  ta.value=ta.value.slice(0,s)+ch+ta.value.slice(e);const p=s+ch.length;try{ta.setSelectionRange(p,p)}catch(_){}ta.dispatchEvent(new Event('input',{bubbles:true}));txRefocus();
+  if(STK.pt==='glyphs'&&desk()&&!GMODE)glKeepScroll(()=>drawPanel());glDraw()}
+function glKeepScroll(fn){const b=popEl.querySelector('.gl2b');const t=b?b.scrollTop:0;fn();const n=popEl.querySelector('.gl2b');if(n)n.scrollTop=t}
+// the floating panel (phones / Garment Studio) shows the same content
+glDraw=function(){const e=document.getElementById('glyLib');if(!e||e.hidden)return;const t=e.querySelector('.glbody'),st=t?t.scrollTop:0;e.innerHTML=`<div class="alh"><b>Glyphs</b><span class="grow"></span><button class="ax" data-l="glyphs" title="Close">&times;</button></div><div class="glbody">${gl2HTML()}</div>`;const n=e.querySelector('.glbody');if(n)n.scrollTop=st};
+// on a computer the Ω button opens Glyphs in the right-hand panel
+{const _g=glToggle;glToggle=function(f){if(D&&desk()&&!GMODE){const el=document.getElementById('glyLib');if(el)el.hidden=true;GLF.open=false;STK.pt=STK.pt==='glyphs'&&f==null&&!popEl.hidden&&PANEL==='layers'?'props':'glyphs';if(popEl.hidden||PANEL!=='layers')openPanel('layers');else drawPanel();updBar();return}return _g(f)}}
+function glRedraw(){if(STK.pt==='glyphs'&&desk()&&!GMODE&&!popEl.hidden)glKeepScroll(()=>drawPanel());glDraw()}
+document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('[data-gl]'))e.preventDefault()},true);
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-gl],[data-l="gl2more"],[data-l="gl2use"]');if(!t||!t.closest('#labPop,#glyLib'))return;e.preventDefault();e.stopPropagation();
+  if(t.dataset.gl!=null){glIns(t.dataset.gl);return}if(t.dataset.l==='gl2more'){GL2.show=1e9;glRedraw();return}
+  if(t.dataset.l==='gl2use'){const l=TXI?TXI.l:curL();if(l&&l.type==='text'){const b=TEXTEDIT&&TEXTEDIT.l===l?null:snapSt();l.t.font=GL2.font;renderText(l);if(b)pushH({k:'st',b,a:snapSt()},'Font');touch(l,false);if(TXI){TXI.k='';txPos()}GL2.font=null;glRedraw();drawOpt();txRefocus()}}},true);
+document.addEventListener('change',e=>{const t=e.target;if(!t.closest||!t.closest('#labPop,#glyLib'))return;if(t.matches('[data-gl2font]')){GL2.font=t.value||null;GL2.show=700;glRedraw()}else if(t.matches('[data-gl2cat]')){GL2.cat=t.value;GL2.q='';GL2.show=700;glRedraw()}});
+document.addEventListener('input',e=>{const t=e.target;if(!t.closest||!t.closest('#labPop,#glyLib'))return;const k=t.matches('[data-gl2q]')?'q':t.matches('[data-gl2txt]')?'txt':null;if(!k)return;
+  if(k==='q')GL2.q=t.value;else GLF.txt=t.value;clearTimeout(glRedraw.t);glRedraw.t=setTimeout(()=>{const sel=k==='q'?'[data-gl2q]':'[data-gl2txt]',p=t.selectionStart;glRedraw();const n=document.querySelector('#labPop '+sel)||document.querySelector('#glyLib '+sel);if(n){n.focus();try{n.setSelectionRange(p,p)}catch(_){}}},220)});
+// re-read a font's characters after it is uploaded
+{const _a=addFontBuf;addFontBuf=async function(n,buf,cat,g){const r=await _a(n,buf,cat,g);GL2.cache.delete(n);if(STK.pt==='glyphs')glRedraw();return r}}
+
+/* ---------- v25: click any text you already made to start typing in it ---------- */
+// caret index for a click on straight text (same layout maths as renderText)
+function txCaretAt(l,p){const t=l.t,text=String(t.text||'');if(tMode(t)!=='none'||t.path)return text.length;
+  const c=TXM;c.font=txFont(t,t.size);const lines=text.split('\n'),lh=t.size*t.lh,tr=t.track*t.size/100,chars=lines.map(L=>[...L].map(ch=>c.measureText(ch).width));
+  const widths=chars.map(cs=>cs.reduce((s,w)=>s+w,0)+Math.max(0,cs.length-1)*tr),W=Math.max(10,...widths),Hh=lines.length*lh,[sx,sy]=tS(t);
+  const dx=p.x-t.x,dy=p.y-t.y,co=Math.cos(-t.rot),si=Math.sin(-t.rot),lx=(dx*co-dy*si)/sx,ly=(dx*si+dy*co)/sy;
+  const li=Math.max(0,Math.min(lines.length-1,Math.floor((ly+Hh/2)/lh)));const lw=widths[li],x0=t.align==='left'?-W/2:t.align==='right'?W/2-lw:-lw/2;
+  let x=x0,k=0;const cs=chars[li];while(k<cs.length&&lx>x+cs[k]/2){x+=cs[k]+tr;k++}
+  let idx=0;for(let i=0;i<li;i++)idx+=lines[i].length+1;return idx+[...lines[li]].slice(0,k).join('').length}
+function txEditAt(l,p){if(!D||!l||l.type!=='text')return;if(TXI&&TXI.l===l){txSetCaret(l,p);return}if(TXI)txCommit();if(XFORM)xfCommit();
+  if(TOOL.t!=='text')setTool('text');D.cur=l.id;D.lsel=new Set();txBegin(l,false);drawPanel();stat();if(p)txSetCaret(l,p)}
+function txSetCaret(l,p){const ta=document.getElementById('txIn');if(!ta||!p)return;const i=txCaretAt(l,p);try{ta.setSelectionRange(i,i)}catch(_){}txRefocus()}
+function txHitTop(p){return [...D.layers].reverse().find(l=>l.type==='text'&&effVis(l)&&!l.lock&&hitText(l,p))}
+{let TD=null;const PAINT=['brush','erase','smudge','clone','dodge','fill','gradient','shape','pen','pick','wand','crop','zoom','rotv','hand','text'];
+  cv.addEventListener('pointerdown',e=>{TD=null;if(!D||e.button!==0||SPACE||LIQ||TPATH||GCPICK)return;TD={x:e.clientX,y:e.clientY,t:performance.now(),tool:TOOL.t,id:e.pointerId,ctrl:e.ctrlKey||e.metaKey||e.shiftKey||e.altKey}},true);
+  cv.addEventListener('pointermove',e=>{if(TD&&TD.id===e.pointerId&&Math.hypot(e.clientX-TD.x,e.clientY-TD.y)>6)TD=null},true);
+  cv.addEventListener('pointerup',e=>{const d=TD;TD=null;if(!d||d.id!==e.pointerId||d.ctrl||GEST||PT.size>1)return;if(d.tool!=='move'||TOOL.t!=='move')return;
+    if(performance.now()-d.t>500||Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)return;const p=evPt(e),l=txHitTop(p);if(!l)return;setTimeout(()=>{if(TOOL.t==='move'&&!ACT)txEditAt(l,p)},0)},true);
+  // double-click text with any non-painting tool (e.g. a selection tool) also opens it for typing
+  cv.addEventListener('dblclick',e=>{if(!D||TXI||PAINT.includes(TOOL.t))return;const p=evPt(e),l=txHitTop(p);if(l){e.preventDefault();txEditAt(l,p)}});
+  // double-click a text layer in the Layers panel to type in it
+  popEl.addEventListener('dblclick',e=>{const r=e.target.closest('.lyr[data-ly]');if(!r||e.target.closest('input,select,.ey,.lmore'))return;const l=D&&D.layers.find(x=>x.id===r.dataset.ly);if(l&&l.type==='text'){e.preventDefault();e.stopPropagation();txEditAt(l,null)}},true)}
 
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
