@@ -2433,7 +2433,7 @@ function slideHTML(it,i){
 }
 function gxHTML(it){const w=it.ways||[];const sw=w.length>1?w.map((x,k)=>`<button class="sw${k===(it.cw||0)?' on':''}" data-a="sw" data-k="${k}" style="--c:${esc(x.hex||'#777')}" title="${esc(x.name||'')}" aria-label="${esc(x.name||'Colour')}"></button>`).join(''):'';
   return sw||it.back?`<div class="gx">${sw}${it.back?'<button class="flipb" data-a="flip" title="Turn around (R)" aria-label="Turn around">&#8635;</button>':''}</div>`:''}
-function render(intro){for(const it of (S.items||[])){const f=it&&it.fields;if(f&&f.name&&mpUgly(f.name))f.name=''}
+function render(intro){try{for(const it of (S.items||[])){const f=it&&it.fields,n=f&&String(f.name||'').trim();if(n&&(/^[0-9a-f]{8}([\s_-][0-9a-f]{4}){1,3}/i.test(n)||/^(img|image|photo|pxl|dsc|dcim|screenshot|file|picture)[\s_-]*\d/i.test(n)))f.name=''}}catch(e){}
   document.body.className=S.mode+(S.items.length?'':' empty')+(adding?' adding':'');
   brand.textContent=S.brand;
   if(ed()){brand.setAttribute('contenteditable',CE);brand.dataset.ph='Your label';brand.spellcheck=false}else brand.removeAttribute('contenteditable');
@@ -7241,7 +7241,7 @@ async function mkAct(a,v,b){const x=v?MK.items.find(z=>z.id===v):null;
     mkAddSheet(MKNEW.id?MKNEW:null);if(p.b)toast('Front & back added – tap Swap if they’re the wrong way round',2600);return}
   if(a==='bulk'){mkBulkAdd();return}
   if(a.indexOf('bk')===0&&await mkBulkAct(a,v))return;
-  if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;MKNEW.fnew=true;if(!MKNEW.name)MKNEW.name=mpNice(f.name).replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t;MKNEW.bnew=true}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
+  if(a==='pick'){const n=$('#mkName'),c=$('#mkCatSel');if(n)MKNEW.name=n.value;if(c)MKNEW.cat=c.value;const f=await mkPickFile();if(!f)return;try{const t=await mkThumb(f);if(v==='f'){MKNEW.f=f;MKNEW.ft=t;MKNEW.fnew=true;if(!MKNEW.name)MKNEW.name=(window.mpNice?window.mpNice(f.name):f.name.replace(/\.[^.]+$/,'')).replace(/[-_]+/g,' ')}else{MKNEW.b=f;MKNEW.bt=t;MKNEW.bnew=true}}catch(e){toast('Could not read that image')}mkAddSheet(MKNEW.id?MKNEW:null);return}
   if(a==='savenew'){const n=($('#mkName').value||'').trim(),c=$('#mkCatSel').value;if(!MKNEW.f&&!MKNEW.id){toast('Add the front image first');return}
     if(MKNEW.rm){const sb=b;sb.textContent='Removing background…';sb.disabled=true;const miss=await mkRmApply(MKNEW,MKNEW.id&&MK.items.find(z=>z.id===MKNEW.id));if(miss)toast('No plain background found on '+(miss>1?'either side':'one side')+' – kept it as it was',2600)}
     if(MKNEW.id){const y=MK.items.find(z=>z.id===MKNEW.id);if(y){y.name=n||y.name;y.cat=c;for(const sd of ['f','b'])if(MKNEW[sd]){y[sd]=MKNEW[sd];y[sd+'t']=MKNEW[sd+'t'];if(MKNEW.rm){y[sd+'o']=MKNEW[sd+'o']||null;y[sd+'bg']=MKNEW[sd+'bg']||null}else if(MKNEW[sd+'new']){y[sd+'o']=null;y[sd+'bg']=null}}if(MKNEW.rm)y.rmset={tol:MKNEW.tol,edge:MKNEW.edge,holes:MKNEW.holes};y.updated=Date.now()}}
@@ -8062,7 +8062,7 @@ async function startSlot(id){const s=SLOTS.find(z=>z.id===id);if(!s)return;if(!s
 /* ---------- import / export / send ---------- */
 let importMode='layer';
 function lbPickSheet(){sheetIn.innerHTML=`<h3>Choose a garment<button data-l="sheetclose">&times;</button></h3><div class="tpl" style="margin-top:14px">${S.items.map(it=>`<button data-l="lbitem:${it.id}"><i style="background:#0c0c0c url(${it.src}) center/contain no-repeat"></i><span>${esc((it.fields||{}).name||'Untitled')}</span></button>`).join('')||'<p class="pnote">This lookbook has no garments yet.</p>'}</div>`;sheetEl.hidden=false}
-$('#labFile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const im=await fileIm(f),nm=mpNice(f.name)||'Image';im._fmt=/jpe?g/i.test(f.type)?'image/jpeg':'image/png';
+$('#labFile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const im=await fileIm(f),nm=(window.mpNice?window.mpNice(f.name):f.name.replace(/\.[^.]+$/,''))||'Image';im._fmt=/jpe?g/i.test(f.type)?'image/jpeg':'image/png';
   if(importMode==='gsback'){await gsMakeBack(im)}else if(importMode==='gs'){sheetEl.hidden=true;await docFromMockup(im,nm)}else if(importMode==='slot')mockSetup(im,(SLOTS.find(z=>z.id===SLOTPICK)||{}).name||nm);else await placeImg(im,nm,importMode==='new')}catch(err){toast('Could not open that image')}});
 const loadIm=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
 async function placeImg(im,name,asNew){if(asNew||!D){blankDoc(clampN(im.naturalWidth/im.naturalHeight,.3,3),name||'Photo design');const l=newLayer('Photo');{const o=capImg(im,D.w*D.h);setSo(l,o,[D.w/o.width,0,0,D.h/o.height,0,0],im._fmt);drawSo(cx2(l.cv),l.so)}const d=newLayer('Design');D.layers=[l,d];D.cur=d.id;openEditor();schedSave();return}
@@ -10354,6 +10354,7 @@ let IPPT=0;addEventListener('mp-pencil',e=>{if(!D||edEl.hidden)return;const k=e.
 
 const mpUgly=n=>{n=String(n||'').trim();return !n||/^[0-9a-f]{8}([\s_-][0-9a-f]{4}){1,3}/i.test(n)||/^[0-9a-f]{20,}$/i.test(n.replace(/[\s_-]/g,''))||/^(img|image|photo|pxl|dsc|dcim|screenshot|screen shot|file|picture)[\s_-]*\d/i.test(n)||/^\d{6,}/.test(n)};
 const mpNice=n=>{n=String(n||'').replace(/\.[a-z0-9]{2,5}$/i,'').trim();return mpUgly(n)?'':n};
+window.mpUgly=mpUgly;window.mpNice=mpNice;
 {const _mb=mkBase;mkBase=function(n){return mpNice(_mb(n))}}
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
