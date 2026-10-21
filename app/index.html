@@ -2426,6 +2426,14 @@ canvas.mplc{display:block;width:100%;height:auto}
 #ipCol .ipchr .ipcs{width:30px;height:30px;border-radius:50%}
 
 #lab.ipst #ipBar{touch-action:none}
+/* v35: the iPad studio panels no longer blur the live canvas behind them – that blur had to be redrawn on every brush frame */
+#lab:is(.ipst,.ipgs) #ipBar,#lab:is(.ipst,.ipgs) .lside,#lab:is(.ipst,.ipgs) .lopt,#lab:is(.ipst,.ipgs) #ipLy,#lab:is(.ipst,.ipgs) #ipLyM,#lab:is(.ipst,.ipgs) #ipCol,#lab:is(.ipst,.ipgs) #ipCard,#lab:is(.ipst,.ipgs) #ipTx,#lab:is(.ipst,.ipgs) .lpop,#lab:is(.ipst,.ipgs) #ipCP{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#lab.ipst #ipBar{background:#121214!important}
+#lab:is(.ipst,.ipgs) .lside,#lab:is(.ipst,.ipgs) .lopt{background:#18181a!important}
+#lab:is(.ipst,.ipgs) #ipLy,#lab:is(.ipst,.ipgs) #ipCol,#lab:is(.ipst,.ipgs) #ipCard,#lab:is(.ipst,.ipgs) #ipLyM,#lab:is(.ipst,.ipgs) #ipTx{background:#1b1b1d!important}
+/* no grey flash or delay on tap */
+html.ipm #lab *{-webkit-tap-highlight-color:transparent}
+html.ipm #lab button,html.ipm #lab [data-l],html.ipm #ipLy .iplr{touch-action:manipulation}
 </style>
 </head>
 <body class="edit empty">
@@ -9064,7 +9072,7 @@ function zoomBy(f,mx,my){mx=mx==null?cv.clientWidth/2:mx;my=my==null?cv.clientHe
 cv.addEventListener('pointerdown',e=>{if(!D)return;closeMenu();cv.setPointerCapture(e.pointerId);PT.set(e.pointerId,{x:e.clientX,y:e.clientY});if(!popEl.hidden&&TOUCH&&!desk()&&!['text','adjust'].includes(PANEL))closePanel();
   if(e.pointerType==='pen')penSeen=true;
   if(e.pointerType==='touch'&&PT.size>=2){if(STROKE){if(performance.now()-STROKE.t0<300&&(STROKE.dist||0)<60/V.s)cancelStroke();else if(STROKE.grad){STROKE=null;GRAD=null}else strokeEnd()}ACT=null;SELDRAW=null;SHAPE=null;startGest();return}
-  if((e.pointerType==='touch'&&penSeen)||e.button===1||SPACE||TOOL.t==='hand'){PAN={x:e.clientX,y:e.clientY,vx:V.x,vy:V.y};labEl.classList.add('pan');return}if(e.button===2)return;
+  if((e.pointerType==='touch'&&penSeen&&(!(labEl.classList.contains('ipst')||labEl.classList.contains('ipgs'))||window.mpPenOnly()))||e.button===1||SPACE||TOOL.t==='hand'){PAN={x:e.clientX,y:e.clientY,vx:V.x,vy:V.y};labEl.classList.add('pan');return}if(e.button===2)return;
   const p=evPt(e);if(e.altKey&&TOOL.t==='clone'){CLONE.src=[p.x,p.y];CLONE.off=null;hint('Clone source set');req();return}if(e.altKey&&['brush','erase','smudge','dodge','fill','gradient','shape','text','pick'].includes(TOOL.t)){pickAt(p.x,p.y);return}
   if(TOOL.t==='clone'&&CLONE.setting){CLONE.src=[p.x,p.y];CLONE.off=null;CLONE.setting=false;hint('Source set – now paint where you want the copy');drawOpt();req();return}
   toolDown(p,e)});
@@ -9078,7 +9086,7 @@ function startGest(){const ps=[...PT.values()],a=ps[0],b=ps[1],r=cv.getBoundingC
 function gestMove(){const ps=[...PT.values()];GEST.n=Math.max(GEST.n,ps.length);if(ps.length<2)return;const a=ps[0],b=ps[1],r=cv.getBoundingClientRect(),d=Math.hypot(b.x-a.x,b.y-a.y),an=Math.atan2(b.y-a.y,b.x-a.x),m=[(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top];
   if(Math.abs(d-GEST.d0)>12||Math.hypot(m[0]-GEST.m0[0],m[1]-GEST.m0[1])>12||Math.abs(an-GEST.a0)>.08)GEST.moved=true;if(!GEST.moved)return;
   V.s=clampN(GEST.V0.s*d/GEST.d0,.02,40);let rr=GEST.V0.r+(an-GEST.a0);const sn=Math.round(rr/(Math.PI/2))*(Math.PI/2);if(Math.abs(rr-sn)<.07)rr=sn;V.r=rr;V.x=0;V.y=0;const p=toScr(GEST.doc[0],GEST.doc[1]);V.x=m[0]-p[0];V.y=m[1]-p[1];req();stat()}
-function endGest(){const g=GEST;GEST=null;if(!g.moved&&performance.now()-g.t0<350){if(g.n===2)undo();else if(g.n>=3)redo()}}
+function endGest(){const g=GEST;GEST=null;const dt=performance.now()-g.t0;if(!g.moved&&dt<350){if(g.n===2)undo();else if(g.n===3)redo();return}if(g.moved&&dt<320&&g.n===2&&V.s<g.V0.s*.72&&TOUCH){fit();hint('Fit to screen',700)}}
 cv.addEventListener('wheel',e=>{if(!D)return;e.preventDefault();const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,mw=!e.ctrlKey&&e.deltaX===0&&Math.abs(e.deltaY)>=40&&e.deltaMode===0&&Number.isInteger(e.deltaY);
   if(e.ctrlKey||mw||e.deltaMode===1)zoomBy(Math.exp(-e.deltaY*(e.ctrlKey?.012:.0016)*(e.deltaMode===1?30:1)),mx,my);else{V.x-=e.deltaX;V.y-=e.deltaY;req()}},{passive:false});
 function selModeOf(e){return e.shiftKey?'add':e.altKey?'sub':TOOL.selMode}
@@ -10583,7 +10591,7 @@ cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||!ipm
   cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||e.pointerType!=='touch')return;if(!G.pts.size){G.max=0;G.t0=performance.now();G.mv=0}G.pts.set(e.pointerId,[e.clientX,e.clientY]);G.max=Math.max(G.max,G.pts.size)},true);
   cv.addEventListener('pointermove',e=>{const q=G.pts.get(e.pointerId);if(q)G.mv=Math.max(G.mv,Math.hypot(e.clientX-q[0],e.clientY-q[1]))},true);
   const end=e=>{if(!G.pts.has(e.pointerId))return;G.pts.delete(e.pointerId);if(G.pts.size)return;if(G.max<2||performance.now()-G.t0>420||G.mv>24)return;
-    if(G.max===2){undo();hint('Undo',700)}else if(G.max===3){redo();hint('Redo',700)}else ipmToggleUI()};
+    if(G.max===2)hint('Undo',700);else if(G.max===3)hint('Redo',700);else ipmToggleUI()};
   cv.addEventListener('pointerup',end,true);cv.addEventListener('pointercancel',e=>{G.pts.delete(e.pointerId)},true)}
 // keep the bar in step with the rest of the editor
 {const _u=updBar;updBar=function(){_u.apply(this,arguments);try{ipmSync()}catch(e){console.error(e)}}}
@@ -10699,34 +10707,35 @@ function ipLyWire(){
   ipLy.addEventListener('input',e=>{const t=e.target;if(!t.dataset.ipop)return;const l=byId(t.dataset.ipop);if(!l)return;if(XFORM&&!XD)xfCommit();if(!OPSNAP)OPSNAP=snapSt();l.op=t.value/100;const o=t.nextElementSibling;if(o)o.textContent=t.value+'%';dirtyComp=true;req()});
   ipLy.addEventListener('change',e=>{const t=e.target;if(!t.dataset.ipop||!OPSNAP)return;pushH({k:'st',b:OPSNAP,a:snapSt()},'Layer opacity');OPSNAP=null;(DMGON?touchProps:touchAll)();IPL.key='';ipLyLater()});
   ipLyM.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-ipm]');if(b){e.preventDefault();ipLyMenuDo(b.dataset.ipm)}});
+  // gestures are read from touch events, which iPad always delivers (scrolling never cancels them)
   // one finger: swipe left = Lock / Duplicate / Delete · swipe right = select several · hold and drag = move
   // two fingers: pinch two layers together = merge everything between · swipe right on a layer = alpha lock · hold = select its contents
-  const TP=new Map();let P=null,M=null;const quiet=()=>{IPL.drag={done:true};setTimeout(()=>{if(IPL.drag&&IPL.drag.done)IPL.drag=null},80)};
+  const TP=new Map();let P=null,M=null;const quiet=()=>{IPL.drag={done:true};setTimeout(()=>{if(IPL.drag&&IPL.drag.done)IPL.drag=null},120)};
   const unpinch=()=>ipLy.querySelectorAll('.iplr.pinch').forEach(x=>x.classList.remove('pinch'));
   const range=(a,b)=>{const L=displayList().map(q=>q.l.id),i=L.indexOf(a),j=L.indexOf(b);if(i<0||j<0)return [];return L.slice(Math.min(i,j),Math.max(i,j)+1)};
-  ipLy.addEventListener('pointerdown',e=>{const r=e.target.closest('.iplr[data-iply]');if(e.target.closest('input,.iplbp,.iplh')||(!TP.size&&e.target.closest('button')))return;
-    TP.set(e.pointerId,{x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY,ly:r?r.dataset.iply:''});
-    if(TP.size===1){if(!r)return;P={id:e.pointerId,x:e.clientX,y:e.clientY,r,ly:r.dataset.iply,mode:'',t:setTimeout(()=>{if(P&&!P.mode&&TP.size===1){P.mode='drag';ipLyDragStart(P)}},380)};return}
-    if(TP.size===2){if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform='';if(P.mode==='drag'&&IPL.drag){IPL.drag.row.classList.remove('lift');IPL.drag.row.style.transform='';IPL.drag.rows.forEach(x=>x.classList.remove('dropA','dropB','dropI'));IPL.drag=null}P=null}
-      const [q1,q2]=[...TP.values()];M={d0:Math.max(20,Math.hypot(q1.x-q2.x,q1.y-q2.y)),done:false,mv:0,t:setTimeout(()=>{if(!M||M.done||M.mv>12)return;const v=[...TP.values()];if(v.length>=2&&v[0].ly&&v[0].ly===v[1].ly){const l=byId(v[0].ly);if(l&&l.type!=='group'&&l.type!=='adj'){M.done=true;selFromLayer(l);mpHap('medium');hint('Selected what is on “'+l.name+'”',1600)}}},550)};
-      if(q1.ly&&q2.ly&&q1.ly!==q2.ly)range(q1.ly,q2.ly).forEach(id=>{const x=ipLy.querySelector(`.iplr[data-iply="${id}"]`);if(x)x.classList.add('pinch')})}});
-  ipLy.addEventListener('pointermove',e=>{const q=TP.get(e.pointerId);if(q){q.x=e.clientX;q.y=e.clientY}
-    if(M&&TP.size>=2){const [a,b]=[...TP.values()],da=[a.x-a.x0,a.y-a.y0],db=[b.x-b.x0,b.y-b.y0];M.mv=Math.max(M.mv,Math.hypot(...da),Math.hypot(...db));if(M.done)return;
-      if(a.ly&&a.ly===b.ly&&da[0]>40&&db[0]>40&&Math.abs(da[1])<40&&Math.abs(db[1])<40){M.done=true;clearTimeout(M.t);const l=byId(a.ly);if(l&&l.type!=='group'){if(XFORM)xfCommit();setProp(l,'alock',!l.alock,'Lock transparency');hint(l.alock?'Alpha lock on – paint only where there is already paint':'Alpha lock off',1800);mpHap('medium');IPL.key='';ipLyLater()}return}
-      if(a.ly&&b.ly&&a.ly!==b.ly){const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<M.d0*.55){M.done=true;clearTimeout(M.t);unpinch();const ids=range(a.ly,b.ly).filter(id=>byId(id));if(ids.length>1){if(XFORM)xfCommit();D.cur=ids[0];D.lsel=new Set(ids.slice(1));labAct('lm:merge',null,null);D.lsel=new Set();mpHap('medium');hint('Merged '+ids.length+' layers',1500);IPL.key='';ipLyLater()}}}
+  const rowOf=(x,y)=>{const el=document.elementFromPoint(x,y);return {el,r:el&&el.closest?el.closest('#ipLy .iplr[data-iply]'):null}};
+  const resetP=()=>{if(!P)return;clearTimeout(P.t);const inn=P.r&&P.r.querySelector('.iplin');if(inn)inn.style.transform='';if(P.mode==='drag'&&IPL.drag){IPL.drag.row.classList.remove('lift');IPL.drag.row.style.transform='';IPL.drag.rows.forEach(x=>x.classList.remove('dropA','dropB','dropI'));IPL.drag=null}P=null};
+  ipLy.addEventListener('touchstart',e=>{for(const t of e.changedTouches){const {el,r}=rowOf(t.clientX,t.clientY);TP.set(t.identifier,{x0:t.clientX,y0:t.clientY,x:t.clientX,y:t.clientY,ly:r?r.dataset.iply:'',r,el})}
+    if(TP.size===1){const [id,q]=[...TP.entries()][0];if(!q.r||(q.el&&q.el.closest('input,.iplbp,button')))return;
+      P={id,x:q.x0,y:q.y0,r:q.r,ly:q.ly,mode:'',t:setTimeout(()=>{if(P&&!P.mode&&TP.size===1){P.mode='drag';ipLyDragStart(P)}},380)};return}
+    if(TP.size===2){resetP();const [q1,q2]=[...TP.values()];
+      M={d0:Math.max(20,Math.hypot(q1.x-q2.x,q1.y-q2.y)),done:false,mv:0,t:setTimeout(()=>{if(!M||M.done||M.mv>12)return;const v=[...TP.values()];if(v.length>=2&&v[0].ly&&v[0].ly===v[1].ly){const l=byId(v[0].ly);if(l&&l.type!=='group'&&l.type!=='adj'){M.done=true;selFromLayer(l);mpHap('medium');hint('Selected what is on “'+l.name+'”',1600)}}},550)};
+      if(q1.ly&&q2.ly&&q1.ly!==q2.ly)range(q1.ly,q2.ly).forEach(id=>{const x=ipLy.querySelector(`.iplr[data-iply="${id}"]`);if(x)x.classList.add('pinch')})}},{passive:true});
+  ipLy.addEventListener('touchmove',e=>{for(const t of e.changedTouches){const q=TP.get(t.identifier);if(q){q.x=t.clientX;q.y=t.clientY}}
+    if(TP.size>=2||M){e.preventDefault();if(!M||TP.size<2)return;const [a,b]=[...TP.values()],da=[a.x-a.x0,a.y-a.y0],db=[b.x-b.x0,b.y-b.y0];M.mv=Math.max(M.mv,Math.hypot(...da),Math.hypot(...db));if(M.done)return;
+      if(a.ly&&a.ly===b.ly&&da[0]>30&&db[0]>30&&Math.abs(da[1])<45&&Math.abs(db[1])<45){M.done=true;clearTimeout(M.t);const l=byId(a.ly);if(l&&l.type!=='group'){if(XFORM)xfCommit();setProp(l,'alock',!l.alock,'Lock transparency');hint(l.alock?'Alpha lock on – paint only where there is already paint':'Alpha lock off',1800);mpHap('medium');IPL.key='';ipLyLater()}return}
+      if(a.ly&&b.ly&&a.ly!==b.ly){const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<M.d0*.6){M.done=true;clearTimeout(M.t);unpinch();const ids=range(a.ly,b.ly).filter(id=>byId(id));if(ids.length>1){if(XFORM)xfCommit();D.cur=ids[0];D.lsel=new Set(ids.slice(1));labAct('lm:merge',null,null);D.lsel=new Set();mpHap('medium');hint('Merged '+ids.length+' layers',1500);IPL.key='';ipLyLater()}}}
       return}
-    if(!P||P.id!==e.pointerId)return;const dx=e.clientX-P.x,dy=e.clientY-P.y;
-    if(!P.mode){if(Math.abs(dx)>14&&Math.abs(dx)>Math.abs(dy)*1.4){P.mode='swipe';clearTimeout(P.t)}else if(Math.hypot(dx,dy)>10){clearTimeout(P.t);P.mode='scroll'}}
-    if(P.mode==='swipe'){const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=`translateX(${Math.max(-200,Math.min(70,dx+(IPL.sw===P.ly?-186:0)))}px)`}
-    else if(P.mode==='drag')ipLyDragMove(P,e)});
-  const end=e=>{const had=TP.delete(e.pointerId);
-    if(M){if(TP.size<2){clearTimeout(M.t);unpinch();if(!TP.size)M=null}quiet();return}
-    if(!P||P.id!==e.pointerId)return;const p=P;P=null;clearTimeout(p.t);const dx=e.clientX-p.x;
-    if(p.mode==='swipe'){const inn=p.r.querySelector('.iplin');if(inn)inn.style.transform='';if(dx>60){IPL.sw='';ipLySel(p.ly)}else{IPL.sw=dx<-60?p.ly:'';IPL.key='';ipLyDraw(true)}quiet()}
-    else if(p.mode==='drag')ipLyDragEnd(p,e)};
-  ipLy.addEventListener('pointerup',end);ipLy.addEventListener('pointercancel',e=>{TP.delete(e.pointerId);if(M){if(TP.size<2){clearTimeout(M.t);unpinch();if(!TP.size)M=null}return}if(P&&P.mode==='drag')return;if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=''}P=null});
-  // while dragging a layer or using two fingers the list must not scroll
-  ipLy.addEventListener('touchmove',e=>{if((IPL.drag&&!IPL.drag.done)||e.touches.length>=2)e.preventDefault()},{passive:false})}
+    if(!P)return;const q=TP.get(P.id);if(!q)return;const dx=q.x-P.x,dy=q.y-P.y;
+    if(!P.mode){if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy)*1.15){P.mode='swipe';clearTimeout(P.t)}else if(Math.hypot(dx,dy)>10){clearTimeout(P.t);P.mode='scroll';P=null;return}}
+    if(P.mode==='swipe'){e.preventDefault();const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=`translateX(${Math.max(-200,Math.min(80,dx+(IPL.sw===P.ly?-186:0)))}px)`}
+    else if(P.mode==='drag'){e.preventDefault();ipLyDragMove(P,{clientX:q.x,clientY:q.y})}},{passive:false});
+  const end=e=>{const ended=[...e.changedTouches].map(t=>t.identifier);const pq=P&&TP.get(P.id);ended.forEach(id=>TP.delete(id));
+    if(M){if(TP.size<2){clearTimeout(M.t);unpinch();if(M.done||M.mv>12)quiet();if(!TP.size)M=null}return}
+    if(!P||!ended.includes(P.id))return;const p=P;P=null;clearTimeout(p.t);const dx=pq?pq.x-p.x:0;
+    if(p.mode==='swipe'){const inn=p.r.querySelector('.iplin');if(inn)inn.style.transform='';if(dx>35){IPL.sw='';ipLySel(p.ly)}else{IPL.sw=dx<-50?p.ly:'';IPL.key='';ipLyDraw(true)}quiet();if(e.cancelable)e.preventDefault()}
+    else if(p.mode==='drag'){ipLyDragEnd(p,{clientX:pq?pq.x:p.x,clientY:pq?pq.y:p.y});if(e.cancelable)e.preventDefault()}};
+  ipLy.addEventListener('touchend',end,{passive:false});ipLy.addEventListener('touchcancel',e=>{[...e.changedTouches].forEach(t=>TP.delete(t.identifier));if(M&&TP.size<2){clearTimeout(M.t);unpinch();if(!TP.size)M=null}resetP()})}
 function ipLySel(id){if(!D||!byId(id))return;if(!D.lsel)D.lsel=new Set();if(id===D.cur){hint('That is your main layer – swipe right on others to add them',1600);return}
   if(D.lsel.has(id))D.lsel.delete(id);else D.lsel.add(id);mpHap('select');IPL.key='';ipLyDraw(true)}
 function ipLyDragStart(P){const r=P.r;IPL.drag={id:P.ly,row:r,y0:P.y,rows:[...ipLy.querySelectorAll('.iplr[data-iply]')],disp:displayList(),mark:null};r.classList.add('lift');mpHap('medium');try{r.setPointerCapture(P.id)}catch(e){}}
@@ -10859,9 +10868,9 @@ function ipSampleAt(cx,cy){const [x,y]=ipDoc(cx,cy);const X=Math.floor(x),Y=Math
   const d=cx2(T('comp')).getImageData(X,Y,1,1).data;if(d[3]<8)return D.bgOn?D.bg:null;const a=d[3]/255,[br,bg,bb]=D.bgOn?hexToRgb(D.bg):[255,255,255];return rgbToHex(d[0]*a+br*(1-a),d[1]*a+bg*(1-a),d[2]*a+bb*(1-a))}
 function ipLoupeShow(x,y){if(!ipLoupe){ipLoupe=document.createElement('div');ipLoupe.id='ipLoupe';ipLoupe.innerHTML='<i class="n"></i><i class="o"></i>';document.body.appendChild(ipLoupe)}
   const c=ipSampleAt(x,y);if(c)EH.c=c;ipLoupe.querySelector('.n').style.background=EH.c||'transparent';ipLoupe.querySelector('.o').style.background=TOOL.color;ipLoupe.style.transform=`translate(${x-55}px,${y-150}px)`;ipLoupe.hidden=false}
-cv.addEventListener('pointerdown',e=>{if(!ipOn()||!D||e.pointerType!=='touch'||PT.size||TXI)return;if(!['brush','erase','smudge','fill','hand','pick','gradient','dodge','clone','select','wand'].includes(TOOL.t))return;
+cv.addEventListener('pointerdown',e=>{if(!ipOn()||!D||(e.pointerType!=='touch'&&e.pointerType!=='pen')||PT.size||TXI)return;if(!['brush','erase','smudge','fill','hand','pick','gradient','dodge','clone','select','wand'].includes(TOOL.t))return;
   clearTimeout(EH.t);EH.on=false;EH.id=e.pointerId;EH.x=e.clientX;EH.y=e.clientY;EH.c=null;
-  EH.t=setTimeout(()=>{if(EH.id!==e.pointerId||PT.size!==1||GEST)return;if(STROKE){if((STROKE.dist||0)>8/V.s)return;cancelStroke()}ACT=null;PAN=null;labEl.classList.remove('pan');EH.on=true;mpHap('select');ipLoupeShow(EH.x,EH.y)},480)},true);
+  EH.t=setTimeout(()=>{if(EH.id!==e.pointerId||PT.size!==1||GEST)return;if(STROKE){if((STROKE.dist||0)>8/V.s)return;cancelStroke()}ACT=null;PAN=null;labEl.classList.remove('pan');EH.on=true;mpHap('select');ipLoupeShow(EH.x,EH.y)},e.pointerType==='pen'?650:450)},true);
 cv.addEventListener('pointermove',e=>{if(EH.id!==e.pointerId)return;if(EH.on){e.stopImmediatePropagation();EH.x=e.clientX;EH.y=e.clientY;ipLoupeShow(EH.x,EH.y);return}if(Math.hypot(e.clientX-EH.x,e.clientY-EH.y)>8){clearTimeout(EH.t);EH.id=null}},true);
 {const up=e=>{if(EH.id!==e.pointerId)return;clearTimeout(EH.t);if(EH.on){EH.on=false;if(ipLoupe)ipLoupe.hidden=true;if(EH.c){ipSetColour(EH.c);addRecent(EH.c);hint('Colour picked',800)}}EH.id=null};cv.addEventListener('pointerup',up,true);cv.addEventListener('pointercancel',up,true)}
 cv.addEventListener('pointerdown',e=>{if(EH.id!=null&&EH.id!==e.pointerId){clearTimeout(EH.t);if(!EH.on)EH.id=null}},true);
@@ -11022,6 +11031,24 @@ function ipPhotoPal(){const f=document.createElement('input');f.type='file';f.ac
 {const _sc=setColor;setColor=function(c){const o=TOOL.color;const r=_sc.apply(this,arguments);if(TOOL.color!==o)IPC.prev=o;try{const b=ipBar&&ipBar.querySelector('.ipc');if(b)b.style.setProperty('--c',TOOL.color)}catch(e){}return r}}
 IDB.get('ippals').then(p=>{if(Array.isArray(p)&&p.length)IPC.pals=p}).catch(()=>{});try{IPC.pal=+(localStorage.getItem('mp_ippal')||0)||0}catch(e){}
 addEventListener('resize',()=>{if(IPC.open){ipColPlace();ipColSyncUI()}});
+/* ---------- v35: fingers work like Procreate – one tap selects, fingers draw, smoother iPad drawing ---------- */
+// one tap is enough: on iPad a tap is turned into a click straight away (no waiting, no "tap twice")
+const FT={id:null,x:0,y:0,t:0,el:null,last:0};
+document.addEventListener('touchstart',e=>{FT.id=null;if(!ipOn()||e.touches.length!==1)return;const el=e.target;
+  if(!el||!el.closest||!edEl.contains(el)||el===cv||el.closest('input,textarea,select,[contenteditable],label,#txIn,canvas[data-ipcv],.ipcdisc'))return;
+  const t=e.changedTouches[0];FT.id=t.identifier;FT.x=t.clientX;FT.y=t.clientY;FT.t=performance.now();FT.el=el},{passive:true,capture:true});
+document.addEventListener('touchmove',e=>{if(FT.id==null)return;for(const t of e.changedTouches)if(t.identifier===FT.id&&Math.hypot(t.clientX-FT.x,t.clientY-FT.y)>10)FT.id=null},{passive:true,capture:true});
+document.addEventListener('touchend',e=>{if(FT.id==null)return;const t=[...e.changedTouches].find(q=>q.identifier===FT.id);if(!t)return;const el=FT.el;FT.id=null;
+  if(performance.now()-FT.t>360||e.touches.length||!el.isConnected||!e.cancelable)return;
+  if(!el.closest('button,[data-l],[data-ip],[data-ipa],[data-ipm],[data-ipc],[data-ipt],[data-cp],[data-ipsw],[data-ipcset],.iplr,a,[role=button],.ipn'))return;
+  e.preventDefault();FT.last=performance.now();el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,clientX:t.clientX,clientY:t.clientY,view:window}))},{passive:false,capture:true});
+// fingers draw, select and move things (like Procreate). Pencil-only drawing is an option in Actions › Prefs.
+window.mpPenOnly=()=>{try{return localStorage.getItem('mp_penonly')==='1'}catch(e){return false}};
+{const _h=ipmCardHTML;ipmCardHTML=function(k){let h=_h.apply(this,arguments);if(k==='actions'&&(IPM.tab||'Add')==='Prefs'){const po=window.mpPenOnly();
+  h=h.replace('<p class="ipnote">Gestures:',`<p class="ipnote">With your finger</p><div class="ipseg"><button class="${po?'':'on'}" data-ip="fing:draw">Draw &amp; edit</button><button class="${po?'on':''}" data-ip="fing:move">Only move the canvas</button></div><p class="ipnote">Gestures:`)}return h}}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ip^="fing:"]');if(!b)return;e.preventDefault();e.stopPropagation();const po=b.dataset.ip==='fing:move';
+  try{localStorage.setItem('mp_penonly',po?'1':'0')}catch(_){}if(ipCard&&!ipCard.hidden)ipCard.innerHTML=ipmCardHTML('actions');hint(po?'Fingers now only move the canvas – draw with the Pencil':'Fingers now draw and edit, like the Pencil',2200)},true);
+
 
 
 
