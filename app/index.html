@@ -3132,7 +3132,8 @@ presentP.addEventListener('click',e=>{const f=e.target.closest('[data-fmt]');if(
 function updMusic(){$('#mName').textContent=MUS?MUS.name:'No music';$('#noMusic').hidden=!MUS}
 IDB.get('music').then(m=>{if(m&&m.blob){MUS=m;updMusic()}}).catch(()=>{});
 $('#afile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;MUS={name:f.name.replace(/\.[^.]+$/,''),blob:f};updMusic();IDB.set('music',{name:MUS.name,blob:f});e.target.value=''});
-const loadImg=(src,max)=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>{const m=max||1700,k=Math.min(1,m/Math.max(im.naturalWidth,im.naturalHeight));if(k>=1)return r(im);try{const c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c)}catch(e){r(im)}};im.onerror=()=>r(null);im.src=src});
+const mpIOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const loadImg=(src,max)=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>{const m=max||(mpIOS?1400:1700),k=Math.min(1,m/Math.max(im.naturalWidth,im.naturalHeight));if(k>=1)return r(im);try{const c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c)}catch(e){r(im)}};im.onerror=()=>r(null);im.src=src});
 async function prepFilm(){
   const out=[];
   for(const it of S.items){const main=await loadImg(it.src);if(!main)continue;
@@ -9134,7 +9135,7 @@ const q=id=>document.getElementById(id),root=()=>q('w3'),veil=()=>q('w3-veil');
 let P={on:true,intro:true,sens:1},introAt=0,guardOk=false;try{Object.assign(P,JSON.parse(localStorage.getItem('mpWorld3')||'{}'))}catch(e){}
 P.on=false; // the 3D gallery only opens when chosen from the home screen
 const saveP=()=>{try{localStorage.setItem('mpWorld3',JSON.stringify(P))}catch(e){}};
-let mode='off',it=0,ev=0,z=9.5,camX=0,yaw=0,pit=0,vel=[0,0],fly=null,hot=-999,scale=innerWidth<700?.55:.75,acc=0,frames=0,last=0,T0=performance.now(),lock=false,raf=0,played=false,mx=0,my=0,inWin=false,lastAt=null,vis=true,visN=0;
+let mode='off',it=0,ev=0,z=9.5,camX=0,yaw=0,pit=0,vel=[0,0],fly=null,hot=-999,scale=innerWidth<700?.6:.8,hqS=1,hqA=0,hqF=0,hqL=0,hqP='',acc=0,frames=0,last=0,T0=performance.now(),lock=false,raf=0,played=false,mx=0,my=0,inWin=false,lastAt=null,vis=true,visN=0;
 const FP=3.6,FY=1.95,DT={tex:null,c:null,sig:'',n:0,items:[]};
 const nCells=()=>Math.max(2,Math.ceil(DT.n/2)),ZSV=6,zEnd=()=>-(nCells()*FP)-2.4;
 const loadImg=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
@@ -9249,14 +9250,14 @@ function loop(now){raf=0;if(!active()){return}raf=requestAnimationFrame(loop);
       const spd=(K.shift?6.5:3.4),m=Math.max(1,Math.hypot(f,r)),tf=f/m*spd,tr=r/m*spd;vel[0]+=(tf-vel[0])*Math.min(1,dt*8);vel[1]+=(tr-vel[1])*Math.min(1,dt*8);
       z+=(-Math.cos(yaw)*vel[0]-Math.sin(yaw)*vel[1])*dt;camX+=(-Math.sin(yaw)*vel[0]+Math.cos(yaw)*vel[1])*dt;camX=Math.max(-(W-.5),Math.min(W-.5,camX));z=Math.max(zEnd()+1,Math.min(ZSV-1,z))}
     const sp=Math.hypot(vel[0],vel[1]);u={cam:[camX,1.68+Math.sin(z*2.2+camX*2.2)*Math.min(.03,sp*.008),z],yaw,pit,hp:[0,-9,0],hm:I3,cp:[0,-9,0],cm:I3,grip:0,tab:0,showh:0,scr:0,chy:0}}
-  if(ok&&u&&vis&&prog&&prog.ready){const U=prog.U;gl.useProgram(prog.p);const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.round(cv.clientWidth*dpr*scale),h=Math.round(cv.clientHeight*dpr*scale);
+  if(ok&&u&&vis&&prog&&prog.ready){const U=prog.U;gl.useProgram(prog.p);const hsig=[u.cam[0],u.cam[1],u.cam[2],u.yaw,u.pit,u.grip,u.tab,u.scr,u.chy,u.hp[0],u.hp[1],u.hp[2]].map(v=>Math.round(v*3000)).join(',');if(hsig!==hqP){hqP=hsig;hqL=now}const mv=!!fly||mode!=='hall'||now-hqL<260,qs=mv?scale:hqS,dpr=Math.min(devicePixelRatio||1,2),w=Math.round(cv.clientWidth*dpr*qs),h=Math.round(cv.clientHeight*dpr*qs);
     if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}gl.viewport(0,0,w,h);
     gl.uniform2f(U.R,w,h);gl.uniform1f(U.T,(now-T0)/1000);gl.uniform1f(U.YAW,u.yaw);gl.uniform1f(U.PIT,u.pit);gl.uniform1f(U.HOT,mode==='hall'?hot:-999);gl.uniform1f(U.ND,DT.n);gl.uniform1f(U.ZS,ZSV);gl.uniform1f(U.ZE,zEnd());gl.uniform1f(U.SC,mode==='intro'?0:1);
     gl.uniform1f(U.GRIP,u.grip);gl.uniform1f(U.TAB,u.tab);gl.uniform1f(U.SHOWH,u.showh);gl.uniform1f(U.SCRON,u.scr);gl.uniform1f(U.CHY,u.chy);
     const hm=u.hm,ww=[.062,-.05,.012],wr=[0,1,2].map(i=>u.hp[i]+hm[i]*ww[0]+hm[3+i]*ww[1]+hm[6+i]*ww[2]),cy=Math.cos(u.yaw),sy=Math.sin(u.yaw);
     gl.uniform3fv(U.WR,wr);gl.uniform3fv(U.ELB,[u.cam[0]+cy*.3+sy*.05,u.cam[1]-.52,u.cam[2]-sy*.3+cy*.05]);gl.uniform3fv(U.CAM,u.cam);gl.uniform3fv(U.CP,u.cp);gl.uniform3fv(U.HP,u.hp);gl.uniformMatrix3fv(U.CM,false,u.cm);gl.uniformMatrix3fv(U.HM,false,u.hm);
     gl.drawArrays(gl.TRIANGLES,0,3);
-    acc+=dt;frames++;if(acc>1){const fps=frames/acc;if(fps<40&&scale>.4)scale*=.88;else if(fps>57&&scale<1)scale=Math.min(1,scale*1.06);acc=0;frames=0}}}
+    if(mv){hqA=0;hqF=0;acc+=dt;frames++;if(acc>1){const fps=frames/acc;if(fps<45&&scale>.45)scale*=.9;else if(fps>57&&scale<1)scale=Math.min(1,scale*1.05);acc=0;frames=0}}else{acc=0;frames=0;hqA+=dt;hqF++;if(hqA>1.2){const f=hqF/hqA;if(f<22&&hqS>.6)hqS=Math.max(.6,hqS*.9);else if(f>45&&hqS<1)hqS=Math.min(1,hqS*1.05);hqA=0;hqF=0}}}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-w3on]');if(!b)return;e.stopPropagation();P.on=true;saveP();show();bindUIsoon()},true);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&active()&&!raf){last=performance.now();raf=requestAnimationFrame(loop)}});
 setTimeout(()=>{const b=document.querySelector('[data-w3on]');if(b)b.hidden=!isSup()},1500);
