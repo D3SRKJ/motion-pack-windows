@@ -2245,6 +2245,29 @@ html.ipm .lg-grid{gap:18px}
 html:not(.mp-go) #home,html:not(.mp-go) #home *,html:not(.mp-go) #home *::before,html:not(.mp-go) #home *::after{animation-play-state:paused!important}
 #intro{will-change:opacity,transform;contain:strict}
 #intro .in2-3d,#intro .in2-flare,#intro .in2-sub,#intro .in2-spot{will-change:transform,opacity}
+
+/* v32 smooth logo + home */
+canvas.mplc{display:block;width:100%;height:auto}
+#intro.pre .in2-spot{animation:glow 3.2s var(--ease) .3s forwards}
+#intro .in2-fl:empty{aspect-ratio:640/170}
+/* the background light sweep moves as one picture instead of being repainted every frame */
+.hm-bg{overflow:hidden}
+.hm-bg::after{inset:0 auto 0 0!important;width:260%;background-size:100% 100%!important;animation:hmsweepT 9s ease-in-out infinite!important;will-change:transform}
+@keyframes hmsweepT{0%{transform:translate3d(-73.85%,0,0)}60%,100%{transform:translate3d(36.92%,0,0)}}
+/* the chrome rings travel as one picture too */
+#home .hm-sym>.mpfr{background:none!important;overflow:hidden;animation:none!important}
+#home .hm-sym>.mpfr::before{content:"";position:absolute;left:0;top:-80%;width:520%;height:260%;background:var(--fr);background-size:50% 100%;animation:mpfrT 5.6s linear infinite;will-change:transform}
+#home .hm-cat:hover .hm-sym>.mpfr::before{animation-duration:1.5s}
+.th-still #home .hm-sym>.mpfr::before{animation:none!important}
+@keyframes mpfrT{to{transform:translate3d(-50%,0,0)}}
+@media (pointer:coarse){
+ /* touch screens: entrances use only movement and fade (blur on big moving layers is what stutters on iPad) */
+ @keyframes in2spin{0%{opacity:0;transform:translateZ(-2400px) translateY(-6%) rotateY(-360deg) rotateX(16deg)}14%{opacity:1}100%{opacity:1;transform:none}}
+ .in2-sub{letter-spacing:.62em!important;padding-left:.62em!important}
+ @keyframes in2sub{from{opacity:0;transform:translateY(8px) scale(1.06)}to{opacity:1;transform:none}}
+ @keyframes hmin{from{opacity:0;transform:perspective(1200px) translateZ(-600px) translateY(90px) rotateX(28deg)}}
+ @keyframes hmrise{from{opacity:0;transform:translateY(26px)}}
+}
 </style>
 </head>
 <body class="edit empty">
@@ -4638,15 +4661,74 @@ function mplPlay(root,dur){const svg=root.querySelector('svg.mpl');if(!svg)retur
       if(spk){if(active&&lens[active[0]]){const q=refs[active[0]].getPointAtLength(lens[active[0]]*active[1]);spk.setAttribute('cx',q.x);spk.setAttribute('cy',q.y);spk.style.opacity=1}else spk.style.opacity=0}
       const g=(T-1.02)/.5;if(gl&&g>-.1)gl.setAttribute('gradientTransform',`translate(${(-200+Math.min(1.2,Math.max(0,g))*1000).toFixed(1)} 0)`);
       if(T>=1&&!doneW){doneW=true;res()}if(T<1.65)requestAnimationFrame(f);else if(spk)spk.remove()};requestAnimationFrame(f)})}
-function mplGlint(root){const gl=root.querySelector('.mplgl');if(!gl||gl._run)return;gl._run=1;const t0=performance.now(),f=n=>{const g=(n-t0)/900;gl.setAttribute('gradientTransform',`translate(${(-200+Math.min(1.2,g)*1000).toFixed(1)} 0)`);if(g<1.2)requestAnimationFrame(f);else gl._run=0};requestAnimationFrame(f)}
+/* ---------- v32: the chrome logo is painted once into pictures, then its write-on, sparkle and glint are drawn
+   on a canvas. The old way re-drew the whole lit, blurred SVG on every frame, which only managed ~3 frames a
+   second on iPad. ---------- */
+function mplSvgPart(o,part,W,H){let s=mpLogoSVG(o).replace('<svg ',`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" `).replace(/ style="[^"]*"/g,'');
+  s=s.replace(/<path class="(sh|bs|tp|g) s\d+"[^>]*\/>/g,(m,c)=>c==='g'?'':part==='all'||(part==='sh'?c==='sh':c!=='sh')?m:'');
+  s=s.replace(/<circle class="dt"[^>]*\/>/g,m=>{const sh=/fill="#000"/.test(m);return part==='all'||(part==='sh'?sh:!sh)?m:''});
+  s=s.replace(/<circle class="spk"[^>]*\/>/g,'');return s}
+function mplRaster(svg,W,H){return new Promise(res=>{const im=new Image();let ok=false;const fin=c=>{if(ok)return;ok=true;res(c)};
+  im.onload=()=>{const go=()=>{try{const c=document.createElement('canvas');c.width=W;c.height=H;c.getContext('2d').drawImage(im,0,0,W,H);fin(c)}catch(e){fin(null)}};(im.decode?im.decode().catch(()=>{}):Promise.resolve()).then(go)};
+  im.onerror=()=>fin(null);setTimeout(()=>fin(null),4000);im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)})}
+function mplSize(cssW){const d=Math.min(2,window.devicePixelRatio||1),W=Math.max(320,Math.min(2400,Math.round(cssW*d)));return {W,H:Math.round(W*170/640)}}
+const MPLX={tan:Math.tan(-14*Math.PI/180)};
+function mplXf(x,k){x.setTransform(k,0,0,k,6*k,8*k);x.transform(1,0,MPLX.tan,1,0,0);x.translate(26,0)}
+function mplGeo(){if(MPLX.geo)return MPLX.geo;const ns='http://www.w3.org/2000/svg',sv=document.createElementNS(ns,'svg');sv.setAttribute('style','position:absolute;width:0;height:0;overflow:hidden;left:-9px;top:-9px');sv.setAttribute('aria-hidden','true');
+  const els=MPL.S.map(s=>{const p=document.createElementNS(ns,'path');p.setAttribute('d',s.d);sv.appendChild(p);return p});document.body.appendChild(sv);
+  return MPLX.geo={els,lens:els.map(p=>{try{return p.getTotalLength()}catch(e){return 600}}),p2:MPL.S.map(s=>new Path2D(s.d))}}
+/* the intro pictures are painted early, while the home screen is being prepared */
+function mplIntroPrep(){if(MPLX.ip)return MPLX.ip;const cssW=Math.min(innerWidth*.94,1080),{W,H}=mplSize(cssW),o={anim:1};
+  return MPLX.ip=Promise.all([mplRaster(mplSvgPart(o,'sh',W,H),W,H),mplRaster(mplSvgPart(o,'bt',W,H),W,H)]).then(([a,b])=>a&&b?{W,H,a,b}:null).catch(()=>null)}
+/* turns a logo holder (SVG inside) into a canvas; resolves true when done */
+function mplCanvasify(holder,o){o=o||{};if(!holder||!window.Path2D)return Promise.resolve(false);if(holder._mplc)return holder._mplc;
+  const cssW=holder.clientWidth||holder.getBoundingClientRect().width||560;let {W,H}=mplSize(cssW);
+  const pics=o.anim?mplIntroPrep().then(r=>{if(!r)return [null,null];W=r.W;H=r.H;return [r.a,r.b]}):Promise.all([mplRaster(mplSvgPart(o,'all',W,H),W,H),mplRaster(mplSvgPart(o,'bt',W,H),W,H)]);
+  return holder._mplc=pics.then(([a,b])=>{
+    if(!a||!b)return false;const c=document.createElement('canvas');c.width=W;c.height=H;c.className='mplc';c.setAttribute('role','img');c.setAttribute('aria-label','Motion Pack');
+    const x=c.getContext('2d'),k=W/640;c._P={W,H,k,a,b,anim:!!o.anim};
+    if(!o.anim){x.drawImage(a,0,0)}
+    c._glint=()=>mplCanvasGlint(c);holder.replaceChildren(c);return true}).catch(()=>false)}
+function mplScratch(P,n){P['s'+n]=P['s'+n]||Object.assign(document.createElement('canvas'),{width:P.W,height:P.H});return P['s'+n]}
+function mplBand(x,P,g){const tx=-200+Math.min(1.2,Math.max(0,g))*1000;mplXf(x,P.k);const gr=x.createLinearGradient(-160+tx,0,-40+tx,0);gr.addColorStop(0,'rgba(255,255,255,0)');gr.addColorStop(.5,'rgba(255,255,255,.95)');gr.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gr;x.fillRect(-200+tx,-60,200,300)}
+function mplDrawGlint(x,P,g){const s=mplScratch(P,2),y=s.getContext('2d');y.setTransform(1,0,0,1,0,0);y.globalCompositeOperation='source-over';y.clearRect(0,0,P.W,P.H);mplBand(y,P,g);y.setTransform(1,0,0,1,0,0);y.globalCompositeOperation='destination-in';y.drawImage(P.b,0,0);
+  x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=.8;x.drawImage(s,0,0);x.restore()}
+/* glint on a finished (static) canvas logo */
+function mplCanvasGlint(c){const P=c._P;if(!P||c._run)return;c._run=1;const x=c.getContext('2d'),full=P.anim?null:P.a,t0=performance.now();
+  const f=n=>{const g=(n-t0)/900;x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,P.W,P.H);if(full)x.drawImage(full,0,0);else{x.drawImage(P.a,0,0);x.drawImage(P.b,0,0)}
+    if(g<1.2){mplDrawGlint(x,P,g);requestAnimationFrame(f)}else c._run=0};requestAnimationFrame(f)}
+/* the intro write-on: same timing as the SVG version */
+function mplCanvasPlay(root,dur){const c=root.querySelector('canvas.mplc'),P=c&&c._P;if(!P)return mplPlay(root,dur);dur=dur||2300;
+  const G=mplGeo(),st=MPL.S,x=c.getContext('2d'),m=mplScratch(P,1),mx=m.getContext('2d'),ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,A=25*Math.PI/180,L=5.5,[dx,dy,dr,dt]=MPL.dot;
+  const nib=[-1,-.5,0,.5,1].map(t=>[t*L*Math.cos(A),-t*L*Math.sin(A)]);
+  const layer=(img,fr,pd,sh)=>{if(fr.every(v=>v>=1)&&pd>=1){x.drawImage(img,0,0);return}
+    mx.setTransform(1,0,0,1,0,0);mx.globalCompositeOperation='source-over';mx.globalAlpha=1;mx.clearRect(0,0,P.W,P.H);mplXf(mx,P.k);mx.lineCap='round';mx.lineJoin='round';mx.strokeStyle='#000';mx.fillStyle='#000';
+    if(sh)mx.translate(3,7);mx.lineWidth=sh?34:7;
+    fr.forEach((v,k)=>{if(v<=0)return;mx.setLineDash(v<1?[v*G.lens[k],G.lens[k]*2+20]:[]);(sh?[[0,0]]:nib).forEach(([ox,oy])=>{mx.translate(ox,oy);mx.stroke(G.p2[k]);mx.translate(-ox,-oy)})});
+    mx.setLineDash([]);if(pd>0){mx.globalAlpha=pd;mx.beginPath();mx.arc(dx,dy,dr+(sh?12:3),0,6.2832);mx.fill();mx.globalAlpha=1}
+    mx.setTransform(1,0,0,1,0,0);mx.globalCompositeOperation='source-in';mx.drawImage(img,0,0);mx.globalCompositeOperation='source-over';x.drawImage(m,0,0)};
+  return new Promise(res=>{const t0=performance.now();let doneW=false;
+    const f=now=>{const T=(now-t0)/dur;let act=-1,av=0;
+      const fr=st.map((s,k)=>{const p=Math.max(0,Math.min(1,(T-s.t0)/(s.t1-s.t0))),v=Math.max(0,Math.min(1,ease(p)*1.03-.03));if(p>0&&p<1){act=k;av=v}return v}),pd=Math.max(0,Math.min(1,(T-dt)/.06));
+      x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,P.W,P.H);layer(P.a,fr,pd,true);layer(P.b,fr,pd,false);
+      const g=(T-1.02)/.5;if(g>-.1&&g<1.2)mplDrawGlint(x,P,g);
+      if(act>=0&&G.lens[act]){try{const q=G.els[act].getPointAtLength(G.lens[act]*av);x.save();mplXf(x,P.k);x.globalCompositeOperation='lighter';const r=x.createRadialGradient(q.x,q.y,0,q.x,q.y,9);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.25,'rgba(255,255,255,.9)');r.addColorStop(1,'rgba(188,214,255,0)');x.fillStyle=r;x.beginPath();x.arc(q.x,q.y,9,0,6.2832);x.fill();x.restore()}catch(e){}}
+      if(T>=1&&!doneW){doneW=true;res()}if(T<1.65)requestAnimationFrame(f);else{x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,P.W,P.H);x.drawImage(P.a,0,0);x.drawImage(P.b,0,0)}};requestAnimationFrame(f)})}
+
+function mplGlint(root){const cv=root&&root.querySelector&&root.querySelector('canvas.mplc');if(cv&&cv._glint)return cv._glint();return mplGlintSvg(root)}
+function mplGlintSvg(root){const gl=root.querySelector('.mplgl');if(!gl||gl._run)return;gl._run=1;const t0=performance.now(),f=n=>{const g=(n-t0)/900;gl.setAttribute('gradientTransform',`translate(${(-200+Math.min(1.2,g)*1000).toFixed(1)} 0)`);if(g<1.2)requestAnimationFrame(f);else gl._run=0};requestAnimationFrame(f)}
 
 {const h=document.querySelector('#gate h2');if(h){h.className='gate-logo';h.innerHTML=mpLogoSVG({lite:1})}}
 function intro(){
   const el=document.getElementById('intro');if(!el)return Promise.resolve();
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,b=(S.brand||'').trim(),name=(S.locked&&b&&!/^your label$/i.test(b))?b:'Motion Pack';
   if(name==='Motion Pack'){const w=el.querySelector('.in-wrap');if(w)w.outerHTML=`<div class="in2"><div class="in2-spot"></div><div class="in2-3d"><div class="in2-fl">${mpLogoSVG({anim:1})}</div></div><i class="in2-flare"></i><p class="in2-sub">Garment Lookbook</p></div>`;
-    requestAnimationFrame(()=>{el.classList.add('go');mplPlay(el,reduce?20:2300)});
-    return new Promise(res=>{let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');res();setTimeout(()=>el.remove(),1800)};setTimeout(end,reduce?500:4700);setTimeout(()=>['pointerdown','keydown','wheel','touchstart'].forEach(t=>addEventListener(t,end,{once:true,passive:true})),600)})}
+    const fl=el.querySelector('.in2-fl');
+    return Promise.race([mplCanvasify(fl,{anim:1}),new Promise(r=>setTimeout(()=>r(false),2500))]).then(ok=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(ok))))).then(ok=>{
+    if(!ok&&fl&&!fl.querySelector('svg'))fl.innerHTML=mpLogoSVG({anim:1});
+    el.classList.add('go');(ok?mplCanvasPlay:mplPlay)(el,reduce?20:2300);
+    setTimeout(()=>document.documentElement.classList.add('mp-go'),reduce?100:4000);
+    return new Promise(res=>{let done=false;const end=()=>{if(done)return;done=true;el.classList.add('out');res();setTimeout(()=>el.remove(),1800)};setTimeout(end,reduce?500:4700);setTimeout(()=>['pointerdown','keydown','wheel','touchstart'].forEach(t=>addEventListener(t,end,{once:true,passive:true})),600)})})}
   const nm=$('#inName');nm.insertAdjacentHTML('afterbegin',[...name.toUpperCase()].map((c,i)=>c===' '?'<span class="sp"> </span>':`<span style="--d:${(200+i*90+Math.random()*140)|0}ms">${esc(c)}</span>`).join(''));
   $('#inSub').textContent=name==='Motion Pack'?'Garment Lookbook':'Motion Pack';
   requestAnimationFrame(()=>el.classList.add('go'));
@@ -8926,8 +9008,8 @@ setInterval(hmClock,15000);
 function hmDustStart(){const c=$('#hmDust');if(!c||HMD)return;const x=c.getContext('2d');let W=0,H=0,P=[];const rs=()=>{const d=Math.min(2,devicePixelRatio||1);W=c.width=Math.round(innerWidth*d);H=c.height=Math.round(innerHeight*d);P=Array.from({length:Math.round(Math.min(90,W*H/28000))},()=>({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.5+.35)*d,v:(Math.random()*.22+.04)*d,a:Math.random()*.45+.08,p:Math.random()*6.28,b:Math.random()<.12}))};rs();if(!HMDR){HMDR=true;addEventListener('resize',()=>{if(HMD)rs()})}
   const f=t=>{if(homeEl.hidden||document.hidden){HMD=null;return}x.clearRect(0,0,W,H);for(const q of P){q.y-=q.v;q.x+=Math.sin(t/3200+q.p)*.18;if(q.y<-8){q.y=H+8;q.x=Math.random()*W}const tw=.55+.45*Math.sin(t/900+q.p*3),al=q.a*tw;if(q.b){const g=x.createRadialGradient(q.x,q.y,0,q.x,q.y,q.r*7);g.addColorStop(0,`rgba(220,232,255,${(al*.5).toFixed(3)})`);g.addColorStop(1,'rgba(220,232,255,0)');x.fillStyle=g;x.beginPath();x.arc(q.x,q.y,q.r*7,0,6.283);x.fill()}else{x.fillStyle=`rgba(228,234,245,${al.toFixed(3)})`;x.beginPath();x.arc(q.x,q.y,q.r,0,6.283);x.fill()}}HMD=requestAnimationFrame(f)};HMD=requestAnimationFrame(f)}
 async function showHome(){try{WORLD3.show()}catch(e){console.error(e)}setTimeout(syAuto,2600);H2.classList.add('inhome');H2.classList.remove('inlab');homeEl.classList.remove('out');homeEl.hidden=false;labEl.hidden=true;
-  const b=(S.brand||'').trim(),bn=$('#hmBrand');if(!bn.querySelector('svg'))bn.innerHTML=mpLogoSVG({lite:1});const sub=homeEl.querySelector('.hm-sub');if(sub)sub.textContent=(b&&!/^your label$/i.test(b)?b+'  ·  ':'')+'Garment design & lookbook studio';
-  hmClock();if(document.documentElement.classList.contains('mp-go'))hmDustStart();else{const _w=()=>document.documentElement.classList.contains('mp-go')?setTimeout(hmDustStart,900):setTimeout(_w,120);_w()}setTimeout(()=>{if(!homeEl.hidden)mplGlint(bn)},1500);
+  const b=(S.brand||'').trim(),bn=$('#hmBrand');if(!bn.querySelector('svg,canvas')){bn.innerHTML=mpLogoSVG({lite:1});mplCanvasify(bn,{lite:1})}const sub=homeEl.querySelector('.hm-sub');if(sub)sub.textContent=(b&&!/^your label$/i.test(b)?b+'  ·  ':'')+'Garment design & lookbook studio';
+  hmClock();if(document.documentElement.classList.contains('mp-go'))hmDustStart();else{const _w=()=>document.documentElement.classList.contains('mp-go')?setTimeout(hmDustStart,900):setTimeout(_w,120);_w()}(function gw(){if(!document.documentElement.classList.contains('mp-go'))return setTimeout(gw,150);setTimeout(()=>{if(!homeEl.hidden)mplGlint(bn)},1600)})();
   const [des,books]=await Promise.all([IDB.get('dlib'),LOCAL?libGet():Promise.resolve([])]);const bk=(books||[]).filter(x=>x.count||x.cover);
   const it=[...(des||[]).map(d=>({k:'d',id:d.id,n:d.name,img:d.thumb,u:d.updated,t:'Design'})),...bk.map(x=>({k:'b',id:x.id,n:x.name||'Untitled',img:x.cover,u:x.updated||0,t:'Lookbook'}))].sort((a,b)=>b.u-a.u).slice(0,10);
   $('#hmCd').textContent=(des||[]).length;$('#hmCb').textContent=bk.length;HML=it[0]||null;$('#hmLast').hidden=!HML;
@@ -10781,7 +10863,7 @@ document.addEventListener('click',e=>{if(!e.composedPath().includes(studioP))ret
   else if(k==='thermal')toast(matchMedia('(pointer:fine)').matches?'Press and hold on a garment to see it in thermal':'Press and hold on a garment',2400);else if(k==='age')toast('Use the slider under the garment',2000)});
 
 Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(async()=>{
-  const toHome=!(needLic&&!LIC)&&LOCAL&&!S.locked,cap=ms=>new Promise(r=>setTimeout(r,ms));
+  try{const _b=(S.brand||'').trim();if(!((S.locked&&_b&&!/^your label$/i.test(_b)))){const _el=document.getElementById('intro'),_w=_el&&_el.querySelector('.in-wrap');if(_w){_w.outerHTML='<div class="in2"><div class="in2-spot"></div><div class="in2-3d"><div class="in2-fl"></div></div><i class="in2-flare"></i><p class="in2-sub">Garment Lookbook</p></div>';_el.classList.add('pre')}mplIntroPrep()}}catch(e){}const toHome=!(needLic&&!LIC)&&LOCAL&&!S.locked,cap=ms=>new Promise(r=>setTimeout(r,ms));
   if(toHome){try{L.tp=1;kick();render(true);applyLic();await Promise.race([LAB.home(),cap(1800)]);await Promise.race([window.__mpHomeReady||0,cap(1500)])}catch(e){console.error(e)}
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}
   await intro();document.documentElement.classList.add('mp-go');
