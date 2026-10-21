@@ -2160,6 +2160,86 @@ html.pl-open,html.pl-open body{overflow:hidden}
 .gl2fx{display:flex;flex-direction:column;gap:5px}
 .gl2fx .gcv:hover{border-color:#7aa8ff;background:#35373b}.gl2fx .gcv span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.gl2fx .gcv em{font-style:normal;font-size:10px;color:#8d8e93;letter-spacing:.08em;text-transform:uppercase;flex:none}
 #glyLib .glbody{flex:1;min-height:0;overflow:auto;padding:10px}
+
+/* ---------- v29: iPad studio (Procreate-style) ---------- */
+html.ipm{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+html.ipm input,html.ipm textarea,html.ipm [contenteditable]{-webkit-user-select:text;user-select:text}
+#ipBar,#ipCard{display:none}
+#lab.ipst .lbar,#lab.ipst .ltools,#lab.ipst .ldtabs,#lab.ipst .lstat{display:none!important}
+#lab.ipst #ipBar{display:flex;position:absolute;z-index:9;top:0;left:0;right:0;height:calc(56px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) 12px 0;align-items:center;gap:2px;
+  background:linear-gradient(180deg,rgba(18,18,20,.94),rgba(12,12,14,.88));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);transition:opacity .25s,transform .25s}
+#ipBar .ipg{height:40px;padding:0 14px;margin-right:6px;border-radius:11px;font:600 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.01em;color:#f2f2f4;background:rgba(255,255,255,.07);border:0}
+#ipBar .ipb{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#d8d8dc;background:none;border:0;transition:background .15s,color .15s}
+#ipBar .ipb:active{background:rgba(255,255,255,.1)}
+#ipBar .ipb.on{color:#0b0b0c;background:linear-gradient(180deg,#fff,#d4d5d9 55%,#b2b3b8);box-shadow:0 2px 10px rgba(0,0,0,.45)}
+#ipBar svg,#ipCard svg,#lab.ipst .ipsb svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#ipBar .ipn{flex:1;min-width:0;text-align:center;font:500 13px -apple-system,BlinkMacSystemFont,sans-serif;color:#8e8e93;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 10px}
+#ipBar .ipc{width:46px;height:46px;border:0;background:none;display:grid;place-items:center;border-radius:50%}
+#ipBar .ipc i{width:30px;height:30px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #0c0c0d,0 0 0 4px #d9dadd}
+#ipBar .ipc.on i{box-shadow:0 0 0 2px #0c0c0d,0 0 0 4px #fff,0 0 14px rgba(255,255,255,.4)}
+/* side strip: size, eyedropper, opacity, undo / redo */
+#lab.ipst .lside{display:flex!important;flex-direction:column;align-items:center;gap:8px;position:absolute;z-index:8;left:calc(10px + env(safe-area-inset-left,0px));top:50%;transform:translateY(-46%);width:58px;padding:14px 6px;border-radius:29px;
+  background:rgba(22,22,24,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.07);box-shadow:0 10px 30px rgba(0,0,0,.45);transition:opacity .25s}
+#lab.ipst .lside .vsl{height:150px}
+#lab.ipst .lside .ipsb{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#d8d8dc;background:rgba(255,255,255,.05);border:0}
+#lab.ipst .lside .ipsb:active{background:rgba(255,255,255,.14)}
+#lab.ipst.mpst .lside{opacity:.25}
+/* tool options float as a slim pill at the bottom */
+#lab.ipst .lopt{position:absolute!important;z-index:8;top:auto!important;left:50%!important;right:auto!important;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  max-width:calc(100% - 180px);height:52px!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important;padding:0 14px!important;border-radius:16px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+  background:rgba(22,22,24,.92)!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 10px 30px rgba(0,0,0,.45)!important;transition:opacity .25s}
+#lab.ipst .lopt::-webkit-scrollbar{display:none}
+#lab.ipst.mpst .lopt{opacity:.2;pointer-events:none}
+/* panels open as floating cards under their button */
+#lab.ipst .lpop{position:absolute!important;z-index:10;top:calc(64px + env(safe-area-inset-top,0px))!important;right:12px!important;left:auto!important;bottom:auto!important;width:min(370px,calc(100vw - 24px))!important;
+  max-height:calc(100% - 150px)!important;border-radius:18px!important;overflow:auto;border:1px solid rgba(255,255,255,.09)!important;
+  background:rgba(26,26,28,.97)!important;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);box-shadow:0 22px 60px rgba(0,0,0,.6)!important;animation:ipIn .18s ease-out}
+#lab.ipst .lpop.stk{display:flex;flex-direction:column;padding:6px!important}
+#lab.ipst .lpop.stk[data-ipv=layers] .pcol,#lab.ipst .lpop.stk[data-ipv=layers] .pprop,
+#lab.ipst .lpop.stk[data-ipv=color] .pprop,#lab.ipst .lpop.stk[data-ipv=color] .plyr,
+#lab.ipst .lpop.stk[data-ipv=props] .pcol,#lab.ipst .lpop.stk[data-ipv=props] .plyr{display:none!important}
+#lab.ipst .lpop.stk .pp{border-radius:12px;overflow:hidden;flex:1 1 auto;min-height:0}
+#lab.ipst .lpop.stk[data-ipv=layers] .plyr{max-height:calc(100vh - 220px)}
+#lab.ipst .lpop.stk[data-ipv=props] .pprop{max-height:calc(100vh - 220px)}
+#lab.ipst .plyr .lyr{height:58px!important}
+#lab.ipst .lpop.stk[data-ipv=color] .cmini{flex-direction:column}
+#lab.ipst .lpop.stk[data-ipv=color] #cpSV canvas{height:230px!important}
+#lab.ipst .lpop.stk[data-ipv=color] #cpH canvas{height:30px!important}
+#lab.ipst .lpop .ppx{display:none}
+@keyframes ipIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+#lab.ipst #ipCard:not([hidden]){display:flex;flex-direction:column;position:absolute;z-index:11;max-height:calc(100% - 140px);overflow:hidden;border-radius:18px;
+  background:rgba(26,26,28,.97);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.09);box-shadow:0 22px 60px rgba(0,0,0,.6);color:#e8e8ea;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;animation:ipIn .18s ease-out}
+#ipCard .iptabs{display:flex;gap:4px;padding:10px 10px 6px;overflow-x:auto;scrollbar-width:none;flex:none}
+#ipCard .iptab{flex:none;height:36px;padding:0 14px;border-radius:10px;border:0;background:rgba(255,255,255,.06);color:#c8c8cc;font:600 13.5px -apple-system,sans-serif}
+#ipCard .iptab.on{background:#f1f1f3;color:#0c0c0d}
+#ipCard .iph{padding:14px 18px 6px;font:700 12px -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8e8e93}
+#ipCard .iph.sub{padding-top:16px}
+#ipCard .ipbody{overflow:auto;padding:4px 8px 10px;-webkit-overflow-scrolling:touch}
+#ipCard .iprow{display:flex;align-items:center;width:100%;min-height:48px;padding:0 12px;border:0;border-radius:11px;background:none;color:#ededf0;font:15px -apple-system,sans-serif;text-align:left}
+#ipCard .iprow:active{background:rgba(255,255,255,.09)}
+#ipCard hr{border:0;border-top:1px solid rgba(255,255,255,.07);margin:6px 10px}
+#ipCard .ipnote{margin:10px 12px;font-size:12.5px;line-height:1.45;color:#8e8e93}
+#ipCard .ipseg{display:flex;gap:4px;margin:0 10px 6px;padding:3px;border-radius:12px;background:rgba(255,255,255,.06)}
+#ipCard .ipseg button{flex:1;height:38px;border:0;border-radius:10px;background:none;color:#c8c8cc;font:600 13px -apple-system,sans-serif}
+#ipCard .ipseg button.on{background:#f1f1f3;color:#0c0c0d}
+#ipCard .ipgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:6px 10px 12px;overflow:auto}
+#ipCard .ipti{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border:0;border-radius:13px;background:rgba(255,255,255,.05);color:#dcdce0;font:12px -apple-system,sans-serif}
+#ipCard .ipti.on{background:#f1f1f3;color:#0c0c0d}
+/* four-finger tap hides everything but the canvas */
+#lab.ipst.iphide #ipBar{opacity:0;transform:translateY(-100%);pointer-events:none}
+#lab.ipst.iphide .lside,#lab.ipst.iphide .lopt,#lab.ipst.iphide .lpop,#lab.ipst.iphide #ipCard{opacity:0!important;pointer-events:none!important}
+/* menus that still drop down get touch-sized rows */
+html.ipm #labDD button{min-height:44px;font-size:14.5px}
+html.ipm .pill{min-height:40px}
+/* iPad: touch-sized controls across the app */
+html.ipm #dock{gap:4px;padding:6px 10px}
+html.ipm #dock>button,html.ipm #dock>label{min-height:44px;min-width:44px;padding:0 14px;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center}
+html.ipm .hm-quick button{min-height:46px;padding:0 16px;font-size:14px}
+html.ipm .sheet .pill,html.ipm .sheet button.pill{min-height:44px;font-size:14px}
+html.ipm .sheet .x,html.ipm .x{min-width:44px;min-height:44px}
+html.ipm .pl-tools button{min-width:48px;min-height:48px}
+html.ipm #mkP button,html.ipm #gsP button{min-height:40px}
+html.ipm .lg-grid{gap:18px}
 </style>
 </head>
 <body class="edit empty">
@@ -2710,9 +2790,19 @@ function toggleFs(){const on=document.fullscreenElement||document.webkitFullscre
 /* ---------- cloud save (hosted page) ---------- */
 let P=null,RO=false,saveT=0,saving=false,again=false;
 const LOCAL=!(window.claude&&window.claude.use);let KEY='lb:'+(S.lid||'default');
-const IDB={db:null,open(){return new Promise(res=>{try{const r=indexedDB.open('motionpack',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(this.db=r.result);r.onerror=()=>res(null)}catch(e){res(null)}})},
-  async get(k){const d=this.db||await this.open();if(!d)return null;return new Promise(res=>{try{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)}catch(e){res(null)}})},
-  async set(k,v){const d=this.db||await this.open();if(!d)return false;return new Promise(res=>{try{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res(true);t.onerror=()=>res(false)}catch(e){res(false)}})}};
+async function mpPack(v){if(v instanceof Blob)return {__mpb:await v.arrayBuffer(),t:v.type||''};if(Array.isArray(v)){const o=[];for(const x of v)o.push(await mpPack(x));return o}
+  if(v&&typeof v==='object'&&Object.getPrototypeOf(v)===Object.prototype){const o={};for(const k in v)o[k]=await mpPack(v[k]);return o}return v}
+function mpUnpack(v){if(v&&typeof v==='object'){if(v.__mpb instanceof ArrayBuffer)return new Blob([v.__mpb],{type:v.t||''});if(Array.isArray(v)){for(let i=0;i<v.length;i++)v[i]=mpUnpack(v[i]);return v}
+  if(Object.getPrototypeOf(v)===Object.prototype){for(const k in v)v[k]=mpUnpack(v[k])}}return v}
+const IDB={db:null,open(){return new Promise(res=>{try{const r=indexedDB.open('motionpack',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');
+    r.onsuccess=()=>{const d=r.result;d.onclose=()=>{if(this.db===d)this.db=null};d.onversionchange=()=>{try{d.close()}catch(e){}if(this.db===d)this.db=null};res(this.db=d)};r.onerror=()=>res(null)}catch(e){res(null)}})},
+  async get(k){for(let a=0;a<2;a++){const d=this.db||await this.open();if(!d)return null;
+      const r=await new Promise(res=>{try{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res({v:q.result||null});q.onerror=()=>res({e:q.error})}catch(e){res({e})}});
+      if(!r.e)return mpUnpack(r.v);console.error('Storage read failed ('+k+'): '+(r.e&&(r.e.name+' '+r.e.message)));this.db=null}return null},
+  async set(k,v){let packed=false;for(let a=0;a<3;a++){const d=this.db||await this.open();if(!d)return false;
+      const r=await new Promise(res=>{try{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res({});t.onerror=()=>res({e:t.error});t.onabort=()=>res({e:t.error})}catch(e){res({e})}});
+      if(!r.e)return true;const n=r.e&&r.e.name;console.error('Storage save failed ('+k+'): '+(r.e?(n+' '+r.e.message):'unknown'));if(n==='QuotaExceededError')return false;
+      this.db=null;if(a===1&&!packed){try{v=await mpPack(v);packed=true}catch(e){return false}}}return false}};
 async function saveLocal(){if(await IDB.set(KEY,Object.assign({savedAt:Date.now(),brand:S.brand,title:S.title,items:S.items},packLook()))){dirty=false;libTouch()}}
 function changed(){dirty=true;clearTimeout(saveT);if(P&&!RO)saveT=setTimeout(save,900);else if(LOCAL)saveT=setTimeout(saveLocal,700)}
 function drop(id){if(id&&P&&P.assets)P.assets.delete(id).catch(()=>{})}
@@ -4666,7 +4756,7 @@ function draw(){rq=0;if(!D||edEl.hidden)return;dpr=Math.min(TOUCH?2:3,devicePixe
   if(!GMODE){x.save();x.shadowColor='rgba(0,0,0,.6)';x.shadowBlur=40;x.shadowOffsetY=12;x.fillStyle='#000';x.fillRect(0,0,D.w,D.h);x.restore()}
   if(!D.bgOn){if(!checker){const c=mk(16,16),g=c.getContext('2d');g.fillStyle='#e6e6e6';g.fillRect(0,0,16,16);g.fillStyle='#c9c9c9';g.fillRect(0,0,8,8);g.fillRect(8,8,8,8);checker=x.createPattern(c,'repeat')}x.save();x.scale(1/V.s,1/V.s);x.fillStyle=checker;x.fillRect(0,0,D.w*V.s,D.h*V.s);x.restore()}
   {const eff=V.s*dpr;x.imageSmoothingEnabled=!(VIEW.pixels&&eff>=3);x.imageSmoothingQuality='high';x.drawImage(GH?GH.base:(eff<.5?mipFor(eff):T('comp')),0,0,D.w,D.h);if(GH)ghostPaint(x);if(D.pat)patNeighbors(x,eff<.5?mipFor(eff):T('comp'));x.imageSmoothingEnabled=true;if(VIEW.pixels&&eff>=10)pixGrid(x)}
-  overlays(x);if(VIEW.rulers&&!GMODE)rulers(x)}
+  overlays(x);if(VIEW.rulers&&!GMODE&&!labEl.classList.contains('ipst'))rulers(x)}
 const hair=()=>1/V.s;
 let antsT=0;function antsTick(){if(antsT)return;antsT=setTimeout(()=>{antsT=0;if(D&&D.sel&&!edEl.hidden)req()},110)}
 const CUR={x:0,y:0,show:false};
@@ -6667,11 +6757,11 @@ function scFree(){for(const k of ['scB','scA','scCB','scCA','scG3']){if(TMP[k]){
 /* fit the canvas inside the space the toolbars really leave (notch, home bar, panels) */
 function fitBox(){const cr=cv.getBoundingClientRect(),W=cv.clientWidth,H=cv.clientHeight;let t=0,b=H,l=0,r=W;
   const R=e=>{if(!e||e.hidden)return null;const q=e.getBoundingClientRect();return q.width&&q.height?q:null};
-  const o=R(optEl)||R(barEl);if(o)t=Math.max(t,o.bottom-cr.top);const tb=R(toolsEl);if(tb){if(desk())l=Math.max(l,tb.right-cr.left);else b=Math.min(b,tb.top-cr.top)}
-  if(desk()&&!popEl.hidden){const pp=R(popEl);if(pp&&pp.left-cr.left>W*.45)r=Math.min(r,pp.left-cr.left)}
+  const IPMo=!!(labEl.classList&&labEl.classList.contains('ipst'));const o=IPMo?null:(R(optEl)||R(barEl));if(o)t=Math.max(t,o.bottom-cr.top);if(IPMo){const ib=R(document.getElementById('ipBar'));if(ib)t=Math.max(t,ib.bottom-cr.top+10);const sd=R(sideEl);if(sd)l=Math.max(l,sd.right-cr.left+10);const ob=R(optEl);if(ob)b=Math.min(b,ob.top-cr.top-10)}const tb=R(toolsEl);if(tb){if(desk())l=Math.max(l,tb.right-cr.left);else b=Math.min(b,tb.top-cr.top)}
+  if(desk()&&!popEl.hidden&&!IPMo){const pp=R(popEl);if(pp&&pp.left-cr.left>W*.45)r=Math.min(r,pp.left-cr.left)}
   const st=R(statEl);if(st&&desk()&&st.top-cr.top>H*.6)b=Math.min(b,st.top-cr.top);
   if(!desk()&&W>H){const sd=R(document.querySelector('#lab .lside'));if(sd)l=Math.max(l,sd.right-cr.left)}
-  if(GMODE){const dk=R(document.getElementById('gsDock'));if(dk)b=Math.min(b,dk.top-cr.top);const tp=R(document.getElementById('gsTop'));if(tp)t=Math.max(t,tp.bottom-cr.top)}const rr=VIEW.rulers&&!GMODE?20:0;t+=rr;l+=rr;const m=desk()?24:10;return {l:l+m,r:W-r+m,t:t+m,b:H-b+m,W,H}}
+  if(GMODE){const dk=R(document.getElementById('gsDock'));if(dk)b=Math.min(b,dk.top-cr.top);const tp=R(document.getElementById('gsTop'));if(tp)t=Math.max(t,tp.bottom-cr.top)}const rr=VIEW.rulers&&!GMODE&&!IPMo?20:0;t+=rr;l+=rr;const m=desk()?24:10;return {l:l+m,r:W-r+m,t:t+m,b:H-b+m,W,H}}
 
 
 /* ================= Sourcing: materials, vendors and budget planner ================= */
@@ -10173,6 +10263,94 @@ function txHitTop(p){return [...D.layers].reverse().find(l=>l.type==='text'&&eff
   cv.addEventListener('dblclick',e=>{if(!D||TXI||PAINT.includes(TOOL.t))return;const p=evPt(e),l=txHitTop(p);if(l){e.preventDefault();txEditAt(l,p)}});
   // double-click a text layer in the Layers panel to type in it
   popEl.addEventListener('dblclick',e=>{const r=e.target.closest('.lyr[data-ly]');if(!r||e.target.closest('input,select,.ey,.lmore'))return;const l=D&&D.layers.find(x=>x.id===r.dataset.ly);if(l&&l.type==='text'){e.preventDefault();e.stopPropagation();txEditAt(l,null)}},true)}
+
+/* ---------- v29: iPad mode – a Procreate-style studio for Design Lab on iPad (and any touch tablet) ---------- */
+const IPM={on:false,card:'',hide:false,setting:false};
+function ipmPref(){try{return localStorage.getItem('mp_ipm')||'auto'}catch(e){return 'auto'}}
+function ipmWant(){const m=ipmPref();if(m==='on')return true;if(m==='off')return false;
+  return matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)>=600}
+const IPI={
+  wrench:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.3 5.3l-5.6 5.6a1.9 1.9 0 0 0 2.7 2.7l5.6-5.6a4 4 0 0 0 5.3-5.3l-2.5 2.5-2.4-.3-.3-2.4z"/></svg>',
+  magic:'<svg viewBox="0 0 24 24"><path d="M4 20 14.5 9.5M13 6l1.5-1.5M17 10l1.5-1.5M15 3v2.2M19 7h2.2M18.2 3.8l-1.4 1.4M11.5 12.5l2 2"/></svg>',
+  tools:'<svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>',
+  drop:'<svg viewBox="0 0 24 24"><path d="M19.5 4.5a2.1 2.1 0 0 0-3 0l-2.3 2.3-1-1-1.4 1.4 1 1L5 15v4h4l7.8-7.8 1 1 1.4-1.4-1-1 2.3-2.3a2.1 2.1 0 0 0 0-3z"/></svg>',
+  acc:'<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8L3.5 9.2l5.9-.9z"/></svg>'};
+const ipTI=t=>{const x=TOOLS.find(a=>a[0]===t);return x&&IC[x[2]]?icon(x[2]):'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg>'};
+let ipBar=null,ipCard=null;
+function ipmEls(){if(ipBar)return;ipBar=document.createElement('div');ipBar.id='ipBar';edEl.appendChild(ipBar);ipCard=document.createElement('div');ipCard.id='ipCard';ipCard.hidden=true;edEl.appendChild(ipCard)}
+function ipmSync(){const want=ipmWant();if(want!==IPM.on){IPM.on=want;document.documentElement.classList.toggle('ipm',want)}
+  const st=IPM.on&&!!D&&!GMODE;const was=labEl.classList.contains('ipst');labEl.classList.toggle('ipst',st);labEl.classList.toggle('iphide',st&&IPM.hide);
+  if(!st){if(ipCard)ipCard.hidden=true;if(was&&D)requestAnimationFrame(()=>{try{fit()}catch(e){}});return}
+  ipmEls();ipmBar();if(!was){if(!popEl.hidden&&PANEL==='layers'&&!popEl.dataset.ipv)closePanel();updSide();requestAnimationFrame(()=>{try{fit()}catch(e){}})}}
+function ipmBar(){const t=TOOL.t,on=k=>t===k?' on':'',cd=k=>IPM.card===k||(k&&k===popEl.dataset.ipv&&!popEl.hidden&&PANEL==='layers')?' on':'';
+  ipBar.innerHTML=`<button class="ipg" data-l="gallery">Gallery</button>
+    <button class="ipb${cd('actions')}" data-ip="card:actions" title="Actions">${IPI.wrench}</button>
+    <button class="ipb${cd('adjust')}" data-ip="card:adjust" title="Adjustments">${IPI.magic}</button>
+    <button class="ipb${on('select')}" data-ip="tool:select" title="Selection">${ipTI('select')}</button>
+    <button class="ipb${on('move')}" data-ip="tool:move" title="Transform">${ipTI('move')}</button>
+    <span class="ipn" data-l="rename">${esc(D.name||'Untitled')}</span>
+    <button class="ipb${cd('tools')}" data-ip="card:tools" title="All tools">${IPI.tools}</button>
+    <button class="ipb${on('brush')}" data-ip="tool:brush" title="Paint">${ipTI('brush')}</button>
+    <button class="ipb${on('smudge')}" data-ip="tool:smudge" title="Smudge">${ipTI('smudge')}</button>
+    <button class="ipb${on('erase')}" data-ip="tool:erase" title="Erase">${ipTI('erase')}</button>
+    <button class="ipb${cd('layers')}" data-ip="card:layers" title="Layers">${icon('layers')}</button>
+    <button class="ipc${cd('color')}" data-ip="card:color" title="Colour" style="--c:${TOOL.color}"><i></i></button>`}
+// ---- cards ----
+const IPTAB={actions:[['Add',null],['Canvas','Image'],['Layer','Layer'],['Select','Select'],['Edit','Edit'],['Share','File'],['View','View'],['Prefs',null]]};
+const IPADD=[['import','Insert a photo / image'],['tool:text','Add text'],['glyphs','Glyphs & fancy text'],['acclib','Accessories library'],['fromlb','Place a lookbook garment'],['smartsel','Select a garment part (tap)'],['gcpick','✦ Smart garment colour'],['rmbg','Remove background'],['patfill','Pattern fill'],['newpat','New pattern tile']];
+function ipRows(list){return list.filter(it=>it&&it[0]).map(it=>it[0]==='-'?'<hr>':`<button class="iprow" data-l="${it[0]}"><span>${it[1]}</span></button>`).join('')}
+function ipmCardHTML(k){
+  if(k==='actions'){const tab=IPM.tab||'Add',tabs=IPTAB.actions.map(([n])=>`<button class="iptab${n===tab?' on':''}" data-ip="tab:${n}">${n}</button>`).join('');
+    let body='';const row=IPTAB.actions.find(x=>x[0]===tab);
+    if(tab==='Add')body=ipRows(IPADD);
+    else if(tab==='Prefs'){const m=ipmPref();body=`<p class="ipnote">Layout on this device</p><div class="ipseg">${[['auto','Automatic'],['on','iPad studio'],['off','Classic (PC)']].map(([v,n])=>`<button class="${m===v?'on':''}" data-ip="ipm:${v}">${n}</button>`).join('')}</div>
+      <p class="ipnote">Gestures: two-finger tap = undo · three-finger tap = redo · four-finger tap = hide the interface · pinch = zoom & rotate · with Apple Pencil, one finger moves the canvas.</p>${ipRows([['pensheet','Apple Pencil & pressure…'],['keys','Keyboard shortcuts…'],['help','Guide']])}`}
+    else body=ipRows((MENUS[row[1]]||[]).map(it=>it[0]==='-'?['-']:[it[0],it[1]]));
+    return `<div class="iptabs">${tabs}</div><div class="ipbody">${body}</div>`}
+  if(k==='adjust'){const A=ADJS.map(([a,n])=>['adj:'+a,n]),F=(MENUS.Filter||[]).filter(it=>it[0]!=='-').map(it=>[it[0],it[1]]);
+    return `<div class="iph">Adjustments</div><div class="ipbody">${ipRows([['gcpick','✦ Smart garment colour'],['desat','Desaturate'],['invertnow','Invert'],...A])}<div class="iph sub">Filters</div>${ipRows(F)}</div>`}
+  if(k==='tools'){return `<div class="iph">Tools</div><div class="ipgrid">${TOOLS.map(([t,n])=>`<button class="ipti${TOOL.t===t?' on':''}" data-ip="tool:${t}">${ipTI(t)}<span>${n}</span></button>`).join('')}</div>`}
+  return ''}
+function ipmOpenCard(k,btn){if(!popEl.hidden&&PANEL==='layers'&&popEl.dataset.ipv){popEl.dataset.ipv='';closePanel()}
+  if(IPM.card===k){ipmCloseCard();return}IPM.card=k;ipCard.className='ipc-'+k;ipCard.innerHTML=ipmCardHTML(k);ipCard.hidden=false;
+  const r=btn.getBoundingClientRect(),er=edEl.getBoundingClientRect(),w=Math.min(380,innerWidth-24);ipCard.style.width=w+'px';
+  ipCard.style.left=Math.max(12,Math.min(r.left-er.left+r.width/2-w/2,er.width-w-12))+'px';ipCard.style.top=(r.bottom-er.top+8)+'px';ipmBar()}
+function ipmCloseCard(){if(!IPM.card)return;IPM.card='';ipCard.hidden=true;ipmBar()}
+function ipmPanel(v){ipmCloseCard();if(!popEl.hidden&&PANEL==='layers'&&popEl.dataset.ipv===v){closePanel();popEl.dataset.ipv='';ipmBar();return}
+  IPM.setting=true;popEl.dataset.ipv=v;if(v==='props')STK.pt='glyphs';if(popEl.hidden||PANEL!=='layers')openPanel('layers');else drawPanel();IPM.setting=false;ipmBar()}
+function ipmTool(t){ipmCloseCard();mpHap('select');if(TOOL.t===t&&['brush','smudge','erase'].includes(t)){openPanel('brushes');return}if(TOOL.t!==t)setTool(t)}
+function ipmAnyCard(){return !!IPM.card||(!popEl.hidden&&(PANEL==='brushes'||(PANEL==='layers'&&!!popEl.dataset.ipv)))}
+function ipmCloseAll(){ipmCloseCard();if(!popEl.hidden&&(PANEL==='brushes'||PANEL==='layers')){closePanel();popEl.dataset.ipv=''}ipmBar()}
+function ipmToggleUI(){IPM.hide=!IPM.hide;ipmSync();hint(IPM.hide?'Interface hidden – four-finger tap to bring it back':'Interface back',1600)}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ip]');if(!b||!labEl.contains(b))return;e.preventDefault();e.stopPropagation();const [k,v]=b.dataset.ip.split(/:(.*)/);
+  if(k==='card'){if(v==='layers'||v==='color')ipmPanel(v);else ipmOpenCard(v,b)}
+  else if(k==='tool')ipmTool(v);
+  else if(k==='tab'){IPM.tab=v;ipCard.innerHTML=ipmCardHTML('actions')}
+  else if(k==='ipm'){try{localStorage.setItem('mp_ipm',v)}catch(_){}ipmCloseCard();updBar();try{fit()}catch(_){}hint(v==='off'?'Classic layout':v==='on'?'iPad studio layout':'Automatic layout',1500)}},true);
+// choosing something in a card closes it (the app runs the action first)
+document.addEventListener('click',e=>{if(!ipCard||ipCard.hidden)return;const b=e.target.closest&&e.target.closest('#ipCard [data-l]');if(b&&!/^(adjmenu|menu:)/.test(b.dataset.l))setTimeout(ipmCloseCard,0)});
+// tapping the canvas closes an open card (like Procreate) instead of painting
+cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||!ipmAnyCard())return;e.preventDefault();e.stopImmediatePropagation();ipmCloseAll()},true);
+// multi-finger taps: 2 = undo, 3 = redo, 4 = hide/show the interface
+{const G={pts:new Map(),max:0,t0:0,mv:0};
+  cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||e.pointerType!=='touch')return;if(!G.pts.size){G.max=0;G.t0=performance.now();G.mv=0}G.pts.set(e.pointerId,[e.clientX,e.clientY]);G.max=Math.max(G.max,G.pts.size)},true);
+  cv.addEventListener('pointermove',e=>{const q=G.pts.get(e.pointerId);if(q)G.mv=Math.max(G.mv,Math.hypot(e.clientX-q[0],e.clientY-q[1]))},true);
+  const end=e=>{if(!G.pts.has(e.pointerId))return;G.pts.delete(e.pointerId);if(G.pts.size)return;if(G.max<2||performance.now()-G.t0>420||G.mv>24)return;
+    if(G.max===2){undo();hint('Undo',700)}else if(G.max===3){redo();hint('Redo',700)}else ipmToggleUI()};
+  cv.addEventListener('pointerup',end,true);cv.addEventListener('pointercancel',e=>{G.pts.delete(e.pointerId)},true)}
+// keep the bar in step with the rest of the editor
+{const _u=updBar;updBar=function(){_u.apply(this,arguments);try{ipmSync()}catch(e){console.error(e)}}}
+{const _s=updSide;updSide=function(){_s.apply(this,arguments);if(labEl.classList.contains('ipst')&&sideEl&&!sideEl.querySelector('.ipsb'))sideEl.insertAdjacentHTML('beforeend',`<button class="ipsb" data-l="tool:pick" title="Eyedropper">${IPI.drop}</button><button class="ipsb" data-l="undo" title="Undo">${icon('undo')}</button><button class="ipsb" data-l="redo" title="Redo">${icon('redo')}</button>`)}}
+{const _o=openPanel;openPanel=function(n){if(!IPM.setting&&n==='layers'&&labEl.classList.contains('ipst'))popEl.dataset.ipv=STK.pt==='glyphs'?'props':'layers';const r=_o.apply(this,arguments);try{if(ipBar)ipmBar()}catch(e){}return r}}
+addEventListener('resize',()=>{if(D)ipmSync()});
+document.documentElement.classList.toggle('ipm',(IPM.on=ipmWant()));
+// ---- native iPad extras (from the Motion Pack iPad app): haptics + Apple Pencil double-tap / squeeze ----
+function mpHap(k){try{window.webkit&&webkit.messageHandlers&&webkit.messageHandlers.mpHaptic&&webkit.messageHandlers.mpHaptic.postMessage(k||'light')}catch(e){}}
+{const _ud=undo,_rd=redo;undo=function(){const r=_ud.apply(this,arguments);if(labEl.classList.contains('ipst'))mpHap('light');return r};redo=function(){const r=_rd.apply(this,arguments);if(labEl.classList.contains('ipst'))mpHap('light');return r}}
+let IPPREV='brush';
+let IPPT=0;addEventListener('mp-pencil',e=>{if(!D||edEl.hidden)return;const k=e.detail;if(performance.now()-IPPT<250)return;IPPT=performance.now();
+  if(k==='tap'){if(TOOL.t==='erase'){setTool(IPPREV==='erase'?'brush':IPPREV)}else{IPPREV=TOOL.t;setTool('erase')}mpHap('select');hint(TOOL.t==='erase'?'Eraser':'Back to '+(TOOLS.find(a=>a[0]===TOOL.t)||['',''])[1],900)}
+  else if(k==='squeeze'&&labEl.classList.contains('ipst')){ipmPanel('color');mpHap('medium')}});
 
 let HMBUSY=0;homeEl.addEventListener('click',async e=>{const px=e.target.closest('.hm-px'),c=e.target.closest('[data-home]')||(px&&!e.target.closest('[data-hq]')?px.querySelector('[data-home]'):null);if(c){if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();pickHome(c.dataset.home);return}const r=e.target.closest('[data-hrec]');if(!r)return;const [k,id]=r.dataset.hrec.split(/:(.*)/s);if(k==='d'){hideHome();openLab();openDoc(id)}else{hideHome();await openBook(id)}});
 homeEl.addEventListener('pointermove',e=>{homeEl.style.setProperty('--hx',e.clientX+'px');homeEl.style.setProperty('--hy',e.clientY+'px');const c=e.target.closest('.hm-card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%')}},{passive:true});
