@@ -2356,6 +2356,76 @@ canvas.mplc{display:block;width:100%;height:auto}
 #lab .lpop[hidden]{display:none!important}
 #lab.ipgs #ipLy:not([hidden]){animation:ipUp .2s ease-out}
 @keyframes ipUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- v34 Drop 1 ---------- */
+#ipLy .iplhb{height:34px;padding:0 12px;margin-left:4px;border:0;border-radius:10px;background:rgba(255,255,255,.08);color:#f2f2f4;font:600 13px -apple-system,sans-serif}
+#ipLy .iplhb.dang{background:#c8343b}
+#ipLy .iplms{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02))}
+#ipLy .iplms b{font-size:16px}
+#ipLy .iplhelp{margin:0;padding:6px 16px 12px;font-size:11px;line-height:1.35;color:#77777c;flex:none}
+#ipLy .iplr.pinch .iplin{outline:2px dashed rgba(255,255,255,.75);outline-offset:-3px}
+#ipLy .iplr.ms .iplin{background:linear-gradient(180deg,#5b5d66,#44464e);box-shadow:inset 3px 0 0 #fff}
+/* copy & paste menu */
+#ipCP{display:none}
+#lab:is(.ipst,.ipgs) #ipCP:not([hidden]){display:block;position:absolute;z-index:20;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);padding:12px;border-radius:18px;background:rgba(26,26,28,.97);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.1);box-shadow:0 22px 60px rgba(0,0,0,.6);animation:ipIn .16s ease-out;color:#ececef;font:15px -apple-system,sans-serif}
+#ipCP b{display:block;text-align:center;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#8e8e93;margin:0 0 10px}
+#ipCP div{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+#ipCP button{min-width:120px;height:48px;border:0;border-radius:12px;background:rgba(255,255,255,.07);color:#f2f2f4;font:500 15px -apple-system,sans-serif}
+#ipCP button:active{background:rgba(255,255,255,.16)}
+#ipCP button:disabled{opacity:.35}
+/* eyedropper loupe */
+#ipLoupe{position:fixed;left:0;top:0;z-index:2147480000;width:110px;height:110px;border-radius:50%;overflow:hidden;pointer-events:none;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,0,0,.5),0 12px 30px rgba(0,0,0,.5);display:flex;flex-direction:column}
+#ipLoupe[hidden]{display:none}
+#ipLoupe i{flex:1}
+/* ColorDrop */
+#ipDrop{position:fixed;left:0;top:0;z-index:2147480000;pointer-events:none;display:flex;align-items:center;gap:10px}
+#ipDrop[hidden]{display:none}
+#ipDrop i{width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,0,0,.45),0 10px 24px rgba(0,0,0,.5)}
+#ipDrop span:not(:empty){padding:6px 10px;border-radius:9px;background:rgba(20,20,22,.9);color:#fff;font:600 13px -apple-system,sans-serif;white-space:nowrap}
+/* colour card */
+#ipCol{display:none}
+#lab.ipst #ipCol:not([hidden]){display:flex;flex-direction:column;position:absolute;z-index:12;max-height:calc(100% - 140px);border-radius:18px;overflow:hidden;background:rgba(24,24,26,.97);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.09);box-shadow:0 22px 60px rgba(0,0,0,.6);color:#ececef;font:14px -apple-system,sans-serif;animation:ipIn .18s ease-out;-webkit-user-select:none;user-select:none}
+#ipCol .ipct{display:flex;gap:3px;padding:10px 10px 6px;flex:none}
+#ipCol .ipct button{flex:1;height:34px;border:0;border-radius:9px;background:rgba(255,255,255,.06);color:#c8c8cc;font:600 12.5px -apple-system,sans-serif}
+#ipCol .ipct button.on{background:#f1f1f3;color:#0c0c0d}
+#ipCol .ipcb{overflow:auto;padding:6px 14px 10px;-webkit-overflow-scrolling:touch}
+#ipCol .ipcdisc{position:relative;width:280px;max-width:100%;margin:4px auto 6px;aspect-ratio:1}
+#ipCol .ipcdisc.hm{width:240px}
+#ipCol canvas{display:block;width:100%;height:auto;touch-action:none;border-radius:8px}
+#ipCol .ipcdisc canvas{border-radius:50%}
+#ipCol .mk{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 0 0 4.5px rgba(0,0,0,.5),0 4px 10px rgba(0,0,0,.4);pointer-events:none}
+#ipCol .mk.bar{width:14px;height:34px;margin:-17px 0 0 -7px;border-radius:7px}
+#ipCol .ipcsq,#ipCol .ipcsl{position:relative;margin:4px 0 10px}
+#ipCol .ipcsl label{display:block;font-size:11.5px;color:#8e8e93;margin-bottom:4px}
+#ipCol input[type=range]{width:100%;accent-color:#e9e9ec;height:30px}
+#ipCol .ipchex{width:100%;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;padding:0 12px;font:500 15px ui-monospace,Menlo,monospace;text-transform:lowercase}
+#ipCol .ipchm{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin:2px 0 8px}
+#ipCol .ipchm button{height:32px;padding:0 10px;border:0;border-radius:9px;background:rgba(255,255,255,.06);color:#c8c8cc;font:600 12px -apple-system,sans-serif}
+#ipCol .ipchm button.on{background:#f1f1f3;color:#0c0c0d}
+#ipCol .ipcsw{display:flex;gap:8px;justify-content:center;margin:6px 0}
+#ipCol .ipcs{width:36px;height:36px;border:0;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.16);flex:none}
+#ipCol .ipcs.main{box-shadow:0 0 0 2px #fff}
+#ipCol .ipcs.add{background:rgba(255,255,255,.06);color:#c8c8cc;font-size:20px}
+#ipCol .ipcval label{display:grid;grid-template-columns:84px 1fr 42px;align-items:center;gap:8px;margin:2px 0;font-size:12.5px;color:#c8c8cc}
+#ipCol .ipcval label:last-child{grid-template-columns:84px 1fr}
+#ipCol .ipcval output{text-align:right;font-variant-numeric:tabular-nums}
+#ipCol .ipcph{display:flex;gap:6px;margin:2px 0 10px}
+#ipCol .ipcph button{flex:1;height:38px;border:0;border-radius:10px;background:rgba(255,255,255,.08);color:#f2f2f4;font:600 13px -apple-system,sans-serif}
+#ipCol .ipcp{padding:10px;border-radius:12px;background:rgba(255,255,255,.03);margin-bottom:8px}
+#ipCol .ipcp.on{background:rgba(255,255,255,.07)}
+#ipCol .ipcpn{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+#ipCol .ipcpn b{flex:1;font-weight:600;font-size:14px}
+#ipCol .ipcpn button{height:28px;padding:0 9px;border:0;border-radius:8px;background:rgba(255,255,255,.06);color:#aeaeb2;font:600 11px -apple-system,sans-serif}
+#ipCol .ipcpg{display:grid;grid-template-columns:repeat(auto-fill,36px);gap:6px}
+#ipCol .ipcnote{font-size:11px;color:#77777c;margin:6px 2px}
+#ipCol .ipch{display:flex;align-items:center;gap:8px;padding:10px 12px 12px;border-top:1px solid rgba(255,255,255,.07);flex:none}
+#ipCol .ipcnow,#ipCol .ipcprev{width:40px;height:40px;border:0;background:none;padding:0;flex:none}
+#ipCol .ipcnow i,#ipCol .ipcprev i{display:block;width:34px;height:34px;margin:3px;border-radius:50%;box-shadow:0 0 0 2px #0c0c0d,0 0 0 3.5px #d9dadd}
+#ipCol .ipcprev i{width:26px;height:26px;margin:7px}
+#ipCol .ipchr{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+#ipCol .ipchr .ipcs{width:30px;height:30px;border-radius:50%}
+
+#lab.ipst #ipBar{touch-action:none}
 </style>
 </head>
 <body class="edit empty">
@@ -4959,7 +5029,7 @@ const H={u:[],r:[],bytes:0};
 const bytesOf=e=>e.k==='px'?(e.b.data.length+e.a.data.length):e.k==='sel'?(e.a?e.a.a.length:0)+(e.b?e.b.a.length:0)+400:e.k==='multi'?e.list.reduce((s,z)=>s+bytesOf(z),0):3000;
 function soMark(e){if(e.k==='multi'){e.list.forEach(soMark);return}if(e.k==='px'&&!e.m&&e.l){if(!('soA' in e)){e.soB=e.l.so||null;e.soA=null}e.l.so=e.soA;if(!('ptA' in e)){e.ptB=e.l.pt||null;e.ptA=null}e.l.pt=e.ptA}}
 function pushH(e,name){if(!e)return;soMark(e);if(name)e.n=name;if(!e.n)e.n=e.k==='px'?'Paint':'Layer change';H.u.push(e);H.bytes+=bytesOf(e);H.r.forEach(z=>H.bytes-=bytesOf(z));H.r=[];while(H.bytes>MAXH&&H.u.length>1)H.bytes-=bytesOf(H.u.shift());refreshPanels();updSide();tlCap()}
-const PROPS=['name','vis','op','fillOp','blend','clip','alock','lock','type','t','bi','fx','mask','maskOn','tgt','gid','collapsed','pt','adj','sm','acc','so'];
+const PROPS=['ref','name','vis','op','fillOp','blend','clip','alock','lock','type','t','bi','fx','mask','maskOn','tgt','gid','collapsed','pt','adj','sm','acc','so'];
 function snapSt(){return {layers:D.layers.map(l=>{const m={};PROPS.forEach(k=>{const v=l[k];m[k]=(k==='t'||k==='bi'||k==='fx'||k==='pt'||k==='adj')&&v?JSON.parse(JSON.stringify(v)):v});return {l,m}}),cur:D.cur,bg:D.bg,bgOn:D.bgOn}}
 function restSt(s){D.layers=s.layers.map(o=>{const t=o.m.t?JSON.parse(JSON.stringify(o.m.t)):o.m.t,pch=JSON.stringify(o.l.pt||null)!==JSON.stringify(o.m.pt||null);Object.assign(o.l,o.m,{t,bi:o.m.bi?JSON.parse(JSON.stringify(o.m.bi)):null,fx:o.m.fx?JSON.parse(JSON.stringify(o.m.fx)):null,pt:o.m.pt?JSON.parse(JSON.stringify(o.m.pt)):null,adj:o.m.adj?JSON.parse(JSON.stringify(o.m.adj)):null});if(o.l.type==='text')renderText(o.l);else if(pch&&o.l.pt&&o.l.ptImg)renderPat(o.l);o.l.v++;o.l.mv++;return o.l});D.cur=s.cur;D.bg=s.bg;D.bgOn=s.bgOn}
 function grab(c,x,y,w,h){x=Math.max(0,Math.floor(x));y=Math.max(0,Math.floor(y));w=Math.min(D.w-x,Math.ceil(w));h=Math.min(D.h-y,Math.ceil(h));if(w<1||h<1)return null;return {x,y,d:cx2(c).getImageData(x,y,w,h)}}
@@ -8189,7 +8259,7 @@ function schedSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{if(STROKE
 const toBlobP=(c,t,q)=>new Promise(r=>c.toBlob(b=>r(b),t||'image/png',q));
 let saving=false;
 async function saveDoc(force){if(!D||saving||(!D.changed&&!force))return;saving=true;const doc=D;doc.changed=false;
-  try{const layers=[];for(const l of doc.layers){const m={id:l.id,name:l.name,type:l.type,vis:l.vis,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,lock:l.lock,maskOn:l.maskOn,tgt:l.tgt,bi:l.bi,fx:l.fx,gid:l.gid||null,collapsed:!!l.collapsed};
+  try{const layers=[];for(const l of doc.layers){const m={id:l.id,name:l.name,type:l.type,vis:l.vis,op:l.op,fillOp:l.fillOp,blend:l.blend,clip:l.clip,alock:l.alock,lock:l.lock,maskOn:l.maskOn,tgt:l.tgt,bi:l.bi,fx:l.fx,gid:l.gid||null,collapsed:!!l.collapsed,ref:!!l.ref};
       if(l.type==='group'){}else if(l.type==='text'){m.t=l.t;m.bb=l.bb}else{if(!l.blob||l.sv!==l.v){l.sv=l.v;const p=pieceOf(l);l.boff=[p.x,p.y];l.blob=p.c?await toBlobP(p.c):null}if(l.blob){m.blob=l.blob;m.off=l.boff}else m.empty=true}
       if(l.mask){if(!l.mblob||l.msv!==l.mv){l.msv=l.mv;l.mblob=await toBlobP(l.mask)}m.mblob=l.mblob}if(l.pt){m.pt=l.pt;m.ptblob=l.ptBlob||null}if(l.adj)m.adj=l.adj;if(l.sm)m.sm=l.sm;if(l.acc)m.acc=l.acc;if(l.so&&l.type!=='text'){if(!l.so.img._blob)l.so.img._blob=await toBlobP(l.so.img,l.so.fmt||'image/png',.95);const q=l.so.m;m.so={m:[q.a,q.b,q.c,q.d,q.e,q.f],blob:l.so.img._blob,fmt:l.so.fmt}}layers.push(m)}
     if(doc!==D){saving=false;return}const c=T('comp');composite(c);const tc=mk(240,300),tx=tc.getContext('2d'),k=Math.min(240/doc.w,300/doc.h);tx.fillStyle='#0c0c0c';tx.fillRect(0,0,240,300);tx.drawImage(c,(240-doc.w*k)/2,(300-doc.h*k)/2,doc.w*k,doc.h*k);const thumbU=tc.toDataURL('image/jpeg',.82);mpPrevSave(doc.id,c,doc.w,doc.h);dirtyComp=true;
@@ -8202,7 +8272,7 @@ async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('
   D={id:r.id,name:r.name,w:r.w,h:r.h,ppi:r.ppi||300,pat:r.pat||null,guides:r.guides||null,inner:r.inner||null,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,kind:r.kind||null,side:r.side||null,pair:r.pair||null,created:r.created,changed:false,sel:null};freeTmp();
   for(const m of r.layers){const l=m.type==='group'?Object.assign(newGroup(m.name),{id:m.id,vis:m.vis,op:m.op,blend:m.blend||'pass',lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',gid:m.gid||null,collapsed:!!m.collapsed}):newLayer(m.name,{gid:m.gid||null,id:m.id,type:m.type,vis:m.vis,op:m.op,fillOp:m.fillOp==null?1:m.fillOp,blend:m.blend,clip:m.clip,alock:m.alock,lock:m.lock,maskOn:m.maskOn!==false,tgt:m.tgt||'px',bi:m.bi||null,fx:m.fx||null});
     if(m.type==='group'){}else if(m.type==='text'){l.t=m.t;l.bb=m.bb}else if(m.blob){try{const bm=await bmpOf(m.blob),w=bm.width||bm.naturalWidth,h=bm.height||bm.naturalHeight,n=mk(w,h);cx2(n).drawImage(bm,0,0);if(bm.close)bm.close();const o=m.off||[0,0];if(!m.off&&w===D.w&&h===D.h){if(l._p&&l._p.c)relc(l._p.c);l._p=null;l._c=n;park(l,true)}else setPiece(l,n,o[0],o[1]);l.blob=m.blob;l.boff=m.off||[0,0];l.sv=l.v}catch(e){}}
-    if(m.adj)l.adj=m.adj;if(m.sm)l.sm=m.sm;if(m.acc)l.acc=m.acc;if(m.pt&&m.ptblob){l.pt=m.pt;l.ptBlob=m.ptblob;try{l.ptImg=await bmpOf(m.ptblob)}catch(e){l.pt=null}}if(m.so&&m.so.blob){try{const im=await bmpOf(m.so.blob);im._blob=m.so.blob;setSo(l,im,m.so.m,m.so.fmt)}catch(e){}}if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';D.layers.push(l)}
+    if(m.adj)l.adj=m.adj;if(m.sm)l.sm=m.sm;if(m.acc)l.acc=m.acc;if(m.pt&&m.ptblob){l.pt=m.pt;l.ptBlob=m.ptblob;try{l.ptImg=await bmpOf(m.ptblob)}catch(e){l.pt=null}}if(m.so&&m.so.blob){try{const im=await bmpOf(m.so.blob);im._blob=m.so.blob;setSo(l,im,m.so.m,m.so.fmt)}catch(e){}}if(m.mblob){try{l.mask=mk(D.w,D.h);cx2(l.mask).drawImage(await bmpOf(m.mblob),0,0);l.mblob=m.mblob;l.msv=l.mv}catch(e){l.mask=null}}else if(l.tgt==='mask')l.tgt='px';l.ref=!!m.ref;D.layers.push(l)}
   relinearize();D.lsel=new Set();if(!D.layers.find(l=>l.id===D.cur))D.cur=D.layers[D.layers.length-1].id;
   for(const l of D.layers)if(l.type==='text'){if(!fontReady(l.t.font))await ensureFont(l.t.font);try{await document.fonts.load(`40px ${fontCss(l.t.font)}`)}catch(e){}renderText(l);park(l,true)}
   openEditor();const pid=D.id;setTimeout(async()=>{try{if(!D||D.id!==pid||await IDB.get('dprev:'+pid))return;const c=T('comp');composite(c);mpPrevSave(pid,c,D.w,D.h);dirtyComp=true}catch(e){}},1500)}
@@ -10551,9 +10621,11 @@ function ipLyRow(x,d){const sel=x.id===D.cur,ms=D.lsel&&D.lsel.has(x.id)&&!sel,g
 function ipLyBlendHTML(x){const g=x.type==='group',list=(g?[['pass','Pass through']]:[]).concat(BLENDS);
   return `<div class="iplbp" data-iplbp="${x.id}"><label class="iplop"><span>Opacity</span><input type="range" min="0" max="100" value="${Math.round(x.op*100)}" data-ipop="${x.id}"><output>${Math.round(x.op*100)}%</output></label>
     <div class="iplbl">${list.map(([k,n])=>`<button class="${x.blend===k?'on':''}" data-ipa="bm:${x.id}:${k}">${n}</button>`).join('')}</div></div>`}
-function ipLyHTML(){const rows=displayList().map(({l,d})=>ipLyRow(l,d)).join('');
-  return `<div class="iplh"><b>Layers</b><span class="grow"></span><button class="iplp" data-ipa="add" title="New layer">${IPLI.plus}</button></div>
-  <div class="ipll">${rows}<div class="iplr iplbg" data-ipa="bgcol"><div class="iplin"><span class="iplsw" style="background:${D.bg}"></span><span class="ipln"><b>Background colour</b><i>Tap to use the current colour</i></span><button class="iplv${D.bgOn?' on':''}" data-ipa="bgvis"><i></i></button></div></div></div>`}
+function ipLyHTML(){const rows=displayList().map(({l,d})=>ipLyRow(l,d)).join(''),n=D.lsel?[...D.lsel].filter(id=>byId(id)&&id!==D.cur).length:0;
+  const head=n?`<div class="iplh iplms"><b>${n+1} selected</b><span class="grow"></span><button class="iplhb" data-ipa="mgroup">Group</button><button class="iplhb" data-ipa="mmerge">Merge</button><button class="iplhb dang" data-ipa="mdel">Delete</button><button class="iplp" data-ipa="mclear" title="Done">✕</button></div>`
+    :`<div class="iplh"><b>Layers</b><span class="grow"></span>${IPCLIP?'<button class="iplhb" data-ipa="paste">Paste</button>':''}<button class="iplp" data-ipa="add" title="New layer">${IPLI.plus}</button></div>`;
+  return head+`<div class="ipll">${rows}<div class="iplr iplbg" data-ipa="bgcol"><div class="iplin"><span class="iplsw" style="background:${D.bg}"></span><span class="ipln"><b>Background colour</b><i>Tap to use the current colour</i></span><button class="iplv${D.bgOn?' on':''}" data-ipa="bgvis"><i></i></button></div></div></div>
+  <p class="iplhelp">Swipe right to select several · pinch layers together to merge · two-finger swipe right = alpha lock</p>`}
 function ipLyThumbs(force){ipLy.querySelectorAll('canvas[data-ipth]').forEach(c=>{const l=byId(c.dataset.ipth);if(!l)return;const k=(l.v||0)+':'+(l.mv||0)+':'+D.w+'x'+D.h+':'+l.type;if(!force&&c._k===k)return;c._k=k;try{thumb(c,l._c||l._p||l.cv)}catch(e){}})}
 function ipLyDraw(force){if(!ipLy||!IPL.open||!D)return;const k=ipLyKey();if(!force&&k===IPL.key){ipLyThumbsSoon();return}IPL.key=k;const sc=ipLy.querySelector('.ipll'),top=sc?sc.scrollTop:0;
   ipLy.innerHTML=ipLyHTML();const ns=ipLy.querySelector('.ipll');if(ns)ns.scrollTop=top;ipLyThumbs(true);ipLyPlace()}
@@ -10584,6 +10656,11 @@ function ipLyDo(a,btn,ev){const [k,id,arg]=a.split(':');const l=id?byId(id):curL
     case'lock':own(l);IPL.sw='';labAct('lm:lock',btn,ev);break;
     case'dup':own(l);IPL.sw='';labAct('lm:dup',btn,ev);break;
     case'del':own(l);IPL.sw='';labAct('lm:del',btn,ev);mpHap('medium');break;
+    case'mgroup':labAct('group',btn,ev);D.lsel=new Set();mpHap('light');break;
+    case'mmerge':labAct('lm:merge',btn,ev);D.lsel=new Set();mpHap('medium');break;
+    case'mdel':labAct('lm:del',btn,ev);D.lsel=new Set();mpHap('medium');break;
+    case'mclear':D.lsel=new Set();break;
+    case'paste':ipClipPaste();break;
     default:return}
   after()}
 /* the layer options menu (tap the selected layer again – like Procreate) */
@@ -10593,13 +10670,13 @@ function ipLyMenuHTML(l){const it=(a,n,on,cls)=>`<button class="ipmi${on?' on':'
    ${px?it('alock','Alpha lock',l.alock):''}${it('clip','Clipping mask',l.clip)}${l.mask?it('maskedit','Paint mask',l.tgt==='mask')+it('masktog',l.maskOn?'Hide mask':'Show mask')+it('maskdel','Delete mask'):it('mask','Mask')}
    ${px?it('invert','Invert'):''}${!g&&l.type!=='adj'?it('style','Styles'):''}${it('lock',l.lock?'Unlock':'Lock',l.lock)}
    ${px?it('fh','Flip horizontal')+it('fv','Flip vertical'):''}${t?it('raster','Rasterize'):''}${px&&!t?it('rmbg','Remove background'):''}
-   ${g?it('ungroup','Ungroup'):''}${it('merge',g?'Flatten group':'Merge down')}${it('dup','Duplicate')}${it('del','Delete',false,'dang')}</div>`}
+   ${px?it('copy','Copy'):''}${px?it('ref','Reference',!!l.ref):''}${g?it('ungroup','Ungroup'):''}${it('merge',g?'Flatten group':'Merge down')}${it('combine','Combine down')}${it('dup','Duplicate')}${it('del','Delete',false,'dang')}</div>`}
 function ipLyMenu(id,row){const l=byId(id);if(!l)return;if(IPL.menu===id&&!ipLyM.hidden){ipLyMenuClose();return}IPL.menu=id;ipLyM.innerHTML=ipLyMenuHTML(l);ipLyM.hidden=false;
   const r=row.getBoundingClientRect(),er=edEl.getBoundingClientRect(),cr=ipLy.getBoundingClientRect(),w=Math.min(300,cr.left-er.left-20);ipLyM.style.width=Math.max(230,w)+'px';
   const left=cr.left-er.left-Math.max(230,w)-10;ipLyM.style.left=Math.max(12,left)+'px';const h=ipLyM.offsetHeight;ipLyM.style.top=Math.max(64,Math.min(r.top-er.top-8,er.height-h-16))+'px';mpHap('select')}
 function ipLyMenuClose(){IPL.menu='';if(ipLyM)ipLyM.hidden=true}
 function ipLyMenuDo(a){const l=byId(IPL.menu);if(!l){ipLyMenuClose();return}if(XFORM)xfCommit();const L=x=>labAct(x,null,null);
-  const keep=['alock','clip','lock','masktog'].includes(a);
+  const keep=['alock','clip','lock','masktog','ref'].includes(a);
   switch(a){
     case'rename':ipLyMenuClose();mpAsk('Rename layer',l.name).then(v=>{v=(v||'').trim();if(v&&v!==l.name){setProp(l,'name',v,'Rename layer');IPL.key='';ipLyLater()}});return;
     case'edittext':ipLyMenuClose();ipLyClose();txEditAt(l,null);return;
@@ -10608,6 +10685,9 @@ function ipLyMenuDo(a){const l=byId(IPL.menu);if(!l){ipLyMenuClose();return}if(X
     case'mask':L('mask:reveal');break;case'maskedit':L('tgt:'+l.id+':'+(l.tgt==='mask'?'px':'mask'));break;case'masktog':L('mask:toggle');break;case'maskdel':L('mask:delete');break;
     case'invert':L('invertnow');break;case'style':ipLyMenuClose();ipLyClose();L('style');return;
     case'fh':L('lm:fh');break;case'fv':L('lm:fv');break;case'raster':L('lm:raster');break;case'rmbg':L('rmbg');break;
+    case'copy':ipClipCopy(false);hint('Copied – three-finger swipe down or tap Paste in Layers',1800);break;
+    case'ref':stOp(()=>{const on=!l.ref;D.layers.forEach(x=>{x.ref=false});l.ref=on},l.ref?'Reference off':'Reference layer');hint(l.ref?'Reference on – ColorDrop now fills inside the lines of “'+l.name+'” on any layer':'Reference off',2600);break;
+    case'combine':{const lvl=kids(l.gid||null),i=lvl.indexOf(l),below=i>0?lvl[i-1]:null;if(!below){hint('There is no layer below to combine with');return}D.cur=l.id;D.lsel=new Set([below.id]);L('group');D.lsel=new Set();break}
     case'ungroup':L('ungroup');break;case'merge':L('lm:merge');break;case'dup':L('lm:dup');break;case'del':L('lm:del');break;default:return}
   mpHap('light');IPL.key='';ipLyLater();if(keep&&byId(l.id)){setTimeout(()=>{if(IPL.menu===l.id&&!ipLyM.hidden)ipLyM.innerHTML=ipLyMenuHTML(byId(l.id))},30)}else ipLyMenuClose();
   if(TOOL.t==='move'&&!XFORM)setTimeout(()=>{if(TOOL.t==='move'&&!XFORM&&D)xfStart()},0)}
@@ -10619,24 +10699,41 @@ function ipLyWire(){
   ipLy.addEventListener('input',e=>{const t=e.target;if(!t.dataset.ipop)return;const l=byId(t.dataset.ipop);if(!l)return;if(XFORM&&!XD)xfCommit();if(!OPSNAP)OPSNAP=snapSt();l.op=t.value/100;const o=t.nextElementSibling;if(o)o.textContent=t.value+'%';dirtyComp=true;req()});
   ipLy.addEventListener('change',e=>{const t=e.target;if(!t.dataset.ipop||!OPSNAP)return;pushH({k:'st',b:OPSNAP,a:snapSt()},'Layer opacity');OPSNAP=null;(DMGON?touchProps:touchAll)();IPL.key='';ipLyLater()});
   ipLyM.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-ipm]');if(b){e.preventDefault();ipLyMenuDo(b.dataset.ipm)}});
-  // swipe left = Lock / Duplicate / Delete · long-press and drag = move the layer
-  let P=null;
-  ipLy.addEventListener('pointerdown',e=>{const r=e.target.closest('.iplr[data-iply]');if(!r||e.target.closest('button,input,.iplbp'))return;P={id:e.pointerId,x:e.clientX,y:e.clientY,r,ly:r.dataset.iply,mode:'',t:setTimeout(()=>{if(P&&!P.mode){P.mode='drag';ipLyDragStart(P)}},380)}});
-  ipLy.addEventListener('pointermove',e=>{if(!P||P.id!==e.pointerId)return;const dx=e.clientX-P.x,dy=e.clientY-P.y;
+  // one finger: swipe left = Lock / Duplicate / Delete · swipe right = select several · hold and drag = move
+  // two fingers: pinch two layers together = merge everything between · swipe right on a layer = alpha lock · hold = select its contents
+  const TP=new Map();let P=null,M=null;const quiet=()=>{IPL.drag={done:true};setTimeout(()=>{if(IPL.drag&&IPL.drag.done)IPL.drag=null},80)};
+  const unpinch=()=>ipLy.querySelectorAll('.iplr.pinch').forEach(x=>x.classList.remove('pinch'));
+  const range=(a,b)=>{const L=displayList().map(q=>q.l.id),i=L.indexOf(a),j=L.indexOf(b);if(i<0||j<0)return [];return L.slice(Math.min(i,j),Math.max(i,j)+1)};
+  ipLy.addEventListener('pointerdown',e=>{const r=e.target.closest('.iplr[data-iply]');if(e.target.closest('input,.iplbp,.iplh')||(!TP.size&&e.target.closest('button')))return;
+    TP.set(e.pointerId,{x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY,ly:r?r.dataset.iply:''});
+    if(TP.size===1){if(!r)return;P={id:e.pointerId,x:e.clientX,y:e.clientY,r,ly:r.dataset.iply,mode:'',t:setTimeout(()=>{if(P&&!P.mode&&TP.size===1){P.mode='drag';ipLyDragStart(P)}},380)};return}
+    if(TP.size===2){if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform='';if(P.mode==='drag'&&IPL.drag){IPL.drag.row.classList.remove('lift');IPL.drag.row.style.transform='';IPL.drag.rows.forEach(x=>x.classList.remove('dropA','dropB','dropI'));IPL.drag=null}P=null}
+      const [q1,q2]=[...TP.values()];M={d0:Math.max(20,Math.hypot(q1.x-q2.x,q1.y-q2.y)),done:false,mv:0,t:setTimeout(()=>{if(!M||M.done||M.mv>12)return;const v=[...TP.values()];if(v.length>=2&&v[0].ly&&v[0].ly===v[1].ly){const l=byId(v[0].ly);if(l&&l.type!=='group'&&l.type!=='adj'){M.done=true;selFromLayer(l);mpHap('medium');hint('Selected what is on “'+l.name+'”',1600)}}},550)};
+      if(q1.ly&&q2.ly&&q1.ly!==q2.ly)range(q1.ly,q2.ly).forEach(id=>{const x=ipLy.querySelector(`.iplr[data-iply="${id}"]`);if(x)x.classList.add('pinch')})}});
+  ipLy.addEventListener('pointermove',e=>{const q=TP.get(e.pointerId);if(q){q.x=e.clientX;q.y=e.clientY}
+    if(M&&TP.size>=2){const [a,b]=[...TP.values()],da=[a.x-a.x0,a.y-a.y0],db=[b.x-b.x0,b.y-b.y0];M.mv=Math.max(M.mv,Math.hypot(...da),Math.hypot(...db));if(M.done)return;
+      if(a.ly&&a.ly===b.ly&&da[0]>40&&db[0]>40&&Math.abs(da[1])<40&&Math.abs(db[1])<40){M.done=true;clearTimeout(M.t);const l=byId(a.ly);if(l&&l.type!=='group'){if(XFORM)xfCommit();setProp(l,'alock',!l.alock,'Lock transparency');hint(l.alock?'Alpha lock on – paint only where there is already paint':'Alpha lock off',1800);mpHap('medium');IPL.key='';ipLyLater()}return}
+      if(a.ly&&b.ly&&a.ly!==b.ly){const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<M.d0*.55){M.done=true;clearTimeout(M.t);unpinch();const ids=range(a.ly,b.ly).filter(id=>byId(id));if(ids.length>1){if(XFORM)xfCommit();D.cur=ids[0];D.lsel=new Set(ids.slice(1));labAct('lm:merge',null,null);D.lsel=new Set();mpHap('medium');hint('Merged '+ids.length+' layers',1500);IPL.key='';ipLyLater()}}}
+      return}
+    if(!P||P.id!==e.pointerId)return;const dx=e.clientX-P.x,dy=e.clientY-P.y;
     if(!P.mode){if(Math.abs(dx)>14&&Math.abs(dx)>Math.abs(dy)*1.4){P.mode='swipe';clearTimeout(P.t)}else if(Math.hypot(dx,dy)>10){clearTimeout(P.t);P.mode='scroll'}}
-    if(P.mode==='swipe'){const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=`translateX(${Math.max(-200,Math.min(0,dx+(IPL.sw===P.ly?-186:0)))}px)`}
+    if(P.mode==='swipe'){const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=`translateX(${Math.max(-200,Math.min(70,dx+(IPL.sw===P.ly?-186:0)))}px)`}
     else if(P.mode==='drag')ipLyDragMove(P,e)});
-  const end=e=>{if(!P||P.id!==e.pointerId)return;const p=P;P=null;clearTimeout(p.t);const dx=e.clientX-p.x;
-    if(p.mode==='swipe'){const inn=p.r.querySelector('.iplin');if(inn)inn.style.transform='';IPL.sw=dx<-60?p.ly:'';IPL.key='';ipLyDraw(true);IPL.drag={done:true};setTimeout(()=>{IPL.drag=null},60)}
+  const end=e=>{const had=TP.delete(e.pointerId);
+    if(M){if(TP.size<2){clearTimeout(M.t);unpinch();if(!TP.size)M=null}quiet();return}
+    if(!P||P.id!==e.pointerId)return;const p=P;P=null;clearTimeout(p.t);const dx=e.clientX-p.x;
+    if(p.mode==='swipe'){const inn=p.r.querySelector('.iplin');if(inn)inn.style.transform='';if(dx>60){IPL.sw='';ipLySel(p.ly)}else{IPL.sw=dx<-60?p.ly:'';IPL.key='';ipLyDraw(true)}quiet()}
     else if(p.mode==='drag')ipLyDragEnd(p,e)};
-  ipLy.addEventListener('pointerup',end);ipLy.addEventListener('pointercancel',e=>{if(P&&P.mode==='drag')return;if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=''}P=null});
-  // while a layer is being dragged the list must not scroll
-  ipLy.addEventListener('touchmove',e=>{if(IPL.drag&&!IPL.drag.done)e.preventDefault()},{passive:false})}
+  ipLy.addEventListener('pointerup',end);ipLy.addEventListener('pointercancel',e=>{TP.delete(e.pointerId);if(M){if(TP.size<2){clearTimeout(M.t);unpinch();if(!TP.size)M=null}return}if(P&&P.mode==='drag')return;if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=''}P=null});
+  // while dragging a layer or using two fingers the list must not scroll
+  ipLy.addEventListener('touchmove',e=>{if((IPL.drag&&!IPL.drag.done)||e.touches.length>=2)e.preventDefault()},{passive:false})}
+function ipLySel(id){if(!D||!byId(id))return;if(!D.lsel)D.lsel=new Set();if(id===D.cur){hint('That is your main layer – swipe right on others to add them',1600);return}
+  if(D.lsel.has(id))D.lsel.delete(id);else D.lsel.add(id);mpHap('select');IPL.key='';ipLyDraw(true)}
 function ipLyDragStart(P){const r=P.r;IPL.drag={id:P.ly,row:r,y0:P.y,rows:[...ipLy.querySelectorAll('.iplr[data-iply]')],disp:displayList(),mark:null};r.classList.add('lift');mpHap('medium');try{r.setPointerCapture(P.id)}catch(e){}}
 function ipLyDragMove(P,e){const G=IPL.drag;if(!G||G.done)return;G.row.style.transform=`translateY(${e.clientY-G.y0}px) scale(1.03)`;G.rows.forEach(x=>x.classList.remove('dropA','dropB','dropI'));G.mark=null;
-  for(const x of G.rows){if(x===G.row)continue;const bb=x.getBoundingClientRect();if(e.clientY>=bb.top&&e.clientY<=bb.bottom){const f=(e.clientY-bb.top)/bb.height,dr=G.disp.find(q=>q.l.id===x.dataset.iply);let w=f<.5?'above':'below';if(dr&&dr.l.type==='group'&&f>.3&&f<.7)w='into';x.classList.add(w==='above'?'dropA':w==='below'?'dropB':'dropI');G.mark={dr,w};break}}
+  for(const x of G.rows){if(x===G.row)continue;const bb=x.getBoundingClientRect();if(e.clientY>=bb.top&&e.clientY<=bb.bottom){const f=(e.clientY-bb.top)/bb.height,dr=G.disp.find(q=>q.l.id===x.dataset.iply);let w=f<.5?'above':'below';if(dr&&f>.3&&f<.7)w=dr.l.type==='group'?'into':'group';x.classList.add(w==='above'?'dropA':w==='below'?'dropB':'dropI');G.mark={dr,w};break}}
   const sc=ipLy.querySelector('.ipll'),sb=sc.getBoundingClientRect();if(e.clientY<sb.top+30)sc.scrollTop-=12;else if(e.clientY>sb.bottom-30)sc.scrollTop+=12}
-function ipLyDragEnd(P,e){const G=IPL.drag;if(!G)return;G.done=true;G.row.classList.remove('lift');G.row.style.transform='';const l=byId(G.id);if(l&&G.mark&&G.mark.dr){if(XFORM)xfCommit();dropItem(l,G.mark.dr,G.mark.w);mpHap('light')}
+function ipLyDragEnd(P,e){const G=IPL.drag;if(!G)return;G.done=true;G.row.classList.remove('lift');G.row.style.transform='';const l=byId(G.id);if(l&&G.mark&&G.mark.dr){if(XFORM)xfCommit();if(G.mark.w==='group'){const t=G.mark.dr.l;if(t.gid!==l.gid)dropItem(l,G.mark.dr,'above');D.cur=t.id;D.lsel=new Set([l.id]);labAct('group',null,null);D.lsel=new Set();hint('Grouped',900)}else dropItem(l,G.mark.dr,G.mark.w);mpHap('light')}
   IPL.key='';ipLyDraw(true);setTimeout(()=>{IPL.drag=null},60)}
 // keep the card in step with every change in the editor
 {const _dp=drawPanel;drawPanel=function(){const r=_dp.apply(this,arguments);if(IPL.open)ipLyLater();return r}}
@@ -10718,6 +10815,214 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 // the text box keeps its bar while typing
 {const _b=txBegin;txBegin=function(){const r=_b.apply(this,arguments);if(ipOn()){ipLyClose();ipmCloseCard();setTimeout(()=>{ipTxShow();ipTxPlace()},0)}return r}}
 {const _e=txEnd;txEnd=function(){const r=_e.apply(this,arguments);ipTxHide();if(ipOn())optEl.classList.remove('iptxhide');return r}}
+/* ---------- v34 (Drop 1): Procreate gestures, copy & paste, QuickShape, ColorDrop and the colour card ---------- */
+let IPCLIP=null;
+const ipDoc=(x,y)=>{const r=cv.getBoundingClientRect();return toDoc(x-r.left,y-r.top)};
+const ipOverCv=(x,y)=>{const r=cv.getBoundingClientRect();return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom&&!document.elementFromPoint(x,y)?.closest('#ipBar,#ipCard,#ipLy,#ipLyM,#ipCol,#ipCP,#labOpt,#labSide,#gsDock,#gsTop,#ipTx')};
+/* ---- copy & paste ---- */
+function ipClipCopy(all){const l=curL();if(!D||(!all&&!l))return false;const c=mk(D.w,D.h),x=cx2(c);
+  if(all){composite(T('g1'),true);dirtyComp=true;x.drawImage(T('g1'),0,0)}else{if(l.type==='group'||l.type==='adj'){hint('Pick a layer with pixels to copy');return false}x.drawImage(l.cv,0,0)}
+  if(D.sel&&D.sel.mask){x.globalCompositeOperation='destination-in';x.drawImage(D.sel.mask,0,0);x.globalCompositeOperation='source-over'}
+  const b=contentBox(c);if(!b){hint('Nothing to copy there');return false}const w=b[2]-b[0],h=b[3]-b[1],o=mk(w,h);cx2(o).drawImage(c,-b[0],-b[1]);
+  IPCLIP={c:o,x:b[0],y:b[1],name:all?'Copy of everything':(l.name+(D.sel?' (selection)':''))};IPL.key='';ipLyLater();return true}
+function ipClipPaste(){if(!IPCLIP||!D)return hint('Nothing copied yet');if(!ensureRoom(1))return limitHint();if(XFORM)xfCommit();const sb=snapSt(),n=newLayer('Pasted');
+  cx2(n.cv).drawImage(IPCLIP.c,Math.min(IPCLIP.x,Math.max(0,D.w-IPCLIP.c.width)),Math.min(IPCLIP.y,Math.max(0,D.h-IPCLIP.c.height)));n.v=(n.v||0)+1;insertAbove(n);
+  pushH({k:'st',b:sb,a:snapSt()},'Paste');D.sel=null;touchAll();setTool('move');mpHap('light');hint('Pasted – move it where you want',1500)}
+function ipClipAct(a){const l=curL();ipCPClose();if(!D)return;if(XFORM)xfCommit();
+  if(a==='copy'){if(ipClipCopy(false))hint(D.sel?'Selection copied':'Layer copied',1200)}
+  else if(a==='copyall'){if(ipClipCopy(true))hint('Everything visible copied',1200)}
+  else if(a==='cut'){if(ipClipCopy(false)){if(D.sel)selAction('clear');else if(l)clearLayer(l);hint('Cut',900)}}
+  else if(a==='dup'){if(D.sel)selAction('copy');else if(l)dupLayer(l)}
+  else if(a==='cutpaste'){if(D.sel)selAction('cut');else hint('Select an area first, then Cut & Paste moves it to its own layer',2600)}
+  else if(a==='paste')ipClipPaste();
+  mpHap('light')}
+let ipCP=null;
+function ipCPOpen(){if(!ipCP){ipCP=document.createElement('div');ipCP.id='ipCP';edEl.appendChild(ipCP);ipCP.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-cp]');if(b)ipClipAct(b.dataset.cp)})}
+  ipCP.innerHTML=`<b>Copy &amp; Paste</b><div>${[['cut','Cut'],['copy','Copy'],['copyall','Copy All'],['dup','Duplicate'],['cutpaste','Cut &amp; Paste'],['paste','Paste']].map(([k,n])=>`<button data-cp="${k}"${k==='paste'&&!IPCLIP?' disabled':''}>${n}</button>`).join('')}</div>`;ipCP.hidden=false;mpHap('medium')}
+function ipCPClose(){if(ipCP)ipCP.hidden=true}
+addEventListener('pointerdown',e=>{if(ipCP&&!ipCP.hidden&&!ipCP.contains(e.target))ipCPClose()},true);
+
+/* ---- three fingers: swipe down = Copy & Paste menu · scrub = clear the layer ---- */
+{const G={pts:new Map(),done:false,xs:[],dir:0,rev:0,t0:0,lastX:0};
+  const avg=()=>{let x=0,y=0,dx=0,dy=0;G.pts.forEach(q=>{x+=q.x;y+=q.y;dx+=q.x-q.x0;dy+=q.y-q.y0});const n=G.pts.size||1;return {x:x/n,y:y/n,dx:dx/n,dy:dy/n}};
+  cv.addEventListener('pointerdown',e=>{if(!ipOn()||e.pointerType!=='touch')return;if(!G.pts.size){G.done=false;G.rev=0;G.dir=0;G.t0=performance.now()}G.pts.set(e.pointerId,{x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY});
+    if(G.pts.size===3){G.pts.forEach(q=>{q.x0=q.x;q.y0=q.y});G.lastX=avg().x;G.rev=0;G.dir=0;G.t0=performance.now()}},true);
+  cv.addEventListener('pointermove',e=>{const q=G.pts.get(e.pointerId);if(!q)return;q.x=e.clientX;q.y=e.clientY;if(G.pts.size<3)return;e.stopImmediatePropagation();if(G.done)return;
+    const a=avg();if(a.dy>90&&Math.abs(a.dx)<70){G.done=true;ipCPOpen();return}
+    const step=a.x-G.lastX;if(Math.abs(step)>26){const d=Math.sign(step);if(G.dir&&d!==G.dir)G.rev++;G.dir=d;G.lastX=a.x;
+      if(G.rev>=3&&performance.now()-G.t0<1800){G.done=true;const l=curL();if(l){if(XFORM)xfCommit();clearLayer(l);mpHap('medium');hint('Layer cleared',1100)}}}},true);
+  const up=e=>{G.pts.delete(e.pointerId)};cv.addEventListener('pointerup',up,true);cv.addEventListener('pointercancel',up,true)}
+
+/* ---- touch and hold = eyedropper ---- */
+let ipLoupe=null;const EH={on:false,id:null,t:0,x:0,y:0,c:null};
+function ipSampleAt(cx,cy){const [x,y]=ipDoc(cx,cy);const X=Math.floor(x),Y=Math.floor(y);if(X<0||Y<0||X>=D.w||Y>=D.h)return null;if(dirtyComp){composite(T('comp'));dirtyComp=false}
+  const d=cx2(T('comp')).getImageData(X,Y,1,1).data;if(d[3]<8)return D.bgOn?D.bg:null;const a=d[3]/255,[br,bg,bb]=D.bgOn?hexToRgb(D.bg):[255,255,255];return rgbToHex(d[0]*a+br*(1-a),d[1]*a+bg*(1-a),d[2]*a+bb*(1-a))}
+function ipLoupeShow(x,y){if(!ipLoupe){ipLoupe=document.createElement('div');ipLoupe.id='ipLoupe';ipLoupe.innerHTML='<i class="n"></i><i class="o"></i>';document.body.appendChild(ipLoupe)}
+  const c=ipSampleAt(x,y);if(c)EH.c=c;ipLoupe.querySelector('.n').style.background=EH.c||'transparent';ipLoupe.querySelector('.o').style.background=TOOL.color;ipLoupe.style.transform=`translate(${x-55}px,${y-150}px)`;ipLoupe.hidden=false}
+cv.addEventListener('pointerdown',e=>{if(!ipOn()||!D||e.pointerType!=='touch'||PT.size||TXI)return;if(!['brush','erase','smudge','fill','hand','pick','gradient','dodge','clone','select','wand'].includes(TOOL.t))return;
+  clearTimeout(EH.t);EH.on=false;EH.id=e.pointerId;EH.x=e.clientX;EH.y=e.clientY;EH.c=null;
+  EH.t=setTimeout(()=>{if(EH.id!==e.pointerId||PT.size!==1||GEST)return;if(STROKE){if((STROKE.dist||0)>8/V.s)return;cancelStroke()}ACT=null;PAN=null;labEl.classList.remove('pan');EH.on=true;mpHap('select');ipLoupeShow(EH.x,EH.y)},480)},true);
+cv.addEventListener('pointermove',e=>{if(EH.id!==e.pointerId)return;if(EH.on){e.stopImmediatePropagation();EH.x=e.clientX;EH.y=e.clientY;ipLoupeShow(EH.x,EH.y);return}if(Math.hypot(e.clientX-EH.x,e.clientY-EH.y)>8){clearTimeout(EH.t);EH.id=null}},true);
+{const up=e=>{if(EH.id!==e.pointerId)return;clearTimeout(EH.t);if(EH.on){EH.on=false;if(ipLoupe)ipLoupe.hidden=true;if(EH.c){ipSetColour(EH.c);addRecent(EH.c);hint('Colour picked',800)}}EH.id=null};cv.addEventListener('pointerup',up,true);cv.addEventListener('pointercancel',up,true)}
+cv.addEventListener('pointerdown',e=>{if(EH.id!=null&&EH.id!==e.pointerId){clearTimeout(EH.t);if(!EH.on)EH.id=null}},true);
+
+/* ---- QuickShape: draw, then hold – the line snaps into a clean shape ---- */
+function qsRDP(P,eps){if(P.length<3)return P.slice();let dm=0,ix=0;const a=P[0],b=P[P.length-1],L=Math.hypot(b.x-a.x,b.y-a.y)||1;
+  for(let i=1;i<P.length-1;i++){const d=Math.abs((b.y-a.y)*P[i].x-(b.x-a.x)*P[i].y+b.x*a.y-b.y*a.x)/L;if(d>dm){dm=d;ix=i}}
+  if(dm>eps){const l=qsRDP(P.slice(0,ix+1),eps),r=qsRDP(P.slice(ix),eps);return l.slice(0,-1).concat(r)}return [a,b]}
+function qsSegD(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,L=dx*dx+dy*dy||1;let t=((p.x-a.x)*dx+(p.y-a.y)*dy)/L;t=Math.max(0,Math.min(1,t));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)}
+function qsFit(pts){const P=pts.filter((q,i)=>i===0||Math.hypot(q.x-pts[i-1].x,q.y-pts[i-1].y)>.5);if(P.length<8)return null;
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;P.forEach(q=>{x0=Math.min(x0,q.x);y0=Math.min(y0,q.y);x1=Math.max(x1,q.x);y1=Math.max(y1,q.y)});const diag=Math.hypot(x1-x0,y1-y0)||1,a=P[0],z=P[P.length-1];
+  const closed=Math.hypot(z.x-a.x,z.y-a.y)<.22*diag;
+  if(!closed){const dev=Math.max(...P.map(q=>qsSegD(q,a,z)));if(dev<.06*diag)return {k:'line'};
+    const m=P[P.length>>1],cc=qsCirc(a,m,z);if(cc){const err=P.reduce((s,q)=>s+Math.abs(Math.hypot(q.x-cc.x,q.y-cc.y)-cc.r),0)/P.length;if(err<.05*cc.r&&cc.r<diag*3){const a0=Math.atan2(a.y-cc.y,a.x-cc.x),am=Math.atan2(m.y-cc.y,m.x-cc.x),a1=Math.atan2(z.y-cc.y,z.x-cc.x);
+      const norm=v=>((v%(2*Math.PI))+2*Math.PI)%(2*Math.PI),ccw=norm(am-a0)>norm(a1-a0);return {k:'arc',n:'Arc',c:[cc.x,cc.y],r:cc.r,a0,a1,ccw}}}
+    const S=qsRDP(P,.05*diag);return {k:'poly',n:'Polyline',p:S.map(q=>[q.x,q.y]),closed:false}}
+  const S=qsRDP(P.concat([a]),.06*diag);let V=S.slice(0,-1);if(V.length>1&&Math.hypot(V[0].x-V[V.length-1].x,V[0].y-V[V.length-1].y)<.1*diag)V.pop();
+  // ellipse by principal axes
+  let mx=0,my=0;P.forEach(q=>{mx+=q.x;my+=q.y});mx/=P.length;my/=P.length;let sxx=0,syy=0,sxy=0;P.forEach(q=>{const dx=q.x-mx,dy=q.y-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy});sxx/=P.length;syy/=P.length;sxy/=P.length;
+  const rot=.5*Math.atan2(2*sxy,sxx-syy),co=Math.cos(rot),si=Math.sin(rot);let vu=0,vv=0;P.forEach(q=>{const dx=q.x-mx,dy=q.y-my,u=dx*co+dy*si,v=-dx*si+dy*co;vu+=u*u;vv+=v*v});
+  const rx=Math.sqrt(2*vu/P.length),ry=Math.sqrt(2*vv/P.length);const eErr=P.reduce((s,q)=>{const dx=q.x-mx,dy=q.y-my,u=(dx*co+dy*si)/(rx||1),v=(-dx*si+dy*co)/(ry||1);return s+Math.abs(Math.sqrt(u*u+v*v)-1)},0)/P.length;
+  if(V.length>=3&&V.length<=6){const pErr=P.reduce((s,q)=>{let d=1e9;for(let i=0;i<V.length;i++)d=Math.min(d,qsSegD(q,V[i],V[(i+1)%V.length]));return s+d},0)/P.length/diag;
+    const corners=V.map((v,i)=>{const p0=V[(i+V.length-1)%V.length],p1=V[(i+1)%V.length],a1=Math.atan2(p0.y-v.y,p0.x-v.x),a2=Math.atan2(p1.y-v.y,p1.x-v.x);let d=Math.abs(a1-a2);if(d>Math.PI)d=2*Math.PI-d;return d*180/Math.PI});
+    if(pErr<.03&&(eErr>.08||corners.some(d=>d<115))){if(V.length===4&&corners.every(d=>Math.abs(d-90)<22)){const e0=Math.atan2(V[1].y-V[0].y,V[1].x-V[0].x),c2=Math.cos(-e0),s2=Math.sin(-e0);let u0=1e9,u1=-1e9,v0=1e9,v1=-1e9;P.forEach(q=>{const u=q.x*c2-q.y*s2,v=q.x*s2+q.y*c2;u0=Math.min(u0,u);u1=Math.max(u1,u);v0=Math.min(v0,v);v1=Math.max(v1,v)});
+        const back=(u,v)=>[u*Math.cos(e0)-v*Math.sin(e0),u*Math.sin(e0)+v*Math.cos(e0)];return {k:'poly',n:'Rectangle',rect:true,p:[back(u0,v0),back(u1,v0),back(u1,v1),back(u0,v1)],closed:true}}
+      return {k:'poly',n:V.length===3?'Triangle':'Polygon',p:V.map(q=>[q.x,q.y]),closed:true}}}
+  return {k:'ellipse',n:Math.abs(rx-ry)<.12*Math.max(rx,ry)?'Circle':'Ellipse',c:[mx,my],rx,ry,rot}}
+function qsCirc(a,b,c){const d=2*(a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y));if(Math.abs(d)<1e-6)return null;const A=a.x*a.x+a.y*a.y,B=b.x*b.x+b.y*b.y,C=c.x*c.x+c.y*c.y;
+  const x=(A*(b.y-c.y)+B*(c.y-a.y)+C*(a.y-b.y))/d,y=(A*(c.x-b.x)+B*(a.x-c.x)+C*(b.x-a.x))/d;return {x,y,r:Math.hypot(a.x-x,a.y-y)}}
+function qsCentre(f){if(f.k==='ellipse'||f.k==='arc')return f.c.slice();const p=f.p;return [p.reduce((s,q)=>s+q[0],0)/p.length,p.reduce((s,q)=>s+q[1],0)/p.length]}
+function qsPts(f){const o=[];if(f.k==='ellipse'){const n=144,co=Math.cos(f.rot),si=Math.sin(f.rot);for(let i=0;i<=n;i++){const t=i/n*2*Math.PI,u=f.rx*Math.cos(t),v=f.ry*Math.sin(t);o.push([f.c[0]+u*co-v*si,f.c[1]+u*si+v*co])}return o}
+  if(f.k==='arc'){const n=96;let sw=f.a1-f.a0;if(f.ccw){while(sw<0)sw+=2*Math.PI}else{while(sw>0)sw-=2*Math.PI}for(let i=0;i<=n;i++){const t=f.a0+sw*i/n;o.push([f.c[0]+f.r*Math.cos(t),f.c[1]+f.r*Math.sin(t)])}return o}
+  const p=f.p.map(q=>q.slice());if(f.closed)p.push(p[0].slice());return p}
+function qsXf(f,c,s,a){const co=Math.cos(a),si=Math.sin(a),T2=q=>{const dx=q[0]-c[0],dy=q[1]-c[1];return [c[0]+(dx*co-dy*si)*s,c[1]+(dx*si+dy*co)*s]};const g=JSON.parse(JSON.stringify(f));
+  if(g.k==='ellipse'){g.c=T2(f.c);g.rx*=s;g.ry*=s;g.rot+=a}else if(g.k==='arc'){g.c=T2(f.c);g.r*=s;g.a0+=a;g.a1+=a}else g.p=f.p.map(T2);return g}
+function qsPerfect(f){const g=JSON.parse(JSON.stringify(f));if(g.k==='ellipse'){const r=(g.rx+g.ry)/2;g.rx=g.ry=r;g.n='Circle'}
+  else if(g.rect){const c=qsCentre(g),e=Math.atan2(g.p[1][1]-g.p[0][1],g.p[1][0]-g.p[0][0]),s=(Math.hypot(g.p[1][0]-g.p[0][0],g.p[1][1]-g.p[0][1])+Math.hypot(g.p[2][0]-g.p[1][0],g.p[2][1]-g.p[1][1]))/4,co=Math.cos(e),si=Math.sin(e);
+    g.p=[[-s,-s],[s,-s],[s,s],[-s,s]].map(([u,v])=>[c[0]+u*co-v*si,c[1]+u*si+v*co]);g.n='Square'}
+  else if(g.k==='poly'&&g.closed){const c=qsCentre(g),n=g.p.length,r=g.p.reduce((s,q)=>s+Math.hypot(q[0]-c[0],q[1]-c[1]),0)/n,a0=Math.atan2(g.p[0][1]-c[1],g.p[0][0]-c[0]);g.p=g.p.map((q,i)=>[c[0]+r*Math.cos(a0+i*2*Math.PI/n),c[1]+r*Math.sin(a0+i*2*Math.PI/n)])}
+  return g}
+function qsDraw(){const S2=STROKE;if(!S2||!S2.qs)return;const f=S2.qsPerf?qsPerfect(S2.qs):S2.qs,p=qsPts(f);cx2(T('stroke')).clearRect(0,0,D.w,D.h);S2.fall=true;S2.carry=0;S2.dist=0;
+  for(let i=1;i<p.length;i++)walk(p[i-1][0],p[i-1][1],1,p[i][0],p[i][1],1);dirtyComp=true;req()}
+{const _ql=quickLine;quickLine=function(){const S2=STROKE;if(!ipOn()||!S2||S2.snap||S2.qs||S2.dist<40/V.s||S2.kind==='smudge'||(S2.b&&S2.b.tip==='stitch'))return _ql.apply(this,arguments);
+  const f=qsFit(S2.pts);if(!f||f.k==='line')return _ql.apply(this,arguments);S2.snap=true;S2.qs=f;S2.qsBase=f;S2.qsP=null;qsDraw();mpHap('medium');
+  hint('QuickShape: '+f.n+' – keep holding and move to size it · touch the screen with another finger to make it perfect',2800)}}
+{const _sm=strokeMove;strokeMove=function(p){const S2=STROKE;if(S2&&S2.qs){if(!S2.qsP)S2.qsP=[p.x,p.y];const c=qsCentre(S2.qsBase),d0=Math.hypot(S2.qsP[0]-c[0],S2.qsP[1]-c[1]),d1=Math.hypot(p.x-c[0],p.y-c[1]);
+    const s=d0>4?d1/d0:1,a=d0>4?Math.atan2(p.y-c[1],p.x-c[0])-Math.atan2(S2.qsP[1]-c[1],S2.qsP[0]-c[0]):0;S2.qs=qsXf(S2.qsBase,c,Math.max(.05,s),a);qsDraw();return}return _sm.apply(this,arguments)}}
+{const QF=new Set();cv.addEventListener('pointerdown',e=>{if(!ipOn()||!STROKE||!STROKE.qs||e.pointerType!=='touch'||PT.has(e.pointerId))return;e.preventDefault();e.stopImmediatePropagation();QF.add(e.pointerId);STROKE.qsPerf=true;qsDraw();mpHap('select');hint('Perfect '+qsPerfect(STROKE.qs).n.toLowerCase(),900)},true);
+  const sw=e=>{if(QF.has(e.pointerId)){e.stopImmediatePropagation();if(e.type!=='pointermove')QF.delete(e.pointerId)}};['pointermove','pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,sw,true))}
+
+/* ---- reference layer: fills look at its lines (ColorDrop, paint bucket) ---- */
+const ipRef=()=>D&&D.layers.find(l=>l.ref&&l.type!=='group'&&l.type!=='adj');
+{const _sd=sampleData;sampleData=function(l){const r=ipRef();if(r&&r!==l&&!TOOL.all)return cx2(r.cv).getImageData(0,0,D.w,D.h).data;return _sd.apply(this,arguments)}}
+
+/* ---- ColorDrop: drag the colour circle onto the canvas; hold to set the threshold ---- */
+let ipDrop=null;const CD={on:false,id:null,x0:0,y0:0,drag:false,hold:0,th:0,pt:null,prev:false,bk:null,before:null,sd:null,l:null,m:false,rt:0,suppress:0,lp:0};
+function ipCDFill(px,py){const l=CD.l,m=CD.m,tc=m?l.mask:l.cv,x=cx2(tc);if(!CD.bk){CD.before=wholeBefore(l,m);CD.bk=mk(D.w,D.h);cx2(CD.bk).drawImage(tc,0,0);CD.sd=sampleData(l)}
+  else{x.save();x.globalCompositeOperation='copy';x.drawImage(CD.bk,0,0);x.restore()}
+  const X=Math.floor(px),Y=Math.floor(py);if(X<0||Y<0||X>=D.w||Y>=D.h)return;const fm=floodMask(CD.sd,D.w,D.h,X,Y,CD.th,true),mc=maskCanvas(fm,true),t=cx2(T('stroke'));
+  t.save();t.globalAlpha=1;t.globalCompositeOperation='copy';t.drawImage(mc,0,0);t.globalCompositeOperation='source-in';t.fillStyle=m?greyOf(TOOL.color):TOOL.color;t.fillRect(0,0,D.w,D.h);t.restore();
+  applyStroke(x,T('stroke'),{kind:'paint',op:1,mask:m},l);touch(l,m);CD.prev=true;dirtyComp=true;req()}
+function ipCDStart(){const l=curL();if(!l||!needPx(l,'ColorDrop'))return false;if(l.lock){hint('This layer is locked');return false}if(XFORM)xfCommit();CD.l=l;CD.m=onMask(l);
+  if(l.type==='text'&&!CD.m){stOp(()=>{l.t.color=TOOL.color;renderText(l)},'Text colour');return false}CD.bk=null;CD.before=null;CD.sd=null;CD.prev=false;CD.th=TOOL.tol==null?28:TOOL.tol;return true}
+function ipCDEnd(commit){clearTimeout(CD.hold);clearTimeout(CD.rt);if(ipDrop)ipDrop.hidden=true;if(!CD.l){CD.on=false;return}
+  if(CD.prev){if(commit){pushH(wholeEntry(CD.l,CD.m,CD.before),'ColorDrop');addRecent(TOOL.color);mpHap('light')}else{const x=cx2(CD.m?CD.l.mask:CD.l.cv);x.save();x.globalCompositeOperation='copy';x.drawImage(CD.bk,0,0);x.restore();touch(CD.l,CD.m)}}
+  CD.l=null;CD.bk=null;CD.sd=null;CD.before=null;CD.on=false;dirtyComp=true;req()}
+function ipDropShow(x,y,txt){if(!ipDrop){ipDrop=document.createElement('div');ipDrop.id='ipDrop';ipDrop.innerHTML='<i></i><span></span>';document.body.appendChild(ipDrop)}ipDrop.querySelector('i').style.background=TOOL.color;
+  ipDrop.querySelector('span').textContent=txt||'';ipDrop.style.transform=`translate(${x-22}px,${y-22}px)`;ipDrop.hidden=false}
+addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('#ipBar .ipc');if(!b||!ipOn()||!D)return;try{ipBar.setPointerCapture(e.pointerId)}catch(_){}CD.on=true;CD.id=e.pointerId;CD.x0=e.clientX;CD.y0=e.clientY;CD.drag=false;CD.pt=null;
+  CD.lp=setTimeout(()=>{if(CD.on&&!CD.drag){CD.on=false;CD.suppress=performance.now();if(IPC.prev){const c=TOOL.color;ipSetColour(IPC.prev);IPC.prev=c;hint('Previous colour',800);mpHap('select')}}},520)},true);
+addEventListener('pointermove',e=>{if(!CD.on||e.pointerId!==CD.id)return;const x=e.clientX,y=e.clientY;
+  if(!CD.drag){if(Math.hypot(x-CD.x0,y-CD.y0)<14)return;clearTimeout(CD.lp);CD.drag=true;ipmCloseAll();if(!ipCDStart()){CD.on=false;return}}
+  e.preventDefault();if(CD.pt&&CD.prev){CD.th=Math.max(0,Math.min(100,CD.th+(x-CD.pt[0])*.25));CD.pt=[x,CD.pt[1]];ipDropShow(x,y,'Threshold '+Math.round(CD.th)+'%');clearTimeout(CD.rt);const P2=CD.p2;CD.rt=setTimeout(()=>{if(CD.on)ipCDFill(P2[0],P2[1])},70);return}
+  ipDropShow(x,y,'');clearTimeout(CD.hold);if(ipOverCv(x,y))CD.hold=setTimeout(()=>{if(!CD.on||!CD.drag)return;CD.p2=ipDoc(x,y);CD.pt=[x,y];ipCDFill(CD.p2[0],CD.p2[1]);mpHap('select');ipDropShow(x,y,'Threshold '+Math.round(CD.th)+'% – slide to change')},420)},{capture:true,passive:false});
+{const up=e=>{if(!CD.on||e.pointerId!==CD.id)return;clearTimeout(CD.lp);if(!CD.drag){CD.on=false;return}CD.suppress=performance.now();const x=e.clientX,y=e.clientY;
+  if(CD.prev)ipCDEnd(true);else if(ipOverCv(x,y)){const p=ipDoc(x,y);ipCDFill(p[0],p[1]);ipCDEnd(true)}else ipCDEnd(false)};addEventListener('pointerup',up,true);addEventListener('pointercancel',e=>{if(CD.on&&e.pointerId===CD.id){if(CD.drag)ipCDEnd(false);CD.on=false}},true)}
+addEventListener('click',e=>{if(performance.now()-CD.suppress<450&&e.target.closest&&e.target.closest('#ipBar .ipc')){e.preventDefault();e.stopImmediatePropagation()}},true);
+addEventListener('touchmove',e=>{if(CD.on&&CD.drag)e.preventDefault()},{passive:false,capture:true});
+
+/* ---- the colour card: Disc · Classic · Harmony · Value · Palettes, with history ---- */
+const IPC={tab:(()=>{try{return localStorage.getItem('mp_ipct')||'disc'}catch(e){return 'disc'}})(),h:0,s:0,v:0,hm:'comp',prev:null,pals:null,pal:0,open:false};
+let ipCol=null;
+function ipSetColour(c,live){if(!c)return;c=c.toLowerCase();if(c!==TOOL.color&&!live)IPC.prev=TOOL.color;else if(c!==TOOL.color&&!IPC.liveFrom)IPC.liveFrom=TOOL.color;TOOL.color=c;refreshSwatch();
+  const b=ipBar&&ipBar.querySelector('.ipc');if(b)b.style.setProperty('--c',c);if(TXI&&ipTx&&!ipTx.hidden){}if(ipCol&&!ipCol.hidden)ipColSyncUI()}
+function ipColLiveEnd(){if(IPC.liveFrom&&IPC.liveFrom!==TOOL.color)IPC.prev=IPC.liveFrom;IPC.liveFrom=null;addRecent(TOOL.color);ipColHist()}
+async function ipPals(){if(IPC.pals)return IPC.pals;let p=await IDB.get('ippals');if(!Array.isArray(p)||!p.length){p=[{id:lid(),name:'My colours',cols:(MYPAL||[]).slice()}];Object.keys(PAL).forEach(k=>p.push({id:lid(),name:k,cols:PAL[k].slice()}))}IPC.pals=p;return p}
+const ipPalSave=()=>IDB.set('ippals',IPC.pals);
+function ipColHTML(){const tabs=[['disc','Disc'],['classic','Classic'],['harmony','Harmony'],['value','Value'],['pal','Palettes']];
+  return `<div class="ipct">${tabs.map(([k,n])=>`<button class="${IPC.tab===k?'on':''}" data-ipc="tab:${k}">${n}</button>`).join('')}</div><div class="ipcb" data-tab="${IPC.tab}">${ipColBody()}</div>
+  <div class="ipch"><button class="ipcnow" data-ipc="noop" title="Current"><i></i></button><button class="ipcprev" data-ipc="prev" title="Previous colour"><i></i></button><span class="ipchr"></span></div>`}
+function ipColBody(){const t=IPC.tab;
+  if(t==='disc')return `<div class="ipcdisc"><canvas data-ipcv="disc" width="560" height="560"></canvas><i class="mk ring"></i><i class="mk in"></i></div>`;
+  if(t==='classic')return `<div class="ipcsq"><canvas data-ipcv="sq" width="600" height="400"></canvas><i class="mk in"></i></div><div class="ipcsl"><canvas data-ipcv="hue" width="600" height="40"></canvas><i class="mk bar"></i></div><div class="ipcsl"><input class="ipchex" data-ipchex value=""></div>`;
+  if(t==='harmony')return `<div class="ipchm">${[['comp','Complementary'],['split','Split'],['ana','Analogous'],['tri','Triadic'],['tet','Tetradic']].map(([k,n])=>`<button class="${IPC.hm===k?'on':''}" data-ipc="hm:${k}">${n}</button>`).join('')}</div>
+    <div class="ipcdisc hm"><canvas data-ipcv="hdisc" width="520" height="520"></canvas><i class="mk in"></i></div><div class="ipcsl"><label>Brightness</label><input type="range" min="0" max="100" data-ipcr="v"></div><div class="ipcsw" data-ipcsw></div>`;
+  if(t==='value')return `<div class="ipcval">${[['h','Hue',360,'°'],['s','Saturation',100,'%'],['v','Brightness',100,'%'],['r','Red',255,''],['g','Green',255,''],['b','Blue',255,'']].map(([k,n,mx,u])=>`<label><span>${n}</span><input type="range" min="0" max="${mx}" data-ipcr="${k}"><output data-ipco="${k}"></output></label>`).join('')}<label><span>Hex</span><input class="ipchex" data-ipchex value=""></label></div>`;
+  return `<div class="ipcpal"><div class="ipcph"><button data-ipc="newpal">+ New palette</button><button data-ipc="photopal">From photo</button></div>${(IPC.pals||[]).map((p,i)=>`<div class="ipcp${IPC.pal===i?' on':''}"><div class="ipcpn"><b data-ipc="palname:${i}">${esc(p.name)}</b><button data-ipc="paldef:${i}">${IPC.pal===i?'Default':'Set default'}</button><button data-ipc="paldel:${i}">✕</button></div><div class="ipcpg">${p.cols.map((c,j)=>`<button class="ipcs" style="background:${esc(c)}" data-ipsw="${i}:${j}"></button>`).join('')}<button class="ipcs add" data-ipc="paladd:${i}" title="Add the current colour">+</button></div></div>`).join('')}<p class="ipcnote">Tap + to add the current colour · press and hold a swatch to remove it</p></div>`}
+function ipColOpen(){if(!ipCol){ipCol=document.createElement('div');ipCol.id='ipCol';ipCol.hidden=true;edEl.appendChild(ipCol);ipColWire()}ipLyClose();ipmCloseCard();
+  if(!popEl.hidden&&PANEL==='layers'){IPM.setting=true;closePanel();IPM.setting=false;popEl.dataset.ipv=''}Object.assign(IPC,hex2hsv(TOOL.color));IPC.open=true;
+  (IPC.tab==='pal'?ipPals():Promise.resolve()).then(()=>{ipCol.innerHTML=ipColHTML();ipCol.hidden=false;ipColPlace();ipColDraw();ipColSyncUI();ipColHist();ipmBar()})}
+function ipColClose(){if(!IPC.open)return;IPC.open=false;if(ipCol)ipCol.hidden=true;ipmBar()}
+function ipColPlace(){const b=ipBar&&ipBar.querySelector('.ipc');if(!b)return;const r=b.getBoundingClientRect(),er=edEl.getBoundingClientRect(),w=Math.min(340,innerWidth-24);ipCol.style.width=w+'px';ipCol.style.left=Math.max(12,Math.min(r.right-er.left-w+4,er.width-w-12))+'px';ipCol.style.top=(r.bottom-er.top+8)+'px'}
+function ipColDraw(){const c=ipCol.querySelector('canvas[data-ipcv]');if(!c)return;const k=c.dataset.ipcv,x=c.getContext('2d'),W=c.width,H=c.height;x.clearRect(0,0,W,H);
+  if(k==='disc'){const R=W/2,ri=R*.8;if(x.createConicGradient){const g=x.createConicGradient(-Math.PI/2,R,R);for(let i=0;i<=12;i++)g.addColorStop(i/12,`hsl(${i*30},100%,50%)`);x.fillStyle=g}else x.fillStyle='#f00';
+    x.beginPath();x.arc(R,R,R,0,6.2832);x.arc(R,R,ri,0,6.2832,true);x.fill();ipDiscInner(x,R,R,ri*.94)}
+  else if(k==='hdisc'){const R=W/2;if(x.createConicGradient){const g=x.createConicGradient(-Math.PI/2,R,R);for(let i=0;i<=12;i++)g.addColorStop(i/12,`hsl(${i*30},100%,50%)`);x.fillStyle=g}x.beginPath();x.arc(R,R,R,0,6.2832);x.fill();
+    const rg=x.createRadialGradient(R,R,0,R,R,R);rg.addColorStop(0,'#fff');rg.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=rg;x.fill();x.fillStyle=`rgba(0,0,0,${1-IPC.v})`;x.fill()}
+  else if(k==='sq'){x.fillStyle=hsv2hex(IPC.h,1,1);x.fillRect(0,0,W,H);let g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,'#fff');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,W,H);g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'#000');x.fillStyle=g;x.fillRect(0,0,W,H);
+    const h=ipCol.querySelector('canvas[data-ipcv="hue"]');if(h){const y=h.getContext('2d'),g2=y.createLinearGradient(0,0,h.width,0);for(let i=0;i<=12;i++)g2.addColorStop(i/12,`hsl(${i*30},100%,50%)`);y.fillStyle=g2;y.fillRect(0,0,h.width,h.height)}}}
+function ipDiscInner(x,cx,cy,r){x.save();x.beginPath();x.arc(cx,cy,r,0,6.2832);x.clip();x.fillStyle=hsv2hex(IPC.h,1,1);x.fillRect(cx-r,cy-r,2*r,2*r);let g=x.createLinearGradient(cx-r,0,cx+r,0);g.addColorStop(0,'#fff');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(cx-r,cy-r,2*r,2*r);
+  g=x.createLinearGradient(0,cy-r,0,cy+r);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'#000');x.fillStyle=g;x.fillRect(cx-r,cy-r,2*r,2*r);x.restore()}
+function ipHarm(){const h=IPC.h,o={comp:[.5],split:[.4167,.5833],ana:[-.0833,.0833],tri:[.3333,.6667],tet:[.25,.5,.75]}[IPC.hm]||[.5];return [h,...o.map(d=>((h+d)%1+1)%1)]}
+function ipColSyncUI(){if(!ipCol||ipCol.hidden)return;const c=TOOL.color,q=s=>ipCol.querySelector(s),pos=(el,cvs,X,Y)=>{if(!el||!cvs)return;const r=cvs.getBoundingClientRect(),pr=cvs.parentElement.getBoundingClientRect();el.style.left=(r.left-pr.left+X*r.width)+'px';el.style.top=(r.top-pr.top+Y*r.height)+'px'};
+  const disc=q('canvas[data-ipcv="disc"]');if(disc){const a=IPC.h*2*Math.PI-Math.PI/2;pos(q('.mk.ring'),disc,.5+.45*Math.cos(a),.5+.45*Math.sin(a));const ri=.8*.94/2;pos(q('.mk.in'),disc,.5+(IPC.s*2-1)*ri*.98,.5+((1-IPC.v)*2-1)*ri*.98)}
+  const sq=q('canvas[data-ipcv="sq"]');if(sq){pos(q('.ipcsq .mk.in'),sq,IPC.s,1-IPC.v);pos(q('.mk.bar'),q('canvas[data-ipcv="hue"]'),IPC.h,.5)}
+  const hd=q('canvas[data-ipcv="hdisc"]');if(hd){const a=IPC.h*2*Math.PI-Math.PI/2;pos(q('.ipcdisc.hm .mk.in'),hd,.5+.5*IPC.s*Math.cos(a),.5+.5*IPC.s*Math.sin(a));const sw=q('[data-ipcsw]');if(sw)sw.innerHTML=ipHarm().map((h,i)=>{const hx=hsv2hex(h,IPC.s,IPC.v);return `<button class="ipcs${i?'':' main'}" style="background:${hx}" data-ipcset="${hx}"></button>`}).join('');const rv=q('[data-ipcr="v"]');if(rv&&document.activeElement!==rv)rv.value=Math.round(IPC.v*100)}
+  if(q('.ipcval')){const [r,g,b]=hexToRgb(c),V2={h:Math.round(IPC.h*360),s:Math.round(IPC.s*100),v:Math.round(IPC.v*100),r,g,b};Object.keys(V2).forEach(k=>{const i=q(`[data-ipcr="${k}"]`),o=q(`[data-ipco="${k}"]`);if(i&&document.activeElement!==i)i.value=V2[k];if(o)o.textContent=V2[k]})}
+  ipCol.querySelectorAll('[data-ipchex]').forEach(i=>{if(document.activeElement!==i)i.value=c});const n=q('.ipcnow i'),p=q('.ipcprev i');if(n)n.style.background=c;if(p)p.style.background=IPC.prev||'transparent'}
+function ipColHist(){const h=ipCol&&ipCol.querySelector('.ipchr');if(h)h.innerHTML=(RECENT||[]).slice(0,10).map(c=>`<button class="ipcs" style="background:${esc(c)}" data-ipcset="${esc(c)}"></button>`).join('')}
+function ipColFromHSV(live){ipSetColour(hsv2hex(IPC.h,IPC.s,IPC.v),live)}
+function ipColWire(){const drag=(sel,fn)=>ipCol.addEventListener('pointerdown',e=>{const c=e.target.closest(sel);if(!c)return;e.preventDefault();c.setPointerCapture(e.pointerId);const r=c.getBoundingClientRect(),go=ev=>{fn((ev.clientX-r.left)/r.width,(ev.clientY-r.top)/r.height,ev,r)};go(e);
+    const mv=ev=>go(ev),up=()=>{c.removeEventListener('pointermove',mv);c.removeEventListener('pointerup',up);c.removeEventListener('pointercancel',up);ipColLiveEnd()};c.addEventListener('pointermove',mv);c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up)});
+  let mode='';ipCol.addEventListener('pointerdown',e=>{const c=e.target.closest('canvas[data-ipcv="disc"]');if(!c)return;const r=c.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;mode=Math.hypot(dx,dy)>.4*.98?'ring':'in'},true);
+  drag('canvas[data-ipcv="disc"]',(u,v)=>{const dx=u-.5,dy=v-.5;if(mode==='ring'){IPC.h=((Math.atan2(dy,dx)+Math.PI/2)/(2*Math.PI)+1)%1;ipColDraw()}else{const ri=.8*.94/2;let a=dx/ri,b=dy/ri;const m=Math.hypot(a,b);if(m>1){a/=m;b/=m}IPC.s=Math.max(0,Math.min(1,(a+1)/2));IPC.v=Math.max(0,Math.min(1,1-(b+1)/2))}ipColFromHSV(true)});
+  drag('canvas[data-ipcv="sq"]',(u,v)=>{IPC.s=Math.max(0,Math.min(1,u));IPC.v=Math.max(0,Math.min(1,1-v));ipColFromHSV(true)});
+  drag('canvas[data-ipcv="hue"]',u=>{IPC.h=Math.max(0,Math.min(.9999,u));ipColDraw();ipColFromHSV(true)});
+  drag('canvas[data-ipcv="hdisc"]',(u,v)=>{const dx=u-.5,dy=v-.5;IPC.h=((Math.atan2(dy,dx)+Math.PI/2)/(2*Math.PI)+1)%1;IPC.s=Math.min(1,Math.hypot(dx,dy)*2);ipColFromHSV(true)});
+  ipCol.addEventListener('input',e=>{const t=e.target,k=t.dataset.ipcr;if(!k)return;const n=+t.value;if(k==='h')IPC.h=n/360;else if(k==='s')IPC.s=n/100;else if(k==='v'){IPC.v=n/100;ipColDraw()}
+    if('rgb'.includes(k)){const c=hexToRgb(TOOL.color);c['rgb'.indexOf(k)]=n;const hx=rgbToHex(...c);Object.assign(IPC,hex2hsv(hx));ipSetColour(hx,true)}else ipColFromHSV(true)});
+  ipCol.addEventListener('change',e=>{const t=e.target;if(t.dataset.ipcr)ipColLiveEnd();if(t.hasAttribute('data-ipchex')){let v=t.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-f]{6}$/i.test(v)){Object.assign(IPC,hex2hsv(v));ipSetColour(v);ipColDraw();addRecent(v);ipColHist()}}});
+  let lp=0,lpd=false;ipCol.addEventListener('pointerdown',e=>{const s=e.target.closest('[data-ipsw]');if(!s)return;lpd=false;lp=setTimeout(()=>{lpd=true;const [i,j]=s.dataset.ipsw.split(':').map(Number);const p=IPC.pals[i];if(p){p.cols.splice(j,1);ipPalSave();ipCol.querySelector('.ipcb').innerHTML=ipColBody();mpHap('medium')}},550)});
+  ipCol.addEventListener('pointerup',()=>clearTimeout(lp));ipCol.addEventListener('pointercancel',()=>clearTimeout(lp));
+  ipCol.addEventListener('click',async e=>{e.stopPropagation();const s=e.target.closest('[data-ipsw]');if(s){if(lpd)return;const [i,j]=s.dataset.ipsw.split(':').map(Number),c=IPC.pals[i]&&IPC.pals[i].cols[j];if(c){Object.assign(IPC,hex2hsv(c));ipSetColour(c);addRecent(c);ipColHist();mpHap('select')}return}
+    const q=e.target.closest('[data-ipcset]');if(q){const c=q.dataset.ipcset;Object.assign(IPC,hex2hsv(c));ipSetColour(c);addRecent(c);ipColDraw();ipColHist();mpHap('select');return}
+    const b=e.target.closest('[data-ipc]');if(!b)return;const [k,v]=b.dataset.ipc.split(/:(.*)/s);
+    if(k==='tab'){IPC.tab=v;try{localStorage.setItem('mp_ipct',v)}catch(_){}if(v==='pal')await ipPals();ipCol.innerHTML=ipColHTML();ipColDraw();requestAnimationFrame(()=>{ipColSyncUI();ipColHist()});return}
+    if(k==='hm'){IPC.hm=v;ipCol.querySelectorAll('.ipchm button').forEach(x=>x.classList.toggle('on',x.dataset.ipc==='hm:'+v));ipColSyncUI();return}
+    if(k==='prev'){if(IPC.prev){const c=TOOL.color,p=IPC.prev;Object.assign(IPC,hex2hsv(p));ipSetColour(p);IPC.prev=c;ipColDraw();ipColSyncUI()}return}
+    const pals=await ipPals(),redraw=()=>{ipCol.querySelector('.ipcb').innerHTML=ipColBody()};
+    if(k==='newpal'){const n=await mpAsk('Name the new palette','Palette '+(pals.length+1));if(n){pals.unshift({id:lid(),name:n.trim()||'Palette',cols:[]});IPC.pal=0;ipPalSave();redraw()}return}
+    if(k==='paladd'){const p=pals[+v];if(p&&!p.cols.includes(TOOL.color)){p.cols.push(TOOL.color);ipPalSave();redraw();mpHap('light')}return}
+    if(k==='palname'){const p=pals[+v];const n=await mpAsk('Rename palette',p.name);if(n&&n.trim()){p.name=n.trim();ipPalSave();redraw()}return}
+    if(k==='paldef'){IPC.pal=+v;try{localStorage.setItem('mp_ippal',v)}catch(_){}redraw();return}
+    if(k==='paldel'){const p=pals[+v];if(p&&confirm('Delete the palette “'+p.name+'”?')){pals.splice(+v,1);if(!pals.length)pals.push({id:lid(),name:'My colours',cols:[]});IPC.pal=0;ipPalSave();redraw()}return}
+    if(k==='photopal'){ipPhotoPal();return}})}
+function ipPhotoPal(){const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=async()=>{const file=f.files&&f.files[0];if(!file)return;try{const bm=await bmpOf(file),k=Math.min(1,120/Math.max(bm.width,bm.height)),w=Math.max(1,Math.round(bm.width*k)),h=Math.max(1,Math.round(bm.height*k)),c=mk(w,h),x=cx2(c);x.drawImage(bm,0,0,w,h);
+    const d=x.getImageData(0,0,w,h).data,px=[];for(let i=0;i<d.length;i+=4)if(d[i+3]>200)px.push([d[i],d[i+1],d[i+2]]);if(!px.length)return hint('No colours found in that picture');
+    let C=[];for(let i=0;i<12;i++)C.push(px[Math.floor((i+.5)/12*px.length)].slice());for(let it=0;it<10;it++){const S2=C.map(()=>[0,0,0,0]);px.forEach(p=>{let bi=0,bd=1e9;C.forEach((c,j)=>{const dd=(p[0]-c[0])**2+(p[1]-c[1])**2+(p[2]-c[2])**2;if(dd<bd){bd=dd;bi=j}});const s=S2[bi];s[0]+=p[0];s[1]+=p[1];s[2]+=p[2];s[3]++});C=C.map((c,j)=>S2[j][3]?[S2[j][0]/S2[j][3],S2[j][1]/S2[j][3],S2[j][2]/S2[j][3]]:c)}
+    const cols=[...new Set(C.map(c=>rgbToHex(...c)))];const pals=await ipPals();pals.unshift({id:lid(),name:(file.name||'Photo').replace(/\.[a-z0-9]+$/i,'').slice(0,28)||'From photo',cols});IPC.pal=0;ipPalSave();ipCol.querySelector('.ipcb').innerHTML=ipColBody();hint('Palette made from your photo',1500)}catch(e){console.error(e);hint('That picture could not be read')}};f.click()}
+// the colour button opens this card in the iPad studio; tapping the canvas closes it
+{const _p=ipmPanel;ipmPanel=function(v){if(v==='color'&&labEl.classList.contains('ipst')){if(IPC.open)ipColClose();else ipColOpen();return}ipColClose();return _p.apply(this,arguments)}}
+{const _c=ipmOpenCard;ipmOpenCard=function(){ipColClose();return _c.apply(this,arguments)}}
+{const _a=ipmAnyCard;ipmAnyCard=function(){return IPC.open||_a.apply(this,arguments)}}
+{const _ca=ipmCloseAll;ipmCloseAll=function(){ipColClose();return _ca.apply(this,arguments)}}
+{const _lo=ipLyOpen;ipLyOpen=function(){ipColClose();return _lo.apply(this,arguments)}}
+{const _b=ipmBar;ipmBar=function(){const r=_b.apply(this,arguments);try{const b=ipBar&&ipBar.querySelector('.ipc');if(b)b.classList.toggle('on',IPC.open)}catch(e){}return r}}
+{const _s=ipmSync;ipmSync=function(){const r=_s.apply(this,arguments);if(!labEl.classList.contains('ipst'))ipColClose();return r}}
+{const _sc=setColor;setColor=function(c){const o=TOOL.color;const r=_sc.apply(this,arguments);if(TOOL.color!==o)IPC.prev=o;try{const b=ipBar&&ipBar.querySelector('.ipc');if(b)b.style.setProperty('--c',TOOL.color)}catch(e){}return r}}
+IDB.get('ippals').then(p=>{if(Array.isArray(p)&&p.length)IPC.pals=p}).catch(()=>{});try{IPC.pal=+(localStorage.getItem('mp_ippal')||0)||0}catch(e){}
+addEventListener('resize',()=>{if(IPC.open){ipColPlace();ipColSyncUI()}});
+
 
 
 const mpUgly=n=>{n=String(n||'').trim();return !n||/^[0-9a-f]{8}([\s_-][0-9a-f]{4}){1,3}/i.test(n)||/^[0-9a-f]{20,}$/i.test(n.replace(/[\s_-]/g,''))||/^(img|image|photo|pxl|dsc|dcim|screenshot|screen shot|file|picture)[\s_-]*\d/i.test(n)||/^\d{6,}/.test(n)};
