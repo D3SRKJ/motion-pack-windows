@@ -2268,6 +2268,94 @@ canvas.mplc{display:block;width:100%;height:auto}
  @keyframes hmin{from{opacity:0;transform:perspective(1200px) translateZ(-600px) translateY(90px) rotateX(28deg)}}
  @keyframes hmrise{from{opacity:0;transform:translateY(26px)}}
 }
+
+/* ---------- v33: Procreate-style Layers card, text bar, transform strip ---------- */
+#ipLy,#ipLyM,#ipTx{display:none}
+#lab:is(.ipst,.ipgs) #ipLy:not([hidden]){display:flex;flex-direction:column;position:absolute;z-index:12;max-height:calc(100% - 150px);border-radius:18px;overflow:hidden;
+  background:rgba(24,24,26,.97);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.09);box-shadow:0 22px 60px rgba(0,0,0,.6);
+  color:#ececef;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;animation:ipIn .18s ease-out;-webkit-user-select:none;user-select:none}
+#ipLy .iplh{display:flex;align-items:center;padding:12px 10px 8px 18px;flex:none}
+#ipLy .iplh b{font-size:19px;font-weight:600;letter-spacing:.01em}
+#ipLy .grow{flex:1}
+#ipLy .iplp{width:44px;height:40px;border:0;border-radius:11px;background:none;color:#f2f2f4;display:grid;place-items:center}
+#ipLy .iplp:active{background:rgba(255,255,255,.1)}
+#ipLy svg,#ipLyM svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#ipLy .ipll{overflow-y:auto;overflow-x:hidden;padding:0 8px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain}
+#ipLy .iplr{position:relative;margin:0 0 4px;border-radius:12px;overflow:hidden;transition:transform .18s}
+#ipLy .iplin{position:relative;z-index:1;display:flex;align-items:center;gap:10px;height:62px;padding:0 8px 0 calc(8px + var(--d,0) * 16px);border-radius:12px;background:#2a2a2d;transition:transform .2s cubic-bezier(.2,.8,.2,1),background .15s}
+#ipLy .iplr.sel .iplin{background:linear-gradient(180deg,#f4f4f6,#c9cacf);color:#0c0c0d}
+#ipLy .iplr.ms .iplin{background:#3c3d43}
+#ipLy .iplr.hid .iplt,#ipLy .iplr.hid .ipln{opacity:.45}
+#ipLy .iplr.sw .iplin{transform:translateX(-186px)}
+#ipLy .iplact{position:absolute;inset:0;display:flex;justify-content:flex-end;gap:2px;padding:0 2px;background:#1a1a1c}
+#ipLy .iplact button{width:60px;border:0;background:#3a3a3e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 11px -apple-system,sans-serif;border-radius:10px;margin:2px 0}
+#ipLy .iplact button.dang{background:#c8343b}
+#ipLy .iplt{width:56px;height:42px;flex:none;border-radius:6px;background:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%);background-size:10px 10px;background-position:0 0,5px 5px;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+#ipLy .iplg{width:56px;height:42px;flex:none;display:grid;place-items:center;border-radius:6px;background:rgba(255,255,255,.07)}
+#ipLy .iplsw{width:56px;height:42px;flex:none;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+#ipLy .iplcl{font-style:normal;color:#8e8e93;margin-right:-4px}
+#ipLy .iplcv{width:26px;height:40px;border:0;background:none;color:inherit;display:grid;place-items:center;margin-right:-6px;transition:transform .15s}
+#ipLy .iplcv.open svg{transform:rotate(90deg)}
+#ipLy .ipln{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+#ipLy .ipln b{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ipLy .ipln i{font-style:normal;font-size:11.5px;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ipLy .iplb{min-width:34px;height:34px;border:0;border-radius:9px;background:rgba(255,255,255,.08);color:inherit;font:700 14px -apple-system,sans-serif}
+#ipLy .iplr.sel .iplb{background:rgba(0,0,0,.1)}
+#ipLy .iplb.on{background:#fff;color:#0c0c0d}
+#ipLy .iplv{width:40px;height:40px;border:0;background:none;display:grid;place-items:center;flex:none}
+#ipLy .iplv i{width:22px;height:22px;border-radius:6px;border:2px solid currentColor;opacity:.75;position:relative}
+#ipLy .iplv.on i{background:currentColor;opacity:1}
+#ipLy .iplv.on i::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #2a2a2d;border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
+#ipLy .iplr.sel .iplv.on i::after{border-color:#d9dadf}
+#ipLy .iplbg .iplin{background:#222225}
+#ipLy .iplr.lift{z-index:5;box-shadow:0 14px 36px rgba(0,0,0,.6);transition:none;opacity:.95}
+#ipLy .iplr.dropA{box-shadow:inset 0 3px 0 #fff}
+#ipLy .iplr.dropB{box-shadow:inset 0 -3px 0 #fff}
+#ipLy .iplr.dropI .iplin{outline:2px solid #fff;outline-offset:-2px}
+#ipLy .iplbp{margin:-2px 2px 8px;padding:12px;border-radius:12px;background:#1d1d20;border:1px solid rgba(255,255,255,.06)}
+#ipLy .iplop{display:flex;align-items:center;gap:10px;font-size:13px;color:#c8c8cc}
+#ipLy .iplop input{flex:1;accent-color:#e9e9ec;height:30px}
+#ipLy .iplop output{width:44px;text-align:right;font-variant-numeric:tabular-nums}
+#ipLy .iplbl{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:10px}
+#ipLy .iplbl button{height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.06);color:#dcdce0;font:500 12.5px -apple-system,sans-serif}
+#ipLy .iplbl button.on{background:#f1f1f3;color:#0c0c0d}
+#lab:is(.ipst,.ipgs) #ipLyM:not([hidden]){display:block;position:absolute;z-index:13;border-radius:16px;overflow:hidden;background:rgba(30,30,33,.98);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 22px 60px rgba(0,0,0,.65);color:#ececef;font:15px -apple-system,BlinkMacSystemFont,sans-serif;animation:ipIn .16s ease-out}
+#ipLyM .ipmh{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.07)}
+#ipLyM .ipmh b{display:block;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ipLyM .ipmh i{font-style:normal;font-size:11.5px;color:#8e8e93}
+#ipLyM .ipmg{display:flex;flex-direction:column;padding:6px;max-height:60vh;overflow:auto}
+#ipLyM .ipmi{min-height:44px;padding:0 12px;border:0;border-radius:10px;background:none;color:#ededf0;text-align:left;font:15px -apple-system,sans-serif;display:flex;align-items:center;justify-content:space-between}
+#ipLyM .ipmi:active{background:rgba(255,255,255,.09)}
+#ipLyM .ipmi.on::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.7)}
+#ipLyM .ipmi.dang{color:#ff6b6b}
+/* text bar */
+#lab:is(.ipst,.ipgs) #ipTx:not([hidden]){display:flex;align-items:center;gap:4px;position:absolute;z-index:14;left:50%;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 8px;border-radius:16px;
+  background:rgba(26,26,28,.96);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.55);color:#ededf0;font:15px -apple-system,sans-serif;flex-wrap:nowrap;-webkit-user-select:none;user-select:none}
+#ipTx .iptb{height:42px;min-width:42px;padding:0 10px;border:0;border-radius:11px;background:rgba(255,255,255,.06);color:inherit;font:500 16px -apple-system,sans-serif;flex:none;display:grid;place-items:center}
+#ipTx .iptb:active{background:rgba(255,255,255,.16)}
+#ipTx .iptb.on{background:#f1f1f3;color:#0c0c0d}
+#ipTx .iptfont{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:17px;display:block;line-height:42px}
+#ipTx .iptsz{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.04);border-radius:11px}
+#ipTx .iptsz b{min-width:38px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums;font-size:14px}
+#ipTx .iptc i{width:22px;height:22px;border-radius:50%;box-shadow:0 0 0 2px #0c0c0d,0 0 0 3.5px #d9dadd}
+#ipTx .iptok{background:linear-gradient(180deg,#fff,#d4d5d9 55%,#b2b3b8);color:#0b0b0c;font-weight:600;padding:0 16px}
+#ipTx .iptf{position:absolute;left:0;bottom:calc(100% + 8px);width:min(420px,calc(100vw - 24px));max-height:46vh;display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:rgba(26,26,28,.98);border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.6)}
+#ipTx .iptfc{display:flex;gap:4px;padding:8px;overflow-x:auto;flex:none;scrollbar-width:none}
+#ipTx .iptfc button{flex:none;height:32px;padding:0 12px;border:0;border-radius:9px;background:rgba(255,255,255,.06);color:#c8c8cc;font:600 12.5px -apple-system,sans-serif}
+#ipTx .iptfc button.on{background:#f1f1f3;color:#0c0c0d}
+#ipTx .iptfl{overflow-y:auto;padding:0 6px 8px;-webkit-overflow-scrolling:touch}
+#ipTx .iptfl button{display:block;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:10px;background:none;color:#ededf0;text-align:left;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ipTx .iptfl button.on{background:rgba(255,255,255,.12)}
+#lab:is(.ipst,.ipgs) #labOpt.iptxhide{display:none!important}
+/* transform strip: slimmer, no Commit / Cancel */
+#lab:is(.ipst,.ipgs) #labOpt .ch{min-height:38px;border-radius:10px}
+#lab:is(.ipst,.ipgs) #labOpt .xdim{font-size:12px;color:#8e8e93;padding:0 6px;white-space:nowrap}
+
+/* a closed panel must never stay on screen (the iPad stack used to override [hidden]) */
+#lab .lpop[hidden]{display:none!important}
+#lab.ipgs #ipLy:not([hidden]){animation:ipUp .2s ease-out}
+@keyframes ipUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body class="edit empty">
@@ -2820,14 +2908,16 @@ let P=null,RO=false,saveT=0,saving=false,again=false;
 const LOCAL=!(window.claude&&window.claude.use);let KEY='lb:'+(S.lid||'default');
 async function mpPack(v){if(v instanceof Blob)return {__mpb:await v.arrayBuffer(),t:v.type||''};if(Array.isArray(v)){const o=[];for(const x of v)o.push(await mpPack(x));return o}
   if(v&&typeof v==='object'&&Object.getPrototypeOf(v)===Object.prototype){const o={};for(const k in v)o[k]=await mpPack(v[k]);return o}return v}
-function mpUnpack(v){if(v&&typeof v==='object'){if(v.__mpb instanceof ArrayBuffer)return new Blob([v.__mpb],{type:v.t||''});if(Array.isArray(v)){for(let i=0;i<v.length;i++)v[i]=mpUnpack(v[i]);return v}
+const mpWK=/AppleWebKit/.test(navigator.userAgent)&&!/Chrome|Chromium|Electron|Edg\//.test(navigator.userAgent);
+async function mpFresh(v){if(v instanceof Blob){if(v._mem)return v;try{const b=new Blob([await v.arrayBuffer()],{type:v.type||''});b._mem=1;return b}catch(e){console.error('A saved picture could not be read: '+(e&&e.name));return v}}if(Array.isArray(v)){for(let i=0;i<v.length;i++)v[i]=await mpFresh(v[i]);return v}if(v&&typeof v==='object'&&Object.getPrototypeOf(v)===Object.prototype){for(const k in v)v[k]=await mpFresh(v[k])}return v}
+function mpUnpack(v){if(v&&typeof v==='object'){if(v.__mpb instanceof ArrayBuffer){const b=new Blob([v.__mpb],{type:v.t||''});b._mem=1;return b}if(Array.isArray(v)){for(let i=0;i<v.length;i++)v[i]=mpUnpack(v[i]);return v}
   if(Object.getPrototypeOf(v)===Object.prototype){for(const k in v)v[k]=mpUnpack(v[k])}}return v}
 const IDB={db:null,open(){return new Promise(res=>{try{const r=indexedDB.open('motionpack',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');
     r.onsuccess=()=>{const d=r.result;d.onclose=()=>{if(this.db===d)this.db=null};d.onversionchange=()=>{try{d.close()}catch(e){}if(this.db===d)this.db=null};res(this.db=d)};r.onerror=()=>res(null)}catch(e){res(null)}})},
   async get(k){for(let a=0;a<2;a++){const d=this.db||await this.open();if(!d)return null;
       const r=await new Promise(res=>{try{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res({v:q.result||null});q.onerror=()=>res({e:q.error})}catch(e){res({e})}});
-      if(!r.e)return mpUnpack(r.v);console.error('Storage read failed ('+k+'): '+(r.e&&(r.e.name+' '+r.e.message)));this.db=null}return null},
-  async set(k,v){let packed=false;for(let a=0;a<3;a++){const d=this.db||await this.open();if(!d)return false;
+      if(!r.e){const o=mpUnpack(r.v);return mpWK?await mpFresh(o):o}console.error('Storage read failed ('+k+'): '+(r.e&&(r.e.name+' '+r.e.message)));this.db=null}return null},
+  async set(k,v){let packed=false;if(mpWK){try{v=await mpPack(v);packed=true}catch(e){console.error('Could not prepare '+k+' for saving')}}for(let a=0;a<3;a++){const d=this.db||await this.open();if(!d)return false;
       const r=await new Promise(res=>{try{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res({});t.onerror=()=>res({e:t.error});t.onabort=()=>res({e:t.error})}catch(e){res({e})}});
       if(!r.e)return true;const n=r.e&&r.e.name;console.error('Storage save failed ('+k+'): '+(r.e?(n+' '+r.e.message):'unknown'));if(n==='QuotaExceededError')return false;
       this.db=null;if(a===1&&!packed){try{v=await mpPack(v);packed=true}catch(e){return false}}}return false}};
@@ -3579,12 +3669,12 @@ async function startFilm(mode){
     F.mr=mr;mr.start(500);
   }
   if(audio){try{await audio.play()}catch(e){}}
-  F.audio=audio;F.actx=actx;F.rec=rec;const t0=performance.now();const samples=rec?5:4;
+  F.audio=audio;F.actx=actx;F.rec=rec;const t0=performance.now();const samples=rec?5:4;F.k=rec?samples:(((typeof mpIOS!=='undefined'&&mpIOS)||matchMedia('(pointer:coarse)').matches)?1:3);F.lt=0;F.slow=0;
   const loop=now=>{if(!filmOn||FILM!==F)return;let t=(now-t0)/1000;
     if(t>=F.T){if(rec){finishRec(F);return}t=t%F.T}
     if(!rec&&F.lastLoop!==Math.floor((now-t0)/1000/F.T)){F.lastLoop=Math.floor((now-t0)/1000/F.T)}
     if(rec&&F.gain&&t>F.T-2.5)F.gain.gain.value=Math.max(0,(F.T-t)/2.5);
-    try{renderFrame(F,c,W,H,t,samples)}catch(err){if(!F.err){F.err=1;console.error(err)}}$('#fProg').style.width=(t/F.T*100).toFixed(1)+'%';requestAnimationFrame(loop)};
+    if(!rec){const dtf=F.lt?now-F.lt:16.7;F.lt=now;if(F.k>1){if(dtf>22){if(++F.slow>4){F.k--;F.slow=0}}else F.slow=Math.max(0,F.slow-1)}}try{renderFrame(F,c,W,H,t,rec?samples:F.k)}catch(err){if(!F.err){F.err=1;console.error(err)}}$('#fProg').style.width=(t/F.T*100).toFixed(1)+'%';requestAnimationFrame(loop)};
   requestAnimationFrame(loop);
 }
 function finishRec(F){try{F.mr&&F.mr.state!=='inactive'&&F.mr.stop()}catch(e){}endFilm(F)}
@@ -4803,12 +4893,12 @@ function fxAbove(o,b,f){
   if(f.go&&f.go.on){const g=f.go,x=cx2(T('e1')),an=g.ang*Math.PI/180,cx0=D.w/2,cy0=D.h/2,r=Math.hypot(D.w,D.h)/2,dx=Math.cos(an)*r,dy=-Math.sin(an)*r;x.save();x.globalCompositeOperation='copy';const gr=x.createLinearGradient(cx0-dx,cy0-dy,cx0+dx,cy0+dy);gr.addColorStop(0,g.c1);gr.addColorStop(1,g.c2);x.fillStyle=gr;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-in';x.drawImage(b,0,0);x.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
   if(f.is&&f.is.on){const g=f.is,an=g.ang*Math.PI/180,x=cx2(T('e1'));x.save();x.globalCompositeOperation='copy';x.fillStyle=g.col;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-out';x.drawImage(b,-Math.cos(an)*g.dist,Math.sin(an)*g.dist);x.restore();blurInto(T('e2'),T('e1'),g.size);const y=cx2(T('e2'));y.save();y.globalCompositeOperation='destination-in';y.drawImage(b,0,0);y.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'multiply';o.drawImage(T('e2'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}fxAboveX(o,b,f);fx2Above(o,b,f)}
 function layerOut(l,below){
-  const s=src(l),live=!!(xfHas(l)||(STROKE&&STROKE.l===l)),hasM=!!l.mask&&l.maskOn,bi=biOn(l.bi),fx=fxOn(l.fx)&&!(live&&TOUCH),fo=l.fillOp<1,keep=bi||fxOn(l.fx)||l===curL();
+  const s=src(l),live=!!(xfHas(l)||(STROKE&&STROKE.l===l)),hasM=!!l.mask&&l.maskOn,bi=biOn(l.bi),fx=fxOn(l.fx)&&!(live&&TOUCH&&(XD||(STROKE&&STROKE.l===l))),fo=l.fillOp<1,keep=bi||fxOn(l.fx)||l===curL();
   if(!hasM&&!bi&&!fx&&!fo)return s;
   const key=[l.v,l.mv,hasM?1:0,JSON.stringify(l.bi),JSON.stringify(l.fx),l.fillOp,wpKey(l)].join('|');
   if(!live&&keep&&!biUnder(l.bi)&&l.fxk===key&&l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h)return l.fxc;
   const DCL=DRECT&&!fxOn(l.fx)&&(live||!keep||biUnder(l.bi))?dmgClipOn([T('lb'),T('lout')]):null;
-  const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!live){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt);if(l.fx.tx&&l.fx.tx.on)txInto(b,l.fx.tx)}
+  const b=T('lb'),bx=cx2(b);bx.save();bx.globalAlpha=1;bx.globalCompositeOperation='copy';dI(bx,s);if(l.fx&&!(live&&(XD||(STROKE&&STROKE.l===l)))){if(l.fx.wp&&l.fx.wp.on)warpInto(b,l.fx.wp,l);if(l.fx.vt&&l.fx.vt.on)vintageInto(b,l.fx.vt);if(l.fx.tx&&l.fx.tx.on)txInto(b,l.fx.tx)}
   if(hasM){bx.globalCompositeOperation='destination-in';bx.drawImage(maskAlpha(l,STROKE&&STROKE.l===l&&STROKE.mask?liveMask(l):null),0,0)}bx.restore();
   const FXPRE=bi&&fx?(()=>{const c=T('lbpre'),q=cx2(c);q.save();q.globalAlpha=1;q.globalCompositeOperation='copy';q.drawImage(b,0,0);q.restore();return c})():null;if(bi)applyBI(b,l.bi,below);
   if(!keep&&l.fxc){relc(l.fxc);l.fxc=null}let out;if(live||!keep||biUnder(l.bi))out=T('lout');else{if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h)l.fxc=mk(D.w,D.h);out=l.fxc}
@@ -8106,7 +8196,7 @@ async function saveDoc(force){if(!D||saving||(!D.changed&&!force))return;saving=
     const rec={id:doc.id,name:doc.name,w:doc.w,h:doc.h,ppi:doc.ppi||300,bg:doc.bg,bgOn:doc.bgOn,garment:doc.garment,cur:doc.cur,created:doc.created,updated:Date.now(),layers,thumb:thumbU,pat:doc.pat||null,guides:doc.guides||null,inner:doc.inner||null,kind:doc.kind||null,side:doc.side||null,pair:doc.pair||null};
     if(!await IDB.set('des:'+doc.id,rec))toast('Could not save the design, storage may be full',3000);tlFlush(doc.id).catch(()=>{});
     if(!doc.inner){const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==doc.id);m.unshift({id:doc.id,name:doc.name,thumb:thumbU,updated:rec.updated,w:doc.w,h:doc.h,kind:doc.kind||undefined,side:doc.side||undefined,pair:doc.pair||undefined});await IDB.set('dlib',m)}}catch(e){console.error(e);doc.changed=true}saving=false}
-const bmpOf=b=>window.createImageBitmap?createImageBitmap(b):blobImg(b);
+async function bmpOf(b){if(window.createImageBitmap){try{return await createImageBitmap(b)}catch(e){}}try{return await blobImg(b)}catch(e){}try{const c=new Blob([await b.arrayBuffer()],{type:b.type||'image/png'});return await blobImg(c)}catch(e){}const u=await new Promise((res,rej)=>{const f=new FileReader();f.onload=()=>res(f.result);f.onerror=()=>rej(f.error);f.readAsDataURL(b)}).catch(()=>null);if(u){try{return await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=u})}catch(e){}}console.error('A layer picture could not be opened');throw new Error('picture unreadable')}
 function blobImg(b){return new Promise((res,rej)=>{const i=new Image(),u=URL.createObjectURL(b);i.onload=()=>{res(i);setTimeout(()=>URL.revokeObjectURL(u),1000)};i.onerror=rej;i.src=u})}
 async function openDoc(id){const r=await IDB.get('des:'+id);if(!r)return toast('Could not open that design');hint('Opening…');
   D={id:r.id,name:r.name,w:r.w,h:r.h,ppi:r.ppi||300,pat:r.pat||null,guides:r.guides||null,inner:r.inner||null,layers:[],cur:r.cur,bg:r.bg,bgOn:r.bgOn,garment:r.garment,kind:r.kind||null,side:r.side||null,pair:r.pair||null,created:r.created,changed:false,sel:null};freeTmp();
@@ -8948,7 +9038,7 @@ function toolMove(p,e,ev){if(ACT==='chn'){chnMove(p);return}if(ACT==='liq'){liqM
 function toolUp(p,e){const a=ACT;ACT=null;if(a==='chn'){chnUp();return}if(a==='liq'){liqUp();return}if(a==='pen'){penUp();return}if(a==='tpath'){tpathEnd();return}if(a==='stroke')strokeEnd();else if(a==='grad')gradEnd();else if(a==='shape')shapeCommit();
   else if(a==='sel'){const s=SELDRAW;SELDRAW=null;const ok=s.m==='lasso'?s.pts.length>3:s.pts.length>1&&Math.hypot(s.pts[1][0]-s.pts[0][0],s.pts[1][1]-s.pts[0][1])>4;if(ok){const sh=s.m==='lasso'?{type:'lasso',pts:s.pts}:{type:s.m,pts:[s.pts[0],s.pts[1]]},path=selPath(sh);selCombine(pathMask(path),s.mode,s.mode==='new'?path:null)}else if(s.mode==='new'){if(D.sel)selAction('deselect')}}
   else if(a==='crop'){if(Math.abs(CROP.b[0]-CROP.a[0])<6||Math.abs(CROP.b[1]-CROP.a[1])<6)CROP=null;drawOpt();req()}
-  else if(a==='xf'){XD=null;req();xfFields()}else if(a==='pick')setTool(PREVT||'brush')}
+  else if(a==='xf'){XD=null;dirtyComp=true;req();xfFields()}else if(a==='pick')setTool(PREVT||'brush')}
 function hitText(l,p){const t=l.t,bb=l.bb||[-50,-20,50,20],[sx,sy]=tS(t),dx=p.x-t.x,dy=p.y-t.y,c=Math.cos(-t.rot),s=Math.sin(-t.rot),lx=(dx*c-dy*s)/sx,ly=(dx*s+dy*c)/sy;return lx>=Math.min(bb[0],bb[2])&&lx<=Math.max(bb[0],bb[2])&&ly>=Math.min(bb[1],bb[3])&&ly<=Math.max(bb[1],bb[3])}
 
 /* ---------- keyboard (Photoshop map) ---------- */
@@ -10438,6 +10528,197 @@ let IPPREV='brush';
 let IPPT=0;addEventListener('mp-pencil',e=>{if(!D||edEl.hidden)return;const k=e.detail;if(performance.now()-IPPT<250)return;IPPT=performance.now();
   if(k==='tap'){if(TOOL.t==='erase'){setTool(IPPREV==='erase'?'brush':IPPREV)}else{IPPREV=TOOL.t;setTool('erase')}mpHap('select');hint(TOOL.t==='erase'?'Eraser':'Back to '+(TOOLS.find(a=>a[0]===TOOL.t)||['',''])[1],900)}
   else if(k==='squeeze'&&labEl.classList.contains('ipst')){ipmPanel('color');mpHap('medium')}});
+/* ---------- v33: iPad studio, part 2 – Procreate-style Layers, live transform and on-canvas text ---------- */
+const IPL={open:false,key:'',th:new Map(),menu:'',blend:'',sw:'',drag:null};
+const ipOn=()=>labEl.classList.contains('ipst')||labEl.classList.contains('ipgs');
+const IPLI={plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',chev:'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>',
+  lock:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',dup:'<svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg>',
+  del:'<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',folder:'<svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg>',
+  txt:'<svg viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></svg>',adj:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>'};
+const BLETTER={'source-over':'N','pass':'P','multiply':'M','screen':'S','overlay':'O','soft-light':'SL','hard-light':'HL','color-dodge':'CD','color-burn':'CB','darken':'D','lighten':'L','difference':'Di','exclusion':'E','hue':'H','saturation':'Sa','color':'C','luminosity':'Lu'};
+let ipLy=null,ipLyM=null;
+function ipLyEls(){if(ipLy)return;ipLy=document.createElement('div');ipLy.id='ipLy';ipLy.hidden=true;edEl.appendChild(ipLy);ipLyM=document.createElement('div');ipLyM.id='ipLyM';ipLyM.hidden=true;edEl.appendChild(ipLyM);ipLyWire()}
+function ipLyKey(){if(!D)return '';return [D.cur,[...(D.lsel||[])].join(','),D.bgOn,D.bg,IPL.blend,IPL.sw,D.layers.map(l=>[l.id,l.name,l.vis?1:0,l.op,l.blend,l.clip?1:0,l.alock?1:0,l.lock?1:0,l.mask?1:0,l.maskOn?1:0,l.gid||'',l.collapsed?1:0,l.type,fxOn(l.fx)?1:0].join(':')).join('|')].join('#')}
+function ipLyRow(x,d){const sel=x.id===D.cur,ms=D.lsel&&D.lsel.has(x.id)&&!sel,g=x.type==='group',hid=!effVis(x),bl=BLETTER[x.blend]||'N';
+  const th=g?`<span class="iplg">${IPLI.folder}</span>`:x.type==='adj'?`<span class="iplg">${IPLI.adj}</span>`:`<canvas class="iplt" data-ipth="${x.id}" width="112" height="84"></canvas>`;
+  const sub=[x.type==='text'?'Text':'',x.clip?'Clipped':'',x.mask?'Mask':'',fxOn(x.fx)?'Styles':'',x.alock?'Alpha lock':'',x.lock?'Locked':'',x.op<1?Math.round(x.op*100)+'%':''].filter(Boolean).join(' · ');
+  return `<div class="iplr${sel?' sel':''}${ms?' ms':''}${hid?' hid':''}${x.clip?' clp':''}${IPL.sw===x.id?' sw':''}" data-iply="${x.id}" style="--d:${d}">
+    <div class="iplact"><button data-ipa="lock:${x.id}">${IPLI.lock}<span>${x.lock?'Unlock':'Lock'}</span></button><button data-ipa="dup:${x.id}">${IPLI.dup}<span>Duplicate</span></button><button class="dang" data-ipa="del:${x.id}">${IPLI.del}<span>Delete</span></button></div>
+    <div class="iplin">${g?`<button class="iplcv${x.collapsed?'':' open'}" data-ipa="collapse:${x.id}">${IPLI.chev}</button>`:''}${x.clip?'<i class="iplcl">↳</i>':''}${th}
+      <span class="ipln"><b>${esc(x.name)}</b>${sub?`<i>${esc(sub)}</i>`:''}</span>
+      <button class="iplb${IPL.blend===x.id?' on':''}" data-ipa="blend:${x.id}" title="Blend mode and opacity">${bl}</button>
+      <button class="iplv${x.vis?' on':''}" data-ipa="vis:${x.id}" title="Show / hide"><i></i></button></div></div>`+(IPL.blend===x.id?ipLyBlendHTML(x):'')}
+function ipLyBlendHTML(x){const g=x.type==='group',list=(g?[['pass','Pass through']]:[]).concat(BLENDS);
+  return `<div class="iplbp" data-iplbp="${x.id}"><label class="iplop"><span>Opacity</span><input type="range" min="0" max="100" value="${Math.round(x.op*100)}" data-ipop="${x.id}"><output>${Math.round(x.op*100)}%</output></label>
+    <div class="iplbl">${list.map(([k,n])=>`<button class="${x.blend===k?'on':''}" data-ipa="bm:${x.id}:${k}">${n}</button>`).join('')}</div></div>`}
+function ipLyHTML(){const rows=displayList().map(({l,d})=>ipLyRow(l,d)).join('');
+  return `<div class="iplh"><b>Layers</b><span class="grow"></span><button class="iplp" data-ipa="add" title="New layer">${IPLI.plus}</button></div>
+  <div class="ipll">${rows}<div class="iplr iplbg" data-ipa="bgcol"><div class="iplin"><span class="iplsw" style="background:${D.bg}"></span><span class="ipln"><b>Background colour</b><i>Tap to use the current colour</i></span><button class="iplv${D.bgOn?' on':''}" data-ipa="bgvis"><i></i></button></div></div></div>`}
+function ipLyThumbs(force){ipLy.querySelectorAll('canvas[data-ipth]').forEach(c=>{const l=byId(c.dataset.ipth);if(!l)return;const k=(l.v||0)+':'+(l.mv||0)+':'+D.w+'x'+D.h+':'+l.type;if(!force&&c._k===k)return;c._k=k;try{thumb(c,l._c||l._p||l.cv)}catch(e){}})}
+function ipLyDraw(force){if(!ipLy||!IPL.open||!D)return;const k=ipLyKey();if(!force&&k===IPL.key){ipLyThumbsSoon();return}IPL.key=k;const sc=ipLy.querySelector('.ipll'),top=sc?sc.scrollTop:0;
+  ipLy.innerHTML=ipLyHTML();const ns=ipLy.querySelector('.ipll');if(ns)ns.scrollTop=top;ipLyThumbs(true);ipLyPlace()}
+let ipLyTT=0;function ipLyThumbsSoon(){clearTimeout(ipLyTT);ipLyTT=setTimeout(()=>{if(IPL.open)ipLyThumbs(false)},120)}
+let ipLyRT=0;function ipLyLater(){if(!IPL.open)return;cancelAnimationFrame(ipLyRT);ipLyRT=requestAnimationFrame(()=>ipLyDraw(false))}
+function ipLyPlace(){const er=edEl.getBoundingClientRect(),w=Math.min(340,innerWidth-24);ipLy.style.width=w+'px';
+  if(GMODE){const dk=document.getElementById('gsDock'),b=dk&&dk.querySelector('[data-l="panel:layers"]'),dr=dk?dk.getBoundingClientRect():{top:er.bottom-80},br=b?b.getBoundingClientRect():{right:er.right-12};
+    ipLy.style.left=Math.max(12,Math.min(br.right-er.left-w,er.width-w-12))+'px';ipLy.style.top='auto';ipLy.style.bottom=Math.max(70,er.bottom-dr.top+10)+'px';ipLy.style.maxHeight=Math.max(240,dr.top-er.top-80)+'px';return}
+  const b=ipBar&&ipBar.querySelector('[data-ip="card:layers"]');if(!b)return;const r=b.getBoundingClientRect();ipLy.style.bottom='auto';ipLy.style.maxHeight='';
+  ipLy.style.left=Math.max(12,Math.min(r.right-er.left-w+6,er.width-w-12))+'px';ipLy.style.top=(r.bottom-er.top+8)+'px'}
+function ipLyOpen(){ipLyEls();ipmCloseCard();if(!popEl.hidden&&(PANEL==='layers'||PANEL==='brushes')){IPM.setting=true;closePanel();IPM.setting=false;popEl.dataset.ipv=''}
+  if(XFORM&&XD)XD=null;IPL.open=true;IPL.key='';ipLy.hidden=false;ipLyDraw(true);const s0=ipLy.querySelector('.iplr.sel');if(s0&&s0.scrollIntoView)s0.scrollIntoView({block:'nearest'});ipmBar();mpHap('select')}
+function ipLyClose(){if(!IPL.open)return;IPL.open=false;IPL.blend='';IPL.sw='';ipLyMenuClose();if(ipLy)ipLy.hidden=true;ipmBar()}
+function ipLyToggle(){IPL.open?ipLyClose():ipLyOpen()}
+/* everything the Layers card can do goes through the app's own layer actions */
+function ipLyDo(a,btn,ev){const [k,id,arg]=a.split(':');const l=id?byId(id):curL();
+  const after=()=>{IPL.key='';ipLyLater();if(TOOL.t==='move'&&!XFORM&&D)setTimeout(()=>{if(TOOL.t==='move'&&!XFORM)xfStart()},0)};
+  const own=x=>{if(x&&x.id!==D.cur){if(XFORM)xfCommit();D.cur=x.id;D.lsel=new Set()}};
+  if(XFORM&&!['blend','collapse','vis','bgvis'].includes(k))xfCommit();
+  switch(k){
+    case'add':labAct('addlayer',btn,ev);mpHap('light');break;
+    case'vis':labAct('vis:'+id,btn,ev);break;
+    case'bgvis':labAct('bgtoggle',btn,ev);break;
+    case'bgcol':labAct('bgsel',btn,ev);hint('Background set to the current colour');break;
+    case'collapse':labAct('collapse:'+id,btn,ev);break;
+    case'blend':IPL.blend=IPL.blend===id?'':id;IPL.sw='';ipLyDraw(true);return;
+    case'bm':if(l){setProp(l,'blend',arg,'Blend mode');mpHap('select')}break;
+    case'lock':own(l);IPL.sw='';labAct('lm:lock',btn,ev);break;
+    case'dup':own(l);IPL.sw='';labAct('lm:dup',btn,ev);break;
+    case'del':own(l);IPL.sw='';labAct('lm:del',btn,ev);mpHap('medium');break;
+    default:return}
+  after()}
+/* the layer options menu (tap the selected layer again – like Procreate) */
+function ipLyMenuHTML(l){const it=(a,n,on,cls)=>`<button class="ipmi${on?' on':''}${cls?' '+cls:''}" data-ipm="${a}">${n}</button>`,g=l.type==='group',t=l.type==='text',px=!g&&l.type!=='adj';
+  return `<div class="ipmh" data-ipm="rename"><b>${esc(l.name)}</b><i>Tap to rename</i></div><div class="ipmg">
+   ${t?it('edittext','Edit text'):''}${px?it('select','Select'):''}${px?it('fill','Fill layer'):''}${px?it('clear','Clear'):''}
+   ${px?it('alock','Alpha lock',l.alock):''}${it('clip','Clipping mask',l.clip)}${l.mask?it('maskedit','Paint mask',l.tgt==='mask')+it('masktog',l.maskOn?'Hide mask':'Show mask')+it('maskdel','Delete mask'):it('mask','Mask')}
+   ${px?it('invert','Invert'):''}${!g&&l.type!=='adj'?it('style','Styles'):''}${it('lock',l.lock?'Unlock':'Lock',l.lock)}
+   ${px?it('fh','Flip horizontal')+it('fv','Flip vertical'):''}${t?it('raster','Rasterize'):''}${px&&!t?it('rmbg','Remove background'):''}
+   ${g?it('ungroup','Ungroup'):''}${it('merge',g?'Flatten group':'Merge down')}${it('dup','Duplicate')}${it('del','Delete',false,'dang')}</div>`}
+function ipLyMenu(id,row){const l=byId(id);if(!l)return;if(IPL.menu===id&&!ipLyM.hidden){ipLyMenuClose();return}IPL.menu=id;ipLyM.innerHTML=ipLyMenuHTML(l);ipLyM.hidden=false;
+  const r=row.getBoundingClientRect(),er=edEl.getBoundingClientRect(),cr=ipLy.getBoundingClientRect(),w=Math.min(300,cr.left-er.left-20);ipLyM.style.width=Math.max(230,w)+'px';
+  const left=cr.left-er.left-Math.max(230,w)-10;ipLyM.style.left=Math.max(12,left)+'px';const h=ipLyM.offsetHeight;ipLyM.style.top=Math.max(64,Math.min(r.top-er.top-8,er.height-h-16))+'px';mpHap('select')}
+function ipLyMenuClose(){IPL.menu='';if(ipLyM)ipLyM.hidden=true}
+function ipLyMenuDo(a){const l=byId(IPL.menu);if(!l){ipLyMenuClose();return}if(XFORM)xfCommit();const L=x=>labAct(x,null,null);
+  const keep=['alock','clip','lock','masktog'].includes(a);
+  switch(a){
+    case'rename':ipLyMenuClose();mpAsk('Rename layer',l.name).then(v=>{v=(v||'').trim();if(v&&v!==l.name){setProp(l,'name',v,'Rename layer');IPL.key='';ipLyLater()}});return;
+    case'edittext':ipLyMenuClose();ipLyClose();txEditAt(l,null);return;
+    case'select':selFromLayer(l);hint('Selected what is on “'+l.name+'”');break;
+    case'fill':L('fillfg');break;case'clear':L('lm:clear');break;case'alock':L('lm:alock');break;case'clip':L('lm:clip');break;case'lock':L('lm:lock');break;
+    case'mask':L('mask:reveal');break;case'maskedit':L('tgt:'+l.id+':'+(l.tgt==='mask'?'px':'mask'));break;case'masktog':L('mask:toggle');break;case'maskdel':L('mask:delete');break;
+    case'invert':L('invertnow');break;case'style':ipLyMenuClose();ipLyClose();L('style');return;
+    case'fh':L('lm:fh');break;case'fv':L('lm:fv');break;case'raster':L('lm:raster');break;case'rmbg':L('rmbg');break;
+    case'ungroup':L('ungroup');break;case'merge':L('lm:merge');break;case'dup':L('lm:dup');break;case'del':L('lm:del');break;default:return}
+  mpHap('light');IPL.key='';ipLyLater();if(keep&&byId(l.id)){setTimeout(()=>{if(IPL.menu===l.id&&!ipLyM.hidden)ipLyM.innerHTML=ipLyMenuHTML(byId(l.id))},30)}else ipLyMenuClose();
+  if(TOOL.t==='move'&&!XFORM)setTimeout(()=>{if(TOOL.t==='move'&&!XFORM&&D)xfStart()},0)}
+function ipLyWire(){
+  // taps: our own handling, so nothing is swallowed by the old panel's "just opened" guard
+  ipLy.addEventListener('click',e=>{e.stopPropagation();if(IPL.drag&&IPL.drag.done)return;const b=e.target.closest('[data-ipa]');if(b){e.preventDefault();ipLyDo(b.dataset.ipa,b,e);return}
+    const r=e.target.closest('.iplr[data-iply]');if(!r)return;const id=r.dataset.iply;if(IPL.sw){IPL.sw='';ipLyDraw(true);return}
+    if(id===D.cur&&!(D.lsel&&D.lsel.size)){ipLyMenu(id,r);return}ipLyMenuClose();pickRow(id,e);IPL.key='';ipLyDraw(false);mpHap('select')});
+  ipLy.addEventListener('input',e=>{const t=e.target;if(!t.dataset.ipop)return;const l=byId(t.dataset.ipop);if(!l)return;if(XFORM&&!XD)xfCommit();if(!OPSNAP)OPSNAP=snapSt();l.op=t.value/100;const o=t.nextElementSibling;if(o)o.textContent=t.value+'%';dirtyComp=true;req()});
+  ipLy.addEventListener('change',e=>{const t=e.target;if(!t.dataset.ipop||!OPSNAP)return;pushH({k:'st',b:OPSNAP,a:snapSt()},'Layer opacity');OPSNAP=null;(DMGON?touchProps:touchAll)();IPL.key='';ipLyLater()});
+  ipLyM.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-ipm]');if(b){e.preventDefault();ipLyMenuDo(b.dataset.ipm)}});
+  // swipe left = Lock / Duplicate / Delete · long-press and drag = move the layer
+  let P=null;
+  ipLy.addEventListener('pointerdown',e=>{const r=e.target.closest('.iplr[data-iply]');if(!r||e.target.closest('button,input,.iplbp'))return;P={id:e.pointerId,x:e.clientX,y:e.clientY,r,ly:r.dataset.iply,mode:'',t:setTimeout(()=>{if(P&&!P.mode){P.mode='drag';ipLyDragStart(P)}},380)}});
+  ipLy.addEventListener('pointermove',e=>{if(!P||P.id!==e.pointerId)return;const dx=e.clientX-P.x,dy=e.clientY-P.y;
+    if(!P.mode){if(Math.abs(dx)>14&&Math.abs(dx)>Math.abs(dy)*1.4){P.mode='swipe';clearTimeout(P.t)}else if(Math.hypot(dx,dy)>10){clearTimeout(P.t);P.mode='scroll'}}
+    if(P.mode==='swipe'){const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=`translateX(${Math.max(-200,Math.min(0,dx+(IPL.sw===P.ly?-186:0)))}px)`}
+    else if(P.mode==='drag')ipLyDragMove(P,e)});
+  const end=e=>{if(!P||P.id!==e.pointerId)return;const p=P;P=null;clearTimeout(p.t);const dx=e.clientX-p.x;
+    if(p.mode==='swipe'){const inn=p.r.querySelector('.iplin');if(inn)inn.style.transform='';IPL.sw=dx<-60?p.ly:'';IPL.key='';ipLyDraw(true);IPL.drag={done:true};setTimeout(()=>{IPL.drag=null},60)}
+    else if(p.mode==='drag')ipLyDragEnd(p,e)};
+  ipLy.addEventListener('pointerup',end);ipLy.addEventListener('pointercancel',e=>{if(P&&P.mode==='drag')return;if(P){clearTimeout(P.t);const inn=P.r.querySelector('.iplin');if(inn)inn.style.transform=''}P=null});
+  // while a layer is being dragged the list must not scroll
+  ipLy.addEventListener('touchmove',e=>{if(IPL.drag&&!IPL.drag.done)e.preventDefault()},{passive:false})}
+function ipLyDragStart(P){const r=P.r;IPL.drag={id:P.ly,row:r,y0:P.y,rows:[...ipLy.querySelectorAll('.iplr[data-iply]')],disp:displayList(),mark:null};r.classList.add('lift');mpHap('medium');try{r.setPointerCapture(P.id)}catch(e){}}
+function ipLyDragMove(P,e){const G=IPL.drag;if(!G||G.done)return;G.row.style.transform=`translateY(${e.clientY-G.y0}px) scale(1.03)`;G.rows.forEach(x=>x.classList.remove('dropA','dropB','dropI'));G.mark=null;
+  for(const x of G.rows){if(x===G.row)continue;const bb=x.getBoundingClientRect();if(e.clientY>=bb.top&&e.clientY<=bb.bottom){const f=(e.clientY-bb.top)/bb.height,dr=G.disp.find(q=>q.l.id===x.dataset.iply);let w=f<.5?'above':'below';if(dr&&dr.l.type==='group'&&f>.3&&f<.7)w='into';x.classList.add(w==='above'?'dropA':w==='below'?'dropB':'dropI');G.mark={dr,w};break}}
+  const sc=ipLy.querySelector('.ipll'),sb=sc.getBoundingClientRect();if(e.clientY<sb.top+30)sc.scrollTop-=12;else if(e.clientY>sb.bottom-30)sc.scrollTop+=12}
+function ipLyDragEnd(P,e){const G=IPL.drag;if(!G)return;G.done=true;G.row.classList.remove('lift');G.row.style.transform='';const l=byId(G.id);if(l&&G.mark&&G.mark.dr){if(XFORM)xfCommit();dropItem(l,G.mark.dr,G.mark.w);mpHap('light')}
+  IPL.key='';ipLyDraw(true);setTimeout(()=>{IPL.drag=null},60)}
+// keep the card in step with every change in the editor
+{const _dp=drawPanel;drawPanel=function(){const r=_dp.apply(this,arguments);if(IPL.open)ipLyLater();return r}}
+{const _rp=refreshPanels;refreshPanels=function(){const r=_rp.apply(this,arguments);if(IPL.open)ipLyLater();return r}}
+{const _st=stat;stat=function(){const r=_st.apply(this,arguments);if(IPL.open)ipLyLater();return r}}
+// the Layers button opens the Procreate-style card; Colour keeps its own card
+{const _p=ipmPanel;ipmPanel=function(v){if(v==='layers'){ipLyToggle();return}ipLyClose();return _p.apply(this,arguments)}}
+{const _c=ipmOpenCard;ipmOpenCard=function(){ipLyClose();return _c.apply(this,arguments)}}
+{const _a=ipmAnyCard;ipmAnyCard=function(){return IPL.open||_a.apply(this,arguments)}}
+{const _ca=ipmCloseAll;ipmCloseAll=function(){ipLyClose();return _ca.apply(this,arguments)}}
+{const _b=ipmBar;ipmBar=function(){if(!ipBar)return;const r=_b.apply(this,arguments);try{const b=ipBar.querySelector('[data-ip="card:layers"]');if(b)b.classList.toggle('on',IPL.open)}catch(e){}return r}}
+{const _s=ipmSync;ipmSync=function(){const r=_s.apply(this,arguments);labEl.classList.toggle('ipgs',!!(IPM.on&&GMODE&&D&&!edEl.hidden));if(!ipOn()){ipLyClose();ipTxHide()}return r}}
+// in the iPad studio the old Photoshop-style stack never pops up by itself
+{const _o=openPanel;openPanel=function(n){if(ipOn()&&n==='text'&&!IPT.full){const l=curL();if(l&&l.type==='text'){if(PANEL==='fonts'||PANEL==='text'){}txEditAt(l,null);return}}
+  const r=_o.apply(this,arguments);if(ipOn()&&n==='layers'&&!IPM.setting){popEl.hidden=true;popEl.dataset.ipv='';updBar();IPL.key='';ipLyLater()}return r}}
+addEventListener('resize',()=>{if(IPL.open)ipLyPlace()});
+// Garment Studio: its Layers button opens the same card; tapping the canvas closes it
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#gsDock [data-l="panel:layers"]');if(!b||!labEl.classList.contains('ipgs'))return;e.preventDefault();e.stopPropagation();ipLyToggle()},true);
+cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipgs')||!(IPL.open||(ipLyM&&!ipLyM.hidden)))return;e.preventDefault();e.stopImmediatePropagation();ipLyClose()},true);
+
+/* ---------- transform: live, no Commit button (like Procreate – it applies when you pick another tool) ---------- */
+{const _d=drawOpt;drawOpt=function(){const r=_d.apply(this,arguments);try{if(ipOn())ipOptPatch()}catch(e){console.error(e)}return r}}
+function ipOptPatch(){if(!D)return;
+  if(TXI){optEl.classList.add('iptxhide');ipTxShow();return}optEl.classList.remove('iptxhide');ipTxHide();
+  if(TOOL.t!=='move')return;const ch=(on,a,txt,cls)=>`<button class="ch${on?' on':''}${cls?' '+cls:''}" data-l="${a}">${txt}</button>`;
+  if(!XFORM){optEl.innerHTML=`<span class="otip">Tap a layer (or tap something on the canvas) to move it</span>${ch(TOOL.autosel,'autosel','Tap picks layer')}`;return}
+  if(XFORM.mode==='warp'){optEl.querySelectorAll('[data-l="xf:apply"],[data-l="xf:cancel"],[data-l="autosel"]').forEach(b=>b.remove());return}
+  const m=XFORM.mode;let h=ch(m==='free'&&TOOL.xffree,'ipxf:freeform','Freeform')+ch(m==='free'&&!TOOL.xffree,'ipxf:uniform','Uniform')+ch(m==='distort','xf:distort','Distort')+ch(m==='warp','xf:warp','Warp')+'<span class="osep"></span>';
+  if(m==='free')h+=ch(false,'xf:fh','Flip H')+ch(false,'xf:fv','Flip V')+ch(false,'xf:r90','Rotate 90°')+ch(false,'ipxf:centre','Centre')+ch(false,'xf:fitw','Fit width')+ch(false,'xf:fith','Fit height')+`<span class="xdim">${xfDimStr()}</span>`;
+  else h+='<span class="otip">Drag each corner</span>';
+  h+=ch(false,'xf:reset','Reset')+ch(TOOL.autosel,'autosel','Tap picks layer');optEl.innerHTML=h}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-l^="ipxf:"]');if(!b||!labEl.contains(b))return;e.preventDefault();e.stopPropagation();const v=b.dataset.l.slice(5);
+  if(v==='freeform'||v==='uniform'){TOOL.xffree=v==='freeform';if(XFORM&&XFORM.mode!=='free')labAct('xf:free',b,e);else drawOpt()}
+  else if(v==='centre'){labAct('xf:ch',b,e);labAct('xf:cv',b,e)}mpHap('select')},true);
+// tap the arrow again to finish moving and go back to the tool you had
+{const _t=ipmTool;ipmTool=function(t){ipLyClose();if(t==='move'&&TOOL.t==='move'){ipmCloseCard();const p=IPM.prev&&IPM.prev!=='move'?IPM.prev:'brush';setTool(p);mpHap('select');hint('Done',700);return}if(t==='move'&&TOOL.t!=='move')IPM.prev=TOOL.t;return _t.apply(this,arguments)}}
+
+/* ---------- text: type straight onto the canvas with a small text bar (like Procreate) ---------- */
+const IPT={full:false};let ipTx=null;
+function ipTxEl(){if(ipTx)return ipTx;ipTx=document.createElement('div');ipTx.id='ipTx';ipTx.hidden=true;edEl.appendChild(ipTx);
+  // keep the keyboard up while using the bar
+  ['pointerdown','mousedown'].forEach(t=>ipTx.addEventListener(t,e=>{if(!e.target.closest('.iptf'))e.preventDefault()}));
+  ipTx.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-ipt]');if(!b)return;e.preventDefault();ipTxAct(b.dataset.ipt);const ta=document.getElementById('txIn');if(TXI&&ta&&document.activeElement!==ta){try{ta.focus({preventScroll:true})}catch(_){ta.focus()}}});
+  return ipTx}
+function ipTxHTML(){const l=TXI&&TXI.l,t=l&&l.t;if(!t)return '';const al={left:'⟸',center:'⟺',right:'⟹'}[t.align]||'⟺';
+  return `<button class="iptb iptfont" data-ipt="fonts" style="font-family:${esc(fontCss(t.font))}">${esc(t.font)} ▾</button>
+  <span class="iptsz"><button class="iptb" data-ipt="size:-">−</button><b>${Math.round(t.size)}</b><button class="iptb" data-ipt="size:+">+</button></span>
+  <button class="iptb${t.bold?' on':''}" data-ipt="bold"><b>B</b></button><button class="iptb${t.it?' on':''}" data-ipt="it"><i>I</i></button>
+  <button class="iptb" data-ipt="align" title="Alignment">${al}</button><button class="iptb iptc" data-ipt="color" title="Use the current colour"><i style="background:${esc(t.color)}"></i></button>
+  <button class="iptb" data-ipt="glyphs" title="Glyphs">Ω</button><button class="iptb" data-ipt="style" title="Outline, puff, path…">Aa</button><button class="iptb iptok" data-ipt="done">Done</button>
+  ${IPT.fonts?ipTxFontsHTML(t):''}`}
+function ipTxFontsHTML(t){const list=FONTS.filter(f=>IPT.fc==null||IPT.fc==='All'||f.cat===IPT.fc||(IPT.fc==='Yours'&&f.u));const cats=['All','Sans','Serif','Display','Script','Mono','Yours'];
+  return `<div class="iptf"><div class="iptfc">${cats.map(c=>`<button class="${(IPT.fc||'All')===c?'on':''}" data-ipt="fc:${c}">${c}</button>`).join('')}</div><div class="iptfl">${list.map(f=>`<button class="${f.n===t.font?'on':''}" data-ipt="font:${esc(f.n)}" style="font-family:${esc(fontReady(f.n)?f.css:'inherit')}">${esc(f.n)}</button>`).join('')}</div></div>`}
+function ipTxShow(){if(!TXI||!ipOn())return;ipTxEl();ipTx.innerHTML=ipTxHTML();ipTx.hidden=false;ipTxPlace()}
+function ipTxHide(){IPT.fonts=false;if(ipTx)ipTx.hidden=true}
+function ipTxPlace(){if(!ipTx||ipTx.hidden)return;const vv=window.visualViewport,er=edEl.getBoundingClientRect(),h=ipTx.offsetHeight||56;let y;
+  if(vv&&vv.height<innerHeight-120)y=vv.offsetTop+vv.height-h-er.top-10;else y=er.height-h-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sab'))||0)-18;ipTx.style.top=Math.max(64,y)+'px'}
+if(window.visualViewport){visualViewport.addEventListener('resize',()=>ipTxPlace());visualViewport.addEventListener('scroll',()=>ipTxPlace())}
+function ipTxAct(a){const l=TXI&&TXI.l;if(!l)return;const t=l.t,[k,v]=a.split(/:(.*)/s);
+  const set=fn=>{fn(t);renderText(l);TXI.k='';txPos();touch(l,false);ipTx.innerHTML=ipTxHTML()};
+  if(k==='done'){txCommit();mpHap('light');return}
+  if(k==='size'){set(q=>{q.size=Math.max(4,Math.round(q.size*(v==='+'?1.12:1/1.12)))});TOOL.tsize=t.size;return}
+  if(k==='bold')return set(q=>{q.bold=!q.bold});if(k==='it')return set(q=>{q.it=!q.it});
+  if(k==='align')return set(q=>{q.align=q.align==='left'?'center':q.align==='center'?'right':'left'});
+  if(k==='color')return set(q=>{q.color=TOOL.color});
+  if(k==='fonts'){IPT.fonts=!IPT.fonts;ipTx.innerHTML=ipTxHTML();ipTxPlace();return}
+  if(k==='fc'){IPT.fc=v;ipTx.innerHTML=ipTxHTML();ipTxPlace();return}
+  if(k==='font'){(async()=>{const ok=await ensureFont(v);if(!ok)return;TOOL.font=v;t.font=v;try{await document.fonts.load(`40px "${v}"`)}catch(e){}renderText(l);TXI.k='';txPos();touch(l,false);IPT.fonts=false;ipTx.innerHTML=ipTxHTML();ipTxPlace()})();return}
+  if(k==='glyphs'){IPM.setting=true;try{STK.pt='glyphs';popEl.dataset.ipv='props';openPanel('layers')}finally{IPM.setting=false}ipmBar();return}
+  if(k==='style'){IPT.full=true;try{openPanel('text')}finally{IPT.full=false}return}}
+// Add text: a text box appears in the middle and the keyboard opens straight away
+function ipAddText(){if(!D)return;ipmCloseAll();if(TOOL.t!=='text')setTool('text');const r=cv.getBoundingClientRect(),[x,y]=toDoc(r.width/2,r.height*.42);try{txTap({x,y},null)}catch(e){console.error(e)}mpHap('light')}
+IPADD.forEach((r,i)=>{if(r[0]==='tool:text')IPADD[i]=['iptext','Add text']});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-l="iptext"]');if(!b||!labEl.contains(b))return;e.preventDefault();e.stopPropagation();setTimeout(ipAddText,0)},true);
+// double-tap any text on the canvas to type in it
+{let LT=null;cv.addEventListener('pointerup',e=>{if(!ipOn()||!D||TXI||PT.size>1)return;const now=performance.now(),p=[e.clientX,e.clientY];
+  if(LT&&now-LT.t<340&&Math.hypot(p[0]-LT.p[0],p[1]-LT.p[1])<26){LT=null;const q=evPt(e),l=txHitTop(q);if(l){const paint=['brush','erase','smudge','clone','dodge','fill','gradient','shape','pen'].includes(TOOL.t);if(!paint||curL()===l){setTimeout(()=>{txEditAt(l,q);mpHap('select')},0)}}return}
+  LT={t:now,p}},true)}
+// the text box keeps its bar while typing
+{const _b=txBegin;txBegin=function(){const r=_b.apply(this,arguments);if(ipOn()){ipLyClose();ipmCloseCard();setTimeout(()=>{ipTxShow();ipTxPlace()},0)}return r}}
+{const _e=txEnd;txEnd=function(){const r=_e.apply(this,arguments);ipTxHide();if(ipOn())optEl.classList.remove('iptxhide');return r}}
+
 
 const mpUgly=n=>{n=String(n||'').trim();return !n||/^[0-9a-f]{8}([\s_-][0-9a-f]{4}){1,3}/i.test(n)||/^[0-9a-f]{20,}$/i.test(n.replace(/[\s_-]/g,''))||/^(img|image|photo|pxl|dsc|dcim|screenshot|screen shot|file|picture)[\s_-]*\d/i.test(n)||/^\d{6,}/.test(n)};
 const mpNice=n=>{n=String(n||'').replace(/\.[a-z0-9]{2,5}$/i,'').trim();return mpUgly(n)?'':n};
