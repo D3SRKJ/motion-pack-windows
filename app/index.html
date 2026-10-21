@@ -371,7 +371,7 @@ html.bright #grain{opacity:.03}
 .sheen.m{display:block}
 /* intro */
 #intro{position:fixed;inset:0;z-index:30;background:#000;display:grid;place-items:center;overflow:hidden;transition:opacity 1.4s var(--ease),filter 1.4s var(--ease),transform 1.8s var(--ease)}
-#intro.out{opacity:0;filter:blur(14px);transform:scale(1.08);pointer-events:none}
+#intro.out{opacity:0;transform:scale(1.04);pointer-events:none;transition:opacity 1.1s cubic-bezier(.4,0,.2,1),transform 1.4s cubic-bezier(.2,.7,.2,1)}
 .in-wrap{position:relative;text-align:center;padding:0 20px;isolation:isolate}
 .in-wrap::before{content:"";position:absolute;left:50%;top:50%;width:140vmax;height:70vmax;transform:translate(-50%,-50%) scale(.3);opacity:0;z-index:-1;background:radial-gradient(ellipse at center,rgba(255,250,242,.11),transparent 60%)}
 #intro.go .in-wrap::before{animation:glow 3s var(--ease) .2s forwards}
@@ -2240,6 +2240,11 @@ html.ipm .sheet .x,html.ipm .x{min-width:44px;min-height:44px}
 html.ipm .pl-tools button{min-width:48px;min-height:48px}
 html.ipm #mkP button,html.ipm #gsP button{min-height:40px}
 html.ipm .lg-grid{gap:18px}
+
+/* v31 smooth start: nothing on the home screen moves until the intro hands over, so every entrance runs from its first frame */
+html:not(.mp-go) #home,html:not(.mp-go) #home *,html:not(.mp-go) #home *::before,html:not(.mp-go) #home *::after{animation-play-state:paused!important}
+#intro{will-change:opacity,transform;contain:strict}
+#intro .in2-3d,#intro .in2-flare,#intro .in2-sub,#intro .in2-spot{will-change:transform,opacity}
 </style>
 </head>
 <body class="edit empty">
@@ -8920,14 +8925,14 @@ function hmClock(){if(homeEl.hidden)return;const d=new Date(),t=$('#hmTime');if(
 setInterval(hmClock,15000);
 function hmDustStart(){const c=$('#hmDust');if(!c||HMD)return;const x=c.getContext('2d');let W=0,H=0,P=[];const rs=()=>{const d=Math.min(2,devicePixelRatio||1);W=c.width=Math.round(innerWidth*d);H=c.height=Math.round(innerHeight*d);P=Array.from({length:Math.round(Math.min(90,W*H/28000))},()=>({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.5+.35)*d,v:(Math.random()*.22+.04)*d,a:Math.random()*.45+.08,p:Math.random()*6.28,b:Math.random()<.12}))};rs();if(!HMDR){HMDR=true;addEventListener('resize',()=>{if(HMD)rs()})}
   const f=t=>{if(homeEl.hidden||document.hidden){HMD=null;return}x.clearRect(0,0,W,H);for(const q of P){q.y-=q.v;q.x+=Math.sin(t/3200+q.p)*.18;if(q.y<-8){q.y=H+8;q.x=Math.random()*W}const tw=.55+.45*Math.sin(t/900+q.p*3),al=q.a*tw;if(q.b){const g=x.createRadialGradient(q.x,q.y,0,q.x,q.y,q.r*7);g.addColorStop(0,`rgba(220,232,255,${(al*.5).toFixed(3)})`);g.addColorStop(1,'rgba(220,232,255,0)');x.fillStyle=g;x.beginPath();x.arc(q.x,q.y,q.r*7,0,6.283);x.fill()}else{x.fillStyle=`rgba(228,234,245,${al.toFixed(3)})`;x.beginPath();x.arc(q.x,q.y,q.r,0,6.283);x.fill()}}HMD=requestAnimationFrame(f)};HMD=requestAnimationFrame(f)}
-async function showHome(){try{WORLD3.show()}catch(e){console.error(e)}setTimeout(syAuto,900);H2.classList.add('inhome');H2.classList.remove('inlab');homeEl.classList.remove('out');homeEl.hidden=false;labEl.hidden=true;
+async function showHome(){try{WORLD3.show()}catch(e){console.error(e)}setTimeout(syAuto,2600);H2.classList.add('inhome');H2.classList.remove('inlab');homeEl.classList.remove('out');homeEl.hidden=false;labEl.hidden=true;
   const b=(S.brand||'').trim(),bn=$('#hmBrand');if(!bn.querySelector('svg'))bn.innerHTML=mpLogoSVG({lite:1});const sub=homeEl.querySelector('.hm-sub');if(sub)sub.textContent=(b&&!/^your label$/i.test(b)?b+'  ·  ':'')+'Garment design & lookbook studio';
-  hmClock();hmDustStart();setTimeout(()=>{if(!homeEl.hidden)mplGlint(bn)},1500);
+  hmClock();if(document.documentElement.classList.contains('mp-go'))hmDustStart();else{const _w=()=>document.documentElement.classList.contains('mp-go')?setTimeout(hmDustStart,900):setTimeout(_w,120);_w()}setTimeout(()=>{if(!homeEl.hidden)mplGlint(bn)},1500);
   const [des,books]=await Promise.all([IDB.get('dlib'),LOCAL?libGet():Promise.resolve([])]);const bk=(books||[]).filter(x=>x.count||x.cover);
   const it=[...(des||[]).map(d=>({k:'d',id:d.id,n:d.name,img:d.thumb,u:d.updated,t:'Design'})),...bk.map(x=>({k:'b',id:x.id,n:x.name||'Untitled',img:x.cover,u:x.updated||0,t:'Lookbook'}))].sort((a,b)=>b.u-a.u).slice(0,10);
   $('#hmCd').textContent=(des||[]).length;$('#hmCb').textContent=bk.length;HML=it[0]||null;$('#hmLast').hidden=!HML;
   $('#hmRec').hidden=!it.length;$('#hmRow').innerHTML=it.map((x,i)=>`<button class="hm-it" style="--k:${i}" data-hrec="${x.k}:${esc(x.id)}"><i style="background-image:url(${x.img||''})"></i><span>${esc(x.n)}</span><em>${x.t}</em></button>`).join('');
-  const cov=bk.find(x=>x.cover);$('#hmCover').style.setProperty('--cover',cov?`url(${cov.cover})`:'none')}
+  const cov=bk.find(x=>x.cover);$('#hmCover').style.setProperty('--cover',cov?`url(${cov.cover})`:'none');if(!window.__mpHomeReady){const imgs=[...it.map(x=>x.img),cov&&cov.cover].filter(Boolean).slice(0,11);window.__mpHomeReady=Promise.race([Promise.all(imgs.map(u=>{const m=new Image();m.src=u;return m.decode?m.decode().catch(()=>{}):Promise.resolve()})),new Promise(r=>setTimeout(r,1600))])}}
 homeEl.addEventListener('click',async e=>{const q=e.target.closest('[data-hq]');if(!q)return;e.stopPropagation();if(performance.now()-HMBUSY<900)return;HMBUSY=performance.now();const k=q.dataset.hq;
   if(k==='new'){hideHome();openLab();templateSheet()}
   else if(k==='last'&&HML){hideHome();if(HML.k==='d'){openLab();openDoc(HML.id)}else await openBook(HML.id)}
@@ -10775,7 +10780,13 @@ document.addEventListener('click',e=>{if(!e.composedPath().includes(studioP))ret
   else if(k==='scratch'||k==='spray'){TOY.scrDone.clear();if(ed())toast('Tap Preview to try it',2200)}else if(k==='explode')toast('Tap a garment to explode it into parts',2400)
   else if(k==='thermal')toast(matchMedia('(pointer:fine)').matches?'Press and hold on a garment to see it in thermal':'Press and hold on a garment',2400);else if(k==='age')toast('Use the slider under the garment',2000)});
 
-Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(intro).then(()=>{L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC)showGate();else goHome()});
+Promise.race([loaded,new Promise(r=>setTimeout(r,400))]).then(()=>licReady).then(()=>{applyLic()}).then(async()=>{
+  const toHome=!(needLic&&!LIC)&&LOCAL&&!S.locked,cap=ms=>new Promise(r=>setTimeout(r,ms));
+  if(toHome){try{L.tp=1;kick();render(true);applyLic();await Promise.race([LAB.home(),cap(1800)]);await Promise.race([window.__mpHomeReady||0,cap(1500)])}catch(e){console.error(e)}
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}
+  await intro();document.documentElement.classList.add('mp-go');
+  if(toHome){const he=document.getElementById('home'),le=document.getElementById('lab');if(he&&he.hidden&&!(le&&!le.hidden))goHome();return}
+  L.tp=1;kick();render(true);applyLic();if(needLic&&!LIC)showGate();else goHome()}).catch(e=>{console.error(e);document.documentElement.classList.add('mp-go')});
 async function goHome(){if(LOCAL&&!S.locked){LAB.home();return}if(!ed())setTimeout(hint,900)}
 cloud();
 })();
