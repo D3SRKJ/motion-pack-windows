@@ -10963,7 +10963,7 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 // choosing something in a card closes it (the app runs the action first)
 document.addEventListener('click',e=>{if(!ipCard||ipCard.hidden)return;const b=e.target.closest&&e.target.closest('#ipCard [data-l]');if(b&&!/^(adjmenu|menu:)/.test(b.dataset.l))setTimeout(ipmCloseCard,0)});
 // tapping the canvas closes an open card (like Procreate) instead of painting
-cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||!ipmAnyCard())return;e.preventDefault();e.stopImmediatePropagation();ipmCloseAll()},true);
+cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||!ipmAnyCard())return;if(e.target===cv){ipmCloseAll();return}e.preventDefault();e.stopImmediatePropagation();ipmCloseAll()},true);
 // multi-finger taps: 2 = undo, 3 = redo, 4 = hide/show the interface
 {const G={pts:new Map(),max:0,t0:0,mv:0};
   cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipst')||e.pointerType!=='touch')return;if(!G.pts.size){G.max=0;G.t0=performance.now();G.mv=0}G.pts.set(e.pointerId,[e.clientX,e.clientY]);G.max=Math.max(G.max,G.pts.size)},true);
@@ -11139,7 +11139,7 @@ function ipLyDragEnd(P,e){const G=IPL.drag;if(!G)return;G.done=true;G.row.classL
 addEventListener('resize',()=>{if(IPL.open)ipLyPlace()});
 // Garment Studio: its Layers button opens the same card; tapping the canvas closes it
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#gsDock [data-l="panel:layers"]');if(!b||!labEl.classList.contains('ipgs'))return;e.preventDefault();e.stopPropagation();ipLyToggle()},true);
-cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipgs')||!(IPL.open||(ipLyM&&!ipLyM.hidden)))return;e.preventDefault();e.stopImmediatePropagation();ipLyClose()},true);
+cv.addEventListener('pointerdown',e=>{if(!labEl.classList.contains('ipgs')||!(IPL.open||(ipLyM&&!ipLyM.hidden)))return;if(e.target===cv){ipLyClose();return}e.preventDefault();e.stopImmediatePropagation();ipLyClose()},true);
 
 /* ---------- transform: live, no Commit button (like Procreate – it applies when you pick another tool) ---------- */
 {const _d=drawOpt;drawOpt=function(){const r=_d.apply(this,arguments);try{if(ipOn())ipOptPatch()}catch(e){console.error(e)}return r}}
@@ -11661,6 +11661,17 @@ const IPNEW={
   return `<h4>${esc((ADJS.find(x=>x[0]===t)||[0,''])[1])}<button data-l="adjx:cancel">&times;</button></h4>${body}<div class="rw"><button class="lch" data-l="adjx:reset">Reset</button><button class="lch pri" data-l="adjx:apply">Apply</button></div>`}}
 // the old panel's Apply / Cancel also close the Procreate bar
 {const _ae=adjEnd;adjEnd=function(ok){const r=_ae.apply(this,arguments);if(IPA.on&&!ADJ){IPA.on=false;const e=document.getElementById('ipAdj');if(e)e.hidden=true}return r}}
+/* ---------- v39: speed – keep painting on the graphics chip, do background work only when you pause ---------- */
+// time of the last touch / pen / mouse input – idle jobs wait for a pause
+let GIN=0;['pointerdown','pointermove','touchstart','touchmove','wheel','keydown'].forEach(t=>addEventListener(t,()=>{GIN=performance.now()},{capture:true,passive:true}));
+// packing idle layers reads every pixel back from the graphics chip – never while you're working
+{const _pk=park;park=function(l,force){if(!force&&performance.now()-GIN<4000)return false;return _pk.apply(this,arguments)}}
+// time-lapse frames wait until you pause
+{const _tl=tlCap;tlCap=function(){clearTimeout(tlCap.w);const go=()=>{if(performance.now()-GIN<1500){tlCap.w=setTimeout(go,700);return}_tl()};tlCap.w=setTimeout(go,600)}}
+// iPad/iPhone: hover styles make Safari ask for a second tap before a button works – remove them on touch screens
+if(matchMedia('(hover:none)').matches){const split=t=>{const o=[];let d=0,c='';for(const ch of t){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d--;if(ch===','&&!d){o.push(c);c=''}else c+=ch}o.push(c);return o};
+  const fix=(list,owner)=>{for(let i=list.length-1;i>=0;i--){const r=list[i];try{if(r.cssRules&&r.selectorText==null){fix(r.cssRules,r);continue}if(r.selectorText&&r.selectorText.includes(':hover')){const keep=split(r.selectorText).filter(s=>!s.includes(':hover'));if(keep.length)r.selectorText=keep.join(',');else owner.deleteRule(i)}}catch(e){}}};
+  const run=()=>{for(const sh of document.styleSheets){try{fix(sh.cssRules,sh)}catch(e){}}};run();setTimeout(run,3000)}
 
 /* ---------- v38: Procreate-style multi-colour gradient bar (Gradient tool + Gradient Map) ---------- */
 const GB={act:-1,ctx:null};
