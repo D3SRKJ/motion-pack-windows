@@ -11055,7 +11055,7 @@ function ipLyMenuHTML(l){const it=(a,n,on,cls)=>`<button class="ipmi${on?' on':'
    ${t?it('edittext','Edit text'):''}${px?it('select','Select'):''}${px?it('fill','Fill layer'):''}${px?it('clear','Clear'):''}
    ${px?it('alock','Alpha lock',l.alock):''}${it('clip','Clipping mask',l.clip)}${l.mask?it('maskedit','Paint mask',l.tgt==='mask')+it('masktog',l.maskOn?'Hide mask':'Show mask')+it('maskdel','Delete mask'):it('mask','Mask')}
    ${px?it('invert','Invert')+it('thresh','Threshold'):''}${!g&&l.type!=='adj'?it('style','Styles'):''}${it('lock',l.lock?'Unlock':'Lock',l.lock)}
-   ${px?it('fh','Flip horizontal')+it('fv','Flip vertical'):''}${t?it('raster','Rasterize'):''}${px&&!t?it('rmbg','Remove background'):''}
+   ${px?it('fh','Flip horizontal')+it('fv','Flip vertical'):''}${(t||l.sm||l.so||l.acc)?it('raster','Rasterize'):''}${fxOn(l.fx)?it('rasterfx','Rasterize styles'):''}${px&&!t?it('rmbg','Remove background'):''}
    ${px?it('copy','Copy'):''}${px?it('ref','Reference',!!l.ref):''}${g?it('ungroup','Ungroup'):''}${it('merge',g?'Flatten group':'Merge down')}${it('combine','Combine down')}${it('dup','Duplicate')}${it('del','Delete',false,'dang')}</div>`}
 function ipLyMenu(id,row){const l=byId(id);if(!l)return;if(IPL.menu===id&&!ipLyM.hidden){ipLyMenuClose();return}IPL.menu=id;ipLyM.innerHTML=ipLyMenuHTML(l);ipLyM.hidden=false;
   const r=row.getBoundingClientRect(),er=edEl.getBoundingClientRect(),cr=ipLy.getBoundingClientRect(),w=Math.min(300,cr.left-er.left-20);ipLyM.style.width=Math.max(230,w)+'px';
@@ -11070,7 +11070,7 @@ function ipLyMenuDo(a){const l=byId(IPL.menu);if(!l){ipLyMenuClose();return}if(X
     case'fill':L('fillfg');break;case'clear':L('lm:clear');break;case'alock':L('lm:alock');break;case'clip':L('lm:clip');break;case'lock':L('lm:lock');break;
     case'mask':L('mask:reveal');break;case'maskedit':L('tgt:'+l.id+':'+(l.tgt==='mask'?'px':'mask'));break;case'masktog':L('mask:toggle');break;case'maskdel':L('mask:delete');break;
     case'invert':L('invertnow');break;case'thresh':ipLyMenuClose();ipLyClose();ipAdjStart('thresh',false);return;case'style':ipLyMenuClose();ipLyClose();L('style');return;
-    case'fh':L('lm:fh');break;case'fv':L('lm:fv');break;case'raster':L('lm:raster');break;case'rmbg':L('rmbg');break;
+    case'fh':L('lm:fh');break;case'fv':L('lm:fv');break;case'raster':ipLyMenuClose();ipRasterize(l);return;case'rasterfx':ipLyMenuClose();L('lm:rasterfx');return;case'rmbg':L('rmbg');break;
     case'copy':ipClipCopy(false);hint('Copied – three-finger swipe down or tap Paste in Layers',1800);break;
     case'ref':stOp(()=>{const on=!l.ref;D.layers.forEach(x=>{x.ref=false});l.ref=on},l.ref?'Reference off':'Reference layer');hint(l.ref?'Reference on – ColorDrop now fills inside the lines of “'+l.name+'” on any layer':'Reference off',2600);break;
     case'combine':{const lvl=kids(l.gid||null),i=lvl.indexOf(l),below=i>0?lvl[i-1]:null;if(!below){hint('There is no layer below to combine with');return}D.cur=l.id;D.lsel=new Set([below.id]);L('group');D.lsel=new Set();break}
@@ -11672,6 +11672,10 @@ let GIN=0;['pointerdown','pointermove','touchstart','touchmove','wheel','keydown
 if(matchMedia('(hover:none)').matches){const split=t=>{const o=[];let d=0,c='';for(const ch of t){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d--;if(ch===','&&!d){o.push(c);c=''}else c+=ch}o.push(c);return o};
   const fix=(list,owner)=>{for(let i=list.length-1;i>=0;i--){const r=list[i];try{if(r.cssRules&&r.selectorText==null){fix(r.cssRules,r);continue}if(r.selectorText&&r.selectorText.includes(':hover')){const keep=split(r.selectorText).filter(s=>!s.includes(':hover'));if(keep.length)r.selectorText=keep.join(',');else owner.deleteRule(i)}}catch(e){}}};
   const run=()=>{for(const sh of document.styleSheets){try{fix(sh.cssRules,sh)}catch(e){}}};run();setTimeout(run,3000)}
+/* ---------- iPad: painting on a smart object turns it into pixels first (Procreate has no smart objects) ---------- */
+{const _np=needPx;needPx=function(l,what){if(ipOn()&&l&&l.sm&&!onMask(l)&&what!=='Adjustments'){stOp(()=>{l.sm=null;l.so=null},'Rasterize');hint('“'+l.name+'” is now a normal pixel layer – paint and erase freely',2200)}return _np.apply(this,arguments)}}
+// layer menu: Rasterize for type, smart objects, placed photos and accessories; Rasterize styles when the layer has effects
+function ipRasterize(l){if(!l)return;if(l.type==='text'){labAct('lm:raster',null,null);return}stOp(()=>{l.sm=null;l.so=null;l.acc=null},'Rasterize');touch(l,false);hint('Rasterized – now a normal pixel layer',1600)}
 
 /* ---------- v38: Procreate-style multi-colour gradient bar (Gradient tool + Gradient Map) ---------- */
 const GB={act:-1,ctx:null};
