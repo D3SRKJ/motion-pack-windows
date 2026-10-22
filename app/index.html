@@ -9327,9 +9327,9 @@ function labAct(a,b,e){const [k,v]=a.split(/:(.*)/s),l=curL();if(gsAct(k,v,l,a,b
     case'msbg':MS.rm=v==='rm';sheetIn.querySelectorAll('[data-l^="msbg"]').forEach(x=>x.classList.toggle('on',x.dataset.l==='msbg:'+v));msPreview();break;
     case'mssave':msSave(false);break;case'mssavego':msSave(true);break;
     case'dopen':openDoc(v);break;
-    case'dren':IDB.get('dlib').then(m=>{m=m||[];const en=m.find(x=>x.id===v);askName('Rename design',en&&en.name,async nv=>{if(!nv)return;const r=await IDB.get('des:'+v);if(r){r.name=nv;await IDB.set('des:'+v,r)}en.name=nv;await IDB.set('dlib',m);drawGallery()})});break;
+    case'dren':IDB.get('dlib').then(m=>{m=m||[];const en=m.find(x=>x.id===v);askName('Rename design',en&&en.name,async nv=>{if(!nv)return;const r=await IDB.get('des:'+v);if(r){r.name=nv;await IDB.set('des:'+v,r)}en.name=nv;await IDB.set('dlib',m);if(window.mpStudioRen)mpStudioRen(v,nv);drawGallery()})});break;
     case'ddup':(async()=>{const r=await IDB.get('des:'+v);if(r){const id=lid();r.id=id;r.name=r.name+' copy';r.updated=Date.now();let bid=null,bk=null;if(r.pair){bk=await IDB.get('des:'+r.pair);if(bk){bid=lid();bk.id=bid;bk.name=r.name+' (back)';bk.pair=id;bk.updated=Date.now();await IDB.set('des:'+bid,bk)}}r.pair=bid;await IDB.set('des:'+id,r);const m=(await IDB.get('dlib'))||[];const en=m.find(x=>x.id===v);if(bk){const eb=m.find(x=>x.id===bk.pair)||{};m.unshift(Object.assign({},m.find(x=>x.side==='back'&&x.pair===v)||{},{id:bid,name:bk.name,side:'back',pair:id,kind:'garment',updated:Date.now()}))}m.unshift(Object.assign({},en,{id,name:r.name,updated:Date.now(),pair:bid||undefined}));await IDB.set('dlib',m);drawGallery()}})();break;
-    case'ddel':if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap to delete';setTimeout(()=>{b.classList.remove('arm');b.textContent='Delete'},3000);return}(async()=>{const rr=await IDB.get('des:'+v),pv=rr&&rr.pair;const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==v&&(!pv||x.id!==pv));await IDB.set('dlib',m);await IDB.set('des:'+v,null);if(pv)await IDB.set('des:'+pv,null);drawGallery()})();break;
+    case'ddel':if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Tap to delete';setTimeout(()=>{b.classList.remove('arm');b.textContent='Delete'},3000);return}(async()=>{if(window.mpStudioDel)mpStudioDel(v);const rr=await IDB.get('des:'+v),pv=rr&&rr.pair;const m=((await IDB.get('dlib'))||[]).filter(x=>x.id!==v&&(!pv||x.id!==pv));await IDB.set('dlib',m);await IDB.set('des:'+v,null);if(pv)await IDB.set('des:'+pv,null);drawGallery()})();break;
     case'menu':openMenu(v,b);return;case'adjmenu':openMenu('__adj',barEl.querySelector('[data-l="menu:Image"]'));return;
     case'tool':setTool(v);break;
     case'panel':if(v==='fonts'&&PANEL==='text'){PANEL='fonts';drawPanel()}else if(v==='text'&&PANEL==='fonts'){PANEL='text';drawPanel()}else if(v==='brushes'&&PANEL==='brushes'&&!popEl.hidden)openPanel('layers');else openPanel(v);break;
@@ -11661,6 +11661,31 @@ const IPNEW={
   return `<h4>${esc((ADJS.find(x=>x[0]===t)||[0,''])[1])}<button data-l="adjx:cancel">&times;</button></h4>${body}<div class="rw"><button class="lch" data-l="adjx:reset">Reset</button><button class="lch pri" data-l="adjx:apply">Apply</button></div>`}}
 // the old panel's Apply / Cancel also close the Procreate bar
 {const _ae=adjEnd;adjEnd=function(ok){const r=_ae.apply(this,arguments);if(IPA.on&&!ADJ){IPA.on=false;const e=document.getElementById('ipAdj');if(e)e.hidden=true}return r}}
+/* ---- v40: iPhone / iPad app – blank canvases open in the native Metal Studio ---- */
+if(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.mpStudio){
+const NSB=window.webkit.messageHandlers.mpStudio,NSN=window.mpStudioNative||{};
+const nsOn=()=>NSN.metal!==false&&!GMODE;
+const nsLayers=(w,h)=>{const per=w*h*4/1048576,b=(NSN.ram||3000)*.42-per*4.4;return Math.max(0,Math.min(200,Math.floor(b/per)))};
+const nsBad=(w,h)=>{if(!(w>=1&&h>=1))return'Enter a width and height';const M=NSN.maxSide||8192;if(w>M||h>M)return`Too large – this device allows up to ${M.toLocaleString()} px per side`;if(nsLayers(w,h)<3)return'Too large for this device – lower the size or resolution';return''};
+{const _i=nsInfo;nsInfo=function(){if(!nsOn())return _i();const el=$('#nsInfo');if(!el)return;const [pw,ph]=nsPx(),bad=nsBad(pw,ph),phys=NS.u==='px'?`${fmtU(pw,'in',NS.ppi)} × ${fmtU(ph,'in',NS.ppi)} in at ${Math.round(NS.ppi)} ppi`:`${Math.round(NS.ppi)} ppi`;
+  let t=`<div><b>${pw>0?pw.toLocaleString():'–'} × ${ph>0?ph.toLocaleString():'–'} px</b> · ${pw>0&&ph>0?(pw*ph/1e6).toFixed(1):'0'} MP · ${phys}</div>`;
+  t+=bad?`<div class="warn">${bad}</div>`:`<div class="ok">Up to ${nsLayers(pw,ph)} layers · opens in Studio</div>`;
+  if(!bad&&NS.u!=='px'&&NS.ppi<150)t+=`<div class="note">Under 150 ppi can look soft when printed – 300 ppi is the print standard.</div>`;
+  el.innerHTML=t;const g=$('#nsGo');if(g)g.disabled=!!bad}}
+{const _c=nsCreate;nsCreate=function(){if(!nsOn())return _c();const [pw,ph]=nsPx(),bad=nsBad(pw,ph);if(bad)return hint(bad,3000);
+  const nm=(($('#nsName')||{}).value||'').trim()||'Untitled design';sheetEl.hidden=true;
+  NSB.postMessage({op:'new',name:nm,w:pw,h:ph,ppi:Math.round(NS.ppi),bg:NS.bg==='clear'?null:NS.bg==='black'?'#000000':'#ffffff'})}}
+const nsEntry=async id=>((await IDB.get('dlib'))||[]).find(x=>x.id===id);
+{const _o=openDoc;openDoc=async function(id){const e=await nsEntry(id);if(e&&e.kind==='studio'){NSB.postMessage({op:'open',id});return}return _o.apply(this,arguments)}}
+window.mpStudioDel=async id=>{const e=await nsEntry(id);if(e&&e.kind==='studio')NSB.postMessage({op:'delete',id})};
+window.mpStudioRen=async(id,name)=>{const e=await nsEntry(id);if(e&&e.kind==='studio')NSB.postMessage({op:'rename',id,name})};
+const nsPut=(m,d)=>{const i=m.findIndex(x=>x.id===d.id),o=i>=0?m.splice(i,1)[0]:{};m.unshift(Object.assign(o,{id:d.id,name:d.name,kind:'studio',w:d.w,h:d.h,ppi:d.ppi,updated:d.updated||Date.now()},d.thumb?{thumb:d.thumb}:{}))};
+window.mpStudioSaved=async d=>{if(!d||!d.id)return;const m=(await IDB.get('dlib'))||[];nsPut(m,d);await IDB.set('dlib',m);drawGallery()};
+window.mpStudioList=async list=>{if(!Array.isArray(list))return;let m=(await IDB.get('dlib'))||[];const ids=new Set(list.map(d=>d.id));
+  m=m.filter(x=>x.kind!=='studio'||ids.has(x.id));for(const d of list)if(!m.some(x=>x.id===d.id))nsPut(m,d);m.sort((a,b)=>(b.updated||0)-(a.updated||0));await IDB.set('dlib',m);drawGallery()};
+window.mpStudioError=t=>hint(t,3500);
+setTimeout(()=>NSB.postMessage({op:'list'}),1500);
+}
 /* ---------- v39: speed – keep painting on the graphics chip, do background work only when you pause ---------- */
 // time of the last touch / pen / mouse input – idle jobs wait for a pause
 let GIN=0;['pointerdown','pointermove','touchstart','touchmove','wheel','keydown'].forEach(t=>addEventListener(t,()=>{GIN=performance.now()},{capture:true,passive:true}));
