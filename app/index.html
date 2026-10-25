@@ -2926,6 +2926,14 @@ html #labSheet.ipes .espv{min-height:48px;font-size:24px}
 html.intl #lab,html.intl #home{visibility:hidden}
 @media (max-width:820px){#tlP .tl-main{flex-direction:column}#tlP .tl-side{width:auto;height:52%;border-left:0;border-top:1px solid var(--gl2,rgba(255,255,255,.07))}#tlP .tl-hd>button:not(.pri):not(.tl-back){padding:0 10px}#tlP .tl-ttl b{font-size:15px}}
 @media (max-width:520px){#tlP .tl-hd [data-tl="shuffle"]{display:none}#tlP .tl-fabs{grid-template-columns:repeat(3,1fr)}}
+/* ---------- v45 ---------- */
+input[type=range]{touch-action:pan-y}
+.mpdrag{cursor:grabbing!important;user-select:none}.mpdrag *{pointer-events:none}
+#tlP .tl-tabs,#tlP .tl-fcat{flex-wrap:wrap;overflow-x:visible}
+#tlP .tl-tabs button{padding:0 10px}
+html.mpfine #tlP .tl-presets{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent;padding-bottom:6px}
+html.mpfine #tlP .tl-presets::-webkit-scrollbar{display:block;height:6px}
+html.mpfine #tlP .tl-presets::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px}
 </style>
 </head>
 <body class="edit empty">
@@ -5460,7 +5468,7 @@ function fxBelow(o,b,f){
   if(f.st&&f.st.on){const g=f.st;tintInto(T('e1'),b,g.col);dilateInto(T('e2'),T('e1'),g.size);if(FXPUNCH){const q=cx2(T('e2'));q.save();q.globalCompositeOperation='destination-out';q.drawImage(b,0,0);q.restore()}o.globalAlpha=g.op;o.drawImage(T('e2'),0,0);o.globalAlpha=1}}
 function fxAbove(o,b,f){
   if(f.co&&f.co.on){const g=f.co;tintInto(T('e1'),b,g.col);o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
-  if(f.go&&f.go.on){const g=f.go,x=cx2(T('e1')),an=g.ang*Math.PI/180,cx0=D.w/2,cy0=D.h/2,r=Math.hypot(D.w,D.h)/2,dx=Math.cos(an)*r,dy=-Math.sin(an)*r;x.save();x.globalCompositeOperation='copy';const gr=x.createLinearGradient(cx0-dx,cy0-dy,cx0+dx,cy0+dy);gr.addColorStop(0,g.c1);gr.addColorStop(1,g.c2);x.fillStyle=gr;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-in';x.drawImage(b,0,0);x.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
+  if(f.go&&f.go.on){const g=f.go,x=cx2(T('e1')),an=g.ang*Math.PI/180,cx0=(D.w/2-FXO.x)*FXO.k,cy0=(D.h/2-FXO.y)*FXO.k,r=Math.hypot(D.w,D.h)/2*FXO.k,dx=Math.cos(an)*r,dy=-Math.sin(an)*r;x.save();x.globalCompositeOperation='copy';const gr=x.createLinearGradient(cx0-dx,cy0-dy,cx0+dx,cy0+dy);gr.addColorStop(0,g.c1);gr.addColorStop(1,g.c2);x.fillStyle=gr;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-in';x.drawImage(b,0,0);x.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'source-over';o.drawImage(T('e1'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}
   if(f.is&&f.is.on){const g=f.is,an=g.ang*Math.PI/180,x=cx2(T('e1'));x.save();x.globalCompositeOperation='copy';x.fillStyle=g.col;x.fillRect(0,0,D.w,D.h);x.globalCompositeOperation='destination-out';x.drawImage(b,-Math.cos(an)*g.dist,Math.sin(an)*g.dist);x.restore();blurInto(T('e2'),T('e1'),g.size);const y=cx2(T('e2'));y.save();y.globalCompositeOperation='destination-in';y.drawImage(b,0,0);y.restore();o.globalAlpha=g.op;o.globalCompositeOperation=g.blend||'multiply';o.drawImage(T('e2'),0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over'}fxAboveX(o,b,f);fx2Above(o,b,f)}
 function layerOut(l,below){
   const s=src(l),live=!!(xfHas(l)||(STROKE&&STROKE.l===l)),hasM=!!l.mask&&l.maskOn,bi=biOn(l.bi),fx=fxOn(l.fx)&&!(live&&TOUCH&&(XD||(STROKE&&STROKE.l===l))),fo=l.fillOp<1,keep=bi||fxOn(l.fx)||l===curL();
@@ -11784,6 +11792,95 @@ const IPNEW={
   return `<h4>${esc((ADJS.find(x=>x[0]===t)||[0,''])[1])}<button data-l="adjx:cancel">&times;</button></h4>${body}<div class="rw"><button class="lch" data-l="adjx:reset">Reset</button><button class="lch pri" data-l="adjx:apply">Apply</button></div>`}}
 // the old panel's Apply / Cancel also close the Procreate bar
 {const _ae=adjEnd;adjEnd=function(ok){const r=_ae.apply(this,arguments);if(IPA.on&&!ADJ){IPA.on=false;const e=document.getElementById('ipAdj');if(e)e.hidden=true}return r}}
+/* ---------- v45: smooth live editing — cropped layer styles, live low-res preview while dragging, faster stroke/dilate, fast Wrap to fabric ---------- */
+var FXO={x:0,y:0,k:1},FXLV={on:false,l:null};let TCS=null;const TMPC={};
+{const _T=T;T=function(n){if(!TCS)return _T(n);let c=TMPC[n];if(!c||c.width!==TCS[0]||c.height!==TCS[1]){if(c){c.width=TCS[0];c.height=TCS[1]}else c=TMPC[n]=mk(TCS[0],TCS[1])}return c}}
+{const _tf=texFill;texFill=function(dst,tile,mat,mask){if(FXO.k!==1||FXO.x||FXO.y)mat=new DOMMatrix().scale(FXO.k,FXO.k).translate(-FXO.x,-FXO.y).multiply(mat);return _tf(dst,tile,mat,mask)}}
+/* stroke / border / glow spread: grow the shape in doubling steps instead of hundreds of stamps (same round result, ~5x fewer draws) */
+{const _dil=dilateInto;dilateInto=function(dst,srcC,r){if(!(r>12)||window.__oldDil)return _dil(dst,srcC,r);const A=T('dlA'),B=T('dlB');if(A.width!==dst.width||A.height!==dst.height||srcC===dst)return _dil(dst,srcC,r);
+  _dil(A,srcC,6);let cur=A,tot=6;while(tot<r-.01){const d=Math.min(r-tot,tot),last=tot+d>=r-.01,tg=last?dst:(cur===A?B:A),x=cx2(tg),n=Math.max(8,Math.ceil(Math.PI*Math.sqrt(d)*1.6));
+    x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';x.clearRect(0,0,tg.width,tg.height);for(let i=0;i<n;i++){const a=i/n*6.2832;x.drawImage(cur,Math.cos(a)*d,Math.sin(a)*d)}x.drawImage(cur,0,0);x.restore();cur=tg;tot+=d}
+  if(cur!==dst){const x=cx2(dst);x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='copy';x.drawImage(cur,0,0);x.restore()}return dst}}
+function fxBox(l,s){if(s&&s.pk)return s.c?[s.x,s.y,s.x+s.c.width,s.y+s.c.height]:null;if(!s||!s.width)return null;if(l._bbs===s&&l._bbv===l.v)return l._bb;
+  const W=s.width,H=s.height,u=new Uint32Array(cx2(s).getImageData(0,0,W,H).data.buffer);let x0=W,y0=H,x1=-1,y1=-1;
+  for(let y=0;y<H;y++){const r=y*W;let a=-1;for(let x=0;x<W;x++)if(u[r+x]>>>24){a=x;break}if(a<0)continue;if(y<y0)y0=y;y1=y;if(a<x0)x0=a;for(let x=W-1;x>x1&&x>=a;x--)if(u[r+x]>>>24){x1=x;break}}
+  const bb=x1<0?null:[x0,y0,x1+1,y1+1];l._bb=bb;l._bbv=l.v;l._bbs=s;return bb}
+function fxMargin(F){let m=0;for(const key in F){const g=F[key];if(!g||!g.on)continue;const b=key.split('_')[0],sz=+g.size||0;let r=0;
+  if(b==='ds')r=(+g.dist||0)+sz*3;else if(b==='og')r=sz*(+g.spread||0)/100+sz*3;else if(b==='st')r=sz;else if(b==='st2')r=sz+((F.st&&F.st.on)?+F.st.size||0:0)+(()=>{let e=0;for(const k2 in F)if(/^st_\d+$/.test(k2)&&F[k2].on)e=Math.max(e,+F[k2].size||0);return e})();
+  else if(b==='pf')r=sz*.45+(sz*.8+2)*3;else if(b==='em')r=(+g.raise||0)/12+1+((+g.raise||0)/8+2)*3+(+g.border||0);if(r>m)m=r}return m+6}
+const FXLEN=['size','dist','border','soft','raise'];
+function scaleFx(F,k){const o={};for(const key in F){const g=F[key];if(!g||typeof g!=='object'){o[key]=g;continue}const c=Object.assign({},g);for(const n of FXLEN)if(typeof c[n]==='number')c[n]*=k;o[key]=c}return o}
+function fxPrevK(l,area){const ms=l._fxms||(area>1.5e6?60:0);if(ms<=26)return 1;const k=Math.sqrt(22/ms);for(const q of [.75,.5,.35])if(k>=q)return q;return .25}
+const c128=v=>Math.ceil(v/128)*128;
+{const _LO=layerOut;layerOut=function(l,below){const t0=performance.now();let out,how=0;
+  try{out=fxFast(l,below);if(out)how=1}catch(e){TCS=null;FXO.x=FXO.y=0;FXO.k=1;out=null;if(window.__mpTest)console.warn('fxFast',e)}
+  if(!out){const k0=l.fxk;out=_LO.apply(this,arguments);if(out===l.fxc&&l.fxc){l.fxcR=null;l._fxB=fxBase(l);l._fxX=null}if(l.fx&&(l.fxk!==k0||!l.fxk)){how=2;l._fxk1=1}}
+  if(how){const ms=performance.now()-t0;if(ms>2){const k=l._fxk1||1;l._fxms=ms/(k*k)}}return out}}
+function fxFast(l,below){const F=l.fx;if(window.__noFXC||!F||!fxOn(F)||biOn(l.bi)||(F.wp&&F.wp.on)||(F.tx&&F.tx.on))return null;
+  if(STROKE&&STROKE.l===l)return null;const xf=xfHas(l);if(xf&&XD&&XFORM.mode==='free'){const r=fxDrag(l);if(r)return r}if(xf&&(TOUCH&&XD||XFORM.mode==='warp'))return null;
+  const hasM=!!l.mask&&l.maskOn,X=XFORM;let s=xf?null:src(l);const bb=xf?dmgGrow(dmgXf(),6):fxBox(l,s);if(!bb)return null;const m=Math.ceil(fxMargin(F)),x0=Math.max(0,Math.floor(bb[0]-m)),y0=Math.max(0,Math.floor(bb[1]-m)),x1=Math.min(D.w,Math.ceil(bb[2]+m)),y1=Math.min(D.h,Math.ceil(bb[3]+m)),cw=x1-x0,ch=y1-y0;
+  if(cw<1||ch<1)return null;const k=FXLV.on&&FXLV.l===l?fxPrevK(l,cw*ch):1;
+  const xk=xf?JSON.stringify([X.mode,X.tx_,X.ty_,X.sx,X.sy,X.r,X.q||0,X.px.length]):'',key=[l.v,l.mv,hasM?1:0,JSON.stringify(l.bi),JSON.stringify(F),l.fillOp,xk].join('|'),want=k<1?key+'|p'+k:key;
+  if(l.fxk===want&&l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h){l._fxk1=0;return l.fxc}
+  if(k>=1&&cw*ch>D.w*D.h*.72)return null;if(xf)s=src(l);
+  const pw=Math.max(1,Math.ceil(cw*k)),ph=Math.max(1,Math.ceil(ch*k)),mA=hasM?maskAlpha(l,null):null,Fs=k<1?scaleFx(F,k):F;
+  let oc;TCS=[c128(pw),c128(ph)];FXO.x=x0;FXO.y=y0;FXO.k=k;
+  try{const b=T('lb'),bx=cx2(b);bx.save();bx.setTransform(1,0,0,1,0,0);bx.globalAlpha=1;bx.globalCompositeOperation='source-over';bx.clearRect(0,0,b.width,b.height);bx.imageSmoothingEnabled=true;bx.setTransform(k,0,0,k,-x0*k,-y0*k);
+    if(s.pk){if(s.c)bx.drawImage(s.c,s.x,s.y)}else bx.drawImage(s,0,0);bx.setTransform(1,0,0,1,0,0);
+    if(F.vt&&F.vt.on)vintageInto(b,Fs.vt);
+    if(mA){bx.globalCompositeOperation='destination-in';bx.setTransform(k,0,0,k,-x0*k,-y0*k);bx.drawImage(mA,0,0);bx.setTransform(1,0,0,1,0,0)}bx.restore();
+    oc=T('lout');const o=cx2(oc);o.save();o.setTransform(1,0,0,1,0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over';o.clearRect(0,0,oc.width,oc.height);
+    FXPUNCH=l.fillOp<1;fxBelow(o,fxShape(b,'fxs'),Fs);FXPUNCH=false;o.globalAlpha=l.fillOp;o.drawImage(b,0,0);o.globalAlpha=1;fxAbove(o,fxShape(b,'fxa'),Fs);o.restore()}
+  finally{TCS=null;FXO.x=FXO.y=0;FXO.k=1}
+  if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h){if(l.fxc)relc(l.fxc);l.fxc=mk(D.w,D.h);l.fxcR=[0,0,0,0]}
+  const q=cx2(l.fxc);q.save();q.setTransform(1,0,0,1,0,0);q.globalAlpha=1;q.globalCompositeOperation='source-over';if(l.fxcR)q.clearRect(l.fxcR[0],l.fxcR[1],l.fxcR[2],l.fxcR[3]);else q.clearRect(0,0,D.w,D.h);
+  q.imageSmoothingEnabled=true;q.imageSmoothingQuality=k<1?'low':'high';q.drawImage(oc,0,0,pw,ph,x0,y0,pw/k,ph/k);q.restore();l.fxcR=[x0,y0,Math.ceil(pw/k)+1,Math.ceil(ph/k)+1];l.fxk=want;l._fxk1=k;l._fxB=fxBase(l);l._fxX=xf?xfM(X):null;return l.fxc}
+/* moving / scaling a styled layer: slide the finished style along with it (no flicker, no popping off and on) */
+function fxBase(l){return [l.mv,l.mask&&l.maskOn?1:0,JSON.stringify(l.fx),l.fillOp].join('|')}
+function xfM(X){const m=xfMat(X),d=180/Math.PI;return new DOMMatrix().translate(m.C[0],m.C[1]).rotate((X.r0+X.r)*d).scale(X.sx,X.sy).rotate(-X.r0*d).translate(-X.c0[0],-X.c0[1])}
+function fxDrag(l){if(l.mask&&l.maskOn)return null;if(!l.fxc||l.fxc.width!==D.w||l.fxc.height!==D.h||l._fxB!==fxBase(l))return null;const M=xfM(XFORM).multiply((l._fxX||new DOMMatrix()).inverse()),c=T('lout'),x=cx2(c);
+  x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';x.clearRect(0,0,c.width,c.height);x.imageSmoothingEnabled=true;x.imageSmoothingQuality='low';x.setTransform(M);x.drawImage(l.fxc,0,0);x.restore();return c}
+/* zoomed-out view: reuse the downsized copies instead of allocating new ones every frame */
+mipFor=function(eff){if(MIP.n!==compN||MIP.w!==D.w||MIP.h!==D.h){MIP.ok=0;MIP.n=compN;MIP.w=D.w;MIP.h=D.h}if(MIP.ok==null)MIP.ok=0;let c=T('comp'),s=1,i=0;
+  while(eff<s*.5&&c.width>64){const w=Math.max(1,Math.round(c.width/2)),h=Math.max(1,Math.round(c.height/2));let n=MIP.l[i];if(!n||n.width!==w||n.height!==h){n=MIP.l[i]=mk(w,h);if(MIP.ok>i)MIP.ok=i}
+    if(MIP.ok<=i){const x=cx2(n);x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='copy';x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(c,0,0,w,h);x.restore();MIP.ok=i+1}c=n;s/=2;i++}return c};
+/* sliders: redraw on every frame while you drag (light preview if the style is heavy), then one full-quality pass the moment you stop */
+styLive=function(){const l=STY&&STY.l;if(!l)return;l.fxk='';dirtyComp=true;FXLV.l=l;FXLV.on=true;req();clearTimeout(styT);styT=setTimeout(()=>{FXLV.on=false;l.fxk='';dirtyComp=true;req()},TOUCH?170:120)};
+/* Wrap to fabric: the blurred fold map is made once (not every frame) and only the area around the artwork is re-bent */
+let WMC=null;
+function wrapFast(A,tc){const v=A.v,W=D.w,H=D.h,mp=D.layers.find(x=>x.id===v.map),c=cx2(tc);if(!mp){c.putImageData(A.orig,0,0);return}
+  const key=mp.id+':'+mp.v+':'+v.soft+':'+W+'x'+H;if(!WMC||WMC.key!==key){const mc=mk(W,H);blurInto(mc,mp.cv,v.soft);const md=cx2(mc).getImageData(0,0,W,H).data,g=new Int16Array(W*H);for(let i=0,k=0;i<g.length;i++,k+=4)g[i]=Math.round((lum(md[k],md[k+1],md[k+2])-127.5)*100);WMC={key,g};relc(mc)}
+  if(A._wb===undefined){if(A.m)A._wb=[0,0,W,H];else{const u=new Uint32Array(A.orig.data.buffer);let x0=W,y0=H,x1=-1,y1=-1;for(let y=0;y<H;y++){const r=y*W;for(let x=0;x<W;x++)if(u[r+x]>>>24){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;y1=y}}A._wb=x1<0?null:[x0,y0,x1+1,y1+1]}}
+  if(!A._wb)return;const str=+v.str||0;A._wm=Math.max(A._wm||0,Math.ceil(Math.abs(str)/2)+2);const e=A._wm,rx0=Math.max(0,A._wb[0]-e),ry0=Math.max(0,A._wb[1]-e),rx1=Math.min(W,A._wb[2]+e),ry1=Math.min(H,A._wb[3]+e),rw=rx1-rx0,rh=ry1-ry0;if(rw<1||rh<1)return;
+  const G=WMC.g,o32=new Uint32Array(A.orig.data.buffer),out=new ImageData(rw,rh),d32=new Uint32Array(out.data.buffer),f=str/25500;
+  for(let y=ry0;y<ry1;y++){const r=y*W,j0=(y-ry0)*rw-rx0;for(let x=rx0;x<rx1;x++){const g=G[r+x]*f;let sx=Math.round(x-g),sy=Math.round(y-g);if(sx<0)sx=0;else if(sx>=W)sx=W-1;if(sy<0)sy=0;else if(sy>=H)sy=H-1;d32[j0+x]=o32[sy*W+sx]}}
+  c.putImageData(out,rx0,ry0)}
+if(typeof IPNEW!=='undefined')IPNEW.wrap=(A,tc)=>wrapFast(A,tc);
+/* Windows / mouse: every sideways row (tabs, chips, presets, tool strips) scrolls with the mouse wheel and by click-dragging */
+(function(){if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;document.documentElement.classList.add('mpfine');
+  const hs=el=>{for(let e=el;e&&e.nodeType===1&&e!==document.body;e=e.parentElement){if(e.id==='cv'||e.classList.contains('tl-view')||e.hasAttribute('data-nohs'))return null;if(e.scrollWidth>e.clientWidth+1&&e.scrollHeight<=e.clientHeight+1){const ox=getComputedStyle(e).overflowX;if(ox==='auto'||ox==='scroll')return e}}return null};
+  addEventListener('wheel',ev=>{if(ev.ctrlKey||Math.abs(ev.deltaX)>=Math.abs(ev.deltaY))return;const e=hs(ev.target);if(!e)return;const d=ev.deltaY*(ev.deltaMode===1?18:1),max=e.scrollWidth-e.clientWidth;if((d>0&&e.scrollLeft>=max-1)||(d<0&&e.scrollLeft<=0))return;e.scrollLeft+=d;ev.preventDefault()},{passive:false,capture:true});
+  let G=null;addEventListener('pointerdown',ev=>{G=null;if(ev.pointerType!=='mouse'||ev.button!==0)return;const t=ev.target;if(!t.closest||t.closest('input,textarea,select,[contenteditable],[data-ak]'))return;const e=hs(t);if(e)G={e,x:ev.clientX,sl:e.scrollLeft,mv:false,id:ev.pointerId}},true);
+  addEventListener('pointermove',ev=>{if(!G||ev.pointerId!==G.id)return;const dx=ev.clientX-G.x;if(!G.mv&&Math.abs(dx)>6){G.mv=true;G.e.classList.add('mpdrag')}if(G.mv){G.e.scrollLeft=G.sl-dx;ev.preventDefault()}},true);
+  const end=ev=>{if(!G)return;const m=G.mv;G.e.classList.remove('mpdrag');G=null;if(m){const k=e=>{e.stopPropagation();e.preventDefault()};addEventListener('click',k,{capture:true,once:true});setTimeout(()=>removeEventListener('click',k,true),60)}};
+  addEventListener('pointerup',end,true);addEventListener('pointercancel',end,true)})();
+/* quick-drag (ghost) frames also carry the layer's styles along */
+ghostPaint=function(x){if(!GH)return;const W=x.canvas.width,H=x.canvas.height;if(!GHC)GHC=document.createElement('canvas');if(GHC.width!==W||GHC.height!==H){GHC.width=W;GHC.height=H}const g=GHC.getContext('2d'),m=x.getTransform();
+  for(const o of XFORM.px){const l=o.l;if(!l.vis)continue;g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,W,H);
+    const fd=XFORM.mode==='free'&&!!l.fx&&fxOn(l.fx)&&!(l.mask&&l.maskOn)&&!!l.fxc&&l.fxc.width===D.w&&l.fxc.height===D.h&&l._fxB===fxBase(l);
+    if(fd){g.setTransform(m.multiply(xfM(XFORM).multiply((l._fxX||new DOMMatrix()).inverse())));g.imageSmoothingEnabled=true;g.drawImage(l.fxc,0,0);g.setTransform(m)}else{g.setTransform(m);xfRender(g,XFORM,o,XFORM.mode==='free'?1:(TOUCH?8:10))}
+    const cb=ghostClipBase(l);if(cb){const p=pieceOf(cb);if(p&&p.c){g.globalCompositeOperation='destination-in';g.drawImage(p.c,p.x||0,p.y||0);g.globalCompositeOperation='source-over'}}
+    x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=l.op*(fd||l.fillOp==null?1:l.fillOp);x.globalCompositeOperation=gco(l.blend);x.drawImage(GHC,0,0);x.restore()}
+  if(GHA)for(const a of GHA){if(!a.vis)continue;const s=layerOut(a,null);if(!s)continue;g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,W,H);g.setTransform(m);
+    if(s.pk){if(s.c)g.drawImage(s.c,s.x,s.y)}else g.drawImage(s,0,0);const cb=ghostClipBase(a);if(cb){const p=pieceOf(cb);if(p&&p.c){g.globalCompositeOperation='destination-in';g.drawImage(p.c,p.x||0,p.y||0);g.globalCompositeOperation='source-over'}}
+    x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=a.op;x.globalCompositeOperation=gco(a.blend);x.drawImage(GHC,0,0);x.restore()}};
+/* …and keeps the layers above it (fabric shading, highlights) on top while you drag, so nothing pops when you let go */
+let GHA=null;
+{const _gs=ghostStart;ghostStart=function(){GHA=null;try{const mv=XFORM.px.map(o=>o.l),idx=Math.max(...mv.map(l=>D.layers.indexOf(l))),ab=D.layers.slice(idx+1).filter(l=>l.vis);
+  const ok=ab.length>0&&ab.length<=4&&mv.every(l=>!l.gid)&&ab.every(l=>!l.gid&&(l.type==='px'||l.type==='text')&&(!l.clip||(()=>{const cb=ghostClipBase(l);return !!cb&&!mv.includes(cb)&&D.layers.indexOf(cb)<idx})()));
+  if(ok){try{ab.forEach(l=>l.vis=false);_gs.apply(this,arguments)}finally{ab.forEach(l=>l.vis=true)}GHA=ab;return}}catch(e){GHA=null}return _gs.apply(this,arguments)}}
+{const _ge=ghostEnd;ghostEnd=function(){GHA=null;return _ge.apply(this,arguments)}}
+
 /* ================= v44: Text Lab engine – turns any word into real-looking fabric letters =================
    Everything is drawn from scratch on the device (no pictures are downloaded): the letters are cut out of a
    procedurally woven / knitted / tanned fabric, lit like a thick patch, frayed or torn at the edges, stitched,
@@ -12089,11 +12186,11 @@ function presets(){const p=el.querySelector('.tl-presets');p.innerHTML=PRE.map((
   const cs=[...p.querySelectorAll('canvas')];let i=0;const next=()=>{if(i>=cs.length||el.hidden)return;const k=i++;try{const s=Object.assign({},DEF,PRE[k][1],{text:'Aa',font:st.font,caps:false,warp:'none',marks:[],threads:Math.min(.2,PRE[k][1].threads||0),border:Math.min(10,PRE[k][1].border||0)});const r=TLX.render(s,{maxSide:150,bg:(W,H)=>TLX.garment('flat','#111214',W,H)}).canvas;const x=cs[k].getContext('2d'),sc=Math.max(96/r.width,64/r.height);x.drawImage(r,(96-r.width*sc)/2,(64-r.height*sc)/2,r.width*sc,r.height*sc)}catch(e){}setTimeout(next,20)};setTimeout(next,300)}
 
 /* ---------- rendering ---------- */
-function draw(quick){if(!el||el.hidden)return;if(busy){again=quick?again||'q':'f';return}busy=true;const bz=el.querySelector('.tl-busy');bz.hidden=false;
-  setTimeout(()=>{try{const stg=el.querySelector('.tl-stage').getBoundingClientRect(),side=Math.max(stg.width,stg.height)*(devicePixelRatio>1?1.4:1),ms=Math.round(Math.min(quick?760:1500,Math.max(500,side)));
-      const r=TLX.render(st,{maxSide:ms,bg:bgFn()});lastInfo=r.info;const cv=el.querySelector('.tl-cv');cv.width=r.canvas.width;cv.height=r.canvas.height;cv.getContext('2d').drawImage(r.canvas,0,0);fitView()}
-    catch(e){console.error(e)}busy=false;bz.hidden=true;if(again){const q=again==='q';again=false;draw(q)}},16)}
-function sched(quick){clearTimeout(RT);RT=setTimeout(()=>draw(quick),quick?30:90);if(!quick)save()}
+function draw(quick){if(!el||el.hidden)return;if(busy){again=quick?again||'q':'f';return}busy=true;const bz=el.querySelector('.tl-busy');if(!quick)bz.hidden=false;
+  (quick?f=>f():f=>setTimeout(f,16))(()=>{const t0=performance.now();try{const stg=el.querySelector('.tl-stage').getBoundingClientRect(),side=Math.max(stg.width,stg.height)*(devicePixelRatio>1?1.4:1),ms=Math.round(quick?Math.min(QS,Math.max(360,side)):Math.min(1500,Math.max(500,side)));
+      const r=TLX.render(st,{maxSide:ms,bg:bgFn()});lastInfo=r.info;const cv=el.querySelector('.tl-cv');cv.width=r.canvas.width;cv.height=r.canvas.height;cv.getContext('2d').drawImage(r.canvas,0,0);fitView();if(quick){const dt=performance.now()-t0;QS=dt>45?Math.max(360,QS*.8):dt<22?Math.min(760,QS*1.12):QS}}
+    catch(e){console.error(e)}busy=false;bz.hidden=true;if(again){const q=again==='q';again=false;draw(q)}})}
+let RQ=0,QS=760;function sched(quick){if(quick){/* live: redraw every frame while dragging */if(!RQ)RQ=requestAnimationFrame(()=>{RQ=0;draw(true)});return}clearTimeout(RT);RT=setTimeout(()=>draw(false),90);save()}
 function fitView(){const v=el.querySelector('.tl-view'),cv=el.querySelector('.tl-cv'),r=v.getBoundingClientRect();const k=Math.min((r.width-24)/cv.width,(r.height-24)/cv.height)*zoom;cv.style.width=cv.width*k+'px';cv.style.height=cv.height*k+'px'}
 
 /* ---------- events ---------- */
