@@ -2805,6 +2805,127 @@ html #labSheet.ipes .esw{margin-top:10px}
 html #labSheet.ipes .esl{max-height:28vh}
 html #labSheet.ipes .esp{max-height:34vh}
 html #labSheet.ipes .espv{min-height:48px;font-size:24px}
+/* v44: gradient colour picker */
+#gbPick{position:fixed;z-index:400;width:268px;padding:12px;border-radius:16px;background:var(--g2,#1c1d20);border:1px solid var(--gl,rgba(255,255,255,.1));box-shadow:0 18px 50px rgba(0,0,0,.6);color:var(--gt,#ececed);font:12px var(--gf,system-ui)}
+#gbPick[hidden]{display:none}
+#gbPick .gbp-sv{position:relative;height:150px;border-radius:10px;overflow:hidden;touch-action:none;cursor:crosshair}
+#gbPick .gbp-sv canvas{width:100%;height:100%;display:block}
+#gbPick .gbp-sv i{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.5);pointer-events:none}
+#gbPick .gbp-h{position:relative;height:16px;margin:12px 2px;border-radius:8px;touch-action:none;cursor:pointer;background:linear-gradient(90deg,#f00,#ff0 17%,#0f0 33%,#0ff 50%,#00f 67%,#f0f 83%,#f00)}
+#gbPick .gbp-h i{position:absolute;top:-3px;width:22px;height:22px;margin-left:-11px;border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.5);pointer-events:none}
+#gbPick .gbp-row{display:flex;gap:6px;align-items:center}
+#gbPick .gbp-sw{width:28px;height:28px;border-radius:8px;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+#gbPick .gbp-hex{flex:1;min-width:0;height:30px;border-radius:8px;border:1px solid var(--gl,rgba(255,255,255,.12));background:rgba(0,0,0,.25);color:inherit;font:600 13px ui-monospace,Menlo,monospace;padding:0 8px}
+#gbPick .gbp-row button{height:30px;padding:0 10px;border-radius:8px;border:1px solid var(--gl,rgba(255,255,255,.12));background:rgba(255,255,255,.06);color:inherit;font:600 12px var(--gf,system-ui)}
+#gbPick .gbp-row .gbp-ok{background:#ececed;color:#111214;border-color:transparent}
+#gbPick .gbp-pal{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin-top:10px}
+#gbPick .gbp-pal button{aspect-ratio:1;border-radius:50%;border:0;background:var(--c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.lpop .gbx,#labPop .gbx{width:auto!important;margin:12px 16px 8px!important}
+/* v44: Procreate-style accessories library (iPad) */
+#accLib.apro-on{left:auto!important;right:12px!important;top:62px!important;bottom:auto!important;width:min(800px,calc(100vw - 24px))!important;height:min(680px,calc(100vh - 150px))!important;max-height:none!important;border-radius:18px!important;
+  background:var(--g2,#1c1d20)!important;border:1px solid var(--gl,rgba(255,255,255,.1))!important;box-shadow:0 24px 60px rgba(0,0,0,.6)!important;color:var(--gt,#ececed)!important;font:13px/1.35 var(--gf,system-ui)!important}
+#accLib.apro-on[hidden]{display:none!important}
+#accLib.apro-on .alh{background:none!important;color:var(--gt,#ececed)!important;border-bottom:1px solid var(--gl2,rgba(255,255,255,.07))!important;padding:12px 12px 12px 16px!important}
+#accLib.apro-on .alh b{font:600 16px var(--gf,system-ui)!important;letter-spacing:-.01em!important}
+#accLib.apro-on .alh button{background:rgba(255,255,255,.07)!important;color:var(--gt,#ececed)!important;border-radius:9px!important;padding:6px 10px!important}
+#accLib.apro-on .alh button.on{background:#ececed!important;color:#111214!important}
+#accLib.apro-on .alh .ax{background:none!important;font-size:22px!important}
+#accLib.apro-on .albody{flex:1;min-height:0;overflow:hidden!important;padding:0!important;display:flex}
+#accLib.apro-on.aedit .albody{overflow:auto!important;display:block;padding:12px!important}
+#accLib .apro{display:flex;flex:1;min-height:0;width:100%}
+#accLib .apro-side{width:214px;flex:none;overflow-y:auto;border-right:1px solid var(--gl2,rgba(255,255,255,.07));padding:8px 8px 20px;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#accLib .apro-q input{width:100%;height:34px;margin:0 0 6px;border-radius:10px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(0,0,0,.25);color:inherit;padding:0 10px;font:13px var(--gf,system-ui)}
+#accLib .apro-side button{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:6px 8px;margin:1px 0;border-radius:10px;border:0;background:none;color:var(--gt,#ececed);text-align:left;font:500 13.5px var(--gf,system-ui);cursor:pointer}
+#accLib .apro-side button.on{background:rgba(255,255,255,.1)}
+#accLib .apro-side button>i{width:40px;height:26px;display:grid;place-items:center;flex:none;color:var(--gt2,#a3a5aa)}
+#accLib .apro-side button>i svg{width:20px;height:20px}
+#accLib .apro-side .apro-ct{width:40px!important;height:40px!important;min-height:0!important;padding:0!important;margin:0!important;flex:none;border-radius:9px;background:rgba(255,255,255,.04)!important;border:0!important;pointer-events:none}
+#accLib .apro-side .apro-ct canvas{width:40px!important;height:40px!important;display:block}
+#accLib .apro-cn{display:flex;flex-direction:column;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#accLib .apro-cn small{color:var(--gt3,#6c6d72);font-size:11px;font-weight:400}
+#accLib .apro-sep{margin:12px 8px 4px;font:600 10.5px var(--gf,system-ui);letter-spacing:2px;text-transform:uppercase;color:var(--gt3,#6c6d72)}
+#accLib .apro-main{flex:1;min-width:0;overflow-y:auto;padding:12px 14px 18px;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#accLib .apro-hd{display:flex;align-items:baseline;gap:8px;margin:0 0 10px}
+#accLib .apro-hd b{font:600 18px var(--gf,system-ui);letter-spacing:-.01em}
+#accLib .apro-hd span{color:var(--gt3,#6c6d72);font-size:12px}
+#accLib .apro-hd button{margin-left:auto;align-self:center;height:30px;padding:0 12px;border-radius:9px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(255,255,255,.05);color:inherit;font:600 12px var(--gf,system-ui)}
+#accLib .apro-hd button.on{background:#ececed;color:#111214;border-color:transparent}
+#accLib .apro-main .asw{margin:0 0 8px}
+#accLib .apro-main .afil{margin:0 0 10px}
+#accLib .apro-main .agrid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;gap:10px!important;padding:0!important}
+#accLib .apro-main .agrid .at{border-radius:12px!important;background:rgba(255,255,255,.035)!important;border:1px solid var(--gl2,rgba(255,255,255,.07))!important}
+#accLib .apro-main .agrid .at canvas,#accLib .apro-main .agrid .at img{width:100%!important;height:auto!important;aspect-ratio:1}
+#accLib .apro-main .avrow{grid-column:1/-1}
+#accLib .apro-tip{margin:14px 2px 0;color:var(--gt3,#6c6d72);font-size:11.5px;text-align:center}
+@media (max-width:700px){#accLib .apro-side{width:150px}#accLib .apro-side .apro-ct{display:none}}
+/* ---------- v44 Text Lab ---------- */
+#tlP{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;background:var(--g1,#141517);color:var(--gt,#ececed);font:13px/1.35 var(--gf,-apple-system,"Helvetica Neue",Arial,sans-serif);-webkit-font-smoothing:antialiased;overscroll-behavior:none;animation:fadein .3s ease}
+#tlP[hidden]{display:none}
+#tlP button{font:inherit;color:inherit;cursor:pointer}
+#tlP .tl-hd{display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;border-bottom:1px solid var(--gl2,rgba(255,255,255,.07))}
+#tlP .tl-hd>button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(255,255,255,.05);font-weight:600}
+#tlP .tl-hd>button.pri{background:#ececed;color:#111214;border-color:transparent}
+#tlP .tl-back{font-weight:600}
+#tlP .tl-ttl{display:flex;flex-direction:column;margin-left:6px}
+#tlP .tl-ttl small{font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:var(--gt3,#6c6d72)}
+#tlP .tl-ttl b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+#tlP .tl-grow{flex:1}
+#tlP .tl-main{flex:1;min-height:0;display:flex}
+#tlP .tl-stage{flex:1;min-width:0;position:relative;display:flex;flex-direction:column}
+#tlP .tl-view{flex:1;min-height:0;display:grid;place-items:center;overflow:auto;touch-action:none;background:radial-gradient(70% 60% at 50% 40%,rgba(255,255,255,.04),rgba(0,0,0,0))}
+#tlP .tl-view.paint{cursor:crosshair}
+#tlP .tl-cv{display:block;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.45);background:repeating-conic-gradient(#2a2b2f 0% 25%,#222327 0% 50%) 0 0/18px 18px}
+#tlP .tl-busy{position:absolute;top:12px;left:50%;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.6);font-size:12px;color:var(--gt2,#a3a5aa);pointer-events:none}
+#tlP .tl-busy[hidden]{display:none}
+#tlP .tl-tools{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px 12px calc(12px + env(safe-area-inset-bottom,0px))}
+#tlP .tl-tools button{height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(255,255,255,.04);font-weight:600;font-size:12.5px}
+#tlP .tl-tools button.on{background:#ececed;color:#111214;border-color:transparent}
+#tlP .tl-sep{width:1px;height:22px;background:var(--gl,rgba(255,255,255,.1));margin:0 4px}
+#tlP .tl-side{width:360px;flex:none;display:flex;flex-direction:column;border-left:1px solid var(--gl2,rgba(255,255,255,.07));min-height:0;background:var(--g2,#18191b)}
+#tlP .tl-presets{display:flex;gap:8px;overflow-x:auto;padding:12px 12px 8px;flex:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#tlP .tl-presets::-webkit-scrollbar{display:none}
+#tlP .tl-presets button{flex:none;width:96px;padding:0;border:1px solid var(--gl2,rgba(255,255,255,.07));border-radius:12px;background:#111214;overflow:hidden;text-align:left}
+#tlP .tl-presets button.on{border-color:#ececed}
+#tlP .tl-presets canvas{display:block;width:96px;height:64px}
+#tlP .tl-presets span{display:block;padding:5px 7px 6px;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tlP .tl-tabs{display:flex;gap:2px;padding:4px 10px;flex:none;overflow-x:auto;border-bottom:1px solid var(--gl2,rgba(255,255,255,.07));scrollbar-width:none}
+#tlP .tl-tabs::-webkit-scrollbar{display:none}
+#tlP .tl-tabs button{flex:none;height:34px;padding:0 11px;border:0;background:none;border-radius:9px;color:var(--gt3,#7c7d82);font-weight:600}
+#tlP .tl-tabs button.on{color:var(--gt,#ececed);background:rgba(255,255,255,.08)}
+#tlP .tl-body{flex:1;min-height:0;overflow-y:auto;padding:6px 14px 30px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#tlP h6{margin:14px 0 8px;font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gt3,#6c6d72)}
+#tlP .tl-txt{width:100%;box-sizing:border-box;min-height:60px;resize:vertical;padding:10px 12px;border-radius:12px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(0,0,0,.25);color:inherit;font:600 18px var(--gf,system-ui)}
+#tlP .tl-fcat,#tlP .tl-seg{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 0 8px}
+#tlP .tl-seg.wrap{flex-wrap:wrap}
+#tlP .tl-fcat button,#tlP .tl-seg button,#tlP .tl-tog,#tlP .tl-wide{flex:none;height:32px;padding:0 11px;border-radius:9px;border:1px solid var(--gl,rgba(255,255,255,.1));background:rgba(255,255,255,.04);font-size:12.5px;font-weight:600}
+#tlP .tl-fcat button.on,#tlP .tl-seg button.on,#tlP .tl-tog.on{background:#ececed;color:#111214;border-color:transparent}
+#tlP .tl-wide{width:100%;margin:10px 0 0}
+#tlP .tl-row{display:flex;gap:6px;margin:0 0 8px}
+#tlP .tl-fonts{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:230px;overflow-y:auto;margin:0 0 10px;padding-right:2px}
+#tlP .tl-fonts button{height:42px;padding:0 10px;border-radius:10px;border:1px solid var(--gl2,rgba(255,255,255,.07));background:rgba(255,255,255,.03);text-align:left;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tlP .tl-fonts button.on{border-color:#ececed;background:rgba(255,255,255,.1)}
+#tlP .tl-fonts small{margin-left:6px;font:600 11px var(--gf,system-ui);color:var(--gt3,#6c6d72)}
+#tlP .tl-sl{display:grid;grid-template-columns:118px 1fr 46px;align-items:center;gap:8px;margin:6px 0}
+#tlP .tl-sl span{font-size:12.5px;color:var(--gt2,#b5b6ba)}
+#tlP .tl-sl em{font-style:normal;font-size:11.5px;color:var(--gt3,#7c7d82);text-align:right;font-variant-numeric:tabular-nums}
+#tlP .tl-sl input{width:100%;accent-color:#ececed}
+#tlP .tl-col{margin:8px 0 10px}
+#tlP .tl-col>span{display:block;font-size:12.5px;color:var(--gt2,#b5b6ba);margin:0 0 6px}
+#tlP .tl-col small{color:var(--gt3,#6c6d72)}
+#tlP .tl-sw{display:flex;flex-wrap:wrap;gap:6px}
+#tlP .tl-sw button,#tlP .tl-pick{width:26px;height:26px;border-radius:50%;border:0;padding:0;background:var(--c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+#tlP .tl-sw button.on{box-shadow:0 0 0 2px var(--g1,#141517),0 0 0 4px #ececed}
+#tlP .tl-pick{position:relative;overflow:hidden;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+#tlP .tl-pick input{position:absolute;inset:-6px;width:40px;height:40px;opacity:0;cursor:pointer}
+#tlP .tl-fabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 8px}
+#tlP .tl-fabs button{padding:0;border:1px solid var(--gl2,rgba(255,255,255,.07));border-radius:10px;background:none;overflow:hidden}
+#tlP .tl-fabs button.on{border-color:#ececed;box-shadow:0 0 0 1px #ececed}
+#tlP .tl-fabs canvas{display:block;width:100%;aspect-ratio:1}
+#tlP .tl-fabs span{display:block;padding:4px 4px 5px;font-size:10.5px;font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tlP .tl-note{margin:10px 0;font-size:12px;color:var(--gt3,#7c7d82);line-height:1.45}
+html.intl #lab,html.intl #home{visibility:hidden}
+@media (max-width:820px){#tlP .tl-main{flex-direction:column}#tlP .tl-side{width:auto;height:52%;border-left:0;border-top:1px solid var(--gl2,rgba(255,255,255,.07))}#tlP .tl-hd>button:not(.pri):not(.tl-back){padding:0 10px}#tlP .tl-ttl b{font-size:15px}}
+@media (max-width:520px){#tlP .tl-hd [data-tl="shuffle"]{display:none}#tlP .tl-fabs{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body class="edit empty">
@@ -2872,7 +2993,7 @@ html #labSheet.ipes .espv{min-height:48px;font-size:24px}
       <p class="gh-k">Workspaces</p>
       <nav class="gh-list" aria-label="Workspaces"><button class="gh-row" data-home="lab"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.6 4.4a2.1 2.1 0 0 1 3 3L7.9 18.1l-4 1 1-4z"/><path d="m13.8 6.2 3 3"/></svg></i><span>Design Lab</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-home="gs"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 3.5 4.2 5.3 2.5 9.6l3 1.6 1.2-1.3v10.6h10.6V9.9l1.2 1.3 3-1.6-1.7-4.3-4.3-1.8c-.3 1.5-1.7 2.6-3.5 2.6s-3.2-1.1-3.5-2.6z"/></svg></i><span>Garment Studio</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-home="books"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 5.5h6a3.5 3.5 0 0 1 3.5 3.5v11a2.6 2.6 0 0 0-2.6-2.6H2.5z"/><path d="M21.5 5.5h-6A3.5 3.5 0 0 0 12 9v11a2.6 2.6 0 0 1 2.6-2.6h6.9z"/></svg></i><span>Lookbooks</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-home="mk"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 3.5 7.4v9.2l8.5 4.6 8.5-4.6V7.4z"/><path d="m3.5 7.4 8.5 4.6 8.5-4.6M12 12v9.2"/></svg></i><span>Mockups</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-hq="acc"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11l3.8 5.3L12 20.5 2.7 8.8z"/><path d="M2.7 8.8h18.6M12 20.5 8.4 8.8l3.6-5.3 3.6 5.3z"/></svg></i><span>Accessories</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-home="src"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6M12 3.2c2.4 2.5 3.6 5.4 3.6 8.8s-1.2 6.3-3.6 8.8c-2.4-2.5-3.6-5.4-3.6-8.8s1.2-6.3 3.6-8.8z"/></svg></i><span>Sourcing</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-home="bgr"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5V4h3.5M16.5 4H20v3.5M20 16.5V20h-3.5M7.5 20H4v-3.5M10.5 4h3M10.5 20h3M4 10.5v3M20 10.5v3"/><path d="m7.5 16 3.2-4 2.3 2.6 1.8-1.9 2.7 3.3"/><circle cx="15" cy="9" r="1.3"/></svg></i><span>Background Remover</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button></nav>
       <button class="gh-more" data-gh="more">View all tools <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></button>
-      <div class="gh-tools" id="ghTools" hidden><p class="gh-k">Tools</p><nav class="gh-list" aria-label="Tools"><button class="gh-row" data-hq="new"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></i><span>New design</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-hq="last" id="hmLast" hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.4"/><path d="M3.5 3.8v4.6h4.6M12 7.5v4.8l3 1.8"/></svg></i><span>Continue last</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-plopen="1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6.5" r="2.8"/><circle cx="6" cy="17.5" r="2.8"/><path d="M8.3 8.1 20.5 19M8.3 15.9 20.5 5"/></svg></i><span>Piece Lab</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-hq="col"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></svg></i><span>Collection planner</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-w3on="1" hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 12 3.5l9 5v7l-9 5-9-5z"/><path d="M12 13.5v7M3 8.5l9 5 9-5"/></svg></i><span>3D gallery home</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button></nav></div>
+      <div class="gh-tools" id="ghTools" hidden><p class="gh-k">Tools</p><nav class="gh-list" aria-label="Tools"><button class="gh-row" data-hq="new"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></i><span>New design</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-hq="last" id="hmLast" hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.4"/><path d="M3.5 3.8v4.6h4.6M12 7.5v4.8l3 1.8"/></svg></i><span>Continue last</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-plopen="1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6.5" r="2.8"/><circle cx="6" cy="17.5" r="2.8"/><path d="M8.3 8.1 20.5 19M8.3 15.9 20.5 5"/></svg></i><span>Piece Lab</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-tlopen="1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5h14M12 5.5v13"/><path d="M8.5 18.5c1.5 1.6 3 .2 4.5 1.4s2.5 1 3.5-.2" stroke-dasharray="1.6 1.8"/></svg></i><span>Text Lab</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-hq="col"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></svg></i><span>Collection planner</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button><button class="gh-row" data-w3on="1" hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5 12 3.5l9 5v7l-9 5-9-5z"/><path d="M12 13.5v7M3 8.5l9 5 9-5"/></svg></i><span>3D gallery home</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5.5 6.5 6.5L9 18.5"/></svg></em></button></nav></div>
       <section class="gh-rec" id="hmRec" hidden><p class="gh-k">Recent</p><div class="gh-recrow" id="hmRow"></div></section>
     </main>
     <footer class="gh-foot"><span class="gh-saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.8"/><path d="m8.2 12.4 2.6 2.5 5-5.4"/></svg><span>All changes saved</span></span></footer>
@@ -5877,7 +5998,7 @@ const MENUS={
   File:[['new','New design…','Ctrl+N'],['timelapse','Timelapse replay (video)…'],['printpdf','Print PDF with cut lines…'],['newpat','New pattern tile…'],['newsize','New canvas (custom size)…','Ctrl+Alt+N'],['import','Place image…'],['fromlb','Place a lookbook garment'],['-'],['save','Save','Ctrl+S'],['dupdoc','Save a copy','Ctrl+Shift+S'],['-'],['exp:png','Export PNG','Ctrl+Alt+Shift+W'],['exp:clear','Export PNG (transparent)'],['exp:jpg','Export JPG'],['sendlb','Send to a new or existing lookbook…'],['sepsheet','Colour separations (screen print)…'],['-'],['rename','Rename design'],['gallery','Close (back to gallery)','Ctrl+W']],
   Edit:[['undo','Undo','Ctrl+Z'],['redo','Redo','Ctrl+Shift+Z'],['undo','Step backward','Ctrl+Alt+Z'],['panel:history','History panel'],['-'],['cafill','Content-aware fill (select the spot first)'],['-'],['xf:free','Free transform','Ctrl+T'],['xf:distort','Distort (perspective)'],['xf:warp','Warp'],['xf:fh','Flip horizontal'],['xf:fv','Flip vertical'],['-'],['fillsheet','Fill…','Shift+F5'],['strokesheet','Stroke selection…'],['sa:clear','Clear','Del'],['-'],['pensheet','Apple Pencil & pressure…'],['keys','Keyboard shortcuts…','?']],
   Image:[['gcpick','✦ Smart garment colour'],['adjmenu','Adjustments ▸'],['desat','Desaturate','Ctrl+Shift+U'],['invertnow','Invert','Ctrl+I'],['-'],['canvas','Canvas size…','Ctrl+Alt+C'],['imgsize','Image size…','Ctrl+Alt+I'],['tool:crop','Crop tool','C'],['sa:crop','Crop to selection'],['rot:1','Rotate 90° clockwise'],['rot:-1','Rotate 90° anti-clockwise'],['flipdoc','Flip canvas horizontally']],
-  Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
+  Layer:[['addlayer','New layer','Ctrl+Shift+N'],['newgroup','New group'],['adjlmenu','New adjustment layer (levels, curves…)'],['patfill','New pattern fill…'],['acclib','Accessories library…'],['glyphs','Glyphs (symbols & fancy text)…'],['textlab','Text Lab (fabric letters)…'],['sa:copy','Layer via copy','Ctrl+J'],['sa:cut','Layer via cut','Ctrl+Shift+J'],['lm:dup','Duplicate'],['lm:del','Delete'],['-'],['smconv','Convert to smart object'],['smedit','Edit smart object contents'],['smrast','Rasterize smart object'],['-'],['group','Group layers','Ctrl+G'],['ungroup','Ungroup','Ctrl+Shift+G'],['-'],['style','Blending options & styles…'],['lm:clip','Create / release clipping mask','Ctrl+Alt+G'],['mask:reveal','Add mask (reveal all)'],['mask:hide','Add mask (hide all)'],['mask:sel','Add mask from selection'],['mask:apply','Apply mask'],['mask:delete','Delete mask'],['-'],['knock:white','Knock out white'],['knock:black','Knock out black'],['rmbg','Remove background'],['lm:raster','Rasterize type'],['-'],['lm:merge','Merge down / merge selected','Ctrl+E'],['mergevis','Merge visible','Ctrl+Shift+E'],['stamp','Stamp visible','Ctrl+Alt+Shift+E'],['flatten','Flatten image'],['-'],['arr:top','Bring to front','Ctrl+Shift+]'],['arr:up','Bring forward','Ctrl+]'],['arr:down','Send backward','Ctrl+['],['arr:bottom','Send to back','Ctrl+Shift+['],['lpick:up','Select layer above','Alt+]'],['lpick:down','Select layer below','Alt+[']],
   Select:[['selsubj','Select subject'],['sa:all','All','Ctrl+A'],['sa:deselect','Deselect','Ctrl+D'],['sa:reselect','Reselect','Ctrl+Shift+D'],['sa:invert','Inverse','Ctrl+Shift+I'],['sa:layer','Load layer pixels','Ctrl-click thumb'],['panel:feather','Feather…','Shift+F6'],['strokesheet','Stroke…'],['-'],['tool:select','Marquee','M'],['lasso','Lasso (freehand)','L'],['tool:wand','Magic wand','W'],['smartsel','Select a garment part (tap)'],['smartcut','Smart remove background…']],
   Filter:[['liquify','Liquify…'],['adj:blur','Blur…'],['adj:sharpen','Sharpen…'],['adj:noise','Add noise…'],['adj:wrap','Wrap to fabric (displace)…'],['txstudio','Texture Studio (puff, embroidery, foil, distress…)'],['-'],['rmbg','Remove background'],['bgrtool','Background Remover (full tool)…'],['-'],['autowarp','Auto-warp art to garment folds…'],['vintage','Vintage / distressed print…'],['smartcut','Smart remove background…'],['fabric','Fabric texture (denim, fleece…)'],['embroid','Embroidery effect…'],['puff','Puff print…'],['dbl','Outline / double outline…'],['-'],['patsheet','Pattern tile: repeat & offset…'],['poffset','Offset ½ (pattern seams)']],
   View:[['fitview','Fit on screen','Ctrl+0'],['zoom100','100%','Ctrl+1'],['zin','Zoom in','Ctrl +'],['zout','Zoom out','Ctrl −'],['rotreset','Reset view rotation','Esc (Rotate tool)'],['flipview','Flip view (mirror)'],['-'],['rulers','Rulers','Ctrl+R'],['guides','Print guides (tags & labels)'],['units','Units & resolution…'],['pixels','Sharp pixels when zoomed in'],['fastdraw','Fast redraw (only what changed)'],['grid','Grid & centre lines',"Ctrl+'"],['noedges','Show / hide selection edges','Ctrl+H'],['hidepanels','Hide / show panels','Tab'],['fullscreen','Full-screen mode','F'],['sym','Symmetry drawing'],['-'],['panel:layers','Layers'],['panel:colour','Colour'],['panel:history','History'],['help','Guide: what everything does'],['keys','Keyboard shortcuts','?']]};
@@ -6720,8 +6841,8 @@ function accWire(e){
     if(k==='sag'||k==='w'){const l=accCur();if(!l)return;const old=t._b&&t._b.acc;if(old){const now=l.acc;l.acc=old;stOp(()=>{l.acc=now},k==='w'?'Width':'Droop');t._b=null}else accAct(k+':'+(k==='sag'?t.value/100:t.value));return}
     if(k==='txt')accAct('txt:'+encodeURIComponent(t.value));else if(k.startsWith('col:'))accAct('col:'+k.slice(4)+':'+t.value)});
   e.addEventListener('pointerover',ev=>{if(ev.pointerType!=='mouse'||ADR)return;const t=ev.target.closest('.at');if(t)accPrev(t,true)});e.addEventListener('pointerout',ev=>{const t=ev.target.closest('.at');if(t&&!t.contains(ev.relatedTarget))accPrev(null,false)});
-  e.addEventListener('pointerdown',ev=>{accPrev(null,false);const t=ev.target.closest('.at');if(!t||ev.target.closest('[data-l]')||ev.button>0)return;ADR={k:t.dataset.ak,x:ev.clientX,y:ev.clientY,id:ev.pointerId,moved:false,t};});
-  addEventListener('pointermove',ev=>{if(!ADR||ev.pointerId!==ADR.id)return;if(!ADR.moved&&Math.hypot(ev.clientX-ADR.x,ev.clientY-ADR.y)>8){ADR.moved=true;accPrev(null,false);const g=document.createElement('div');g.id='accGhost';const src=ADR.t.querySelector('canvas,img');if(src){const c=accCv(90,90);try{cx2(c).drawImage(src,0,0,90,90)}catch(_){}g.appendChild(c)}document.body.appendChild(g);ADR.g=g;e.classList.add('adrag')}
+  e.addEventListener('pointerdown',ev=>{accPrev(null,false);const t=ev.target.closest('.at');if(!t||ev.target.closest('[data-l]')||ev.button>0)return;ADR={k:t.dataset.ak,x:ev.clientX,y:ev.clientY,id:ev.pointerId,moved:false,t,touch:ev.pointerType!=='mouse',t0:performance.now()};});
+  addEventListener('pointermove',ev=>{if(!ADR||ev.pointerId!==ADR.id)return;if(!ADR.moved&&ADR.touch&&performance.now()-ADR.t0<320&&Math.hypot(ev.clientX-ADR.x,ev.clientY-ADR.y)>8){ADR=null;return}if(!ADR.moved&&Math.hypot(ev.clientX-ADR.x,ev.clientY-ADR.y)>8){ADR.moved=true;accPrev(null,false);const g=document.createElement('div');g.id='accGhost';const src=ADR.t.querySelector('canvas,img');if(src){const c=accCv(90,90);try{cx2(c).drawImage(src,0,0,90,90)}catch(_){}g.appendChild(c)}document.body.appendChild(g);ADR.g=g;e.classList.add('adrag')}
     if(ADR.moved&&ADR.g){ADR.g.style.transform=`translate(${ev.clientX-45}px,${ev.clientY-45}px)`;const r=cv.getBoundingClientRect(),over=document.elementFromPoint(ev.clientX,ev.clientY)===cv;ADR.g.classList.toggle('ok',over&&ev.clientX>r.left)}});
   const end=ev=>{if(!ADR||ev.pointerId!==ADR.id)return;const A=ADR;ADR=null;e.classList.remove('adrag');if(A.g)A.g.remove();if(ev.type==='pointercancel')return;
     if(!A.moved){accPlace(A.k,null);return}const r=cv.getBoundingClientRect();if(document.elementFromPoint(ev.clientX,ev.clientY)===cv){accPlace(A.k,toDoc(ev.clientX-r.left,ev.clientY-r.top))}};
@@ -7646,7 +7767,7 @@ async function gsNewSheet(){await getSlots();sheetIn.innerHTML=`<h3>New garment<
   ${await gsMkSection()}<h5>Your mockups <span class="h5n">Tap a mockup to start, or an empty slot to add one</span></h5><div class="tpl slots">${SLOTS.map(s=>s.blob?`<div class="slot full"><button data-l="slot:${s.id}" title="Start on this mockup"><i style="background-image:url(${s.thumb})"></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotrep:${s.id}">Replace</button><button data-l="slotren:${s.id}">Rename</button><button data-l="slotclr:${s.id}">Clear</button></div></div>`:`<div class="slot"><button data-l="slot:${s.id}" title="Add your mockup"><i><em>+</em><small>Add mockup</small></i></button><span>${esc(s.name)}</span><div class="sa"><button data-l="slotren:${s.id}">Rename</button><button data-l="slotdel:${s.id}">Remove</button></div></div>`).join('')}</div>`;sheetEl.hidden=false}
 /* designs go between the garment and its fabric shading, so they pick up the folds */
 function gsDesignSlot(){const L=D.layers,si=L.findIndex(l=>l.name==='Fabric shading'&&l.clip);const c=curL();if(si>0&&(!c||c.id===L[si].id||c.id===D.garment||c.type==='adj'||c.type==='group'))D.cur=L[si-1].id;else if(si<0&&c&&c.id===D.garment&&L[idxOf(c)+1])D.cur=L[idxOf(c)+1].id}
-const GSREAL=[['txstudio','Texture Studio – materials & distress'],['bgrtool','Remove background (full tool)'],['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
+const GSREAL=[['textlab','Text Lab – fabric letters'],['txstudio','Texture Studio – materials & distress'],['bgrtool','Remove background (full tool)'],['autowarp','Auto-warp art to the folds'],['adj:wrap','Wrap to fabric'],['fabric','Fabric texture'],['vintage','Vintage / cracked print'],['puff','Puff print'],['embroid','Embroidery'],['dbl','Outline'],['style','Shadow & glow']];
 const GSBL=[['source-over','Normal'],['multiply','Multiply – print soaks into fabric'],['screen','Screen – light ink on dark'],['overlay','Overlay'],['soft-light','Soft light'],['darken','Darken'],['lighten','Lighten']];
 function gsMenu(k,btn){const mn=document.getElementById('gsMenu');if(!mn)return;if(!mn.hidden&&mn.dataset.k===k){gsMenuClose();return}const l=curL();let h='';
   if(k==='real')h=`<h6>Bring it to life <span>on “${esc(l?l.name:'')}”</span></h6>`+GSREAL.map(([a,n])=>`<button data-l="${a}">${n}</button>`).join('');
@@ -10932,7 +11053,7 @@ function ipmBar(){const t=TOOL.t,on=k=>t===k?' on':'',cd=k=>IPM.card===k||(k&&k=
     <button class="ipc${cd('color')}" data-ip="card:color" title="Colour" style="--c:${TOOL.color}"><i></i></button>`}
 // ---- cards ----
 const IPTAB={actions:[['Add',null],['Canvas','Image'],['Layer','Layer'],['Select','Select'],['Edit','Edit'],['Share','File'],['View','View'],['Prefs',null]]};
-const IPADD=[['import','Insert a photo / image'],['tool:text','Add text'],['glyphs','Glyphs & fancy text'],['acclib','Accessories library'],['fromlb','Place a lookbook garment'],['smartsel','Select a garment part (tap)'],['gcpick','✦ Smart garment colour'],['rmbg','Remove background'],['patfill','Pattern fill'],['newpat','New pattern tile']];
+const IPADD=[['import','Insert a photo / image'],['tool:text','Add text'],['textlab','Text Lab – fabric letters'],['glyphs','Glyphs & fancy text'],['acclib','Accessories library'],['fromlb','Place a lookbook garment'],['smartsel','Select a garment part (tap)'],['gcpick','✦ Smart garment colour'],['rmbg','Remove background'],['patfill','Pattern fill'],['newpat','New pattern tile']];
 function ipRows(list){return list.filter(it=>it&&it[0]).map(it=>it[0]==='-'?'<hr>':`<button class="iprow" data-l="${it[0]}"><span>${it[1]}</span></button>`).join('')}
 function ipmCardHTML(k){
   if(k==='actions'){const tab=IPM.tab||'Add',tabs=IPTAB.actions.map(([n])=>`<button class="iptab${n===tab?' on':''}" data-ip="tab:${n}">${n}</button>`).join('');
@@ -11663,6 +11784,448 @@ const IPNEW={
   return `<h4>${esc((ADJS.find(x=>x[0]===t)||[0,''])[1])}<button data-l="adjx:cancel">&times;</button></h4>${body}<div class="rw"><button class="lch" data-l="adjx:reset">Reset</button><button class="lch pri" data-l="adjx:apply">Apply</button></div>`}}
 // the old panel's Apply / Cancel also close the Procreate bar
 {const _ae=adjEnd;adjEnd=function(ok){const r=_ae.apply(this,arguments);if(IPA.on&&!ADJ){IPA.on=false;const e=document.getElementById('ipAdj');if(e)e.hidden=true}return r}}
+/* ================= v44: Text Lab engine – turns any word into real-looking fabric letters =================
+   Everything is drawn from scratch on the device (no pictures are downloaded): the letters are cut out of a
+   procedurally woven / knitted / tanned fabric, lit like a thick patch, frayed or torn at the edges, stitched,
+   ripped, worn, and given loose hanging threads and a soft shadow on the garment. */
+const TLX=(()=>{
+const mkc=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w));c.height=Math.max(1,Math.round(h));return c};
+const c2=c=>c.getContext('2d',{willReadFrequently:true});
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const sstep=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)};
+function rng(seed){let a=(seed>>>0)||1;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const hx=h=>{h=String(h||'#000').replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16)||0;return[n>>16&255,n>>8&255,n&255]};
+const rgbs=(c,a=1)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
+const lift=(c,k)=>c.map(v=>clamp(v+(255-v)*k,0,255));
+const dim=(c,k)=>c.map(v=>clamp(v*(1-k),0,255));
+const lum=c=>(c[0]*.3+c[1]*.59+c[2]*.11)/255;
+
+/* ---------- value noise (smooth), in 0..1 ---------- */
+function vnoise(W,H,cx,cy,R){cx=Math.max(.6,cx);cy=Math.max(.6,cy);const gw=Math.ceil(W/cx)+2,gh=Math.ceil(H/cy)+2,g=new Float32Array(gw*gh);for(let i=0;i<g.length;i++)g[i]=R();const o=new Float32Array(W*H);
+  for(let y=0;y<H;y++){const fy=y/cy,iy=fy|0,ty=fy-iy,sy=ty*ty*(3-2*ty),r0=iy*gw,r1=r0+gw,row=y*W;
+    for(let x=0;x<W;x++){const fx=x/cx,ix=fx|0,tx=fx-ix,sx=tx*tx*(3-2*tx),a=g[r0+ix],b=g[r0+ix+1],c=g[r1+ix],d=g[r1+ix+1],t0=a+(b-a)*sx;o[row+x]=t0+(c+(d-c)*sx-t0)*sy}}return o}
+function fbm(W,H,cell,oct,R,ax=1,ay=1){const o=new Float32Array(W*H);let amp=1,tot=0,c=cell;for(let k=0;k<oct;k++){const n=vnoise(W,H,c*ax,c*ay,R);for(let i=0;i<o.length;i++)o[i]+=n[i]*amp;tot+=amp;amp*=.5;c*=.5}for(let i=0;i<o.length;i++)o[i]/=tot;return o}
+
+/* ---------- distance transforms (chamfer 3-4, in pixels) ---------- */
+function dist(inside,W,H){const D=new Float32Array(W*H),INF=1e6;for(let i=0;i<D.length;i++)D[i]=inside[i]?INF:0;const a=1,b=1.4142;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;let v=D[i];if(!v)continue;if(x>0)v=Math.min(v,D[i-1]+a);if(y>0){v=Math.min(v,D[i-W]+a);if(x>0)v=Math.min(v,D[i-W-1]+b);if(x<W-1)v=Math.min(v,D[i-W+1]+b)}D[i]=v}
+  for(let y=H-1;y>=0;y--)for(let x=W-1;x>=0;x--){const i=y*W+x;let v=D[i];if(!v)continue;if(x<W-1)v=Math.min(v,D[i+1]+a);if(y<H-1){v=Math.min(v,D[i+W]+a);if(x<W-1)v=Math.min(v,D[i+W+1]+b);if(x>0)v=Math.min(v,D[i+W-1]+b)}D[i]=v}
+  return D}
+// signed distance: + inside, − outside (from an alpha 0..1 field)
+function sdf(A,W,H){const ins=new Uint8Array(W*H),out=new Uint8Array(W*H);for(let i=0;i<A.length;i++){ins[i]=A[i]>=.5?1:0;out[i]=1-ins[i]}const di=dist(ins,W,H),dO=dist(out,W,H),S=new Float32Array(W*H);for(let i=0;i<S.length;i++)S[i]=ins[i]?di[i]-.5:-(dO[i]-.5);return S}
+
+/* ---------- marching squares: closed outlines of a field at a threshold ---------- */
+function contours(F,W,H,thr,step){step=step||2;const gw=Math.floor((W-1)/step),gh=Math.floor((H-1)/step),NW=gw+1,v=(i,j)=>F[(j*step)*W+i*step];
+  const pos=new Map(),adj=new Map();const ep=(k,x,y)=>{if(!pos.has(k))pos.set(k,[x,y])};
+  const link=(a,b)=>{(adj.get(a)||adj.set(a,[]).get(a)).push(b);(adj.get(b)||adj.set(b,[]).get(b)).push(a)};
+  const T=(i,j)=>{const k=(j*NW+i)*2,a=v(i,j),b=v(i+1,j),t=(thr-a)/((b-a)||1e-6);ep(k,(i+clamp(t,0,1))*step,j*step);return k};
+  const L=(i,j)=>{const k=(j*NW+i)*2+1,a=v(i,j),b=v(i,j+1),t=(thr-a)/((b-a)||1e-6);ep(k,i*step,(j+clamp(t,0,1))*step);return k};
+  for(let j=0;j<gh;j++)for(let i=0;i<gw;i++){const a=v(i,j)>=thr,b=v(i+1,j)>=thr,c=v(i+1,j+1)>=thr,d=v(i,j+1)>=thr,id=(a?8:0)|(b?4:0)|(c?2:0)|(d?1:0);if(!id||id===15)continue;
+    const t=()=>T(i,j),r=()=>L(i+1,j),bo=()=>T(i,j+1),l=()=>L(i,j);
+    switch(id){case 1:case 14:link(l(),bo());break;case 2:case 13:link(bo(),r());break;case 3:case 12:link(l(),r());break;case 4:case 11:link(t(),r());break;
+      case 5:link(l(),t());link(bo(),r());break;case 6:case 9:link(t(),bo());break;case 7:case 8:link(l(),t());break;case 10:link(t(),r());link(l(),bo());break}}
+  const seen=new Set(),out=[];for(const k of adj.keys()){if(seen.has(k))continue;const line=[];let cur=k,prev=-1;while(cur!=null&&!seen.has(cur)){seen.add(cur);line.push(pos.get(cur));const n=adj.get(cur)||[];const nx=n.find(z=>z!==prev&&!seen.has(z));prev=cur;cur=nx}if(line.length>3)out.push(line)}
+  return out}
+// even spacing along a polyline (closed)
+function resample(pl,sp){const o=[];let carry=0;for(let i=0;i<pl.length;i++){const a=pl[i],b=pl[(i+1)%pl.length],dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);if(!L)continue;let s=carry;while(s<L){const t=s/L;o.push([a[0]+dx*t,a[1]+dy*t,dx/L,dy/L]);s+=sp}carry=s-L}return o}
+function smooth(pl,k){if(pl.length<5)return pl;let p=pl;for(let n=0;n<k;n++){const q=[];for(let i=0;i<p.length;i++){const a=p[(i-1+p.length)%p.length],b=p[i],c=p[(i+1)%p.length];q.push([(a[0]+2*b[0]+c[0])/4,(a[1]+2*b[1]+c[1])/4])}p=q}return p}
+
+/* ---------- fabrics: grey relief G (0..1), second colour mix Wm, see-through A, and how they catch light ---------- */
+const FAB=[
+  ['canvas','Cotton canvas'],['denim','Denim'],['twill','Tackle twill'],['felt','Felt'],['chenille','Chenille'],['terry','Terry towel'],['corduroy','Corduroy'],
+  ['leather','Leather'],['suede','Suede'],['satin','Satin'],['velvet','Velvet'],['knit','Knit jersey'],['tweed','Tweed'],['burlap','Burlap'],['linen','Linen'],
+  ['mesh','Athletic mesh'],['sequin','Sequins'],['sherpa','Sherpa fleece'],['embroidery','Embroidery fill'],['flannel','Flannel plaid'],['nylon','Ripstop nylon'],['waffle','Waffle knit']];
+const FPROP={canvas:[.05,8,1],denim:[.05,8,1],twill:[.12,10,.8],felt:[0,1,.9],chenille:[.06,4,1.6],terry:[0,1,1.6],corduroy:[.12,8,1.4],leather:[.45,22,.9],suede:[.04,3,.6],satin:[.95,34,.35],velvet:[.5,5,.7],
+  knit:[.04,6,1],tweed:[.03,4,1],burlap:[0,1,1.5],linen:[.04,6,1],mesh:[.25,14,1],sequin:[1.2,46,1],sherpa:[0,1,1.8],embroidery:[.7,24,1.1],flannel:[.03,4,.7],nylon:[.5,18,.5],waffle:[.05,6,1.4]};
+function strokeField(W,H,R,base,fn){const c=mkc(W,H),x=c2(c);x.fillStyle=`rgb(${base*255|0},${base*255|0},${base*255|0})`;x.fillRect(0,0,W,H);fn(x);const d=x.getImageData(0,0,W,H).data,G=new Float32Array(W*H);for(let i=0;i<G.length;i++)G[i]=d[i*4]/255;return G}
+function fabric(type,W,H,t,R){const N=W*H,G=new Float32Array(N);let Wm=null,A=null;const fine=vnoise(W,H,t*.7,t*.7,R);
+  const weave=(tt,cV,cH,slubK)=>{const nV=vnoise(W,H,tt*.9,tt*16,R),nH=vnoise(W,H,tt*16,tt*.9,R),sl=vnoise(W,H,tt*2.2,tt*46,R);
+    const P2=Math.PI*2/tt,P1=Math.PI/tt;for(let y=0;y<H;y++){const hy=.5+.5*Math.cos(y*P2),sy=Math.sin(y*P1);for(let x=0;x<W;x++){const i=y*W+x,vx=.5+.5*Math.cos(x*P2),mx=.5+.5*Math.sin(x*P1)*sy,th=vx*mx+hy*(1-mx);
+      G[i]=.5+.17*(th-.5)+cV*(nV[i]-.5)*mx+cH*(nH[i]-.5)*(1-mx)+.07*(fine[i]-.5)+(slubK&&sl[i]>.72?slubK*(sl[i]-.72):0)}}};
+  switch(type){
+  case'canvas':weave(t*.72,.16,.13,.35);break;
+  case'linen':weave(t*.95,.34,.3,1.1);break;
+  case'denim':case'twill':{const dn=type==='denim',tt=t*(dn?.58:.7),st=vnoise(W,H,tt*1.4,tt*90,R),st2=vnoise(W,H,tt*.9,tt*22,R);if(dn)Wm=new Float32Array(N);
+    for(let y=0;y<H;y++){const iy=Math.floor(y/tt),fv=y/tt-iy;for(let x=0;x<W;x++){const ix=Math.floor(x/tt),fu=x/tt-ix,i=y*W+x,k=((ix-iy)%4+4)%4,weft=k===0,pr=weft?Math.sin(Math.PI*fv):Math.sin(Math.PI*fu);
+      G[i]=.5+.16*(pr-.6)+(dn?.42:.1)*(st[i]-.5)+(dn?.16:0)*(st2[i]-.5)+.05*(fine[i]-.5)-(weft?.03:0);if(dn)Wm[i]=weft?(.22+.3*fine[i])*pr:.02}}break}
+  case'felt':{const f=fbm(W,H,t*2.4,3,R);const s=strokeField(W,H,R,.5,x=>{const n=W*H/(t*t)*.5|0;x.lineCap='round';for(let k=0;k<n;k++){const px=R()*W,py=R()*H,a=R()*6.28,l=t*(1+R()*3);x.strokeStyle=R()<.5?'rgba(255,255,255,.18)':'rgba(0,0,0,.18)';x.lineWidth=t*.35;x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+Math.cos(a+1)*l*.5,py+Math.sin(a+1)*l*.5,px+Math.cos(a)*l,py+Math.sin(a)*l);x.stroke()}});
+    for(let i=0;i<N;i++)G[i]=.5+.26*(f[i]-.5)+(s[i]-.5)*.9;break}
+  case'chenille':case'terry':case'sherpa':{const ch=type==='chenille',te=type==='terry';const s=strokeField(W,H,R,ch?.42:.3,x=>{const n=W*H/(t*t)*(ch?.9:te?.75:1.6)|0;for(let k=0;k<n;k++){const px=R()*W,py=R()*H;
+      if(ch){const r=t*(1.2+R()*.9),g=x.createRadialGradient(px-r*.3,py-r*.3,0,px,py,r);g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(.6,'rgba(175,175,175,.75)');g.addColorStop(1,'rgba(60,60,60,0)');x.fillStyle=g;x.beginPath();x.arc(px,py,r,0,6.29);x.fill()}
+      else if(te){const r=t*(.8+R()*.7);x.strokeStyle=`rgba(${200+R()*55|0},${200+R()*55|0},${200+R()*55|0},.85)`;x.lineWidth=t*.55;x.beginPath();x.ellipse(px,py,r,r*(.6+R()*.4),R()*3,0,6.29);x.stroke()}
+      else{const r=t*(.6+R()*1.1),a=R()*6.28;x.strokeStyle=`rgba(255,255,255,${.35+R()*.5})`;x.lineWidth=t*.45;x.beginPath();x.arc(px,py,r,a,a+2.5+R()*2);x.stroke()}}});
+    for(let i=0;i<N;i++)G[i]=s[i]*.95+.06*(fine[i]-.5);break}
+  case'corduroy':{const w=t*3.4,n=vnoise(W,H,t*.8,t*30,R);for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,f=(x/w)%1,r=Math.pow(Math.sin(Math.PI*f),.7);G[i]=.18+.66*r+.1*(n[i]-.5)+.05*(fine[i]-.5)}break}
+  case'leather':{const n=fbm(W,H,t*6,3,R),pb=vnoise(W,H,t*1.3,t*1.3,R),c=fbm(W,H,t*16,2,R);for(let i=0;i<N;i++){const cr=1-Math.abs(c[i]*2-1);G[i]=.55+.14*(n[i]-.5)+.2*(pb[i]-.5)-.16*Math.max(0,cr-.95)/.05+(R()<.002?-.15:0)}break}
+  case'suede':{const n=fbm(W,H,t*20,2,R);for(let i=0;i<N;i++)G[i]=.5+.1*(fine[i]-.5)+.24*(n[i]-.5);break}
+  case'satin':{const n=fbm(W,H,t*34,2,R);for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;G[i]=.5+.035*Math.sin((x*.85+y*.25)/(t*.45))+.34*(n[i]-.5)}break}
+  case'velvet':case'nylon':{const n=fbm(W,H,t*24,2,R);if(type==='nylon'){const g=t*7;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,gx=x%g<t*.5||y%g<t*.5;G[i]=.5+.05*Math.sin(x/(t*.5))*Math.sin(y/(t*.5))+.22*(n[i]-.5)+(gx?.1:0)}}else for(let i=0;i<N;i++)G[i]=.5+.09*(fine[i]-.5)+.34*(n[i]-.5);break}
+  case'knit':{const tw=t*2.6,th=t*3.4;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,row=Math.floor(y/th),lx=((x+(row&1)*0)%tw+tw)%tw,ly=y%th,leg=lx<tw/2?0:1,nx=(lx-(leg?tw*.75:tw*.25))/(tw*.28),ny=(ly-th/2)/(th*.55),sl=leg?.55:-.55,d=(nx+sl*ny)**2+ny*ny*.55;G[i]=.25+.55*Math.max(0,1-d)+.08*(fine[i]-.5)}break}
+  case'waffle':{const g=t*4.2;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,fx=(x%g)/g,fy=(y%g)/g,e=Math.min(fx,1-fx,fy,1-fy);G[i]=.25+.6*sstep(0,.22,e)*(1-.3*sstep(.22,.5,e))+.08*(fine[i]-.5)}break}
+  case'tweed':{Wm=new Float32Array(N);const fl=vnoise(W,H,t*.9,t*.9,R),n=fbm(W,H,t*1.6,2,R);for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,band=Math.floor(x/(t*6)),dir=band&1?1:-1,l=Math.sin((y+dir*x)/(t*.42));G[i]=.5+.16*l+.2*(n[i]-.5);Wm[i]=fl[i]>.86?Math.min(1,(fl[i]-.86)*9):0}break}
+  case'burlap':{A=new Float32Array(N);const tt=t*2.3,nV=vnoise(W,H,tt*.6,tt*9,R),nH=vnoise(W,H,tt*9,tt*.6,R);for(let y=0;y<H;y++){const v=y/tt,iy=v|0,fv=v-iy;for(let x=0;x<W;x++){const u=x/tt,ix=u|0,fu=u-ix,i=y*W+x,tv=Math.abs(fu-.5)<.33+.08*(nV[i]-.5),th=Math.abs(fv-.5)<.33+.08*(nH[i]-.5),over=(ix+iy)&1;
+      if(!tv&&!th){G[i]=.15;A[i]=.08}else{const vert=tv&&(over||!th);const pr=vert?Math.cos(Math.PI*(fu-.5)/.66):Math.cos(Math.PI*(fv-.5)/.66);G[i]=.45+.25*pr+.25*((vert?nV[i]:nH[i])-.5)+.08*(fine[i]-.5);A[i]=1}}}break}
+  case'mesh':{A=new Float32Array(N);const g=t*5,r=g*.3;for(let y=0;y<H;y++){const row=Math.floor(y/(g*.866));for(let x=0;x<W;x++){const i=y*W+x,ox=(row&1)*g/2,cx=Math.round((x-ox)/g)*g+ox,cy=(row+.5)*g*.866,d=Math.hypot(x-cx,y-cy);A[i]=sstep(r,r+t*.6,d);G[i]=.45+.25*sstep(r,g*.5,d)+.1*(fine[i]-.5)}}break}
+  case'sequin':{const g=t*4.4,cols=Math.ceil(W/g)+2,rows=Math.ceil(H/(g*.8))+2,tilt=new Float32Array(cols*rows*2);for(let k=0;k<tilt.length;k++)tilt[k]=R();
+    for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x;let best=1e9,bi=0,bx=0,by=0;for(let dr=-1;dr<=1;dr++){const row=Math.floor(y/(g*.8))+dr;if(row<0)continue;const ox=(row&1)*g/2;const col=Math.round((x-ox)/g);const cx=col*g+ox,cy=row*g*.8;const d=Math.hypot(x-cx,y-cy);if(d<best){best=d;bi=(row*cols+((col%cols)+cols)%cols)*2;bx=x-cx;by=y-cy}}
+      const rr=g*.56;if(best<rr){const a=tilt[bi]*6.28,hl=Math.max(0,1-Math.hypot(bx/rr-Math.cos(a)*.4,by/rr-Math.sin(a)*.4)*1.6);G[i]=.32+.4*tilt[bi+1]+.5*hl*hl-.15*sstep(rr*.8,rr,best)}else G[i]=.12}break}
+  case'embroidery':{const tw=t*.95,L=t*14;const off=new Float32Array(4096);for(let k=0;k<4096;k++)off[k]=R()*L;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,a=(x+y)*.7071,b=(x-y)*.7071+1e5,row=Math.floor(b/tw),fb=b/tw-row,fa=((a+off[row&4095])/L)%1;G[i]=.5+.32*(Math.sin(Math.PI*fb)-.62)+.1*(Math.sin(Math.PI*fa)-.5)-(fa<.035?.22:0)+.04*(fine[i]-.5)}break}
+  case'flannel':{Wm=new Float32Array(N);const band=t*11,n=fbm(W,H,t*3,2,R),pat=[0,0,0,1,0,0,.55,.55,0,0,1,0];for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,sx=pat[Math.floor(x/band*4)%pat.length],sy=pat[Math.floor(y/band*4)%pat.length],tw=((Math.floor(x/(t*.9))-Math.floor(y/(t*.9)))%3+3)%3===0;Wm[i]=clamp((sx+sy)/1.6,0,1)*(tw?.85:1);G[i]=.5+.12*(n[i]-.5)+(tw?.05:-.02)+.08*(fine[i]-.5)}break}
+  default:weave(t,.26,.22,.5)}
+  const p=FPROP[type]||[.05,8,1];return {G,Wm,A,spec:p[0],shin:p[1],depth:p[2]}}
+
+/* ---------- text → alpha mask, with letter spacing, lines, alignment and a warp ---------- */
+function textMask(st,F){const lines=String(st.caps?st.text.toUpperCase():st.text||' ').split('\n');const fnt=`${st.italic?'italic ':''}${st.weight||800} ${F}px ${st.font||'Impact, sans-serif'}`;
+  const m=c2(mkc(4,4));m.font=fnt;const tr=(st.track||0)*F,lh=F*(st.lh||1.05);
+  const widths=lines.map(L=>{const cs=[...L];return cs.reduce((s,ch)=>s+m.measureText(ch).width,0)+Math.max(0,cs.length-1)*tr});const maxW=Math.max(F*.5,...widths);
+  const pad=F*.35,Wt=Math.ceil(maxW+pad*2),Ht=Math.ceil(lh*(lines.length-1)+F*1.25+pad*2);const T=mkc(Wt,Ht),x=c2(T);x.font=fnt;x.fillStyle='#fff';x.textBaseline='alphabetic';
+  lines.forEach((L,k)=>{let px=pad+(st.align==='left'?0:st.align==='right'?maxW-widths[k]:(maxW-widths[k])/2);const py=pad+F*.95+k*lh;for(const ch of L){x.fillText(ch,px,py);px+=m.measureText(ch).width+tr}});
+  return warp(T,st.warp||'none',st.bend||0,st.vbend||0)}
+function warp(T,type,b,vb){if(type==='none'&&!vb)return T;const W=T.width,H=T.height,M=Math.ceil(H*(1+Math.abs(b)*1.6)+W*Math.abs(vb)*.4),O=mkc(W*1.25,H+M*2),x=c2(O);const cx=O.width/2,cy=O.height/2,hw=W/2;
+  if(type==='arc'&&Math.abs(b)>.01){const th=b*Math.PI*.55,Rr=hw/Math.abs(th);for(let sx=0;sx<W;sx+=1){const u=(sx+.5-hw)/hw,a=u*th,px=cx+Rr*Math.sin(a),py=cy+(b>0?1:-1)*Rr*(1-Math.cos(a))-(b>0?1:-1)*Rr*(1-Math.cos(th))/2;
+      x.setTransform(Math.cos(a),Math.sin(a),-Math.sin(a),Math.cos(a),px,py);x.drawImage(T,sx,0,1.6,H,-.3,-H/2,1.6,H)}x.setTransform(1,0,0,1,0,0);return O}
+  for(let sx=0;sx<W;sx+=1){const u=(sx+.5-hw)/hw;let dy=0,sy=1;
+    switch(type){case'arch':dy=-b*H*.55*(1-u*u);break;case'bulge':sy=1+b*.75*(1-u*u);break;case'squeeze':sy=1-b*.45*(1-u*u);break;case'flag':dy=b*H*.22*Math.sin(Math.PI*u);break;
+      case'wave':dy=b*H*.18*Math.sin(Math.PI*u*2);sy=1+b*.12*Math.cos(Math.PI*u*2);break;case'rise':dy=-b*H*.35*u;break;case'perspective':sy=1+b*.55*u;break;case'fisheye':sy=1+b*.9*Math.cos(u*Math.PI/2)**2-b*.3;dy=0;break;
+      case'arclower':dy=b*H*.4*(u*u)*.0;sy=1+b*.6*(1-u*u);dy=-b*H*.3*(1-u*u);break;case'arcupper':sy=1+b*.6*(1-u*u);dy=b*H*.3*(1-u*u)-b*H*.3*(1-u*u)*0;dy=-b*H*.0;break}
+    dy+=vb*H*.5*u;const h=H*sy;let top=cy-h/2+dy;if(type==='arcupper')top=cy+H/2-h+dy;if(type==='arclower')top=cy-H/2+dy+(b>0?0:0);x.drawImage(T,sx,0,1,H,sx+(O.width-W)/2,top,1.2,h)}return O}
+function bbox(c){const W=c.width,H=c.height,d=c2(c).getImageData(0,0,W,H).data;let x0=W,y0=H,x1=-1,y1=-1;for(let y=0;y<H;y+=2){const r=y*W;for(let x=0;x<W;x+=2)if(d[(r+x)*4+3]>8){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}return x1<0?null:[x0,y0,x1+2,y1+2]}
+
+/* ---------- the full render ---------- */
+function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),Rg=rng((st.seed||7)*31+5);
+  // size the letters so the result fits
+  let F=260;const probe=textMask(st,F),bb0=bbox(probe)||[0,0,F,F];const extra=F*(.5+(st.threads||0)*.9+(st.fray||0)*.25);let k=Math.min(maxSide/(bb0[2]-bb0[0]+extra*2),maxSide/(bb0[3]-bb0[1]+extra*2));F=clamp(F*k,24,900);
+  const q=F/260,src=textMask(st,F),bb=bbox(src)||[0,0,F,F],pad=Math.ceil(F*(.42+(st.threads||0)*.85+(st.fray||0)*.2+(st.border||0)/260*1.2));
+  const W=Math.min(4096,bb[2]-bb[0]+pad*2|0),H=Math.min(4096,bb[3]-bb[1]+pad*2|0),N=W*H;
+  const Mc=mkc(W,H);c2(Mc).drawImage(src,-bb[0]+pad,-bb[1]+pad);const md=c2(Mc).getImageData(0,0,W,H).data;let Atop=new Float32Array(N);for(let i=0;i<N;i++)Atop[i]=md[i*4+3]/255;
+  const cx0=W/2,cy0=H/2,info={F,W,H,cx:cx0,cy:cy0};
+  // second layer (border fabric) around the letters
+  const bw=(st.border||0)*q;let Aout=Atop,SDtop=sdf(Atop,W,H),SDout=SDtop;
+  if(bw>.5){Aout=new Float32Array(N);for(let i=0;i<N;i++)Aout[i]=clamp(SDtop[i]+bw+.5,0,1);SDout=sdf(Aout,W,H)}
+  // cut edge: clean, frayed (fluffy), torn (ragged bites) or raw
+  const edge=st.edge||'clean',ea=st.edgeAmt==null?.6:st.edgeAmt;
+  if(edge!=='clean'){const big=vnoise(W,H,F*.055,F*.055,R),mid=vnoise(W,H,F*.02,F*.02,R),fin=vnoise(W,H,F*.007,F*.007,R),Aw=new Float32Array(N);
+    const amp=edge==='torn'?[F*.016*ea,F*.012*ea,F*.006]:edge==='frayed'?[F*.006*ea,F*.006*ea,F*.004]:[F*.01*ea,F*.005,F*.003];
+    for(let i=0;i<N;i++){const s=SDout[i]+(big[i]-.5)*2*amp[0]+(mid[i]-.5)*2*amp[1]+(fin[i]-.5)*2*amp[2];Aw[i]=clamp(s+.5,0,1)}
+    if(bw>.5)Aout=Aw;else{Aout=Aw;Atop=Aw}SDout=sdf(Aout,W,H);if(bw<=.5)SDtop=SDout}
+  // outlines
+  const outL=contours(Aout,W,H,.5,Math.max(1,Math.round(q*1.4))).map(p=>smooth(p,1));
+  // rips: auto ones near the edges + the ones you painted
+  const rips=[];const marks=st.marks||[];const heal=marks.filter(m=>m.t==='heal');const healed=(x,y)=>heal.some(m=>Math.hypot(x-(cx0+m.x*F),y-(cy0+m.y*F))<m.r*F);
+  const nR=Math.round((st.rips||0)*Math.max(1,(bb[2]-bb[0])/F)*2.2);const pts=outL.flat();
+  for(let n=0;n<nR&&pts.length;n++){const p=pts[Rg()*pts.length|0],ix=p[0]|0,iy=p[1]|0;let best=null;for(let tries=0;tries<12;tries++){const a=Rg()*6.28,r=F*(.03+Rg()*.09),x=p[0]+Math.cos(a)*r,y=p[1]+Math.sin(a)*r,i=(y|0)*W+(x|0);if(i>0&&i<N&&SDout[i]>F*.02){best=[x,y];break}}
+    if(best&&!healed(best[0],best[1]))rips.push({x:best[0],y:best[1],rx:F*(.04+Rg()*.07)*(.6+(st.ripSize||.5)),ry:F*(.025+Rg()*.04)*(.6+(st.ripSize||.5)),a:(Rg()-.5)*.6,s:Rg()*1e9|0});void ix;void iy}
+  marks.filter(m=>m.t==='rip').forEach(m=>rips.push({x:cx0+m.x*F,y:cy0+m.y*F,rx:m.r*F*1.15,ry:m.r*F*.68,a:(Rg()-.5)*.5,s:Rg()*1e9|0}));
+  const RIP=new Float32Array(N);if(rips.length){const rn=vnoise(W,H,F*.012,F*.012,R);for(const r of rips){const ex=Math.max(r.rx,r.ry)*1.4,x0=Math.max(0,r.x-ex|0),x1=Math.min(W-1,r.x+ex|0),y0=Math.max(0,r.y-ex|0),y1=Math.min(H-1,r.y+ex|0),ca=Math.cos(r.a),sa=Math.sin(r.a);
+      for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const dx=x-r.x,dy=y-r.y,u=(dx*ca+dy*sa)/r.rx,v=(-dx*sa+dy*ca)/r.ry,i=y*W+x,val=1-(u*u+v*v)+(rn[i]-.5)*.9;if(val>0)RIP[i]=Math.max(RIP[i],clamp(val*4,0,1))}}}
+  // fabrics
+  const t=Math.max(1,F*.0105*(st.tscale||1)),f1=fabric(st.fabric||'canvas',W,H,t,R),f2=bw>.5?fabric(st.fabric2||st.fabric||'felt',W,H,t,R):null;
+  const C1=hx(st.c1||'#e8e1d3'),C2=hx(st.c2||'#ffffff'),B1=hx(st.b1||'#f2efe8'),B2=hx(st.b2||'#ffffff'),BK=hx(st.backing||'#e9e0cf');
+  const wear=st.wear||0,dirt=st.dirt||0,fade=st.fade||0,thick=st.thick==null?.55:st.thick;
+  const wearN=wear||fade?fbm(W,H,F*.035,3,R):null,dirtN=dirt?fbm(W,H,F*.09,3,R):null,edgeN=vnoise(W,H,t*.9,t*.9,R);
+  const bev=F*(.012+thick*.03),Hh=new Float32Array(N),col=new Float32Array(N*3),AL=new Float32Array(N);
+  const tornW=edge==='torn'?F*.035*(.5+ea):0;
+  for(let i=0;i<N;i++){const ao=Aout[i];if(ao<.004)continue;const at=bw>.5?Atop[i]:1;
+    let g1=f1.G[i],w1=f1.Wm?f1.Wm[i]:0,a1=f1.A?f1.A[i]:1;let r=C1[0]*(.58+.84*g1)+(g1-.5)*26,gg=C1[1]*(.58+.84*g1)+(g1-.5)*26,b=C1[2]*(.58+.84*g1)+(g1-.5)*26;
+    if(w1){const k=w1,s=.72+.5*g1;r+=(C2[0]*s-r)*k;gg+=(C2[1]*s-gg)*k;b+=(C2[2]*s-b)*k}
+    // wash / fade (denim style lighter patches)
+    if(wearN){const wn=wearN[i];if(fade){const k=sstep(.45,.85,wn)*fade*.8+fade*.15;const s=f1.Wm?C2:lift(C1,.55);r+=(s[0]*(.8+.3*g1)-r)*k*.7;gg+=(s[1]*(.8+.3*g1)-gg)*k*.7;b+=(s[2]*(.8+.3*g1)-b)*k*.7}
+      if(wear){const k=sstep(1-wear*.75,1.06-wear*.75,wn)*.75;const s=f1.Wm?C2:lift(C1,.45);r+=(s[0]-r)*k*.55;gg+=(s[1]-gg)*k*.55;b+=(s[2]-b)*k*.55;g1=.5+(g1-.5)*(1-k*.6)}}
+    // torn edges show the white weft threads
+    if(tornW&&SDout[i]<tornW){const k=(1-SDout[i]/tornW)*sstep(.35,.75,edgeN[i]);const s=f1.Wm?C2:lift(C1,.6);r+=(s[0]-r)*k;gg+=(s[1]-gg)*k;b+=(s[2]-b)*k}
+    let h=bev*sstep(0,bev*2.2,SDout[i])*1.0+f1.depth*(g1-.5)*t*.9;let alpha=ao*a1;
+    if(edge==='frayed'){const rw=F*.022,k=SDout[i]<rw?(1-SDout[i]/rw)*(.55+.45*edgeN[i]):0;if(k){const s=lift(C1,.5);r+=(s[0]-r)*k*.45;gg+=(s[1]-gg)*k*.45;b+=(s[2]-b)*k*.45;h+=k*bev*.35}}
+    if(bw>.5){const g2=f2.G[i],a2=f2.A?f2.A[i]:1,w2=f2.Wm?f2.Wm[i]:0;let br=B1[0]*(.58+.84*g2)+(g2-.5)*26,bg=B1[1]*(.58+.84*g2)+(g2-.5)*26,bb2=B1[2]*(.58+.84*g2)+(g2-.5)*26;if(w2){const s=.72+.5*g2;br+=(B2[0]*s-br)*w2;bg+=(B2[1]*s-bg)*w2;bb2+=(B2[2]*s-bb2)*w2}
+      const ht=bev*sstep(0,bev*2.2,SDtop[i])*.9;r=br+(r-br)*at;gg=bg+(gg-bg)*at;b=bb2+(b-bb2)*at;h=bev*sstep(0,bev*2.2,SDout[i])+at*ht+(at>.5?f1.depth*(g1-.5):f2.depth*(g2-.5))*t*.9;alpha=ao*(a2+(a1-a2)*at)}
+    // rips: the top fabric is gone, the backing (or nothing) shows
+    const rp=RIP[i];if(rp>0){const yy=(i/W|0),gb=.55+.35*Math.sin(Math.PI*((yy/(t*1.05))%1))+.08*(edgeN[i]-.5);if(st.ripReveal==='hole'){alpha*=1-rp*.97}else{r+=(BK[0]*gb-r)*rp;gg+=(BK[1]*gb-gg)*rp;b+=(BK[2]*gb-b)*rp}h-=rp*bev*1.4}
+    if(dirtN){const k=sstep(.5,.85,dirtN[i])*dirt*.6;r*=1-k*.55;gg*=1-k*.62;b*=1-k*.75}
+    col[i*3]=r;col[i*3+1]=gg;col[i*3+2]=b;AL[i]=alpha;Hh[i]=h}
+  // light it like a thick patch
+  const la=(st.light==null?225:st.light)*Math.PI/180,L=[Math.cos(la)*.62,Math.sin(la)*.62,.78],Hv=[L[0],L[1],L[2]+1],hl=Math.hypot(...Hv);Hv[0]/=hl;Hv[1]/=hl;Hv[2]/=hl;
+  const spec=(st.sheen==null?1:st.sheen)*f1.spec,shin=f1.shin,out=c2(mkc(W,H)).createImageData(W,H),od=out.data;
+  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x;const a=AL[i];if(a<.004)continue;const dx=(Hh[i+1]-Hh[i-1])*.5,dy=(Hh[i+W]-Hh[i-W])*.5,nl=Math.hypot(dx,dy,1),nx=-dx/nl,ny=-dy/nl,nz=1/nl;
+    const df=Math.max(0,nx*L[0]+ny*L[1]+nz*L[2]),sp=spec?Math.pow(Math.max(0,nx*Hv[0]+ny*Hv[1]+nz*Hv[2]),shin)*spec:0,sh=.42+.72*df;
+    od[i*4]=clamp(col[i*3]*sh+sp*255,0,255);od[i*4+1]=clamp(col[i*3+1]*sh+sp*255,0,255);od[i*4+2]=clamp(col[i*3+2]*sh+sp*255,0,255);od[i*4+3]=clamp(a*255,0,255)}
+  const body=mkc(W,H);c2(body).putImageData(out,0,0);
+  // threads, fibres and stitches on top
+  const S=mkc(W,H);let x=c2(S);x.lineCap='round';x.lineJoin='round';
+  const thr=hx(st.thread||'#f4efe6'),fibreC=f1.Wm?C2:lift(C1,.35),fibreO=bw>.5?(f2.Wm?B2:lift(B1,.35)):fibreC;
+  const fray=st.fray==null?(edge==='clean'?0:.6):st.fray;
+  if(fray>0&&edge!=='clean'){const tornish=edge==='torn';for(const pl of outL){const pts=resample(pl,Math.max(.8,q*(tornish?1.3:.75)/(.35+fray)));for(const p of pts){if(Rg()>.55+fray*.45)continue;const nx=p[3],ny=-p[2];
+        // outward normal
+        const tx=p[0]+nx*3,ty=p[1]+ny*3,ii=(ty|0)*W+(tx|0),sgn=ii>0&&ii<N&&Aout[ii]>.5?-1:1;const ox=nx*sgn,oy=ny*sgn;if(healed(p[0],p[1]))continue;
+        let ang=Math.atan2(oy,ox)+(Rg()-.5)*(tornish?.9:1.9);
+        const len=q*(tornish?1.8+Math.pow(Rg(),2.6)*13:1.2+Math.pow(Rg(),3)*9)*(.5+fray),st0=q*(.5+Rg()*2.5),sx=p[0]-ox*st0,sy=p[1]-oy*st0,cur=(Rg()-.5)*len*.7;
+        const ex=sx+Math.cos(ang)*len,ey=sy+Math.sin(ang)*len,mx=(sx+ex)/2-Math.sin(ang)*cur,my=(sy+ey)/2+Math.cos(ang)*cur;
+        const c=Rg()<.15?dim(fibreO,.15):lift(fibreO,Rg()*.25);x.strokeStyle=rgbs(c,.5+Rg()*.5);x.lineWidth=q*(.35+Rg()*.75);x.beginPath();x.moveTo(sx,sy);x.quadraticCurveTo(mx,my,ex,ey);x.stroke();
+        if(!tornish&&Rg()<.6*fray){const r=q*(1+Rg()*2.2),a0=ang-1.6;x.lineWidth=q*(.35+Rg()*.4);x.strokeStyle=rgbs(lift(fibreO,.15),.45+Rg()*.4);x.beginPath();x.arc(p[0]+ox*r*.4,p[1]+oy*r*.4,r,a0,a0+Math.PI*(1+Rg()*.6));x.stroke()}}}}
+  // rip rims + threads across the hole (kept inside the letters)
+  const xMain=x;let RC=null;if(rips.length){RC=mkc(W,H);x=c2(RC);x.lineCap='round'}
+  for(const r of rips){const n=Math.round(10+r.rx/q*1.2);for(let k=0;k<n;k++){const a=Rg()*6.28,ex=r.x+Math.cos(a)*r.rx*(.85+Rg()*.25),ey=r.y+Math.sin(a)*r.ry*(.85+Rg()*.25),ang=a+Math.PI+(Rg()-.5)*1.2,len=q*(2+Rg()*7);x.strokeStyle=rgbs(lift(fibreC,.2),.55+Rg()*.4);x.lineWidth=q*(.4+Rg()*.6);x.beginPath();x.moveTo(ex,ey);x.lineTo(ex+Math.cos(ang)*len,ey+Math.sin(ang)*len);x.stroke()}
+    const m=2+Math.round(Rg()*5*(st.ripThreads==null?1:st.ripThreads));for(let k=0;k<m;k++){const yy=r.y+(Rg()-.5)*r.ry*1.5,w=r.rx*Math.sqrt(Math.max(.05,1-((yy-r.y)/r.ry)**2)),x0=r.x-w*1.05,x1=r.x+w*1.05,sag=(Rg()-.3)*q*4;
+      x.strokeStyle='rgba(0,0,0,.35)';x.lineWidth=q*1.5;x.beginPath();x.moveTo(x0,yy+q);x.quadraticCurveTo(r.x,yy+sag+q*1.4,x1,yy+q);x.stroke();
+      x.strokeStyle=rgbs(lift(f1.Wm?C2:BK,.1),.95);x.lineWidth=q*(.9+Rg()*.8);x.beginPath();x.moveTo(x0,yy);x.quadraticCurveTo(r.x,yy+sag,x1,yy);x.stroke()}}
+  if(RC){const mk=mkc(W,H),mx=c2(mk),id=mx.createImageData(W,H);for(let i=0;i<N;i++)id.data[i*4+3]=Aout[i]*255;mx.putImageData(id,0,0);x.globalCompositeOperation='destination-in';x.drawImage(mk,0,0);x=xMain;x.drawImage(RC,0,0)}
+  // stitching
+  const sType=st.stitch||'none';if(sType!=='none'){const base=bw>.5&&st.stitchOn!=='outer'?SDtop:SDout,ins=(st.inset==null?.045:st.inset)*F,tw=q*(st.stitchW||1.3),sl=q*(st.stitchLen||6);
+    const lines=(d)=>contours(base,W,H,d,Math.max(1,Math.round(q*1.2))).map(p=>smooth(p,3));
+    const dash=(a,b)=>{x.strokeStyle='rgba(0,0,0,.42)';x.lineWidth=tw*1.5;x.beginPath();x.moveTo(a[0]+q*.5,a[1]+q*.8);x.lineTo(b[0]+q*.5,b[1]+q*.8);x.stroke();
+      x.strokeStyle=rgbs(thr,1);x.lineWidth=tw;x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();
+      x.strokeStyle=rgbs(lift(thr,.6),.75);x.lineWidth=tw*.35;x.beginPath();x.moveTo(a[0]-q*.25,a[1]-q*.35);x.lineTo(b[0]-q*.25,b[1]-q*.35);x.stroke();
+      x.fillStyle='rgba(0,0,0,.35)';for(const p of [a,b]){x.beginPath();x.arc(p[0],p[1],tw*.45,0,6.29);x.fill()}};
+    const run=(pl)=>{const pts=resample(pl,sl*.33);for(let k=0;k+3<pts.length;k+=5)dash(pts[k],pts[k+3])};
+    const zig=(pl,amp,spc)=>{const pts=resample(pl,spc);let prev=null;for(let k=0;k<pts.length;k++){const p=pts[k],nx=p[3],ny=-p[2],s=k&1?1:-1,c=[p[0]+nx*amp*s,p[1]+ny*amp*s];if(prev)dash(prev,c);prev=c}};
+    if(sType==='single')lines(ins).forEach(run);
+    else if(sType==='double'){lines(ins).forEach(run);lines(ins+tw*3.2).forEach(run)}
+    else if(sType==='zigzag')lines(Math.max(tw*2.5,ins*.6)).forEach(pl=>zig(pl,Math.max(tw*2,ins*.35),sl*.55));
+    else if(sType==='satin')lines(Math.max(tw*3,ins*.5)).forEach(pl=>zig(pl,Math.max(tw*2.6,ins*.5),tw*1.05));
+    else if(sType==='rope'||sType==='rope2'){const rope=pl=>{const pts=resample(pl,tw*1.7);for(let k=0;k<pts.length;k+=1){const p=pts[k],a=Math.atan2(p[3],p[2])+.8,l=tw*1.6;const A=[p[0]-Math.cos(a)*l,p[1]-Math.sin(a)*l],B=[p[0]+Math.cos(a)*l,p[1]+Math.sin(a)*l];
+        x.strokeStyle='rgba(0,0,0,.3)';x.lineWidth=tw*1.25;x.beginPath();x.moveTo(A[0]+q*.5,A[1]+q*.7);x.lineTo(B[0]+q*.5,B[1]+q*.7);x.stroke();x.strokeStyle=rgbs(thr,1);x.lineWidth=tw*1.05;x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(B[0],B[1]);x.stroke();
+        x.strokeStyle=rgbs(lift(thr,.7),.7);x.lineWidth=tw*.32;x.beginPath();x.moveTo(A[0]-q*.2,A[1]-q*.3);x.lineTo(B[0]-q*.2,B[1]-q*.3);x.stroke()}};lines(ins).forEach(rope);if(sType==='rope2')lines(ins+tw*4.2).forEach(rope)}
+    else if(sType==='chain'){lines(ins).forEach(pl=>{const pts=resample(pl,sl*.9);for(const p of pts){x.strokeStyle='rgba(0,0,0,.35)';x.lineWidth=tw*.9;x.beginPath();x.ellipse(p[0]+q*.4,p[1]+q*.6,sl*.48,tw*1.3,Math.atan2(p[3],p[2]),0,6.29);x.stroke();x.strokeStyle=rgbs(thr,1);x.lineWidth=tw*.8;x.beginPath();x.ellipse(p[0],p[1],sl*.48,tw*1.3,Math.atan2(p[3],p[2]),0,6.29);x.stroke()}})}
+    else if(sType==='cross')lines(ins).forEach(pl=>{const pts=resample(pl,sl*.8);for(const p of pts){const nx=p[3],ny=-p[2],d=sl*.35;dash([p[0]-p[2]*d-nx*d,p[1]-p[3]*d-ny*d],[p[0]+p[2]*d+nx*d,p[1]+p[3]*d+ny*d]);dash([p[0]-p[2]*d+nx*d,p[1]-p[3]*d+ny*d],[p[0]+p[2]*d-nx*d,p[1]+p[3]*d-ny*d])}})}
+  // loose hanging threads
+  const nT=Math.round((st.threads||0)*6*Math.max(1,(bb[2]-bb[0])/F/2));const tpts=outL.flat();const thread=(p,len)=>{const sx=p[0],sy=p[1],side=Rg()<.5?-1:1;let px=sx,py=sy;const segs=3+(Rg()*3|0);x.beginPath();x.moveTo(sx,sy);
+      let dx=(Rg()-.5)*.6+side*.25,dy=.6+Rg()*.5;for(let s=0;s<segs;s++){const l=len/segs;const c1x=px+dx*l*.6+(Rg()-.5)*l*.6,c1y=py+dy*l*.5,nx=px+dx*l+(Rg()-.5)*l*.5,ny=py+dy*l;x.quadraticCurveTo(c1x,c1y,nx,ny);px=nx;py=ny;dx+=(Rg()-.5)*.8;dy=Math.max(.15,dy+(Rg()-.4)*.5)}
+      const w=q*(.7+Rg()*.6);x.save();x.strokeStyle='rgba(0,0,0,.35)';x.lineWidth=w*1.6;x.translate(q*1.4,q*2);x.stroke();x.restore();x.strokeStyle=rgbs(lift(fibreO,Rg()*.2),.95);x.lineWidth=w;x.stroke()};
+  for(let n=0;n<nT&&tpts.length;n++){const p=tpts[Rg()*tpts.length|0];if(healed(p[0],p[1]))continue;thread(p,F*(.12+Rg()*.4)*(st.threadLen||1))}
+  marks.filter(m=>m.t==='thread').forEach(m=>{const mx=cx0+m.x*F,my=cy0+m.y*F;let best=null,bd=1e9;for(const p of tpts){const d=(p[0]-mx)**2+(p[1]-my)**2;if(d<bd){bd=d;best=p}}if(best)thread(best,F*(.25+Rg()*.35)*(st.threadLen||1))});
+  // fuzz / pilling
+  const pill=st.pill||0;if(pill>0){const n=Math.round(N/(q*q*260)*pill);for(let k=0;k<n;k++){const px=Rg()*W,py=Rg()*H,i=(py|0)*W+(px|0);if(Aout[i]<.6)continue;const r=q*(.6+Rg()*1.6),a=Rg()*6.28;x.strokeStyle=rgbs(lift(fibreC,.2+Rg()*.3),.18+Rg()*.3);x.lineWidth=q*.4;x.beginPath();x.arc(px,py,r,a,a+2+Rg()*3);x.stroke()}}
+  // everything together, with a soft shadow on the garment
+  const P=mkc(W,H),px=c2(P);px.drawImage(body,0,0);px.drawImage(S,0,0);
+  const res=mkc(W,H),rx=c2(res);if(opts.bg){rx.drawImage(opts.bg(W,H),0,0)}
+  const shA=st.shadow==null?.6:st.shadow;if(shA>0){const s1=mkc(W/4,H/4),s1x=c2(s1);s1x.drawImage(P,0,0,s1.width,s1.height);s1x.globalCompositeOperation='source-in';s1x.fillStyle='#000';s1x.fillRect(0,0,s1.width,s1.height);
+    const s2=mkc(W/10,H/10);c2(s2).drawImage(s1,0,0,s2.width,s2.height);const off=F*(.012+thick*.022);rx.globalAlpha=shA*.8;rx.imageSmoothingQuality='high';rx.drawImage(s2,-Math.cos(la)*off*1.6,-Math.sin(la)*off*1.6,W,H);rx.globalAlpha=shA*.6;rx.drawImage(s1,-Math.cos(la)*off*.5,-Math.sin(la)*off*.5,W,H);rx.globalAlpha=1}
+  rx.drawImage(P,0,0);info.contours=outL.length;info.rips=rips.length;return {canvas:res,info}}
+
+/* ---------- a small fabric swatch (for the fabric picker) ---------- */
+function swatch(type,c1,c2c,S=72){const R=rng(11),f=fabric(type,S,S,2.4,R),C1=hx(c1),C2=hx(c2c),c=mkc(S,S),x=c2(c),d=x.createImageData(S,S),o=d.data;
+  for(let i=0;i<S*S;i++){const g=f.G[i],w=f.Wm?f.Wm[i]:0,a=f.A?f.A[i]:1;let r=C1[0]*(.58+.84*g)+(g-.5)*26,gg=C1[1]*(.58+.84*g)+(g-.5)*26,b=C1[2]*(.58+.84*g)+(g-.5)*26;if(w){const s=.72+.5*g;r+=(C2[0]*s-r)*w;gg+=(C2[1]*s-gg)*w;b+=(C2[2]*s-b)*w}
+    o[i*4]=clamp(r,0,255);o[i*4+1]=clamp(gg,0,255);o[i*4+2]=clamp(b,0,255);o[i*4+3]=a*255}x.putImageData(d,0,0);return c}
+/* ---------- garment backgrounds ---------- */
+function garment(type,hex,W,H){const c=mkc(W,H),x=c2(c);x.fillStyle=hex;x.fillRect(0,0,W,H);if(type==='flat')return c;const R=rng(3),t=Math.max(1.2,Math.min(W,H)/360),f=fabric('knit',W,H,t,R),C=hx(hex),d=x.getImageData(0,0,W,H),o=d.data,vig=fbm(W,H,Math.max(W,H)/3,2,R);
+  for(let i=0;i<W*H;i++){const g=f.G[i],v=.82+.3*vig[i],k=(.85+.3*g)*v;o[i*4]=clamp(C[0]*k+(g-.5)*10,0,255);o[i*4+1]=clamp(C[1]*k+(g-.5)*10,0,255);o[i*4+2]=clamp(C[2]*k+(g-.5)*10,0,255)}x.putImageData(d,0,0);return c}
+return {render,swatch,garment,FAB}})();
+
+/* ================= v44: Text Lab – a small studio for fabric letters ================= */
+const TL=(()=>{
+const DEF={text:'NYC',font:'',weight:900,italic:false,caps:true,align:'center',track:.02,lh:1.02,tscale:1,
+  fabric:'canvas',c1:'#e8e1d3',c2:'#ffffff',sheen:1,thick:.6,border:0,fabric2:'felt',b1:'#f2ede2',b2:'#ffffff',
+  edge:'frayed',edgeAmt:.7,fray:.85,stitch:'rope2',stitchW:1.5,stitchLen:6,thread:'#f3eee4',inset:.05,stitchOn:'top',
+  rips:0,ripSize:.6,ripReveal:'backing',backing:'#e8dfcf',ripThreads:1,threads:.35,threadLen:1,wear:0,fade:0,pill:.3,dirt:0,
+  warp:'none',bend:0,vbend:0,bg:'black',bgc:'#111214',knit:true,light:225,shadow:.6,seed:7,marks:[]};
+const PRE=[
+  ['Frayed canvas',{fabric:'canvas',c1:'#e8e1d3',c2:'#ffffff',edge:'frayed',edgeAmt:.7,fray:.85,stitch:'rope2',stitchW:1.5,stitchLen:6,thread:'#f3eee4',inset:.05,thick:.6,border:0,rips:0,threads:.35,wear:0,fade:0,pill:.3,dirt:0}],
+  ['Torn denim',{fabric:'denim',c1:'#243a5a',c2:'#efe9de',edge:'torn',edgeAmt:.7,fray:.55,stitch:'none',thick:.4,border:0,rips:.6,ripSize:.8,ripReveal:'backing',backing:'#e8dfcf',threads:.15,fade:.25,wear:.15,pill:0,dirt:0}],
+  ['Varsity chenille',{fabric:'chenille',c1:'#b3122e',edge:'clean',fray:0,stitch:'zigzag',thread:'#f3efe6',border:16,fabric2:'felt',b1:'#f2ede2',thick:.75,inset:.04,rips:0,threads:0,fade:0,wear:0,pill:0}],
+  ['Tackle twill',{fabric:'twill',c1:'#1d2c4f',edge:'clean',fray:0,stitch:'satin',thread:'#26365c',border:12,fabric2:'twill',b1:'#f4f1ea',thick:.45,rips:0,threads:0,fade:0,wear:0,pill:0}],
+  ['Felt patch',{fabric:'felt',c1:'#2f5a3c',edge:'clean',fray:0,stitch:'single',thread:'#f1e9d9',border:0,thick:.6,rips:0,threads:0,pill:.2}],
+  ['Leather',{fabric:'leather',c1:'#5b3620',edge:'clean',fray:0,stitch:'single',thread:'#e9d7b5',border:0,thick:.7,rips:0,threads:0,pill:0,wear:.1}],
+  ['Suede',{fabric:'suede',c1:'#9b6a43',edge:'raw',edgeAmt:.4,fray:.2,stitch:'single',thread:'#e7d3b4',border:0,thick:.5,rips:0,threads:0,pill:0}],
+  ['Corduroy',{fabric:'corduroy',c1:'#7a4a2a',edge:'raw',edgeAmt:.5,fray:.4,stitch:'double',thread:'#e2c79f',border:0,thick:.6,rips:0,threads:.1}],
+  ['Embroidery',{fabric:'embroidery',c1:'#d9d3c6',edge:'clean',fray:0,stitch:'satin',thread:'#d9d3c6',border:0,thick:.45,rips:0,threads:0,pill:0}],
+  ['Terry towel',{fabric:'terry',c1:'#f3efe7',edge:'clean',fray:0,stitch:'single',thread:'#ffffff',border:0,thick:.7,rips:0,threads:0}],
+  ['Sherpa',{fabric:'sherpa',c1:'#efe7d8',edge:'frayed',edgeAmt:.5,fray:.45,stitch:'none',border:0,thick:.8,rips:0,threads:0}],
+  ['Velvet',{fabric:'velvet',c1:'#4a1230',edge:'clean',fray:0,stitch:'none',border:0,thick:.55,rips:0,threads:0,pill:0}],
+  ['Knit',{fabric:'knit',c1:'#8a8d91',edge:'raw',edgeAmt:.4,fray:.35,stitch:'none',border:0,thick:.5}],
+  ['Tweed',{fabric:'tweed',c1:'#6c6152',c2:'#c94f3d',edge:'frayed',edgeAmt:.5,fray:.45,stitch:'single',thread:'#d7c8a8',border:0,thick:.55}],
+  ['Burlap',{fabric:'burlap',c1:'#b08f62',edge:'frayed',edgeAmt:.8,fray:.9,stitch:'none',border:0,thick:.45,threads:.5}],
+  ['Flannel',{fabric:'flannel',c1:'#8a1f1f',c2:'#161616',edge:'raw',edgeAmt:.5,fray:.4,stitch:'single',thread:'#e9e2d2',border:0,thick:.5}],
+  ['Sequins',{fabric:'sequin',c1:'#c9c9cf',edge:'clean',fray:0,stitch:'none',border:0,thick:.4,rips:0,threads:0,pill:0}],
+  ['Mesh jersey',{fabric:'mesh',c1:'#1e1e22',edge:'clean',fray:0,stitch:'zigzag',thread:'#e8e8e8',border:10,fabric2:'twill',b1:'#e8e8e8',thick:.45}],
+  ['Ripstop',{fabric:'nylon',c1:'#3a4632',edge:'clean',fray:0,stitch:'double',thread:'#c9cbb8',border:0,thick:.4}],
+  ['Linen',{fabric:'linen',c1:'#d9cdb6',edge:'frayed',edgeAmt:.6,fray:.6,stitch:'single',thread:'#efe6d2',border:0,thick:.5}],
+  ['Waffle',{fabric:'waffle',c1:'#e9e4da',edge:'raw',edgeAmt:.4,fray:.3,stitch:'none',border:0,thick:.6}]];
+const STI=[['none','None'],['single','Single'],['double','Double'],['rope','Rope'],['rope2','Rope ×2'],['zigzag','Zigzag'],['satin','Satin border'],['chain','Chain'],['cross','Cross']];
+const WARPS=[['none','None'],['arc','Arc'],['arch','Arch'],['bulge','Bulge'],['squeeze','Squeeze'],['flag','Flag'],['wave','Wave'],['rise','Rise'],['perspective','Perspective'],['fisheye','Fish-eye']];
+const BGS=[['black','Black tee','#111214'],['white','White tee','#f1f0ec'],['heather','Heather grey','#9a9a9c'],['navy','Navy','#1b2436'],['cream','Cream','#e7dfcf'],['clear','Transparent','']];
+const PAL=['#111214','#f4f1ea','#e8e1d3','#9a9a9c','#b3122e','#7b1e2b','#e8742a','#f2c14e','#2f5a3c','#243a5a','#4f86c6','#5b3620','#9b6a43','#e9b7c6','#6a3d9a','#c9c9cf'];
+let st=null,el=null,tab='text',from=null,editId=null,busy=false,again=false,lastInfo=null,tool='view',zoom=1,fontCat='All',RT=null,lastFull=0;
+const esc2=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function load(){try{const v=JSON.parse(localStorage.getItem('mp_tl')||'null');if(v&&typeof v==='object')return Object.assign({},DEF,v,{marks:Array.isArray(v.marks)?v.marks:[]})}catch(e){}return Object.assign({},DEF)}
+function save(){try{localStorage.setItem('mp_tl',JSON.stringify(st))}catch(e){}}
+function fonts(){try{if(!FONTS.length)buildFonts()}catch(e){}return (typeof FONTS!=='undefined'?FONTS:[])}
+function defFont(){const L=fonts(),pick=['Anton','Impact','Arial Black','Futura','Bahnschrift','Helvetica Neue'];for(const n of pick){const f=L.find(x=>x.n===n&&(!x.g||(typeof fontReady==='function'&&fontReady(n))));if(f)return f.css}return '"Arial Black","Helvetica Neue",Arial,sans-serif'}
+const bgFn=()=>{const b=BGS.find(x=>x[0]===st.bg);if(!b||!b[2])return null;const c=st.bg==='custom'?st.bgc:b[2];return (W,H)=>TLX.garment(st.knit?'knit':'flat',c,W,H)};
+
+function build(){el=document.createElement('div');el.id='tlP';el.hidden=true;el.innerHTML=`
+  <div class="tl-hd"><button class="tl-back" data-tl="close" aria-label="Close">&#8249;&nbsp;Back</button><div class="tl-ttl"><small>Text Lab</small><b>Fabric letters</b></div><span class="tl-grow"></span>
+    <button data-tl="shuffle" title="New random frays, rips and threads">Shuffle</button><button data-tl="png">Save PNG</button><button data-tl="add" class="tl-addnew" hidden>Add as new</button><button class="pri" data-tl="addmain">Add to design</button></div>
+  <div class="tl-main"><div class="tl-stage"><div class="tl-view"><canvas class="tl-cv"></canvas></div><div class="tl-busy" hidden>Rendering…</div>
+      <div class="tl-tools"><button data-tlt="view" class="on">View</button><button data-tlt="rip">Rip</button><button data-tlt="thread">Loose thread</button><button data-tlt="heal">Mend</button><span class="tl-sep"></span><button data-tl="undomark">Undo mark</button><button data-tl="clearmarks">Clear</button></div></div>
+    <div class="tl-side"><div class="tl-presets"></div><div class="tl-tabs">${[['text','Text'],['fabric','Fabric'],['edge','Edges'],['stitch','Stitch'],['distress','Distress'],['warp','Warp'],['scene','Scene']].map(([k,n])=>`<button data-tltab="${k}">${n}</button>`).join('')}</div><div class="tl-body"></div></div></div>`;
+  document.body.appendChild(el);wire()}
+
+/* ---------- controls ---------- */
+const sl=(k,n,a,b,s,fmt)=>`<label class="tl-sl"><span>${n}</span><input type="range" min="${a}" max="${b}" step="${s}" value="${st[k]}" data-k="${k}"><em>${fmt?fmt(st[k]):Math.round(st[k]*100)/100}</em></label>`;
+const seg=(k,opts)=>`<div class="tl-seg">${opts.map(([v,n])=>`<button class="${st[k]===v?'on':''}" data-set="${k}" data-v="${esc2(v)}">${n}</button>`).join('')}</div>`;
+const tog=(k,n)=>`<button class="tl-tog${st[k]?' on':''}" data-tog="${k}">${n}</button>`;
+const colour=(k,n)=>`<div class="tl-col"><span>${n}</span><div class="tl-sw">${PAL.map(c=>`<button class="${String(st[k]).toLowerCase()===c?'on':''}" style="--c:${c}" data-set="${k}" data-v="${c}" aria-label="${c}"></button>`).join('')}<label class="tl-pick" style="--c:${st[k]}"><input type="color" value="${st[k]}" data-col="${k}"></label></div></div>`;
+const h6=t=>`<h6>${t}</h6>`;
+function fabGrid(k,ck,ck2){return `<div class="tl-fabs">${TLX.FAB.map(([id,n])=>`<button class="${st[k]===id?'on':''}" data-set="${k}" data-v="${id}"><canvas width="72" height="72" data-fab="${id}" data-c1="${st[ck]}" data-c2="${st[ck2]}"></canvas><span>${n}</span></button>`).join('')}</div>`}
+function body(){const b=el.querySelector('.tl-body');let h='';
+  if(tab==='text'){const L=fonts(),cats=['All',...new Set(L.map(f=>f.cat))];const list=L.filter(f=>fontCat==='All'||f.cat===fontCat);
+    h=h6('Words')+`<textarea class="tl-txt" rows="2" data-k="text" spellcheck="false">${esc2(st.text)}</textarea>`+
+      h6('Font')+`<div class="tl-fcat">${cats.map(c=>`<button class="${fontCat===c?'on':''}" data-fcat="${esc2(c)}">${esc2(c)}</button>`).join('')}</div><div class="tl-fonts">${list.map(f=>`<button class="${st.font===f.css?'on':''}" data-font="${esc2(f.n)}" style="font-family:${esc2(f.g&&!(typeof fontReady==='function'&&fontReady(f.n))?'inherit':f.css)}">${esc2(f.n)}${f.g&&!(typeof fontReady==='function'&&fontReady(f.n))?'<small>⤓</small>':''}</button>`).join('')}</div>`+
+      seg('weight',[[400,'Regular'],[700,'Bold'],[900,'Black']])+`<div class="tl-row">${tog('caps','ALL CAPS')}${tog('italic','Italic')}</div>`+seg('align',[['left','Left'],['center','Centre'],['right','Right']])+
+      sl('track','Letter spacing',-.1,.6,.01)+sl('lh','Line spacing',.7,1.6,.01)+sl('tscale','Thread size',.4,2.5,.05)}
+  else if(tab==='fabric'){h=h6('Fabric')+fabGrid('fabric','c1','c2')+colour('c1','Colour')+colour('c2','Second colour <small>(denim weft, tweed flecks, plaid)</small>')+sl('thick','Thickness / puff',0,1,.01)+sl('sheen','Sheen',0,2,.05)+
+      h6('Second layer (border)')+sl('border','Border width',0,40,1,v=>v?v+' px':'Off')+(st.border?fabGrid('fabric2','b1','b2')+colour('b1','Border colour'):'')}
+  else if(tab==='edge'){h=h6('Cut edge')+seg('edge',[['clean','Clean cut'],['frayed','Frayed'],['torn','Torn'],['raw','Raw']])+sl('edgeAmt','Roughness',0,1,.01)+sl('fray','Fibres',0,1.5,.01)+`<p class="tl-note">Frayed = soft fluffy fibres like canvas appliqué · Torn = ragged denim with white threads.</p>`}
+  else if(tab==='stitch'){h=h6('Stitching')+`<div class="tl-seg wrap">${STI.map(([v,n])=>`<button class="${st.stitch===v?'on':''}" data-set="stitch" data-v="${v}">${n}</button>`).join('')}</div>`+(st.stitch!=='none'?colour('thread','Thread colour')+sl('inset','Distance from edge',.01,.12,.002)+sl('stitchLen','Stitch length',2,14,.5)+sl('stitchW','Thread thickness',.6,3,.05)+(st.border?seg('stitchOn',[['top','On the top layer'],['outer','On the border']]):''):'')}
+  else if(tab==='distress'){h=h6('Rips & holes')+sl('rips','Rips',0,1.5,.01)+sl('ripSize','Rip size',.1,1.5,.01)+seg('ripReveal',[['backing','Show backing'],['hole','See-through hole']])+(st.ripReveal==='backing'?colour('backing','Backing colour'):'')+sl('ripThreads','Threads across rips',0,2,.05)+
+      h6('Threads & wear')+sl('threads','Loose threads',0,2,.01)+sl('threadLen','Thread length',.3,2.5,.01)+sl('wear','Wear / abrasion',0,1,.01)+sl('fade','Fade / wash',0,1,.01)+sl('pill','Pilling / fuzz',0,1.5,.01)+sl('dirt','Dirt / vintage stain',0,1,.01)+
+      `<button class="tl-wide" data-tl="shuffle">Shuffle rips &amp; threads</button><p class="tl-note">Paint your own: pick Rip or Loose thread under the picture and tap / drag on the letters. Mend removes them.</p>`}
+  else if(tab==='warp'){h=h6('Warp')+`<div class="tl-seg wrap">${WARPS.map(([v,n])=>`<button class="${st.warp===v?'on':''}" data-set="warp" data-v="${v}">${n}</button>`).join('')}</div>`+sl('bend','Bend',-1,1,.01,v=>Math.round(v*100)+'%')+sl('vbend','Tilt',-1,1,.01,v=>Math.round(v*100)+'%')}
+  else if(tab==='scene'){h=h6('Garment behind')+`<div class="tl-seg wrap">${BGS.map(([v,n])=>`<button class="${st.bg===v?'on':''}" data-set="bg" data-v="${v}">${n}</button>`).join('')}</div><div class="tl-row">${tog('knit','Knit texture')}</div>`+
+      sl('light','Light direction',0,359,1,v=>v+'°')+sl('shadow','Shadow',0,1,.01)+`<p class="tl-note">Save PNG and Add to design keep the background see-through – only the letters, their threads and shadow go onto your design.</p>`}
+  b.innerHTML=h;el.querySelectorAll('[data-tltab]').forEach(x=>x.classList.toggle('on',x.dataset.tltab===tab));
+  // fabric swatches
+  b.querySelectorAll('canvas[data-fab]').forEach((c,i)=>setTimeout(()=>{try{const s=TLX.swatch(c.dataset.fab,c.dataset.c1,c.dataset.c2,72);c.getContext('2d').drawImage(s,0,0)}catch(e){}},i*8))}
+function presets(){const p=el.querySelector('.tl-presets');p.innerHTML=PRE.map(([n],i)=>`<button data-pre="${i}"><canvas width="96" height="64"></canvas><span>${n}</span></button>`).join('');
+  // small live previews of every look
+  const cs=[...p.querySelectorAll('canvas')];let i=0;const next=()=>{if(i>=cs.length||el.hidden)return;const k=i++;try{const s=Object.assign({},DEF,PRE[k][1],{text:'Aa',font:st.font,caps:false,warp:'none',marks:[],threads:Math.min(.2,PRE[k][1].threads||0),border:Math.min(10,PRE[k][1].border||0)});const r=TLX.render(s,{maxSide:150,bg:(W,H)=>TLX.garment('flat','#111214',W,H)}).canvas;const x=cs[k].getContext('2d'),sc=Math.max(96/r.width,64/r.height);x.drawImage(r,(96-r.width*sc)/2,(64-r.height*sc)/2,r.width*sc,r.height*sc)}catch(e){}setTimeout(next,20)};setTimeout(next,300)}
+
+/* ---------- rendering ---------- */
+function draw(quick){if(!el||el.hidden)return;if(busy){again=quick?again||'q':'f';return}busy=true;const bz=el.querySelector('.tl-busy');bz.hidden=false;
+  setTimeout(()=>{try{const stg=el.querySelector('.tl-stage').getBoundingClientRect(),side=Math.max(stg.width,stg.height)*(devicePixelRatio>1?1.4:1),ms=Math.round(Math.min(quick?760:1500,Math.max(500,side)));
+      const r=TLX.render(st,{maxSide:ms,bg:bgFn()});lastInfo=r.info;const cv=el.querySelector('.tl-cv');cv.width=r.canvas.width;cv.height=r.canvas.height;cv.getContext('2d').drawImage(r.canvas,0,0);fitView()}
+    catch(e){console.error(e)}busy=false;bz.hidden=true;if(again){const q=again==='q';again=false;draw(q)}},16)}
+function sched(quick){clearTimeout(RT);RT=setTimeout(()=>draw(quick),quick?30:90);if(!quick)save()}
+function fitView(){const v=el.querySelector('.tl-view'),cv=el.querySelector('.tl-cv'),r=v.getBoundingClientRect();const k=Math.min((r.width-24)/cv.width,(r.height-24)/cv.height)*zoom;cv.style.width=cv.width*k+'px';cv.style.height=cv.height*k+'px'}
+
+/* ---------- events ---------- */
+function set(k,v,quick){const num=typeof DEF[k]==='number';st[k]=num?+v:v;if(k==='text'||k==='font'||k==='warp'||k==='bend'||k==='vbend'||k==='track'||k==='lh'||k==='caps'||k==='align'||k==='weight'||k==='italic'){/* the marks belong to the old layout */if(st.marks.length&&!quick)st.marks=[]}sched(quick)}
+function wire(){
+  el.addEventListener('click',async e=>{const b=e.target.closest('button,[data-tl]');if(!b||!el.contains(b))return;const d=b.dataset;
+    if(d.tltab){tab=d.tltab;body();return}
+    if(d.pre){Object.assign(st,PRE[+d.pre][1]);st.marks=[];el.querySelectorAll('[data-pre]').forEach(x=>x.classList.toggle('on',x===b));body();sched();return}
+    if(d.set){set(d.set,d.v);body();return}
+    if(d.tog){st[d.tog]=!st[d.tog];set(d.tog,st[d.tog]);body();return}
+    if(d.fcat){fontCat=d.fcat;body();return}
+    if(d.font){const f=fonts().find(x=>x.n===d.font);if(!f)return;if(f.g&&!(typeof fontReady==='function'&&fontReady(f.n))){b.disabled=true;const ok=typeof ensureFont==='function'?await ensureFont(f.n):false;b.disabled=false;if(!ok)return}st.font=f.css;st.marks=[];body();sched();return}
+    if(d.tlt){tool=d.tlt;el.querySelectorAll('[data-tlt]').forEach(x=>x.classList.toggle('on',x===b));el.querySelector('.tl-view').classList.toggle('paint',tool!=='view');return}
+    switch(d.tl){case'close':close();break;case'shuffle':st.seed=(Math.random()*1e9|0)+1;sched();break;case'undomark':st.marks.pop();sched();break;case'clearmarks':st.marks=[];sched();break;case'png':exportPNG(false);break;case'add':exportPNG(true,false);break;case'addmain':exportPNG(true,!!editId);break}});
+  el.addEventListener('input',e=>{const t=e.target;if(t.dataset.k){if(t.type==='range'){const em=t.parentElement.querySelector('em');const k=t.dataset.k;const v=+t.value;if(em)em.textContent=k==='border'?(v?v+' px':'Off'):k==='light'?v+'°':(k==='bend'||k==='vbend')?Math.round(v*100)+'%':Math.round(v*100)/100;set(k,v,true)}else set(t.dataset.k,t.value,true)}
+    if(t.dataset.col){st[t.dataset.col]=t.value;t.parentElement.style.setProperty('--c',t.value);sched(true)}});
+  el.addEventListener('change',e=>{const t=e.target;if(t.dataset.k||t.dataset.col){if(t.dataset.k==='border'||t.dataset.col)body();sched(false)}});
+  // painting rips / threads / mend on the letters
+  const cv=el.querySelector('.tl-cv');let painting=false,lastP=null;
+  const toMark=ev=>{if(!lastInfo)return null;const r=cv.getBoundingClientRect(),px=(ev.clientX-r.left)/r.width*cv.width,py=(ev.clientY-r.top)/r.height*cv.height;return {x:(px-lastInfo.cx)/lastInfo.F,y:(py-lastInfo.cy)/lastInfo.F}};
+  cv.addEventListener('pointerdown',ev=>{if(tool==='view')return;ev.preventDefault();painting=true;lastP=null;add(ev)});
+  const add=ev=>{const m=toMark(ev);if(!m)return;if(lastP&&Math.hypot(m.x-lastP.x,m.y-lastP.y)<(tool==='rip'?.12:.08))return;lastP=m;
+    if(tool==='heal'){const before=st.marks.length;st.marks=st.marks.filter(k=>Math.hypot(k.x-m.x,k.y-m.y)>.14);if(st.marks.length===before)st.marks.push({t:'heal',x:m.x,y:m.y,r:.14})}else st.marks.push({t:tool,x:m.x,y:m.y,r:.05+(st.ripSize||.6)*.05});sched(true)};
+  addEventListener('pointermove',ev=>{if(painting)add(ev)});addEventListener('pointerup',()=>{if(painting){painting=false;sched(false)}});
+  // pinch / wheel zoom on the picture, double-tap to fit
+  const view=el.querySelector('.tl-view');view.addEventListener('wheel',ev=>{ev.preventDefault();zoom=Math.max(.5,Math.min(5,zoom*(ev.deltaY<0?1.1:.9)));fitView()},{passive:false});
+  const P=new Map();let d0=0,z0=1,tap=0;view.addEventListener('pointerdown',ev=>{P.set(ev.pointerId,[ev.clientX,ev.clientY]);if(P.size===2){const [a,b]=[...P.values()];d0=Math.hypot(a[0]-b[0],a[1]-b[1]);z0=zoom}else if(tool==='view'){const now=performance.now();if(now-tap<300){zoom=1;fitView()}tap=now}});
+  view.addEventListener('pointermove',ev=>{if(!P.has(ev.pointerId))return;P.set(ev.pointerId,[ev.clientX,ev.clientY]);if(P.size===2&&d0){const [a,b]=[...P.values()];zoom=Math.max(.5,Math.min(5,z0*Math.hypot(a[0]-b[0],a[1]-b[1])/d0));fitView()}});
+  const up=ev=>{P.delete(ev.pointerId);if(P.size<2)d0=0};view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
+  addEventListener('resize',()=>{if(el&&!el.hidden)fitView()})}
+
+/* ---------- output ---------- */
+// update the Text Lab layer you came from (same place and size, undoable)
+function updLayer(l,im,name,F){try{if(XFORM)xfCommit()}catch(_){}const so=l.so;if(!so||!l.cv)return false;const o=so.m,w0=so.img.width,h0=so.img.height,cx=o.a*w0/2+o.c*h0/2+o.e,cy=o.b*w0/2+o.d*h0/2+o.f,k=(l.tlF||F)/F;
+  const c=capImg(im,Math.min(SOMAX,D.w*D.h*1.5)),sc=(im.naturalWidth||im.width)/c.width;const m=new DOMMatrix([o.a*k*sc,o.b*k*sc,o.c*k*sc,o.d*k*sc,0,0]);m.e=cx-(m.a*c.width/2+m.c*c.height/2);m.f=cy-(m.b*c.width/2+m.d*c.height/2);
+  const b=wholeBefore(l,false),soB=l.so;setSo(l,c,m,'image/png');const x=cx2(l.cv);x.save();x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,D.w,D.h);drawSo(x,l.so);x.restore();
+  const e=wholeEntry(l,false,b,name);e.soA=l.so;e.soB=soB;pushH(e,'Update '+name);l.tl=JSON.parse(JSON.stringify(st));l.tlF=F;l.name=name;touch(l,false);try{dirtyComp=true;req();if(TOOL.t==='move')xfStart()}catch(_){}return true}
+async function exportPNG(toDesign,update){const bz=el.querySelector('.tl-busy');bz.textContent=toDesign?'Adding to your design…':'Making the PNG…';bz.hidden=false;await new Promise(r=>setTimeout(r,30));
+  let c,F=0;try{const rr=TLX.render(st,{maxSide:2200});c=rr.canvas;F=rr.info.F}catch(e){console.error(e);bz.hidden=true;try{toast('That was too big for this device – try fewer letters')}catch(_){}return}
+  const name='Text – '+String(st.text||'').replace(/\s+/g,' ').slice(0,24);bz.hidden=true;bz.textContent='Rendering…';
+  if(!toDesign){c.toBlob(b=>{try{saveBlob((String(st.text||'text').replace(/[^\w-]+/g,'_').slice(0,30)||'text')+'-fabric.png',b)}catch(e){console.error(e)}},'image/png');return}
+  const url=c.toDataURL('image/png'),im=new Image();im.onload=()=>{try{
+      if(update&&D&&!edEl.hidden){const l=D.layers.find(z=>z.id===editId);if(l&&updLayer(l,im,name,F)){close(true);return}}
+      if(!D||edEl.hidden){try{if(typeof hideHome==='function')hideHome()}catch(_){}openLab();newDoc({ar:.8,name:'Text Lab design'})}
+      if(typeof GMODE!=='undefined'&&GMODE){try{gsDesignSlot()}catch(_){}}
+      placeImg(im,name);const l=curL();if(l){l.tl=JSON.parse(JSON.stringify(st));l.tlF=F}close(true)}catch(e){console.error(e);try{toast('Couldn’t add it – save the PNG instead')}catch(_){}}};im.src=url}
+
+function open(o){o=o||{};from=o.from||'lab';if(!el)build();editId=o.layer||null;el.querySelector('[data-tl="addmain"]').textContent=editId?'Update layer':'Add to design';el.querySelector('.tl-addnew').hidden=!editId;st=load();if(o.st)st=Object.assign({},DEF,o.st);if(!st.font)st.font=defFont();el.hidden=false;document.documentElement.classList.add('intl');presets();body();zoom=1;tool='view';el.querySelectorAll('[data-tlt]').forEach(x=>x.classList.toggle('on',x.dataset.tlt==='view'));el.querySelector('.tl-view').classList.remove('paint');requestAnimationFrame(()=>draw(false))}
+function close(placed){if(!el)return;save();el.hidden=true;document.documentElement.classList.remove('intl');if(!placed&&from==='home'){try{showHome()}catch(e){}}}
+return {open,close,get st(){return st},draw,isOpen:()=>!!el&&!el.hidden}})();
+function tlOpen(o){return TL.open(o)}
+// entry points: Home ▸ tools list, Design Lab ▸ Add menu, Garment Studio ▸ Realism menu
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-tlopen]');if(!b)return;e.preventDefault();e.stopPropagation();try{hideHome()}catch(_){}tlOpen({from:'home'})},true);
+{const _la=labAct;labAct=function(a,b,e){if(a==='textlab'){try{closeMenu()}catch(_){}try{gsMenuClose()}catch(_){}const l=curL();tlOpen({from:'lab',st:l&&l.tl?l.tl:null,layer:l&&l.tl&&l.so?l.id:null});return}return _la.apply(this,arguments)}}
+
+/* ---------- v44: Accessories library – Procreate-style on iPad (categories on the left, big previews on the right) ---------- */
+const APRO=()=>{try{return ipOn()}catch(e){return false}};
+AF.pcat=AF.pcat||'';AF.pf=false;
+const APIC={rec:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3 1.8"/></svg>',
+  fav:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 4 2.4 5 5.4.7-4 3.7 1 5.4L12 16.2 7.2 18.8l1-5.4-4-3.7 5.4-.7z"/></svg>',
+  most:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 19V11M10 19V6M15 19v-9M20 19V4"/></svg>',
+  my:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>'};
+function accProCats(){return ACAT.map(c=>{const L=ACI.filter(a=>a.cat===c.id);return {id:c.id,name:c.name,n:L.length+L.reduce((n,a)=>n+(a.vars?a.vars.length:0),0),first:L[0]&&L[0].id}}).filter(c=>c.n)}
+function accProHTML(orig){const cats=accProCats();if(!AF.pcat)AF.pcat=ACCST.rec&&ACCST.rec.length?'rec':(cats[0]||{}).id||'';
+  const sp=[['rec','Recent'],['fav','Favourites'],['most','Most used'],['my','My Assets']];
+  const side=`<div class="apro-side"><div class="apro-q"><input class="aq" data-aq type="search" placeholder="Search ${ACI.length+ACI.reduce((n,a)=>n+(a.vars?a.vars.length:0),0)}" value="${esc(AF.q)}"></div>`+
+    sp.map(([k,n])=>`<button class="apro-s${AF.pcat===k&&!AF.q?' on':''}" data-l="acc:pcat:${k}"><i>${APIC[k]}</i><span class="apro-cn">${n}</span></button>`).join('')+
+    `<p class="apro-sep">Library</p>`+cats.map(c=>`<button class="apro-c${AF.pcat===c.id&&!AF.q?' on':''}" data-l="acc:pcat:${c.id}"><span class="at apro-ct" data-ak="${esc(c.first||'')}"><canvas width="88" height="88"></canvas></span><span class="apro-cn">${esc(c.name)}<small>${c.n}</small></span></button>`).join('')+`</div>`;
+  // the filters of the old panel, folded away (colour + hardware stay visible – they change what you place)
+  AF.tab='all';const old=orig();const fil=(old.match(/<div class="afil">[\s\S]*?<\/select><\/div>/)||[''])[0],sw=(old.match(/<div class="asw">[\s\S]*?<\/div><div class="asw afn">[\s\S]*?<\/div>/)||[''])[0];
+  let title='',body='',n=0;
+  if(AF.q){AF.cat='';const L=ACI.filter(accMatch);n=L.length;title='“'+esc(AF.q)+'”';body=L.length?`<div class="agrid">${accTiles(L)}</div>`:'<p class="anote">Nothing found – try another word.</p>'}
+  else if(AF.pcat==='my'){AF.tab='my';title='My Assets';body=orig().replace(/^<div class="atabs">[\s\S]*?<\/div>/,'')}
+  else if(AF.pcat==='fav'||AF.pcat==='rec'||AF.pcat==='most'){AF.tab=AF.pcat;let ks=AF.pcat==='fav'?ACCST.fav:AF.pcat==='rec'?ACCST.rec:Object.entries(ACCST.use).sort((a,b)=>b[1]-a[1]).map(e=>e[0]).slice(0,60);
+    ks=ks.filter(k=>{const a=accItem(k.split('#')[0]);return a&&(a.my||accMatch(a))});n=ks.length;title=sp.find(x=>x[0]===AF.pcat)[1];
+    body=ks.length?`<div class="agrid">${ks.map(k=>{const a=accItem(k.split('#')[0]);return a.my?`<div class="at amt" data-ak="${esc(k)}"><img src="${(MYA.find(m=>m.id===k)||{}).thumb}" alt=""><span>${esc(a.name)}</span></div>`:accTile(k,accName(k),a,k.includes('#')?+k.split('#')[1]:null)}).join('')}</div>`:`<p class="anote">${AF.pcat==='fav'?'Tap ★ on any accessory to keep it here.':'Accessories you place show up here.'}</p>`}
+  else{AF.cat='';const c=ACAT.find(c=>c.id===AF.pcat);const L=ACI.filter(a=>a.cat===AF.pcat&&accMatch(a));n=L.length;title=c?esc(c.name):'';body=L.length?`<div class="agrid">${accTiles(L)}</div>`:'<p class="anote">No matches – clear the filters.</p>'}
+  const anyF=AF.mat||AF.sty||AF.fab||AF.con;
+  const main=`<div class="apro-main"><div class="apro-hd"><b>${title}</b><span>${n?n+' items':''}</span><button class="${AF.pf||anyF?'on':''}" data-l="acc:pfilt">Filters${anyF?' •':''}</button></div>${AF.pcat==='my'&&!AF.q?'':sw}${AF.pf&&AF.pcat!=='my'?fil:''}${body}<p class="apro-tip">Tap to place · hold, then drag onto the canvas</p></div>`;
+  return `<div class="apro">${side}${main}</div>`}
+{const _al=accLibHTML;accLibHTML=function(){return APRO()?accProHTML(_al):_al()}}
+{const _aa=accAct;accAct=function(v){const [c,a]=String(v||'').split(':');
+  if(c==='pcat'){AF.pcat=a;AF.q='';AF.cat='';AF.tab=['rec','fav','most','my'].includes(a)?a:'all';AF.mode='lib';const m=document.querySelector('#accLib .apro-main');if(m)m.scrollTop=0;accDraw2();return}
+  if(c==='pfilt'){AF.pf=!AF.pf;accDraw2();return}
+  return _aa.apply(this,arguments)}}
+{const _ad=accDraw2;accDraw2=function(){const e=document.getElementById('accLib'),pro=APRO();if(e)e.classList.toggle('apro-on',pro);
+  const m0=e&&e.querySelector('.apro-main'),s0=e&&e.querySelector('.apro-side'),st=m0?m0.scrollTop:0,ss=s0?s0.scrollTop:0,key=AF.pcat+'|'+AF.q;
+  const r=_ad.apply(this,arguments);
+  if(pro&&e){const m=e.querySelector('.apro-main'),sd=e.querySelector('.apro-side');if(m&&accDraw2._k===key)m.scrollTop=st;if(sd)sd.scrollTop=ss;accDraw2._k=key;
+    if(accIO)accIO.disconnect();accIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){accIO.unobserve(en.target);accThumb(en.target)}}),{root:null,rootMargin:'200px'});e.querySelectorAll('.at canvas').forEach(c=>accIO.observe(c))}
+  return r}}
+// placing from the big library closes it so you see the canvas straight away (like picking a brush in Procreate) – open it again to recolour
+{const _ap=accPlace;accPlace=async function(){const r=await _ap.apply(this,arguments);if(APRO()&&ACCOPEN){accToggle(false);try{hint('Placed – drag, scale or turn it · tap Accessories again to recolour it',2600)}catch(e){}}return r}}
+
+/* ---------- v44: tap a gradient circle (Gradient Map / Gradient tool) → its colour picker opens right there ---------- */
+const GBP={el:null,ctx:null,i:-1,h:0,s:0,v:0,bx:null};
+const gbpHsv=hex=>{const [r,g,b]=hexToRgb(hex).map(x=>x/255),mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let h=0;if(d){h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}return [h,mx?d/mx:0,mx]};
+const gbpHex=(h,s,v)=>{const f=n=>{const k=(n+h/60)%6;return v-v*s*Math.max(0,Math.min(k,4-k,1))};return rgbToHex(f(5)*255,f(3)*255,f(1)*255)};
+const GBPAL=['#000000','#ffffff','#7a7a7a','#c8102e','#7b1e2b','#e8742a','#f2c14e','#2e6b3a','#1f3b73','#4f86c6','#6a3d9a','#e9b7c6','#e8dcc8','#6b4226'];
+function gbPickEl(){if(GBP.el)return GBP.el;const e=document.createElement('div');e.id='gbPick';e.hidden=true;
+  e.innerHTML='<div class="gbp-sv"><canvas width="240" height="150"></canvas><i></i></div><div class="gbp-h"><i></i></div><div class="gbp-row"><span class="gbp-sw"></span><input class="gbp-hex" maxlength="7" spellcheck="false" autocapitalize="off" aria-label="Hex colour"><button data-gbp="del">Remove</button><button class="gbp-ok" data-gbp="done">Done</button></div><div class="gbp-pal"></div>';
+  document.body.appendChild(e);GBP.el=e;
+  const sv=e.querySelector('.gbp-sv'),hu=e.querySelector('.gbp-h');
+  const drag=(el,fn)=>el.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();const r=el.getBoundingClientRect();const go=x=>fn(Math.max(0,Math.min(1,(x.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(x.clientY-r.top)/r.height)));go(ev);
+    const mv=x=>go(x),up=()=>{removeEventListener('pointermove',mv,true);removeEventListener('pointerup',up,true);removeEventListener('pointercancel',up,true)};addEventListener('pointermove',mv,true);addEventListener('pointerup',up,true);addEventListener('pointercancel',up,true)});
+  drag(sv,(x,y)=>{GBP.s=x;GBP.v=1-y;gbpSet(gbpHex(GBP.h,GBP.s,GBP.v),true)});
+  drag(hu,x=>{GBP.h=x*359.9;gbpSet(gbpHex(GBP.h,GBP.s,GBP.v),true)});
+  e.querySelector('.gbp-hex').addEventListener('change',ev=>{let v=ev.target.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){const [h,s,vv]=gbpHsv(v);GBP.h=h;GBP.s=s;GBP.v=vv;gbpSet(v.toLowerCase(),false)}});
+  e.addEventListener('pointerdown',ev=>ev.stopPropagation());
+  e.addEventListener('click',ev=>{const b=ev.target.closest('[data-gbp],[data-gbc]');if(!b)return;ev.stopPropagation();
+    if(b.dataset.gbc){const c=b.dataset.gbc,[h,s,v]=gbpHsv(c);GBP.h=h;GBP.s=s;GBP.v=v;gbpSet(c,false);return}
+    if(b.dataset.gbp==='done')gbPickClose();
+    else if(b.dataset.gbp==='del'){const st=gbStops(GBP.ctx);if(st.length>2&&st[GBP.i]){st.splice(GBP.i,1);GB.act=-1;gbChanged(GBP.ctx)}gbPickClose()}});
+  // tap anywhere else closes it
+  addEventListener('pointerdown',ev=>{if(!GBP.el||GBP.el.hidden)return;if(ev.target.closest&&(ev.target.closest('#gbPick')||ev.target.closest('.gbx')))return;gbPickClose()},true);
+  return e}
+function gbpPaint(){const e=GBP.el;if(!e)return;const c=e.querySelector('canvas'),x=c.getContext('2d'),W=c.width,H=c.height;
+  x.fillStyle=gbpHex(GBP.h,1,1);x.fillRect(0,0,W,H);let g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,'#fff');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'#000');x.fillStyle=g;x.fillRect(0,0,W,H);
+  const k=e.querySelector('.gbp-sv i');k.style.left=(GBP.s*100)+'%';k.style.top=((1-GBP.v)*100)+'%';e.querySelector('.gbp-h i').style.left=(GBP.h/360*100)+'%'}
+function gbpSet(c,fromDrag){const st=gbStops(GBP.ctx);if(!st[GBP.i])return gbPickClose();st[GBP.i][1]=c;GB.ctx=GBP.ctx;GB.act=GBP.i;gbChanged(GBP.ctx);
+  const e=GBP.el;e.querySelector('.gbp-sw').style.background=c;const hx=e.querySelector('.gbp-hex');if(document.activeElement!==hx||fromDrag)hx.value=c.toUpperCase();gbpPaint()}
+function gbPickOpen(ctx,i,bx){const st=gbStops(ctx);if(!st[i])return;const e=gbPickEl();GBP.ctx=ctx;GBP.i=i;GBP.bx=bx;const c=st[i][1],[h,s,v]=gbpHsv(c);GBP.h=h;GBP.s=s;GBP.v=v;
+  const used=[...new Set([TOOL.color,TOOL.color2,...st.map(x=>x[1]),...GBPAL].filter(Boolean).map(x=>String(x).toLowerCase()))].slice(0,18);
+  e.querySelector('.gbp-pal').innerHTML=used.map(c=>`<button data-gbc="${c}" style="--c:${c}" aria-label="${c}"></button>`).join('');
+  e.querySelector('[data-gbp="del"]').hidden=st.length<=2;e.querySelector('.gbp-sw').style.background=c;e.querySelector('.gbp-hex').value=c.toUpperCase();
+  e.hidden=false;gbpPaint();const r=bx.getBoundingClientRect(),w=e.offsetWidth||268,hh=e.offsetHeight||300,kx=r.left+st[i][0]*r.width;
+  let top=r.bottom+12;if(top+hh>innerHeight-8)top=Math.max(8,r.top-hh-12);e.style.left=Math.max(8,Math.min(innerWidth-w-8,kx-w/2))+'px';e.style.top=top+'px';mpHap&&mpHap('light')}
+function gbPickClose(){if(GBP.el)GBP.el.hidden=true;GBP.i=-1}
+// close it when the adjustment / gradient bar goes away
+setInterval(()=>{if(GBP.el&&!GBP.el.hidden&&(!GBP.bx||!GBP.bx.isConnected))gbPickClose()},400);
+
 /* ---- v42: print sizes just over the iPad's 16.7 MP canvas limit (e.g. DTG 12 × 16 in at 300 ppi) work –
    the design is made a hair smaller on the iPad and PNG exports come out at the full requested pixels and ppi ---- */
 const bfFit=(w,h)=>{if(!(w>=1&&h>=1)||w>MAXSIDE*1.2||h>MAXSIDE*1.2)return null;if(w*h<=MAXAREA)return null;const k=Math.sqrt(MAXAREA*.998/(w*h));if(k<.7)return null;
@@ -11822,7 +12385,7 @@ addEventListener('pointerdown',e=>{const bx=e.target.closest&&e.target.closest('
   GB.ctx=ctx;GB.act=i;gbChanged(ctx);const x0=e.clientX,y0=e.clientY,s0=st[i][0];let moved=false,gone=false;
   const mv=ev=>{const dx=ev.clientX-x0,dy=ev.clientY-y0;if(Math.hypot(dx,dy)>4)moved=true;gone=Math.abs(dy)>60&&st.length>2;st[i][0]=pos(x0+dx+(s0-pos(x0))*r.width);const kk=bx.querySelector(`.gbk[data-gbi="${i}"]`);if(kk){kk.style.left=(st[i][0]*100)+'%';kk.classList.toggle('gone',gone)}bx.querySelector('.gbt').style.background=gbCss(st)};
   const up=()=>{removeEventListener('pointermove',mv,true);removeEventListener('pointerup',up,true);removeEventListener('pointercancel',up,true);
-    if(gone){st.splice(i,1);GB.act=-1;mpHap&&mpHap('medium')}else if(k&&!moved){try{setColor(st[i][1])}catch(_){}GB.ctx=ctx;GB.act=i}gbChanged(ctx)};
+    if(gone){st.splice(i,1);GB.act=-1;mpHap&&mpHap('medium')}else if(!moved){GB.ctx=ctx;GB.act=i}gbChanged(ctx);if(!gone&&!moved)gbPickOpen(ctx,i,bx)};
   addEventListener('pointermove',mv,true);addEventListener('pointerup',up,true);addEventListener('pointercancel',up,true)},true);
 // picking a colour while a circle is selected changes that circle
 {const _sc=setColor;setColor=function(c){const r=_sc.apply(this,arguments);if(GB.act>=0&&GB.ctx&&document.querySelector(`.gbx[data-gbx="${GB.ctx}"]`)){const st=gbStops(GB.ctx);if(st[GB.act]){st[GB.act][1]=c;gbChanged(GB.ctx)}}return r}}
