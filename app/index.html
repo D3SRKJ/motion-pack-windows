@@ -3026,7 +3026,7 @@ html.mpfine #tlP .tl-presets::-webkit-scrollbar-thumb{background:rgba(255,255,25
   <div class="lsheet" id="labSheet" hidden><div id="labSheetIn"></div></div>
   <div id="labDD" hidden></div>
   <input type="file" id="labFile" accept="image/*" hidden>
-  <input type="file" id="labFont" accept=".ttf,.otf,.woff,.woff2,font/*" hidden>
+  <input type="file" id="labFont" accept=".ttf,.otf,.woff,.woff2,font/*" multiple hidden>
 </div>
 
 <div id="library" hidden role="dialog" aria-label="Your lookbooks"><div class="lib-in">
@@ -3086,6 +3086,8 @@ setTimeout(function(){var i=document.getElementById('intro');if(i&&!i.classList.
 <script id="app">
 (()=>{'use strict';
 document.documentElement.classList.remove('nojs');
+try{const kd=Object.getOwnPropertyDescriptor(KeyboardEvent.prototype,'key');if(kd&&kd.get)Object.defineProperty(KeyboardEvent.prototype,'key',{configurable:true,enumerable:kd.enumerable,get(){const v=kd.get.call(this);return typeof v==='string'?v:''}});const cd=Object.getOwnPropertyDescriptor(KeyboardEvent.prototype,'code');if(cd&&cd.get)Object.defineProperty(KeyboardEvent.prototype,'code',{configurable:true,enumerable:cd.enumerable,get(){const v=cd.get.call(this);return typeof v==='string'?v:''}})}catch(_){}
+['keydown','keyup','keypress'].forEach(t=>addEventListener(t,e=>{if(typeof e.key!=='string')try{Object.defineProperty(e,'key',{value:'',configurable:true})}catch(_){}if(typeof e.code!=='string')try{Object.defineProperty(e,'code',{value:'',configurable:true})}catch(_){}},true));
 {const vp=document.querySelector('meta[name=viewport]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')}
 const SRC='<!doctype html>\n'+document.documentElement.outerHTML;
 let S;try{S=JSON.parse(document.getElementById('state').textContent)}catch(e){S={}}
@@ -7201,7 +7203,7 @@ addEventListener('resize',()=>{if(TXI){TXI.k='';txPos()}});
 const otxTarget=()=>{if(TXI)return TXI.l;const l=D&&curL();return l&&l.type==='text'?l:null};
 const TXAL={left:'<svg viewBox="0 0 16 16"><path d="M2 3h12M2 6.5h8M2 10h12M2 13.5h8"/></svg>',center:'<svg viewBox="0 0 16 16"><path d="M2 3h12M4 6.5h8M2 10h12M4 13.5h8"/></svg>',right:'<svg viewBox="0 0 16 16"><path d="M2 3h12M6 6.5h8M2 10h12M6 13.5h8"/></svg>'};
 function otxBar(ch){const l=otxTarget(),t=l&&l.t,col=t?t.color:TOOL.color,font=t?t.font:(TOOL.font||'Helvetica Neue'),size=Math.round(t?t.size:(TOOL.tsize||D.w*.08)),qs=[...new Set(['#000000','#ffffff',...(RECENT||[]).map(c=>String(c).toLowerCase())])].slice(0,6);
-  let h=`<button class="ch otxf" data-l="otx:fonts" title="Font" style="font-family:${esc(fontCss(font))}">${esc(font)} ▾</button><label class="otxs" title="Font size">Size<input type="number" min="4" max="${Math.round(D.w)}" value="${size}" data-otx="size"></label>`;
+  let h=`<button class="ch otxf" data-l="otx:fonts" title="Font" style="font-family:${esc(fontCss(font))}">${esc(font)} ▾</button><button class="ch otxaf" data-l="otx:addfont" title="Add your own font files (.ttf .otf .woff)">+ Font</button><label class="otxs" title="Font size">Size<input type="number" min="4" max="${Math.round(D.w)}" value="${size}" data-otx="size"></label>`;
   h+=`<span class="otxg">${ch(t&&t.bold,'otx:bold','<b>B</b>','','Bold')}${ch(t&&t.it,'otx:it','<i>I</i>','','Italic')}</span><span class="otxg">${['left','center','right'].map(a=>ch(t&&t.align===a,'otx:'+a,TXAL[a],'otxa','Align '+a)).join('')}</span>`;
   h+=`<label class="otxc" title="Text colour – tap to pick any colour"><input type="color" value="${esc(col)}" data-otx="color"><i style="--c:${esc(col)}"></i></label><span class="otxq">${qs.map(c=>`<button data-l="otx:col:${c}" style="--c:${c}" title="${c}"></button>`).join('')}</span>`;
   if(t){h+=ch(t.stroke,'otx:stroke','Outline','','Outline around the letters');if(t.stroke)h+=`<label class="otxc sm" title="Outline colour"><input type="color" value="${esc(t.sc||'#000000')}" data-otx="sc"><i style="--c:${esc(t.sc||'#000000')}"></i></label><label class="otxs" title="Outline width">Width<input type="number" min="1" max="200" value="${Math.round(t.sw||6)}" data-otx="sw"></label>`}
@@ -7210,7 +7212,7 @@ function otxBar(ch){const l=otxTarget(),t=l&&l.t,col=t?t.color:TOOL.color,font=t
   else h+=`<span class="otip">${t?'Click the text to type into it · click empty canvas for new type':'Click on the canvas and start typing'}</span>`;
   return h}
 function otxApply(fn,name){const l=otxTarget();if(!l){fn(null);drawOpt();return}const b=TEXTEDIT&&TEXTEDIT.l===l?null:snapSt();fn(l.t);renderText(l);if(b)pushH({k:'st',b,a:snapSt()},name);touch(l,false);if(TXI)TXI.k='';if(PANEL==='text'&&!popEl.hidden)drawPanel();drawOpt();txRefocus()}
-function otxAct(v){if(v==='done'){txCommit();return}if(v==='cancel'){txCancel();return}
+function otxAct(v){if(v==='addfont'){$('#labFont').click();return}if(v==='done'){txCommit();return}if(v==='cancel'){txCancel();return}
   if(v==='more'||v==='fonts'){const l=otxTarget();if(l){D.cur=l.id;openPanel('text');if(v==='fonts')openPanel('fonts')}else if(v==='fonts')openPanel('fonts');else hint('Click the canvas to add type first');return}
   if(v.startsWith('col:')){const c=v.slice(4);TOOL.color=c;refreshSwatch();otxApply(t=>{if(t)t.color=c},'Type colour');return}
   otxApply(t=>{if(!t)return;if(v==='left'||v==='center'||v==='right')t.align=v;else if(v==='bold')t.bold=!t.bold;else if(v==='it')t.it=!t.it;else if(v==='stroke'){t.stroke=!t.stroke;if(t.stroke&&!(t.sw>0))t.sw=6;if(t.stroke&&(!t.sc||t.sc.toLowerCase()===String(t.color).toLowerCase()))t.sc=lumA(...hexToRgb(t.color))>128?'#000000':'#ffffff'}},'Type settings')}
@@ -8831,7 +8833,11 @@ async function sendSheet(){const l=LOCAL?await libGet():[];l.sort((a,b)=>(b.upda
 async function sendToLookbook(target){if(GMODE&&D&&D.pair)return gsSendPair(target);hint('Sending…',3000);if(XFORM)xfCommit();const c=flatten(true),blob=await toBlobP(c),name=D.name;await saveDoc(true);
   try{if(target==='__new')await newBook();else if(target!=='__cur'&&target!==(S.lid||'default'))await openBook(target);const r=await shrink(blob,GMAX);S.items.push({id:uid(),src:r.src,ar:r.ar,fields:{name},points:[],open:false,des:D.id});S.mode='edit';libEl.hidden=true;await closeLab(true);render(true);changed();
     requestAnimationFrame(()=>feed.scrollTo({top:(S.items.length-1)*feed.clientHeight,behavior:'auto'}));toast('"'+name+'" added to your lookbook',2600)}catch(e){console.error(e);toast('Could not send the design')}}
-$('#labFont').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const buf=await f.arrayBuffer(),n=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+(regular|normal)$/i,'').trim()||'My font';await addFontBuf(n,buf,'Yours',false);FCAT='Yours';TOOL.font=n;if(TEXTEDIT){TEXTEDIT.l.t.font=n;renderText(TEXTEDIT.l)}drawPanel();hint('Font added: '+n)}catch(err){toast('That font file could not be read')}});
+$('#labFont').addEventListener('change',async e=>{const fs=[...(e.target.files||[])];e.target.value='';if(!fs.length)return;let last=null,bad=0;
+  for(const f of fs){try{const buf=await f.arrayBuffer(),n=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+(regular|normal)$/i,'').trim()||'My font';await addFontBuf(n,buf,'Yours',false);last=n}catch(err){bad++}}
+  if(!last){toast(fs.length>1?'Those font files could not be read':'That font file could not be read');return}
+  FCAT='Yours';TOOL.font=last;if(TEXTEDIT){TEXTEDIT.l.t.font=last;renderText(TEXTEDIT.l)}else{const L=(typeof TXI!=='undefined'&&TXI&&TXI.l)||null;if(L&&L.t){L.t.font=last;renderText(L);try{TXI.k='';txPos()}catch(_){}touch(L,false);try{if(ipTx&&!ipTx.hidden)ipTx.innerHTML=ipTxHTML()}catch(_){}}else{try{const l=otxTarget();if(l&&l.t)otxApply(t=>{if(t)t.font=last},'Font')}catch(_){}}}
+  drawPanel();try{drawOpt()}catch(_){}hint((fs.length-bad>1?(fs.length-bad)+' fonts added · using ':'Font added: ')+last+(bad?' · '+bad+' could not be read':''),2600)});
 /* ---------- HD: original-quality images ---------- */
 const SOMAX=TOUCH?8e6:24e6,GMAX=3600;
 function soScale(m){return Math.sqrt(Math.abs(m.a*m.d-m.b*m.c))}
@@ -11297,14 +11303,14 @@ function ipTxEl(){if(ipTx)return ipTx;ipTx=document.createElement('div');ipTx.id
   ipTx.addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-ipt]');if(!b)return;e.preventDefault();ipTxAct(b.dataset.ipt);const ta=document.getElementById('txIn');if(TXI&&ta&&document.activeElement!==ta){try{ta.focus({preventScroll:true})}catch(_){ta.focus()}}});
   return ipTx}
 function ipTxHTML(){const l=TXI&&TXI.l,t=l&&l.t;if(!t)return '';const al={left:'⟸',center:'⟺',right:'⟹'}[t.align]||'⟺';
-  return `<button class="iptb iptfont" data-ipt="fonts" style="font-family:${esc(fontCss(t.font))}">${esc(t.font)} ▾</button>
+  return `<button class="iptb iptfont" data-ipt="fonts" style="font-family:${esc(fontCss(t.font))}">${esc(t.font)} ▾</button><button class="iptb" data-ipt="addfont" title="Add your own font files (.ttf .otf .woff)">+ Font</button>
   <span class="iptsz"><button class="iptb" data-ipt="size:-">−</button><b>${Math.round(t.size)}</b><button class="iptb" data-ipt="size:+">+</button></span>
   <button class="iptb${t.bold?' on':''}" data-ipt="bold"><b>B</b></button><button class="iptb${t.it?' on':''}" data-ipt="it"><i>I</i></button>
   <button class="iptb" data-ipt="align" title="Alignment">${al}</button><button class="iptb iptc" data-ipt="color" title="Use the current colour"><i style="background:${esc(t.color)}"></i></button>
   <button class="iptb" data-ipt="glyphs" title="Glyphs">Ω</button><button class="iptb" data-ipt="style" title="Outline, puff, path…">Aa</button><button class="iptb iptok" data-ipt="done">Done</button>
   ${IPT.fonts?ipTxFontsHTML(t):''}`}
 function ipTxFontsHTML(t){const list=FONTS.filter(f=>IPT.fc==null||IPT.fc==='All'||f.cat===IPT.fc||(IPT.fc==='Yours'&&f.u));const cats=['All','Sans','Serif','Display','Script','Mono','Yours'];
-  return `<div class="iptf"><div class="iptfc">${cats.map(c=>`<button class="${(IPT.fc||'All')===c?'on':''}" data-ipt="fc:${c}">${c}</button>`).join('')}</div><div class="iptfl">${list.map(f=>`<button class="${f.n===t.font?'on':''}" data-ipt="font:${esc(f.n)}" style="font-family:${esc(fontReady(f.n)?f.css:'inherit')}">${esc(f.n)}</button>`).join('')}</div></div>`}
+  return `<div class="iptf"><div class="iptfc"><button data-ipt="addfont">+ Add font</button>${cats.map(c=>`<button class="${(IPT.fc||'All')===c?'on':''}" data-ipt="fc:${c}">${c}</button>`).join('')}</div><div class="iptfl">${list.map(f=>`<button class="${f.n===t.font?'on':''}" data-ipt="font:${esc(f.n)}" style="font-family:${esc(fontReady(f.n)?f.css:'inherit')}">${esc(f.n)}</button>`).join('')}</div></div>`}
 function ipTxShow(){if(!TXI||!ipOn())return;ipTxEl();ipTx.innerHTML=ipTxHTML();ipTx.hidden=false;ipTxPlace()}
 function ipTxHide(){IPT.fonts=false;if(ipTx)ipTx.hidden=true}
 function ipTxPlace(){if(!ipTx||ipTx.hidden)return;const vv=window.visualViewport,er=edEl.getBoundingClientRect(),h=ipTx.offsetHeight||56;let y;
@@ -11312,7 +11318,7 @@ function ipTxPlace(){if(!ipTx||ipTx.hidden)return;const vv=window.visualViewport
 if(window.visualViewport){visualViewport.addEventListener('resize',()=>ipTxPlace());visualViewport.addEventListener('scroll',()=>ipTxPlace())}
 function ipTxAct(a){const l=TXI&&TXI.l;if(!l)return;const t=l.t,[k,v]=a.split(/:(.*)/s);
   const set=fn=>{fn(t);renderText(l);TXI.k='';txPos();touch(l,false);ipTx.innerHTML=ipTxHTML()};
-  if(k==='done'){txCommit();mpHap('light');return}
+  if(k==='addfont'){$('#labFont').click();return}if(k==='done'){txCommit();mpHap('light');return}
   if(k==='size'){set(q=>{q.size=Math.max(4,Math.round(q.size*(v==='+'?1.12:1/1.12)))});TOOL.tsize=t.size;return}
   if(k==='bold')return set(q=>{q.bold=!q.bold});if(k==='it')return set(q=>{q.it=!q.it});
   if(k==='align')return set(q=>{q.align=q.align==='left'?'center':q.align==='center'?'right':'left'});
