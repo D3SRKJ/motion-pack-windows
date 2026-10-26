@@ -3092,13 +3092,18 @@ html.mpfine #tlP .tl-presets::-webkit-scrollbar-thumb{background:rgba(255,255,25
 <script id="state" type="application/json">{"brand":"Your Label","mode":"edit","items":[]}</script>
 <script>
 /* safety net: never leave a black screen — show what went wrong */
-(function(){var shown=0;function show(msg){try{var i=document.getElementById('intro');if(i)i.remove();if(shown++)return;var d=document.createElement('div');d.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99;max-width:90vw;padding:12px 18px;border-radius:10px;background:#1a1a1a;border:1px solid #555;color:#ddd;font:12px/1.5 system-ui,sans-serif';d.textContent='Something went wrong: '+msg+'  (Press Ctrl+R to reload)';document.body.appendChild(d)}catch(e){}}
-window.addEventListener('error',function(e){show(e.message||'unknown error')});window.addEventListener('unhandledrejection',function(e){show((e.reason&&e.reason.message)||String(e.reason))});
+(function(){var shown=0;function show(msg){try{var i=document.getElementById('intro');if(i)i.remove();if(shown++)return;var d=document.createElement('div');d.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99;max-width:90vw;padding:12px 18px;border-radius:10px;background:#1a1a1a;border:1px solid #555;color:#ddd;font:12px/1.5 system-ui,sans-serif';d.textContent='Something went wrong: '+msg+'  (Press Ctrl+R to reload)';document.body.appendChild(d);if(window.__mpUp)setTimeout(function(){try{d.remove();shown=0}catch(e){}},7000)}catch(e){}}
+var where=function(st){try{var m=String(st||'').split('\n').map(function(s){return s.trim()}).filter(Boolean);var f=m.find(function(s){return /\d+:\d+/.test(s)})||'';var nm=(f.match(/^([\w$.<>]+)@/)||f.match(/at ([\w$.<>]+) /)||[])[1]||'';var ln=(f.match(/:(\d+):\d+\)?$/)||[])[1]||'';return nm||ln?' ['+(nm||'?')+(ln?' '+ln:'')+']':''}catch(_){return ''}};
+window.addEventListener('error',function(e){show((e.message||'unknown error')+where(e.error&&e.error.stack)+(e.lineno?' @'+e.lineno:''))});window.addEventListener('unhandledrejection',function(e){show(((e.reason&&e.reason.message)||String(e.reason))+where(e.reason&&e.reason.stack))});setTimeout(function(){window.__mpUp=1},8000);
 setTimeout(function(){var i=document.getElementById('intro');if(i&&!i.classList.contains('out')){i.classList.add('out');setTimeout(function(){i.remove()},1500)}},9000)})();
 </script>
 <script id="app">
 (()=>{'use strict';
 document.documentElement.classList.remove('nojs');
+try{const bad=s=>!s||(s.width===0||s.height===0)||(typeof HTMLImageElement!=='undefined'&&s instanceof HTMLImageElement&&(!s.complete||!s.naturalWidth))||(typeof HTMLVideoElement!=='undefined'&&s instanceof HTMLVideoElement&&s.readyState<2);
+  for(const P of [CanvasRenderingContext2D.prototype,typeof OffscreenCanvasRenderingContext2D!=='undefined'?OffscreenCanvasRenderingContext2D.prototype:null]){if(!P)continue;const dI0=P.drawImage,cP0=P.createPattern;
+    P.drawImage=function(s){if(bad(s))return;try{return dI0.apply(this,arguments)}catch(e){if(e&&e.name==='InvalidStateError')return;throw e}};
+    P.createPattern=function(s){if(bad(s))return null;try{return cP0.apply(this,arguments)}catch(e){if(e&&e.name==='InvalidStateError')return null;throw e}}}}catch(_){}
 try{const kd=Object.getOwnPropertyDescriptor(KeyboardEvent.prototype,'key');if(kd&&kd.get)Object.defineProperty(KeyboardEvent.prototype,'key',{configurable:true,enumerable:kd.enumerable,get(){const v=kd.get.call(this);return typeof v==='string'?v:''}});const cd=Object.getOwnPropertyDescriptor(KeyboardEvent.prototype,'code');if(cd&&cd.get)Object.defineProperty(KeyboardEvent.prototype,'code',{configurable:true,enumerable:cd.enumerable,get(){const v=cd.get.call(this);return typeof v==='string'?v:''}})}catch(_){}
 ['keydown','keyup','keypress'].forEach(t=>addEventListener(t,e=>{if(typeof e.key!=='string')try{Object.defineProperty(e,'key',{value:'',configurable:true})}catch(_){}if(typeof e.code!=='string')try{Object.defineProperty(e,'code',{value:'',configurable:true})}catch(_){}},true));
 {const vp=document.querySelector('meta[name=viewport]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')}
@@ -11905,7 +11910,9 @@ let GHA=null;
    procedurally woven / knitted / tanned fabric, lit like a thick patch, frayed or torn at the edges, stitched,
    ripped, worn, and given loose hanging threads and a soft shadow on the garment. */
 const TLX=(()=>{
-const mkc=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w));c.height=Math.max(1,Math.round(h));return c};
+let LIVE=null;const mkc=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w));c.height=Math.max(1,Math.round(h));if(LIVE)LIVE.push(c);return c};
+// scratch canvases of one render are emptied as soon as it's done (iPad has a tight canvas memory budget)
+const rmine=c=>{c.width=0;c.height=0};
 const c2=c=>c.getContext('2d',{willReadFrequently:true});
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
 const sstep=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)};
@@ -11930,6 +11937,9 @@ function dist(inside,W,H){const D=new Float32Array(W*H),INF=1e6;for(let i=0;i<D.
 // signed distance: + inside, − outside (from an alpha 0..1 field)
 function sdf(A,W,H){const ins=new Uint8Array(W*H),out=new Uint8Array(W*H);for(let i=0;i<A.length;i++){ins[i]=A[i]>=.5?1:0;out[i]=1-ins[i]}const di=dist(ins,W,H),dO=dist(out,W,H),S=new Float32Array(W*H);for(let i=0;i<S.length;i++)S[i]=ins[i]?di[i]-.5:-(dO[i]-.5);return S}
 
+// solid silhouette (holes filled) – a logo is stitched around its outside, not along every little line
+function fillHoles(A,W,H){const o=new Uint8Array(W*H),stk=[];const push=i=>{if(!o[i]&&A[i]<.5){o[i]=1;stk.push(i)}};for(let x=0;x<W;x++){push(x);push((H-1)*W+x)}for(let y=0;y<H;y++){push(y*W);push(y*W+W-1)}
+  while(stk.length){const i=stk.pop(),x=i%W;if(x>0)push(i-1);if(x<W-1)push(i+1);if(i>=W)push(i-W);if(i<W*(H-1))push(i+W)}const F2=new Float32Array(W*H);for(let i=0;i<F2.length;i++)F2[i]=o[i]?0:1;return F2}
 /* ---------- marching squares: closed outlines of a field at a threshold ---------- */
 function contours(F,W,H,thr,step){step=step||2;const gw=Math.floor((W-1)/step),gh=Math.floor((H-1)/step),NW=gw+1,v=(i,j)=>F[(j*step)*W+i*step];
   const pos=new Map(),adj=new Map();const ep=(k,x,y)=>{if(!pos.has(k))pos.set(k,[x,y])};
@@ -12000,7 +12010,7 @@ function textMask(st,F,mode){const lines=String(st.caps?st.text.toUpperCase():st
 /* ---------- the shape to build: typed words, or an uploaded logo / design ---------- */
 const isLogo=(st,o)=>st.src==='logo'&&!!(o&&o.logo&&o.logo.c);
 const hasLC=st=>Array.isArray(st.lc)&&st.lc.some(Boolean);
-function logoMask(st,F,L,which){const src=which==='id'?L.id:L.c,lw=L.c.width,lh=L.c.height,s=F*1.6/(st.lfx||1)/Math.sqrt(lw*lh),w=Math.max(2,lw*s),h=Math.max(2,lh*s),pad=F*.35,T=mkc(w+pad*2,h+pad*2),x=c2(T);
+function logoMask(st,F,L,which){const src=which==='id'?L.id:L.c,lw=L.c.width,lh=L.c.height,s=F*2.6/(st.lfx||1)/Math.sqrt(lw*lh),w=Math.max(2,lw*s),h=Math.max(2,lh*s),pad=F*.35,T=mkc(w+pad*2,h+pad*2),x=c2(T);
   if(which==='id')x.imageSmoothingEnabled=false;else x.imageSmoothingQuality='high';x.drawImage(src,pad,pad,w,h);return warp(T,st.warp||'none',st.bend||0,st.vbend||0,which==='id')}
 function srcMask(st,F,o,which){if(isLogo(st,o)){if(which==='id'&&!o.logo.id)return null;if(which==='col'&&st.lcol==='fabric')return null;return logoMask(st,F,o.logo,which)}
   if(which==='col'&&!hasLC(st))return null;return textMask(st,F,which)}
@@ -12015,7 +12025,8 @@ function warp(T,type,b,vb,nearest){if(type==='none'&&!vb)return T;const W=T.widt
 function bbox(c){const W=c.width,H=c.height,d=c2(c).getImageData(0,0,W,H).data;let x0=W,y0=H,x1=-1,y1=-1;for(let y=0;y<H;y+=2){const r=y*W;for(let x=0;x<W;x+=2)if(d[(r+x)*4+3]>8){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}return x1<0?null:[x0,y0,x1+2,y1+2]}
 
 /* ---------- the full render ---------- */
-function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),Rg=rng((st.seed||7)*31+5);
+function render(st,opts={}){const outer=!LIVE;if(outer)LIVE=[];let r=null;try{r=render0(st,opts);return r}finally{if(outer){const L2=LIVE;LIVE=null;for(const c of L2)if(!r||c!==r.canvas)rmine(c)}}}
+function render0(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),Rg=rng((st.seed||7)*31+5);
   // size the letters so the result fits
   let F=260;const probe=srcMask(st,F,opts),bb0=bbox(probe)||[0,0,F,F];const extra=F*(.5+(st.threads||0)*.9+(st.fray||0)*.25);let k=Math.min(maxSide/(bb0[2]-bb0[0]+extra*2),maxSide/(bb0[3]-bb0[1]+extra*2));F=clamp(F*k,24,900);
   const q=F/260,src=srcMask(st,F,opts),bb=bbox(src)||[0,0,F,F],pad=Math.ceil(F*(.42+(st.threads||0)*.85+(st.fray||0)*.2+(st.border||0)/260*1.2));
@@ -12031,11 +12042,15 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   const colAt=(x,y)=>{if(!CMd)return null;const i=((y|0)*W+(x|0))*4;return i>=0&&i<CMd.length&&CMd[i+3]>0?[CMd[i],CMd[i+1],CMd[i+2]]:null};
   // second layer (border fabric) around the letters
   const bw=(st.border||0)*q;let Aout=Atop,SDtop=sdf(Atop,W,H),SDout=SDtop;
+  // detail size: thin logo lines and thin fonts get finer frays, edges and stitches so the original shape survives
+  let ef=1;{let A=0,P=0;for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x;if(Atop[i]<.5)continue;A++;if(Atop[i-1]<.5||Atop[i+1]<.5||Atop[i-W]<.5||Atop[i+W]<.5)P++}
+    const hwr=P?A/P/F:1;info.hw=hwr;ef=clamp(hwr/.045,.1,1);if(isLogo(st,opts)&&st.lexact!==false)ef=Math.min(ef,.85)*.8}
+  const efs=Math.sqrt(ef);info.ef=ef;
   if(bw>.5){Aout=new Float32Array(N);for(let i=0;i<N;i++)Aout[i]=clamp(SDtop[i]+bw+.5,0,1);SDout=sdf(Aout,W,H)}
   // cut edge: clean, frayed (fluffy), torn (ragged bites) or raw
   const edge=st.edge||'clean',ea=st.edgeAmt==null?.6:st.edgeAmt;
-  if(edge!=='clean'){const big=vnoise(W,H,F*.055,F*.055,R),mid=vnoise(W,H,F*.02,F*.02,R),fin=vnoise(W,H,F*.007,F*.007,R),Aw=new Float32Array(N);
-    const amp=edge==='torn'?[F*.016*ea,F*.012*ea,F*.006]:edge==='frayed'?[F*.006*ea,F*.006*ea,F*.004]:[F*.01*ea,F*.005,F*.003];
+  if(edge!=='clean'){const big=vnoise(W,H,F*.055*efs,F*.055*efs,R),mid=vnoise(W,H,F*.02*efs,F*.02*efs,R),fin=vnoise(W,H,F*.007*efs,F*.007*efs,R),Aw=new Float32Array(N);
+    const amp=(edge==='torn'?[F*.016*ea,F*.012*ea,F*.006]:edge==='frayed'?[F*.006*ea,F*.006*ea,F*.004]:[F*.01*ea,F*.005,F*.003]).map(v=>v*ef);
     for(let i=0;i<N;i++){const s=SDout[i]+(big[i]-.5)*2*amp[0]+(mid[i]-.5)*2*amp[1]+(fin[i]-.5)*2*amp[2];Aw[i]=clamp(s+.5,0,1)}
     if(bw>.5)Aout=Aw;else{Aout=Aw;Atop=Aw}SDout=sdf(Aout,W,H);if(bw<=.5)SDtop=SDout}
   // separate pieces: every letter / logo colour is its own raised piece of fabric
@@ -12047,8 +12062,8 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   // rips: auto ones near the edges + the ones you painted
   const rips=[];const marks=st.marks||[];const heal=marks.filter(m=>m.t==='heal');const healed=(x,y)=>heal.some(m=>Math.hypot(x-(cx0+m.x*F),y-(cy0+m.y*F))<m.r*F);
   const nR=Math.round((st.rips||0)*Math.max(1,(bb[2]-bb[0])/F)*2.2);const pts=outL.flat();
-  for(let n=0;n<nR&&pts.length;n++){const p=pts[Rg()*pts.length|0],ix=p[0]|0,iy=p[1]|0;let best=null;for(let tries=0;tries<12;tries++){const a=Rg()*6.28,r=F*(.03+Rg()*.09),x=p[0]+Math.cos(a)*r,y=p[1]+Math.sin(a)*r,i=(y|0)*W+(x|0);if(i>0&&i<N&&SDout[i]>F*.02){best=[x,y];break}}
-    if(best&&!healed(best[0],best[1]))rips.push({x:best[0],y:best[1],rx:F*(.04+Rg()*.07)*(.6+(st.ripSize||.5)),ry:F*(.025+Rg()*.04)*(.6+(st.ripSize||.5)),a:(Rg()-.5)*.6,s:Rg()*1e9|0});void ix;void iy}
+  for(let n=0;n<nR&&pts.length;n++){const p=pts[Rg()*pts.length|0],ix=p[0]|0,iy=p[1]|0;let best=null;for(let tries=0;tries<12;tries++){const a=Rg()*6.28,r=F*(.03+Rg()*.09),x=p[0]+Math.cos(a)*r,y=p[1]+Math.sin(a)*r,i=(y|0)*W+(x|0);if(i>0&&i<N&&SDout[i]>F*.02*ef){best=[x,y];break}}
+    if(best&&!healed(best[0],best[1]))rips.push({x:best[0],y:best[1],rx:F*(.04+Rg()*.07)*(.6+(st.ripSize||.5))*efs,ry:F*(.025+Rg()*.04)*(.6+(st.ripSize||.5))*efs,a:(Rg()-.5)*.6,s:Rg()*1e9|0});void ix;void iy}
   marks.filter(m=>m.t==='rip').forEach(m=>rips.push({x:cx0+m.x*F,y:cy0+m.y*F,rx:m.r*F*1.15,ry:m.r*F*.68,a:(Rg()-.5)*.5,s:Rg()*1e9|0}));
   const RIP=new Float32Array(N);if(rips.length){const rn=vnoise(W,H,F*.012,F*.012,R);for(const r of rips){const ex=Math.max(r.rx,r.ry)*1.4,x0=Math.max(0,r.x-ex|0),x1=Math.min(W-1,r.x+ex|0),y0=Math.max(0,r.y-ex|0),y1=Math.min(H-1,r.y+ex|0),ca=Math.cos(r.a),sa=Math.sin(r.a);
       for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const dx=x-r.x,dy=y-r.y,u=(dx*ca+dy*sa)/r.rx,v=(-dx*sa+dy*ca)/r.ry,i=y*W+x,val=1-(u*u+v*v)+(rn[i]-.5)*.9;if(val>0)RIP[i]=Math.max(RIP[i],clamp(val*4,0,1))}}}
@@ -12057,8 +12072,8 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   const C1g=hx(st.c1||'#e8e1d3'),C2=hx(st.c2||'#ffffff'),B1=hx(st.b1||'#f2efe8'),B2=hx(st.b2||'#ffffff'),BK=hx(st.backing||'#e9e0cf');
   const wear=st.wear||0,dirt=st.dirt||0,fade=st.fade||0,thick=st.thick==null?.55:st.thick;
   const wearN=wear||fade?fbm(W,H,F*.035,3,R):null,dirtN=dirt?fbm(W,H,F*.09,3,R):null,edgeN=vnoise(W,H,t*.9,t*.9,R);
-  const bev=F*(.012+thick*.03),Hh=new Float32Array(N),col=new Float32Array(N*3),AL=new Float32Array(N);
-  const tornW=edge==='torn'?F*.035*(.5+ea):0;
+  const bev=F*(.012+thick*.03)*Math.max(.3,ef),Hh=new Float32Array(N),col=new Float32Array(N*3),AL=new Float32Array(N);
+  const tornW=edge==='torn'?F*.035*(.5+ea)*ef:0;
   const cl=[0,0,0];for(let i=0;i<N;i++){const ao=Aout[i];if(ao<.004)continue;const at=bw>.5?Atop[i]:1;let C1=C1g;if(CMd){const j=i*4;if(CMd[j+3]>0){cl[0]=CMd[j];cl[1]=CMd[j+1];cl[2]=CMd[j+2];C1=cl}}
     let g1=f1.G[i],w1=f1.Wm?f1.Wm[i]:0,a1=f1.A?f1.A[i]:1;let r=C1[0]*(.58+.84*g1)+(g1-.5)*26,gg=C1[1]*(.58+.84*g1)+(g1-.5)*26,b=C1[2]*(.58+.84*g1)+(g1-.5)*26;
     if(w1){const k=w1,s=.72+.5*g1;r+=(C2[0]*s-r)*k;gg+=(C2[1]*s-gg)*k;b+=(C2[2]*s-b)*k}
@@ -12068,7 +12083,7 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
     // torn edges show the white weft threads
     if(tornW&&SDout[i]<tornW){const k=(1-SDout[i]/tornW)*sstep(.35,.75,edgeN[i]);const s=f1.Wm?C2:lift(C1,.6);r+=(s[0]-r)*k;gg+=(s[1]-gg)*k;b+=(s[2]-b)*k}
     const sdH=SDreg?SDout[i]+(SDreg[i]-SDout[i])*pcs:SDout[i];let h=bev*sstep(0,bev*2.2,sdH)*1.0+f1.depth*(g1-.5)*t*.9;if(SDreg&&pcs>0&&SDreg[i]<bev*1.2&&SDreg[i]<SDout[i]-.5){const k=(1-SDreg[i]/(bev*1.2))*pcs*.22;r*=1-k;gg*=1-k;b*=1-k}let alpha=ao*a1;
-    if(edge==='frayed'){const rw=F*.022,k=SDout[i]<rw?(1-SDout[i]/rw)*(.55+.45*edgeN[i]):0;if(k){const s=lift(C1,.5);r+=(s[0]-r)*k*.45;gg+=(s[1]-gg)*k*.45;b+=(s[2]-b)*k*.45;h+=k*bev*.35}}
+    if(edge==='frayed'){const rw=F*.022*ef,k=SDout[i]<rw?(1-SDout[i]/rw)*(.55+.45*edgeN[i]):0;if(k){const s=lift(C1,.5);r+=(s[0]-r)*k*.45;gg+=(s[1]-gg)*k*.45;b+=(s[2]-b)*k*.45;h+=k*bev*.35}}
     if(bw>.5){const g2=f2.G[i],a2=f2.A?f2.A[i]:1,w2=f2.Wm?f2.Wm[i]:0;let br=B1[0]*(.58+.84*g2)+(g2-.5)*26,bg=B1[1]*(.58+.84*g2)+(g2-.5)*26,bb2=B1[2]*(.58+.84*g2)+(g2-.5)*26;if(w2){const s=.72+.5*g2;br+=(B2[0]*s-br)*w2;bg+=(B2[1]*s-bg)*w2;bb2+=(B2[2]*s-bb2)*w2}
       const ht=bev*sstep(0,bev*2.2,SDtop[i])*.9;r=br+(r-br)*at;gg=bg+(gg-bg)*at;b=bb2+(b-bb2)*at;h=bev*sstep(0,bev*2.2,SDout[i])+at*ht+(at>.5?f1.depth*(g1-.5):f2.depth*(g2-.5))*t*.9;alpha=ao*(a2+(a1-a2)*at)}
     // rips: the top fabric is gone, the backing (or nothing) shows
@@ -12086,14 +12101,14 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   const S=mkc(W,H);let x=c2(S);x.lineCap='round';x.lineJoin='round';
   const thr=hx(st.thread||'#f4efe6'),fibreC=f1.Wm?C2:lift(C1g,.35),fibreO=bw>.5?(f2.Wm?B2:lift(B1,.35)):fibreC;
   const fray=st.fray==null?(edge==='clean'?0:.6):st.fray;
-  if(fray>0&&edge!=='clean'){const tornish=edge==='torn';for(const pl of outL){const pts=resample(pl,Math.max(.8,q*(tornish?1.3:.75)/(.35+fray)));for(const p of pts){if(Rg()>.55+fray*.45)continue;const nx=p[3],ny=-p[2];
+  if(fray>0&&edge!=='clean'){const tornish=edge==='torn';for(const pl of outL){const pts=resample(pl,Math.max(.8,q*(tornish?1.3:.75)/(.35+fray))/Math.max(.35,ef));for(const p of pts){if(Rg()>.55+fray*.45)continue;const nx=p[3],ny=-p[2];
         // outward normal
         const tx=p[0]+nx*3,ty=p[1]+ny*3,ii=(ty|0)*W+(tx|0),sgn=ii>0&&ii<N&&Aout[ii]>.5?-1:1;const ox=nx*sgn,oy=ny*sgn;if(healed(p[0],p[1]))continue;
         let ang=Math.atan2(oy,ox)+(Rg()-.5)*(tornish?.9:1.9);
-        const len=q*(tornish?1.8+Math.pow(Rg(),2.6)*13:1.2+Math.pow(Rg(),3)*9)*(.5+fray),st0=q*(.5+Rg()*2.5),sx=p[0]-ox*st0,sy=p[1]-oy*st0,cur=(Rg()-.5)*len*.7;
+        const len=q*(tornish?1.8+Math.pow(Rg(),2.6)*13:1.2+Math.pow(Rg(),3)*9)*(.5+fray)*Math.max(.25,ef),st0=q*(.5+Rg()*2.5)*Math.max(.3,ef),sx=p[0]-ox*st0,sy=p[1]-oy*st0,cur=(Rg()-.5)*len*.7;
         const ex=sx+Math.cos(ang)*len,ey=sy+Math.sin(ang)*len,mx=(sx+ex)/2-Math.sin(ang)*cur,my=(sy+ey)/2+Math.cos(ang)*cur;
-        const lo=bw>.5||f1.Wm?null:colAt(p[0],p[1]),fo=lo?lift(lo,.35):fibreO;const c=Rg()<.15?dim(fo,.15):lift(fo,Rg()*.25);x.strokeStyle=rgbs(c,.5+Rg()*.5);x.lineWidth=q*(.35+Rg()*.75);x.beginPath();x.moveTo(sx,sy);x.quadraticCurveTo(mx,my,ex,ey);x.stroke();
-        if(!tornish&&Rg()<.6*fray){const r=q*(1+Rg()*2.2),a0=ang-1.6;x.lineWidth=q*(.35+Rg()*.4);x.strokeStyle=rgbs(lift(fo,.15),.45+Rg()*.4);x.beginPath();x.arc(p[0]+ox*r*.4,p[1]+oy*r*.4,r,a0,a0+Math.PI*(1+Rg()*.6));x.stroke()}}}}
+        const lo=bw>.5||f1.Wm?null:colAt(p[0],p[1]),fo=lo?lift(lo,.35):fibreO;const c=Rg()<.15?dim(fo,.15):lift(fo,Rg()*.25);x.strokeStyle=rgbs(c,.5+Rg()*.5);x.lineWidth=q*(.35+Rg()*.75)*Math.max(.5,efs);x.beginPath();x.moveTo(sx,sy);x.quadraticCurveTo(mx,my,ex,ey);x.stroke();
+        if(!tornish&&Rg()<.6*fray*ef){const r=q*(1+Rg()*2.2)*Math.max(.4,ef),a0=ang-1.6;x.lineWidth=q*(.35+Rg()*.4);x.strokeStyle=rgbs(lift(fo,.15),.45+Rg()*.4);x.beginPath();x.arc(p[0]+ox*r*.4,p[1]+oy*r*.4,r,a0,a0+Math.PI*(1+Rg()*.6));x.stroke()}}}}
   // rip rims + threads across the hole (kept inside the letters)
   const xMain=x;let RC=null;if(rips.length){RC=mkc(W,H);x=c2(RC);x.lineCap='round'}
   for(const r of rips){const n=Math.round(10+r.rx/q*1.2);for(let k=0;k<n;k++){const a=Rg()*6.28,ex=r.x+Math.cos(a)*r.rx*(.85+Rg()*.25),ey=r.y+Math.sin(a)*r.ry*(.85+Rg()*.25),ang=a+Math.PI+(Rg()-.5)*1.2,len=q*(2+Rg()*7);{const lo=f1.Wm?null:colAt(r.x,r.y);x.strokeStyle=rgbs(lift(lo?lift(lo,.35):fibreC,.2),.55+Rg()*.4)}x.lineWidth=q*(.4+Rg()*.6);x.beginPath();x.moveTo(ex,ey);x.lineTo(ex+Math.cos(ang)*len,ey+Math.sin(ang)*len);x.stroke()}
@@ -12102,7 +12117,7 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
       x.strokeStyle=rgbs(lift(f1.Wm?C2:BK,.1),.95);x.lineWidth=q*(.9+Rg()*.8);x.beginPath();x.moveTo(x0,yy);x.quadraticCurveTo(r.x,yy+sag,x1,yy);x.stroke()}}
   if(RC){const mk=mkc(W,H),mx=c2(mk),id=mx.createImageData(W,H);for(let i=0;i<N;i++)id.data[i*4+3]=Aout[i]*255;mx.putImageData(id,0,0);x.globalCompositeOperation='destination-in';x.drawImage(mk,0,0);x=xMain;x.drawImage(RC,0,0)}
   // stitching
-  const sType=st.stitch||'none';if(sType!=='none'){const base=SDreg&&st.pieceStitch&&!(bw>.5&&st.stitchOn==='outer')?SDreg:bw>.5&&st.stitchOn!=='outer'?SDtop:SDout,ins=(st.inset==null?.045:st.inset)*F,tw=q*(st.stitchW||1.3),sl=q*(st.stitchLen||6);
+  const sType=st.stitch||'none';if(sType!=='none'){const base=SDreg&&st.pieceStitch&&!(bw>.5&&st.stitchOn==='outer')?SDreg:isLogo(st,opts)&&!(bw>.5&&st.stitchOn!=='outer')?sdf(fillHoles(Aout,W,H),W,H):bw>.5&&st.stitchOn!=='outer'?SDtop:SDout,ins=(st.inset==null?.045:st.inset)*F*ef,tw=q*(st.stitchW||1.3)*Math.max(.45,efs),sl=q*(st.stitchLen||6)*Math.max(.45,efs);
     const lines=(d)=>contours(base,W,H,d,Math.max(1,Math.round(q*1.2))).map(p=>smooth(p,3));
     const dash=(a,b)=>{x.strokeStyle='rgba(0,0,0,.42)';x.lineWidth=tw*1.5;x.beginPath();x.moveTo(a[0]+q*.5,a[1]+q*.8);x.lineTo(b[0]+q*.5,b[1]+q*.8);x.stroke();
       x.strokeStyle=rgbs(thr,1);x.lineWidth=tw;x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();
@@ -12123,7 +12138,7 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   const nT=Math.round((st.threads||0)*6*Math.max(1,(bb[2]-bb[0])/F/2));const tpts=outL.flat();const thread=(p,len)=>{const sx=p[0],sy=p[1],side=Rg()<.5?-1:1;let px=sx,py=sy;const segs=3+(Rg()*3|0);x.beginPath();x.moveTo(sx,sy);
       let dx=(Rg()-.5)*.6+side*.25,dy=.6+Rg()*.5;for(let s=0;s<segs;s++){const l=len/segs;const c1x=px+dx*l*.6+(Rg()-.5)*l*.6,c1y=py+dy*l*.5,nx=px+dx*l+(Rg()-.5)*l*.5,ny=py+dy*l;x.quadraticCurveTo(c1x,c1y,nx,ny);px=nx;py=ny;dx+=(Rg()-.5)*.8;dy=Math.max(.15,dy+(Rg()-.4)*.5)}
       const w=q*(.7+Rg()*.6);x.save();x.strokeStyle='rgba(0,0,0,.35)';x.lineWidth=w*1.6;x.translate(q*1.4,q*2);x.stroke();x.restore();{const lo=bw>.5||f1.Wm?null:colAt(sx,sy);x.strokeStyle=rgbs(lift(lo?lift(lo,.35):fibreO,Rg()*.2),.95)}x.lineWidth=w;x.stroke()};
-  for(let n=0;n<nT&&tpts.length;n++){const p=tpts[Rg()*tpts.length|0];if(healed(p[0],p[1]))continue;thread(p,F*(.12+Rg()*.4)*(st.threadLen||1))}
+  for(let n=0;n<nT&&tpts.length;n++){const p=tpts[Rg()*tpts.length|0];if(healed(p[0],p[1]))continue;thread(p,F*(.12+Rg()*.4)*(st.threadLen||1)*Math.max(.4,ef))}
   marks.filter(m=>m.t==='thread').forEach(m=>{const mx=cx0+m.x*F,my=cy0+m.y*F;let best=null,bd=1e9;for(const p of tpts){const d=(p[0]-mx)**2+(p[1]-my)**2;if(d<bd){bd=d;best=p}}if(best)thread(best,F*(.25+Rg()*.35)*(st.threadLen||1))});
   // fuzz / pilling
   const pill=st.pill||0;if(pill>0){const n=Math.round(N/(q*q*260)*pill);for(let k=0;k<n;k++){const px=Rg()*W,py=Rg()*H,i=(py|0)*W+(px|0);if(Aout[i]<.6)continue;const r=q*(.6+Rg()*1.6),a=Rg()*6.28;{const lo=f1.Wm?null:colAt(px,py);x.strokeStyle=rgbs(lift(lo?lift(lo,.35):fibreC,.2+Rg()*.3),.18+Rg()*.3)}x.lineWidth=q*.4;x.beginPath();x.arc(px,py,r,a,a+2+Rg()*3);x.stroke()}}
@@ -12131,7 +12146,7 @@ function render(st,opts={}){const maxSide=opts.maxSide||1400,R=rng(st.seed||7),R
   const P=mkc(W,H),px=c2(P);px.drawImage(body,0,0);px.drawImage(S,0,0);
   const res=mkc(W,H),rx=c2(res);if(opts.bg){rx.drawImage(opts.bg(W,H),0,0)}
   const shA=st.shadow==null?.6:st.shadow;if(shA>0){const s1=mkc(W/4,H/4),s1x=c2(s1);s1x.drawImage(P,0,0,s1.width,s1.height);s1x.globalCompositeOperation='source-in';s1x.fillStyle='#000';s1x.fillRect(0,0,s1.width,s1.height);
-    const s2=mkc(W/10,H/10);c2(s2).drawImage(s1,0,0,s2.width,s2.height);const off=F*(.012+thick*.022);rx.globalAlpha=shA*.8;rx.imageSmoothingQuality='high';rx.drawImage(s2,-Math.cos(la)*off*1.6,-Math.sin(la)*off*1.6,W,H);rx.globalAlpha=shA*.6;rx.drawImage(s1,-Math.cos(la)*off*.5,-Math.sin(la)*off*.5,W,H);rx.globalAlpha=1}
+    const s2=mkc(W/10,H/10);c2(s2).drawImage(s1,0,0,s2.width,s2.height);const off=F*(.012+thick*.022)*Math.max(.4,ef);rx.globalAlpha=shA*.8;rx.imageSmoothingQuality='high';rx.drawImage(s2,-Math.cos(la)*off*1.6,-Math.sin(la)*off*1.6,W,H);rx.globalAlpha=shA*.6;rx.drawImage(s1,-Math.cos(la)*off*.5,-Math.sin(la)*off*.5,W,H);rx.globalAlpha=1}
   rx.drawImage(P,0,0);info.contours=outL.length;info.rips=rips.length;return {canvas:res,info}}
 
 /* ---------- a small fabric swatch (for the fabric picker) ---------- */
@@ -12223,7 +12238,7 @@ function body(){const b=el.querySelector('.tl-body');let h='';
   b.querySelectorAll('canvas[data-fab]').forEach((c,i)=>setTimeout(()=>{try{const s=TLX.swatch(c.dataset.fab,c.dataset.c1,c.dataset.c2,72);c.getContext('2d').drawImage(s,0,0)}catch(e){}},i*8))}
 function presets(){const p=el.querySelector('.tl-presets');p.innerHTML=PRE.map(([n],i)=>`<button data-pre="${i}"><canvas width="96" height="64"></canvas><span>${n}</span></button>`).join('');
   // small live previews of every look
-  const cs=[...p.querySelectorAll('canvas')];let i=0;const next=()=>{if(i>=cs.length||el.hidden)return;const k=i++;try{const s=Object.assign({},DEF,PRE[k][1],{text:'Aa',font:st.font,caps:false,warp:'none',marks:[],threads:Math.min(.2,PRE[k][1].threads||0),border:Math.min(10,PRE[k][1].border||0)});const r=TLX.render(s,{maxSide:150,bg:(W,H)=>TLX.garment('flat','#111214',W,H)}).canvas;const x=cs[k].getContext('2d'),sc=Math.max(96/r.width,64/r.height);x.drawImage(r,(96-r.width*sc)/2,(64-r.height*sc)/2,r.width*sc,r.height*sc)}catch(e){}setTimeout(next,20)};setTimeout(next,300)}
+  const cs=[...p.querySelectorAll('canvas')];let i=0;const next=()=>{if(i>=cs.length||el.hidden)return;const k=i++;try{const s=Object.assign({},DEF,PRE[k][1],{text:'Aa',font:st.font,caps:false,warp:'none',marks:[],threads:Math.min(.2,PRE[k][1].threads||0),border:Math.min(10,PRE[k][1].border||0)});const r=TLX.render(s,{maxSide:150,bg:(W,H)=>TLX.garment('flat','#111214',W,H)}).canvas;const x=cs[k].getContext('2d'),sc=Math.max(96/r.width,64/r.height);x.drawImage(r,(96-r.width*sc)/2,(64-r.height*sc)/2,r.width*sc,r.height*sc);r.width=0;r.height=0}catch(e){}setTimeout(next,20)};setTimeout(next,300)}
 
 /* ---------- per-letter colours ---------- */
 const dispChars=()=>[...(st.caps?String(st.text||'').toUpperCase():String(st.text||''))];
@@ -12311,7 +12326,7 @@ function remapLogo(){if(!LOGO||!LOGO.src)return;const S=LOGO.src,lp=st.lpal||[];
 /* ---------- rendering ---------- */
 function draw(quick){if(!el||el.hidden)return;if(busy){again=quick?again||'q':'f';return}busy=true;const bz=el.querySelector('.tl-busy');if(!quick)bz.hidden=false;
   (quick?f=>f():f=>setTimeout(f,16))(()=>{const t0=performance.now();try{const stg=el.querySelector('.tl-stage').getBoundingClientRect(),side=Math.max(stg.width,stg.height)*(devicePixelRatio>1?1.4:1),ms=Math.round(quick?Math.min(QS,Math.max(360,side)):Math.min(1500,Math.max(500,side)));
-      const r=TLX.render(st,{maxSide:ms,bg:bgFn(),ids:true,logo:logoOpt()});lastInfo=r.info;const cv=el.querySelector('.tl-cv');cv.width=r.canvas.width;cv.height=r.canvas.height;cv.getContext('2d').drawImage(r.canvas,0,0);fitView();if(quick){const dt=performance.now()-t0;QS=dt>45?Math.max(360,QS*.8):dt<22?Math.min(760,QS*1.12):QS}}
+      const r=TLX.render(st,{maxSide:ms,bg:bgFn(),ids:true,logo:logoOpt()});lastInfo=r.info;const cv=el.querySelector('.tl-cv');cv.width=r.canvas.width;cv.height=r.canvas.height;cv.getContext('2d').drawImage(r.canvas,0,0);r.canvas.width=0;r.canvas.height=0;fitView();if(quick){const dt=performance.now()-t0;QS=dt>45?Math.max(360,QS*.8):dt<22?Math.min(760,QS*1.12):QS}}
     catch(e){console.error(e)}busy=false;bz.hidden=true;if(again){const q=again==='q';again=false;draw(q)}})}
 let RQ=0,QS=760;function sched(quick){if(quick){/* live: redraw every frame while dragging */if(!RQ)RQ=requestAnimationFrame(()=>{RQ=0;draw(true)});return}clearTimeout(RT);RT=setTimeout(()=>draw(false),90);save()}
 function fitView(){const v=el.querySelector('.tl-view'),cv=el.querySelector('.tl-cv'),r=v.getBoundingClientRect();const k=Math.min((r.width-24)/cv.width,(r.height-24)/cv.height)*zoom;cv.style.width=cv.width*k+'px';cv.style.height=cv.height*k+'px'}
